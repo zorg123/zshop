@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.pojo.sys.tb_role" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.sys.TbRole" >
+    <result column="role_id" property="role_id" jdbcType="INTEGER" />
+    <result column="role_name" property="role_name" jdbcType="VARCHAR" />
+    <result column="role_desc" property="role_desc" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>  
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbRole" useGeneratedKeys="true" keyProperty="role_id">
+    insert into tb_role (role_name, role_desc, 
+      create_date)
+    values (#{role_name,jdbcType=VARCHAR}, #{role_desc,jdbcType=VARCHAR}, 
+      #{create_date,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="select" parameterType="com.flyrui.dao.pojo.sys.TbRole" resultType="TbRole">
+  	select b.role_id, b.role_name, b.role_desc,b.create_date
+     from  tb_role b 
+     where 1=1 
+     <if test="role_id != null and role_id !='' ">
+     	and role_id = #{role_id,jdbcType=INTEGER}
+     </if>
+     <if test="role_name != null and role_name !='' ">
+     	and role_name = #{role_name,jdbcType=VARCHAR}
+     </if>     
+  </select>
+  <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbRole">
+  	 update tb_role set role_name = #{role_name,jdbcType=VARCHAR}, 
+  			role_desc= #{role_desc,jdbcType=VARCHAR}
+     where role_id = #{role_id,jdbcType=INTEGER}
+  </update>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.sys.TbRole" >
+    delete from tb_role 
+    where role_id = #{role_id,jdbcType=INTEGER}
+  </delete>
+  <select id="queryRoleIdByUserCode" parameterType="com.flyrui.dao.pojo.sys.User" resultType="TbRole">
+  	select b.role_id, b.role_name, b.role_desc,b.create_date
+     from tb_user_role a left join tb_role b on a.role_id = b.role_id
+     where a.user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+  <select id="queryRoleListFilterByUser" parameterType="com.flyrui.dao.pojo.sys.TbRole" resultType="TbRole">
+  	select b.role_id, b.role_name, b.role_desc,b.create_date
+     from  tb_role b 
+     where 1=1 and b.role_id not in (select role_id from tb_user_role a where a.user_id = #{user_id,jdbcType=VARCHAR})
+     <if test="role_id != null and role_id !='' ">
+     	and b.role_id = #{role_id,jdbcType=INTEGER}
+     </if>
+     <if test="role_name != null and role_name !='' ">
+     	and b.role_name = #{role_name,jdbcType=VARCHAR}
+     </if>     
+  </select>
+</mapper>

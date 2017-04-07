@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusTemplateItemMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.bus.BusTemplateItem" >
+    <result column="item_id" property="item_id" jdbcType="INTEGER" />
+    <result column="template_id" property="template_id" jdbcType="VARCHAR" />
+    <result column="item_name" property="item_name" jdbcType="VARCHAR" />
+    <result column="item_type" property="item_type" jdbcType="VARCHAR" />
+    <result column="data_col" property="data_col" jdbcType="VARCHAR" />
+    <result column="rule_id" property="rule_id" jdbcType="INTEGER" />
+    <result column="order_id" property="order_id" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    item_id, template_id, item_name, item_type, data_col, rule_id, order_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItemCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_template_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItemCriteria" >
+    delete from bus_template_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItem" >
+    insert into bus_template_item (item_id, template_id, item_name, 
+      item_type, data_col, rule_id, 
+      order_id)
+    values (#{item_id,jdbcType=INTEGER}, #{template_id,jdbcType=VARCHAR}, #{item_name,jdbcType=VARCHAR}, 
+      #{item_type,jdbcType=VARCHAR}, #{data_col,jdbcType=VARCHAR}, #{rule_id,jdbcType=INTEGER}, 
+      #{order_id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItem" >
+    insert into bus_template_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="item_id != null" >
+        item_id,
+      </if>
+      <if test="template_id != null" >
+        template_id,
+      </if>
+      <if test="item_name != null" >
+        item_name,
+      </if>
+      <if test="item_type != null" >
+        item_type,
+      </if>
+      <if test="data_col != null" >
+        data_col,
+      </if>
+      <if test="rule_id != null" >
+        rule_id,
+      </if>
+      <if test="order_id != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="item_id != null" >
+        #{item_id,jdbcType=INTEGER},
+      </if>
+      <if test="template_id != null" >
+        #{template_id,jdbcType=VARCHAR},
+      </if>
+      <if test="item_name != null" >
+        #{item_name,jdbcType=VARCHAR},
+      </if>
+      <if test="item_type != null" >
+        #{item_type,jdbcType=VARCHAR},
+      </if>
+      <if test="data_col != null" >
+        #{data_col,jdbcType=VARCHAR},
+      </if>
+      <if test="rule_id != null" >
+        #{rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="order_id != null" >
+        #{order_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItemCriteria" resultType="java.lang.Integer" >
+    select count(*) from bus_template_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_template_item
+    <set >
+      <if test="record.item_id != null" >
+        item_id = #{record.item_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.template_id != null" >
+        template_id = #{record.template_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item_name != null" >
+        item_name = #{record.item_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item_type != null" >
+        item_type = #{record.item_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data_col != null" >
+        data_col = #{record.data_col,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rule_id != null" >
+        rule_id = #{record.rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.order_id != null" >
+        order_id = #{record.order_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_template_item
+    set item_id = #{record.item_id,jdbcType=INTEGER},
+      template_id = #{record.template_id,jdbcType=VARCHAR},
+      item_name = #{record.item_name,jdbcType=VARCHAR},
+      item_type = #{record.item_type,jdbcType=VARCHAR},
+      data_col = #{record.data_col,jdbcType=VARCHAR},
+      rule_id = #{record.rule_id,jdbcType=INTEGER},
+      order_id = #{record.order_id,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.train.dao.mapper.InfoTrainAuditStaffMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.train.pojo.InfoTrainAuditStaff" >
+    	<result column="id" property="id" jdbcType="INTEGER" />
+    	<result column="deparment_id" property="deparment_id" jdbcType="VARCHAR" />
+    	<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="oper_staff" property="oper_staff" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	deparment_id,
+    	user_id,
+    	state,
+    	create_date,
+    	oper_staff
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null and id != ''" >
+        		and id = #{id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="deparment_id != null and deparment_id != ''" >
+        		and deparment_id = #{deparment_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_id != null and user_id != ''" >
+        		and user_id = #{user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null and state != ''" >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="oper_staff != null and oper_staff != ''" >
+        		and oper_staff = #{oper_staff,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAuditStaff" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_train_audit_staff
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAuditStaff" >
+    delete from info_train_audit_staff
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAuditStaff" >
+    insert into info_train_audit_staff ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{deparment_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{user_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{oper_staff,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAuditStaff">
+    update info_train_audit_staff
+    set
+   		<if test="id != null and id != ''" >
+      		id = #{id,jdbcType=INTEGER},
+   		</if>
+   		<if test="deparment_id != null and deparment_id != ''" >
+      		deparment_id = #{deparment_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="user_id != null and user_id != ''" >
+      		user_id = #{user_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null and state != ''" >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null and create_date != ''" >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="oper_staff != null and oper_staff != ''" >
+      		oper_staff = #{oper_staff,jdbcType=VARCHAR}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

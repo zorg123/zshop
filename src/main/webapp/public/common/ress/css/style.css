@@ -1,0 +1,12 @@
+@charset "utf-8";
+.star{ background:url(/public/common/ress/images/main/front/star.png) left top no-repeat; display:inline-block; vertical-align:middle;}
+.onestar{ background-position:0px 0px; width:84px; height:16px;}
+.twostar{ background-position:0px -16px; width:84px; height:16px;}
+.threestar{ background-position:0px -32px; width:84px; height:16px;}
+.fourstar{ background-position:0px -48px; width:84px; height:16px;}
+.fivestar{ background-position:0px -64px; width:84px; height:16px;}
+
+.columnList{ display:block; padding:0px; margin:0px;}
+.columnList li{ padding:0px 8px 5px 0px; float:left;}
+
+.fonts{ font-size:18px;}

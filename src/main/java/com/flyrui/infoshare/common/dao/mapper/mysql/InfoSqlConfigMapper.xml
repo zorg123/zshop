@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.common.dao.mapper.InfoSqlConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.common.pojo.InfoSqlConfig" >
+    	<result column="sql_id" property="sql_id" jdbcType="INTEGER" />
+    	<result column="sql_type" property="sql_type" jdbcType="VARCHAR" />
+    	<result column="sql_body_content" property="sql_body_content" jdbcType="VARCHAR" />
+    	<result column="sql_where" property="sql_where" jdbcType="VARCHAR" />
+    	<result column="sql_param" property="sql_param" jdbcType="VARCHAR" />
+    	<result column="sql_desc" property="sql_desc" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	sql_id,
+    	sql_type,
+    	sql_body_content,
+    	sql_where,
+    	sql_param,
+    	sql_desc,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="sql_id != null and sql_id != ''" >
+        		and sql_id = #{sql_id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="sql_type != null and sql_type != ''" >
+        		and sql_type = #{sql_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="sql_body_content != null and sql_body_content != ''" >
+        		and sql_body_content = #{sql_body_content,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="sql_where != null and sql_where != ''" >
+        		and sql_where = #{sql_where,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="sql_param != null and sql_param != ''" >
+        		and sql_param = #{sql_param,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="sql_desc != null and sql_desc != ''" >
+        		and sql_desc = #{sql_desc,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=DATE}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.common.pojo.InfoSqlConfig" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_sql_config
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.common.pojo.InfoSqlConfig" >
+    delete from info_sql_config
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.common.pojo.InfoSqlConfig" >
+    insert into info_sql_config ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{sql_id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{sql_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{sql_body_content,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{sql_where,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{sql_param,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{sql_desc,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=DATE}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.common.pojo.InfoSqlConfig">
+    update info_sql_config
+    set
+   		<if test="sql_id != null and sql_id != ''" >
+      		sql_id = #{sql_id,jdbcType=INTEGER},
+   		</if>
+   		<if test="sql_type != null and sql_type != ''" >
+      		sql_type = #{sql_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="sql_body_content != null and sql_body_content != ''" >
+      		sql_body_content = #{sql_body_content,jdbcType=VARCHAR},
+   		</if>
+   		<if test="sql_where != null and sql_where != ''" >
+      		sql_where = #{sql_where,jdbcType=VARCHAR},
+   		</if>
+   		<if test="sql_param != null and sql_param != ''" >
+      		sql_param = #{sql_param,jdbcType=VARCHAR},
+   		</if>
+   		<if test="sql_desc != null and sql_desc != ''" >
+      		sql_desc = #{sql_desc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null and create_date != ''" >
+      		create_date = #{create_date,jdbcType=DATE}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+  
+  <select id="queryDynamicSql" parameterType="Map" >
+   		${sql}
+  </select>
+</mapper>

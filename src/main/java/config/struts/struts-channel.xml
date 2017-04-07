@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="channel" extends="frcms_default" namespace="/Channel">    	
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+    	<action name="*" class="com.flyrui.channel.action.ChannelAction" method="{1}">        	
+            <result name="editChannel">
+            	/admin/channel/channelOperate.jsp
+            </result>
+            <result name="editContent">
+            	/admin/channel/contentOperate.jsp
+            </result>
+            <result name="page" type="json">
+            	<param name="root">pageModel</param>
+            </result>
+            <result name="success" type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="error" type="json">
+            	<param name="root">result</param>
+            </result>
+        </action>
+        <action name="*!*" class="com.flyrui.channel.action.{1}Action" method="{2}">        	
+            <result name="page" type="json">
+            	<param name="root">pageModel</param>
+            </result>
+            <result name="success" type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="error" type="json">
+            	<param name="root">result</param>
+            </result>
+        </action>      
+    </package>
+</struts>

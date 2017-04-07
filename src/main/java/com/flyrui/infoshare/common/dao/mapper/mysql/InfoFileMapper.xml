@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.common.dao.mapper.InfoFileMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.common.pojo.InfoFile" >
+    	<result column="file_id" property="file_id" jdbcType="VARCHAR" />
+    	<result column="file_name" property="file_name" jdbcType="VARCHAR" />
+    	<result column="file_type" property="file_type" jdbcType="VARCHAR" />
+    	<result column="file_size" property="file_size" jdbcType="INTEGER" />
+    	<result column="file_key" property="file_key" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	file_id,
+    	file_name,
+    	file_type,
+    	file_size,
+    	file_key,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_name != null  and file_name != '' " >
+        		and file_name = #{file_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_type != null  and file_type != '' " >
+        		and file_type = #{file_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_size != null  and file_size != '' " >
+        		and file_size = #{file_size,jdbcType=INTEGER}
+     		</if>
+	    	<if test="file_key != null  and file_key != '' " >
+        		and file_key = #{file_key,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.common.pojo.InfoFile" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.common.pojo.InfoFile" >
+    delete from info_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.common.pojo.InfoFile" >
+    insert into info_file ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{file_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_size,jdbcType=INTEGER},     		
+	    	    	
+        	  #{file_key,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.common.pojo.InfoFile">
+    update info_file
+    set
+   		<if test="file_id != null  and file_id != '' " >
+      		file_id = #{file_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_name != null  and file_name != '' " >
+      		file_name = #{file_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_type != null  and file_type != '' " >
+      		file_type = #{file_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_size != null  and file_size != '' " >
+      		file_size = #{file_size,jdbcType=INTEGER},
+   		</if>
+   		<if test="file_key != null  and file_key != '' " >
+      		file_key = #{file_key,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.train.dao.mapper.InfoTrainAuditMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.train.pojo.InfoTrainAudit" >
+    	<result column="audit_id" property="audit_id" jdbcType="INTEGER" />
+    	<result column="train_id" property="train_id" jdbcType="VARCHAR" />
+    	<result column="audit_result" property="audit_result" jdbcType="VARCHAR" />
+    	<result column="audit_comments" property="audit_comments" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="audit_staff" property="audit_staff" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	audit_id,
+    	train_id,
+    	audit_result,
+    	audit_comments,
+    	create_date,
+    	audit_staff
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="audit_id != null and audit_id != ''" >
+        		and audit_id = #{audit_id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="train_id != null and train_id != ''" >
+        		and train_id = #{train_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="audit_result != null and audit_result != ''" >
+        		and audit_result = #{audit_result,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="audit_comments != null and audit_comments != ''" >
+        		and audit_comments = #{audit_comments,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="audit_staff != null and audit_staff != ''" >
+        		and audit_staff = #{audit_staff,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAudit" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_train_audit
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAudit" >
+    delete from info_train_audit
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAudit" >
+    insert into info_train_audit ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{audit_id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{train_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{audit_result,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{audit_comments,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{audit_staff,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.train.pojo.InfoTrainAudit">
+    update info_train_audit
+    set
+   		<if test="audit_id != null and audit_id != ''" >
+      		audit_id = #{audit_id,jdbcType=INTEGER},
+   		</if>
+   		<if test="train_id != null and train_id != ''" >
+      		train_id = #{train_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="audit_result != null and audit_result != ''" >
+      		audit_result = #{audit_result,jdbcType=VARCHAR},
+   		</if>
+   		<if test="audit_comments != null and audit_comments != ''" >
+      		audit_comments = #{audit_comments,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null and create_date != ''" >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="audit_staff != null and audit_staff != ''" >
+      		audit_staff = #{audit_staff,jdbcType=VARCHAR}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

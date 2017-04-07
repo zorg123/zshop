@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.staff.dao.mapper.InfoUserExtMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+  		<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+  		<result column="id" property="id" jdbcType="VARCHAR" />
+  		<result column="name" property="name" jdbcType="VARCHAR" />
+  		<result column="department" property="department" jdbcType="VARCHAR" />
+    	<result column="department_name" property="department_name" jdbcType="VARCHAR" />
+    	<result column="status" property="status" jdbcType="VARCHAR" />
+    	<result column="account" property="account" jdbcType="VARCHAR" />
+    	<result column="phone" property="phone" jdbcType="VARCHAR" />
+    	<result column="citizen_id" property="citizen_id" jdbcType="VARCHAR" />
+    	<result column="register_time" property="register_time" jdbcType="TIMESTAMP" />
+    	<result column="sex" property="sex" jdbcType="VARCHAR" />
+    	<result column="office_room" property="office_room" jdbcType="VARCHAR" />
+    	<result column="political_status" property="political_status" jdbcType="VARCHAR" />
+    	<result column="work_date" property="work_date" jdbcType="TIMESTAMP" />
+    	<result column="join_date" property="join_date" jdbcType="TIMESTAMP" />
+    	<result column="education" property="education" jdbcType="VARCHAR" />
+    	<result column="degree" property="degree" jdbcType="VARCHAR" />
+    	<result column="job_title" property="job_title" jdbcType="VARCHAR" />
+    	<result column="job_level" property="job_level" jdbcType="VARCHAR" />
+    	<result column="serving_time" property="serving_time" jdbcType="TIMESTAMP" />
+    	<result column="nowjob_up_time" property="nowjob_up_time" jdbcType="TIMESTAMP" />
+    	<result column="qualify_name" property="qualify_name" jdbcType="VARCHAR" />
+    	<result column="qualify_level" property="qualify_level" jdbcType="VARCHAR" />
+    	<result column="appoint_level" property="appoint_level" jdbcType="VARCHAR" />
+    	<result column="jyfs" property="jyfs" jdbcType="VARCHAR" />
+    	<result column="jysj" property="jysj" jdbcType="TIMESTAMP" />
+    	<result column="prgrjszwmc" property="prgrjszwmc" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="seq" property="seq" jdbcType="INTEGER" />
+    	<result column="job_state" property="job_state" jdbcType="VARCHAR" />
+    	<result column="off_job_time" property="off_job_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	user_id,
+    	sex,
+    	office_room,
+    	political_status,
+    	work_date,
+    	join_date,
+    	education,
+    	degree,
+    	job_title,
+    	job_level,
+    	serving_time,
+    	nowjob_up_time,
+    	qualify_name,
+    	qualify_level,
+    	appoint_level,
+    	jyfs,
+    	jysj,
+    	prgrjszwmc,
+    	create_date,
+    	state_date,
+    	state,
+    	seq,
+    	job_state,
+    	off_job_time
+  </sql> 
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="user_id != null and user_id != ''" >
+        		and user_id = #{user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="sex != null and sex != ''" >
+        		and sex = #{sex,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="office_room != null and office_room != ''" >
+        		and office_room = #{office_room,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="political_status != null and political_status != ''" >
+        		and political_status = #{political_status,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="work_date != null and work_date != ''" >
+        		and work_date = #{work_date,jdbcType=DATE}
+     		</if>
+	    	<if test="join_date != null and join_date != ''" >
+        		and join_date = #{join_date,jdbcType=DATE}
+     		</if>
+	    	<if test="education != null and education != ''" >
+        		and education = #{education,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="degree != null and degree != ''" >
+        		and degree = #{degree,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="job_title != null and job_title != ''" >
+        		and job_title = #{job_title,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="job_level != null and job_level != ''" >
+        		and job_level = #{job_level,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="serving_time != null and serving_time != ''" >
+        		and serving_time = #{serving_time,jdbcType=DATE}
+     		</if>
+	    	<if test="nowjob_up_time != null and nowjob_up_time != ''" >
+        		and nowjob_up_time = #{nowjob_up_time,jdbcType=DATE}
+     		</if>
+	    	<if test="qualify_name != null and qualify_name != ''" >
+        		and qualify_name = #{qualify_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="qualify_level != null and qualify_level != ''" >
+        		and qualify_level = #{qualify_level,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="appoint_level != null and appoint_level != ''" >
+        		and appoint_level = #{appoint_level,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="jyfs != null and jyfs != ''" >
+        		and jyfs = #{jyfs,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="jysj != null and jysj != ''" >
+        		and jysj = #{jysj,jdbcType=DATE}
+     		</if>
+	    	<if test="prgrjszwmc != null and prgrjszwmc != ''" >
+        		and prgrjszwmc = #{prgrjszwmc,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=DATE}
+     		</if>
+	    	<if test="state_date != null and state_date != ''" >
+        		and state_date = #{state_date,jdbcType=DATE}
+     		</if>
+	    	<if test="state != null and state != ''" >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="seq != null and seq != ''" >
+        		and seq = #{seq,jdbcType=INTEGER}
+     		</if>
+	    	<if test="job_state != null and job_state != ''" >
+        		and job_state = #{job_state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="off_job_time != null and off_job_time != ''" >
+        		and off_job_time = #{off_job_time,jdbcType=DATE}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_user_ext
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+    select  a.user_id,
+    	b.id,
+    	b.name,
+    	b.department,
+    	c.name as department_name,
+    	b.status,
+    	b.account,
+    	b.phone,
+    	b.citizen_id,
+    	b.register_time,
+    	a.sex,
+    	a.office_room,
+    	a.political_status,
+    	a.work_date,
+    	a.join_date,
+    	a.education,
+    	a.degree,
+    	a.job_title,
+    	a.job_level,
+    	a.serving_time,
+    	a.nowjob_up_time,
+    	a.qualify_name,
+    	a.qualify_level,
+    	a.appoint_level,
+    	a.jyfs,
+    	a.jysj,
+    	a.prgrjszwmc,
+    	a.create_date,
+    	a.state_date,
+    	a.state,
+    	a.seq,
+    	a.job_state,
+    	a.off_job_time  
+    from core_user b left join info_user_ext a on a.user_id = b.id left join core_department c on c.id = b.department
+    where  b.id = #{id,jdbcType=VARCHAR} 
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+    delete from info_user_ext
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+    insert into info_user_ext ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{user_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{sex,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{office_room,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{political_status,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{work_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{join_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{education,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{degree,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{job_title,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{job_level,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{serving_time,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{nowjob_up_time,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{qualify_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{qualify_level,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{appoint_level,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{jyfs,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{jysj,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{prgrjszwmc,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{state_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{seq,jdbcType=INTEGER},     		
+	    	    	
+        	  #{job_state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{off_job_time,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt">
+    update info_user_ext
+    set   		
+   		<if test="sex != null and sex != ''" >
+      		sex = #{sex,jdbcType=VARCHAR},
+   		</if>
+   		<if test="office_room != null and office_room != ''" >
+      		office_room = #{office_room,jdbcType=VARCHAR},
+   		</if>
+   		<if test="political_status != null and political_status != ''" >
+      		political_status = #{political_status,jdbcType=VARCHAR},
+   		</if>
+   		<if test="work_date != null" >
+      		work_date = #{work_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="join_date != null " >
+      		join_date = #{join_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="education != null and education != ''" >
+      		education = #{education,jdbcType=VARCHAR},
+   		</if>
+   		<if test="degree != null and degree != ''" >
+      		degree = #{degree,jdbcType=VARCHAR},
+   		</if>
+   		<if test="job_title != null and job_title != ''" >
+      		job_title = #{job_title,jdbcType=VARCHAR},
+   		</if>
+   		<if test="job_level != null and job_level != ''" >
+      		job_level = #{job_level,jdbcType=VARCHAR},
+   		</if>
+   		<if test="serving_time != null " >
+      		serving_time = #{serving_time,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="nowjob_up_time != null " >
+      		nowjob_up_time = #{nowjob_up_time,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="qualify_name != null and qualify_name != ''" >
+      		qualify_name = #{qualify_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="qualify_level != null and qualify_level != ''" >
+      		qualify_level = #{qualify_level,jdbcType=VARCHAR},
+   		</if>
+   		<if test="appoint_level != null and appoint_level != ''" >
+      		appoint_level = #{appoint_level,jdbcType=VARCHAR},
+   		</if>
+   		<if test="jyfs != null and jyfs != ''" >
+      		jyfs = #{jyfs,jdbcType=VARCHAR},
+   		</if>
+   		<if test="jysj != null " >
+      		jysj = #{jysj,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="prgrjszwmc != null and prgrjszwmc != ''" >
+      		prgrjszwmc = #{prgrjszwmc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="state_date != null " >
+      		state_date = #{state_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="state != null and state != ''" >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="seq != null " >
+      		seq = #{seq,jdbcType=INTEGER},
+   		</if>
+   		<if test="job_state != null and job_state != ''" >
+      		job_state = #{job_state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="off_job_time != null " >
+      		off_job_time = #{off_job_time,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="user_id != null and user_id != ''" >
+      		user_id = #{user_id,jdbcType=VARCHAR}
+   		</if>
+    <if test="_parameter != null" >
+      	where user_id = #{user_id,jdbcType=VARCHAR} and seq= 0
+    </if>
+    
+  </update>
+  
+  <select id="queryMaxSeq" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+    select  max(seq) seq  from info_user_ext where user_id = #{user_id,jdbcType=VARCHAR}
+  </select>
+  <insert id="bakOldRecord" parameterType="com.flyrui.infoshare.staff.pojo.InfoUserExt" >
+     insert into info_user_ext ( <include refid="Base_Column_List" />)
+     select user_id,sex,office_room,political_status,work_date,join_date,education,degree,job_title,job_level,serving_time,nowjob_up_time,qualify_name,qualify_level,appoint_level,jyfs,jysj,prgrjszwmc,create_date,state_date,'0',#{seq,jdbcType=INTEGER},job_state,off_job_time from info_user_ext where user_id = #{user_id,jdbcType=VARCHAR} and state = #{state,jdbcType=VARCHAR} 
+  </insert>
+</mapper>

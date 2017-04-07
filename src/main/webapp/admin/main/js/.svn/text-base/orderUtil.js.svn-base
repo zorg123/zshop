@@ -1,0 +1,287 @@
+var orderUtil = {
+	/**
+	 * 特殊连接符
+	 * @return {String}
+	 */
+	getJoin: function() {
+		return "__^jj^__";
+	},
+	/**
+	 * 订单确认显示排序
+	 * @param {} array
+	 * @return {}
+	 */
+	sort: function(array) {
+		var me = this;
+		var num = [];
+		var val = [];
+		for (var jj = 0, jjS = array.length; jj < jjS; jj++) {
+			var v = array[jj];
+			var vArray = v.split(me.getJoin());
+			num.push(vArray[0]);
+			val.push(vArray[1]);
+		}
+		
+		var i = 0, len = num.length, j, d, temp;
+		for (; i < len; i++) { 
+	　　		for (j = 0; j < len; j++) { 
+	　　			if (num[i] < num[j]) { 
+	　　				d = num[j]; 
+	　　				temp = val[j];
+	　　				num[j] = num[i];
+	　　				val[j] = val[i];
+	　　				num[i] = d;
+	　　				val[i] = temp;
+	　　			} 
+	　　		} 
+	　　}
+	　　return val; 
+	},		
+	/**
+	 * 冒泡排序方法原型
+	 * @param {} num
+	 * @return {}
+	 */
+	bubbleSort: function(num) {
+		var i = 0, len = num.length, j, d; 
+		for (; i < len; i++) { 
+			for (j = 0; j < len; j++) { 
+				if (num[i] < num[j]) { 
+					d = num[j]; 
+					num[j] = num[i]; 
+					num[i] = d; 
+				} 
+			} 
+		}
+		return num; 
+	},		
+	/**
+	 * 设置对象值
+	 * @param {} obj
+	 * @param {} id
+	 * @param {} val
+	 */
+	setObjVal: function(obj, id, val) {
+		var me = this;
+		if (me.isEmpty(obj) || me.isEmpty(id)) return;
+		if (!obj.hasOwnProperty(id)) {
+			obj[id] = val;
+		} else {
+			obj[id] = obj[id] + "," + val;
+		}
+	},
+	/**
+	 * 获取字符字节长度
+	 * @param {} str
+	 * @return {}
+	 */
+	getByteLen: function(str) {//获取字符串长度
+		var l = str.length;
+		var n = l;
+		for (var i = 0; i < l; i++) {
+			if (str.charCodeAt(i) < 0 || str.charCodeAt(i) > 255) {
+				n++;
+			}
+		}
+		return n;
+	},	
+	/**
+	 * 判断对象是否为空
+	 * @param {} obj
+	 * @return {Boolean}
+	 */
+	isEmpty: function(obj) {
+		var me = this;
+		if (null == obj || "undefined" == obj) {
+			return true;
+		} else {
+			var objType = typeof obj;
+			//字符串
+			if ('string' === objType && me.getByteLen(obj) == 0) {
+				return true;
+			}
+			//数组
+			if ($.isArray(obj) && obj.length == 0) {
+				return true;
+			}
+			return false;
+		}
+	},	
+	/**
+	 * 设置输入域值
+	 * @param {} inputOjb
+	 * @param {} divId
+	 */
+	setDomainValue: function(inputOjb, divId) {
+		if (inputOjb == 'undefined' || inputOjb == null) return;
+		$("#" + divId).find("span").each(function() {
+			var $curObj = $(this);
+			var objId = $curObj.attr("id");
+			if (null != objId && '' != objId) {
+				var objIdFirst = objId.substr(0, objId.length - 2);
+				//遍历对象
+				for (var attr in inputOjb) {
+					if (attr === objIdFirst || attr === (objIdFirst + "_cname")) {
+						$curObj.text(inputOjb[attr]);
+					}	
+				}			
+			}
+		});
+	},
+	/**
+	 * 获取输入域值
+	 * @param {} divId
+	 * @return {}
+	 */
+	getInputDomain: function(divId) {
+		
+		var me = this;
+		var iv = {};
+		
+		//checkbox
+		$("#" + divId).find("input[type='checkbox']:checked").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("name");
+			//真值
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			//显示值
+			var cname = $obj.attr("cname");
+			if (!me.isEmpty(cname)) {
+				me.setObjVal(iv, ivId + "_cname", cname);
+			}
+		});	
+		
+		//text
+		$("#" + divId).find("input[type='text']").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			
+			//显示值
+			var cname = $obj.attr("cname");
+			if (!me.isEmpty(cname)) {
+				me.setObjVal(iv, ivId + "_cname", cname);
+			}
+			var lastcname = $obj.attr("lastcname");
+			if (!me.isEmpty(lastcname)) {
+				me.setObjVal(iv, ivId + "_lastcname", lastcname);
+			}
+			var oid = $obj.attr("oid");
+			if (!me.isEmpty(oid)) {
+				me.setObjVal(iv, ivId + "_oid", oid);
+			}
+		});	
+		//password
+		$("#" + divId).find("input[type='password']").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			
+			//显示值
+			var cname = $obj.attr("cname");
+			if (!me.isEmpty(cname)) {
+				me.setObjVal(iv, ivId + "_cname", cname);
+			}
+			var lastcname = $obj.attr("lastcname");
+			if (!me.isEmpty(lastcname)) {
+				me.setObjVal(iv, ivId + "_lastcname", lastcname);
+			}
+			var oid = $obj.attr("oid");
+			if (!me.isEmpty(oid)) {
+				me.setObjVal(iv, ivId + "_oid", oid);
+			}
+		});	
+		
+		//hidden
+		$("#" + divId).find("input[type='hidden']").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			
+			//显示值
+			var cname = $obj.attr("cname");
+			if (!me.isEmpty(cname)) {
+				me.setObjVal(iv, ivId + "_cname", cname);
+			}
+			var lastcname = $obj.attr("lastcname");
+			if (!me.isEmpty(lastcname)) {
+				me.setObjVal(iv, ivId + "_lastcname", lastcname);
+			}
+			var oid = $obj.attr("oid");
+			if (!me.isEmpty(oid)) {
+				me.setObjVal(iv, ivId + "_oid", oid);
+			}
+		});	
+		
+		//select
+		$("#" + divId).find("select").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			//真值
+			var ivVal = $obj.find("option[selected='selected']").val();
+			me.setObjVal(iv, ivId, ivVal);
+			//显示值
+			var ivValDesc = $obj.find("option[selected='selected']").text();
+			me.setObjVal(iv, ivId + "_cname", ivValDesc);
+		});	
+		
+		//textarea
+		$("#" + divId).find("textarea").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			//真值
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			
+			//显示值
+			var cname = $obj.attr("cname");
+			if (!me.isEmpty(cname)) {
+				me.setObjVal(iv, ivId + "_cname", cname);
+			}
+			var lastcname = $obj.attr("lastcname");
+			if (!me.isEmpty(lastcname)) {
+				me.setObjVal(iv, ivId + "_lastcname", lastcname);
+			}
+			var oid = $obj.attr("oid");
+			if (!me.isEmpty(oid)) {
+				me.setObjVal(iv, ivId + "_oid", oid);
+			}
+			
+		});		
+		
+		//radio
+		$("#" + divId).find("input[type='radio']:checked").each(function() {
+			var $obj = $(this);
+			var ivId = $obj.attr("id");
+			//真值
+			var ivVal = $obj.val();
+			me.setObjVal(iv, ivId, ivVal);
+			//显示值
+			var ivValDesc = $obj.next("span").text();
+			me.setObjVal(iv, ivId + "_cname", ivValDesc);
+			
+		});		
+		
+		return iv;
+	},
+	/**
+	 * 提交方法
+	 * @param {} obj
+	 * @param {} callback
+	 */
+	submit: function(obj, callback) {
+		
+	},
+	/**
+	 * 回调方法
+	 * @param {} reply
+	 * @param {} callback
+	 */
+	callback: function(reply, callback) {
+		
+	}
+};

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.bus.BusInfo" >
+    <result column="bus_id" property="bus_id" jdbcType="INTEGER" />
+    <result column="bus_name" property="bus_name" jdbcType="VARCHAR" />
+    <result column="imp_tmp" property="imp_tmp" jdbcType="VARCHAR" />
+    <result column="exp_tmp" property="exp_tmp" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bus_id, bus_name, imp_tmp, exp_tmp, create_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.bus.BusInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.flyrui.dao.pojo.bus.BusInfoCriteria" >
+    delete from bus_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.bus.BusInfo" >
+    insert into bus_info (bus_id, bus_name, imp_tmp, 
+      exp_tmp, create_date)
+    values (#{bus_id,jdbcType=INTEGER}, #{bus_name,jdbcType=VARCHAR}, #{imp_tmp,jdbcType=VARCHAR}, 
+      #{exp_tmp,jdbcType=VARCHAR}, #{create_date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flyrui.dao.pojo.bus.BusInfo" >
+    insert into bus_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bus_id != null" >
+        bus_id,
+      </if>
+      <if test="bus_name != null" >
+        bus_name,
+      </if>
+      <if test="imp_tmp != null" >
+        imp_tmp,
+      </if>
+      <if test="exp_tmp != null" >
+        exp_tmp,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bus_id != null" >
+        #{bus_id,jdbcType=INTEGER},
+      </if>
+      <if test="bus_name != null" >
+        #{bus_name,jdbcType=VARCHAR},
+      </if>
+      <if test="imp_tmp != null" >
+        #{imp_tmp,jdbcType=VARCHAR},
+      </if>
+      <if test="exp_tmp != null" >
+        #{exp_tmp,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.flyrui.dao.pojo.bus.BusInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from bus_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_info
+    <set >
+      <if test="record.bus_id != null" >
+        bus_id = #{record.bus_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bus_name != null" >
+        bus_name = #{record.bus_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imp_tmp != null" >
+        imp_tmp = #{record.imp_tmp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp_tmp != null" >
+        exp_tmp = #{record.exp_tmp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.create_date != null" >
+        create_date = #{record.create_date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_info
+    set bus_id = #{record.bus_id,jdbcType=INTEGER},
+      bus_name = #{record.bus_name,jdbcType=VARCHAR},
+      imp_tmp = #{record.imp_tmp,jdbcType=VARCHAR},
+      exp_tmp = #{record.exp_tmp,jdbcType=VARCHAR},
+      create_date = #{record.create_date,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

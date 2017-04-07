@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusSalaryExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.salary.BusSalaryExtend" >
+    	<result column="salary_id" property="salary_id" jdbcType="VARCHAR" />
+    	<result column="extend_name" property="extend_name" jdbcType="VARCHAR" />
+    	<result column="extend_value" property="extend_value" jdbcType="VARCHAR" />
+    	<result column="order_id" property="order_id" jdbcType="INTEGER" />
+    	<result column="batch_id" property="batch_id" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	salary_id,
+    	extend_name,
+    	extend_value,
+    	order_id,
+    	batch_id,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="salary_id != null and salary_id != ''" >
+        		and salary_id = #{salary_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="extend_name != null and extend_name != ''" >
+        		and extend_name = #{extend_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="extend_value != null and extend_value != ''" >
+        		and extend_value = #{extend_value,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="order_id != null and order_id != ''" >
+        		and order_id = #{order_id,jdbcType=INTEGER}
+     		</if>
+     		<if test="batch_id != null and batch_id != ''" >
+        		and batch_id = #{batch_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=DATE}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalaryExtend" >
+    select    
+    <include refid="Base_Column_List" />
+    from bus_salary_extend
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    order by order_id 
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.salary.BusSalaryExtend" >
+    delete from bus_salary_extend
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.salary.BusSalaryExtend" >
+    insert into bus_salary_extend ( <include refid="Base_Column_List" />)
+    values (#{salary_id,jdbcType=VARCHAR},#{extend_name,jdbcType=VARCHAR},#{extend_value,jdbcType=VARCHAR},#{order_id,jdbcType=INTEGER},
+        	#{batch_id,jdbcType=VARCHAR},now())
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.dao.pojo.salary.BusSalaryExtend">
+    update bus_salary_extend
+    set
+   	<if test="salary_id != null and salary_id != ''" >
+      		salary_id = #{salary_id,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="extend_name != null and extend_name != ''" >
+      		extend_name = #{extend_name,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="extend_value != null and extend_value != ''" >
+      		extend_value = #{extend_value,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="order_id != null and order_id != ''" >
+      		order_id = #{order_id,jdbcType=INTEGER},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="create_date != null and create_date != ''" >
+      		create_date = #{create_date,jdbcType=DATE}
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </update>
+  <select id="querySalaryExtendByIds" resultMap="BaseResultMap">
+    select    
+    <include refid="Base_Column_List" />
+    from bus_salary_extend
+    where salary_id in  
+    <foreach collection="list" item="salaryBase" index="index"
+            open="(" close=")" separator=",">
+            #{salaryBase.salary_id}
+    </foreach>
+  </select>
+  
+</mapper>

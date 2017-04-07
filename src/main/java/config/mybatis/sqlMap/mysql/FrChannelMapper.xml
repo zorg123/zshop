@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.FrChannelMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.channel.FrChannel" >
+    <id column="channel_id" property="channel_id" jdbcType="INTEGER" />
+    <result column="model_id" property="model_id" jdbcType="INTEGER" />
+    <result column="site_id" property="site_id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parent_id" jdbcType="INTEGER" />
+    <result column="channel_path" property="channel_path" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="has_content" property="has_content" jdbcType="BIT" />
+    <result column="is_display" property="is_display" jdbcType="BIT" />
+  </resultMap>
+  
+  <resultMap id="AllResultMap" type="com.flyrui.dao.pojo.channel.FrChannel" extends="BaseResultMap" >
+    <result column="channel_name" property="channel_name" jdbcType="VARCHAR" />
+    <result column="final_step" property="final_step" jdbcType="TINYINT" />
+    <result column="after_check" property="after_check" jdbcType="TINYINT" />
+    <result column="is_static_channel" property="is_static_channel" jdbcType="CHAR" />
+    <result column="is_static_content" property="is_static_content" jdbcType="CHAR" />
+    <result column="is_access_by_dir" property="is_access_by_dir" jdbcType="CHAR" />
+    <result column="is_list_child" property="is_list_child" jdbcType="CHAR" />
+    <result column="page_size" property="page_size" jdbcType="INTEGER" />
+    <result column="channel_rule" property="channel_rule" jdbcType="VARCHAR" />
+    <result column="content_rule" property="content_rule" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="tpl_channel" property="tpl_channel" jdbcType="VARCHAR" />
+    <result column="tpl_content" property="tpl_content" jdbcType="VARCHAR" />
+    <result column="title_img" property="title_img" jdbcType="VARCHAR" />
+    <result column="content_img" property="content_img" jdbcType="VARCHAR" />
+    <result column="has_title_img" property="has_title_img" jdbcType="BIT" />
+    <result column="has_content_img" property="has_content_img" jdbcType="BIT" />
+    <result column="title_img_width" property="title_img_width" jdbcType="INTEGER" />
+    <result column="title_img_height" property="title_img_height" jdbcType="INTEGER" />
+    <result column="content_img_width" property="content_img_width" jdbcType="INTEGER" />
+    <result column="content_img_height" property="content_img_height" jdbcType="INTEGER" />
+    <result column="comment_control" property="comment_control" jdbcType="INTEGER" />
+    <result column="allow_updown" property="allow_updown" jdbcType="BIT" />
+    <result column="is_blank" property="is_blank" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    channel_id, model_id, site_id, parent_id, channel_path, priority, has_content, is_display,
+  </sql>
+  <sql id="ALL_Column_List" >
+    a.channel_id, a.model_id, a.site_id, a.parent_id, a.channel_path, a.priority, a.has_content, a.is_display,
+    b.channel_name, b.final_step, b.after_check, b.is_static_channel, b.is_static_content, 
+    b.is_access_by_dir, b.is_list_child, b.page_size, b.channel_rule, b.content_rule, b.link, b.tpl_channel, 
+    b.tpl_content, b.title_img, b.content_img, b.has_title_img, b.has_content_img, b.title_img_width, 
+    b.title_img_height, b.content_img_width, b.content_img_height, b.comment_control, b.allow_updown, 
+    b.is_blank, b.title, b.keywords, b.description
+  </sql>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.channel.FrChannel" >
+    delete from fr_channel
+    where channel_id = #{channel_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.channel.FrChannel" >
+    insert into fr_channel (channel_id, model_id, site_id, 
+      parent_id, channel_path, priority, 
+      has_content, is_display)
+    values (#{channel_id,jdbcType=INTEGER}, #{model_id,jdbcType=INTEGER}, #{site_id,jdbcType=INTEGER}, 
+      #{parent_id,jdbcType=INTEGER}, #{channel_path,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, 
+      #{has_content,jdbcType=BIT}, #{is_display,jdbcType=BIT})
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.channel.FrChannel" >
+    update fr_channel
+    set model_id = #{model_id,jdbcType=INTEGER},
+      site_id = #{site_id,jdbcType=INTEGER},
+      parent_id = #{parent_id,jdbcType=INTEGER},
+      channel_path = #{channel_path,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      has_content = #{has_content,jdbcType=BIT},
+      is_display = #{is_display,jdbcType=BIT}
+    where channel_id = #{channel_id,jdbcType=INTEGER}    
+  </update>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.channel.FrChannel" >
+    select
+    <include refid="Base_Column_List" />
+    from fr_channel
+     where 1 = 1 
+    <if test="channel_id != null" >
+       and channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+    <if test="model_id != null" >
+       and model_id = #{model_id,jdbcType=INTEGER}
+    </if>
+    <if test="site_id != null" >
+       and site_id = #{site_id,jdbcType=INTEGER}
+    </if>
+    <if test="parent_id != null" >
+       and parent_id = #{parent_id,jdbcType=INTEGER}
+    </if>
+    <if test="channel_path != null" >
+       and channel_path = #{channel_path,jdbcType=VARCHAR}
+    </if>
+    <if test="priority != null" >
+       and priority = #{priority,jdbcType=INTEGER}
+    </if>
+    <if test="has_content != null" >
+       and has_content = #{has_content,jdbcType=BIT}
+    </if>
+    <if test="is_display != null" >
+       and is_display = #{is_display,jdbcType=BIT}
+    </if>
+  </select>
+  
+  <select id="queryAllWithExt" resultMap="AllResultMap" parameterType="com.flyrui.dao.pojo.channel.FrChannel" >
+    select
+    <include refid="ALL_Column_List" />
+    from fr_channel a left join fr_channel_ext b on a.channel_id = b.channel_id
+     where 1 = 1 
+    <if test="channel_id != null" >
+       and a.channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+    <if test="model_id != null" >
+       and a.model_id = #{model_id,jdbcType=INTEGER}
+    </if>
+    <if test="site_id != null" >
+       and a.site_id = #{site_id,jdbcType=INTEGER}
+    </if>
+    <if test="parent_id != null" >
+       and a.parent_id = #{parent_id,jdbcType=INTEGER}
+    </if>
+    <if test="channel_path != null" >
+       and a.channel_path = #{channel_path,jdbcType=VARCHAR}
+    </if>
+    <if test="priority != null" >
+       and a.priority = #{priority,jdbcType=INTEGER}
+    </if>
+    <if test="has_content != null" >
+       and a.has_content = #{has_content,jdbcType=BIT}
+    </if>
+    <if test="is_display != null" >
+       and a.is_display = #{is_display,jdbcType=BIT}
+    </if>
+    <if test="channel_name !=null">
+    	and b.channel_name like #{channel_name,jdbcType=VARCHAR}
+    </if>
+    order by a.priority
+  </select>
+</mapper>

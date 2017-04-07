@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusSalaryBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.salary.BusSalaryBase" >
+    	<result column="salary_id" property="salary_id" jdbcType="VARCHAR" />
+    	<result column="user_id" property="user_id" jdbcType="INTEGER" />
+    	<result column="bank_account" property="bank_account" jdbcType="VARCHAR" />
+    	<result column="user_code" property="user_code" jdbcType="VARCHAR" />
+    	<result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    	<result column="salary_schedule" property="salary_schedule" jdbcType="DATE" />
+    	<result column="org_name" property="org_name" jdbcType="VARCHAR" />
+    	<result column="batch_id" property="batch_id" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="DATE" />
+    	<result column="oper_user_id" property="oper_user_id" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	salary_id,
+    	user_id,
+    	bank_account,
+    	user_code,
+    	user_name,
+    	salary_schedule,
+    	org_name,
+    	batch_id,
+    	create_date,
+    	oper_user_id
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="salary_id != null and salary_id != ''" >
+        		and salary_id = #{salary_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_id != null and user_id != ''" >
+        		and user_id = #{user_id,jdbcType=INTEGER}
+     		</if>
+     		<if test="bank_account != null and bank_account != ''" >
+        		and bank_account = #{bank_account,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_code != null and user_code != ''" >
+        		and user_code = #{user_code,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_name != null and user_name != ''" >
+        		and user_name like #{user_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="salary_schedule != null and salary_schedule != ''" >
+        		and salary_schedule = #{salary_schedule,jdbcType=DATE}
+     		</if>
+     		<if test="salary_schedule_start != null and salary_schedule_start != ''" >
+        		and salary_schedule &gt;= str_to_date(#{salary_schedule_start,jdbcType=VARCHAR},'%Y-%m-%d')
+     		</if>
+     		<if test="salary_schedule_end != null and salary_schedule_end != ''" >
+        		and salary_schedule &lt;= str_to_date(#{salary_schedule_end,jdbcType=VARCHAR},'%Y-%m-%d')
+     		</if>
+	    	<if test="org_name != null and org_name != ''" >
+        		and org_name like #{org_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="batch_id != null and batch_id != ''" >
+        		and batch_id = #{batch_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null and create_date != ''" >
+        		and create_date = #{create_date,jdbcType=DATE}
+     		</if>
+	    	<if test="oper_user_id != null and oper_user_id != ''" >
+        		and oper_user_id = #{oper_user_id,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalaryBase" >
+    select    
+    <include refid="Base_Column_List" />
+    from bus_salary_base
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.salary.BusSalaryBase" >
+    delete from bus_salary_base
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.salary.BusSalaryBase" >
+    insert into bus_salary_base ( <include refid="Base_Column_List" />)
+    values (#{salary_id,jdbcType=VARCHAR},#{user_id,jdbcType=INTEGER},#{bank_account,jdbcType=INTEGER},
+     		#{user_code,jdbcType=VARCHAR},#{user_name,jdbcType=VARCHAR},#{salary_schedule,jdbcType=DATE},
+	    	#{org_name,jdbcType=VARCHAR},
+	        #{batch_id,jdbcType=VARCHAR},now(),#{oper_user_id,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.dao.pojo.salary.BusSalaryBase">
+    update bus_salary_base
+    set
+   	<if test="salary_id != null and salary_id != ''" >
+      		salary_id = #{salary_id,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="user_id != null and user_id != ''" >
+      		user_id = #{user_id,jdbcType=INTEGER},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="user_code != null and user_code != ''" >
+      		user_code = #{user_code,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="user_name != null and user_name != ''" >
+      		user_name = #{user_name,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="salary_schedule != null and salary_schedule != ''" >
+      		salary_schedule = #{salary_schedule,jdbcType=DATE},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="org_name != null and org_name != ''" >
+      		org_name = #{org_name,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="batch_id != null and batch_id != ''" >
+      		batch_id = #{batch_id,jdbcType=VARCHAR},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="create_date != null and create_date != ''" >
+      		create_date = #{create_date,jdbcType=DATE},
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+   	<if test="oper_user_id != null and oper_user_id != ''" >
+      		oper_user_id = #{oper_user_id,jdbcType=VARCHAR}
+   	</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </update>
+</mapper>

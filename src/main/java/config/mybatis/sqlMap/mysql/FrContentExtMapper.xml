@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.FrContentExtMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.channel.FrContentExt" >
+    <id column="content_id" property="content_id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="short_title" property="short_title" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="origin_url" property="origin_url" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="release_date" property="release_date" jdbcType="TIMESTAMP" />
+    <result column="media_path" property="media_path" jdbcType="VARCHAR" />
+    <result column="media_type" property="media_type" jdbcType="VARCHAR" />
+    <result column="title_color" property="title_color" jdbcType="VARCHAR" />
+    <result column="is_bold" property="is_bold" jdbcType="BIT" />
+    <result column="title_img" property="title_img" jdbcType="VARCHAR" />
+    <result column="content_img" property="content_img" jdbcType="VARCHAR" />
+    <result column="type_img" property="type_img" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="tpl_content" property="tpl_content" jdbcType="VARCHAR" />
+    <result column="need_regenerate" property="need_regenerate" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    content_id, title, short_title, author, origin, origin_url, description, release_date, 
+    media_path, media_type, title_color, is_bold, title_img, content_img, type_img, link, 
+    tpl_content, need_regenerate
+  </sql>  
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.channel.FrContentExt" >
+    delete from fr_content_ext
+    where content_id = #{content_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.channel.FrContentExt" >
+    insert into fr_content_ext (content_id, title, short_title, 
+      author, origin, origin_url, 
+      description, release_date, media_path, 
+      media_type, title_color, is_bold, 
+      title_img, content_img, type_img, 
+      link, tpl_content, need_regenerate
+      )
+    values (#{content_id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{short_title,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, #{origin_url,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{release_date,jdbcType=TIMESTAMP}, #{media_path,jdbcType=VARCHAR}, 
+      #{media_type,jdbcType=VARCHAR}, #{title_color,jdbcType=VARCHAR}, #{is_bold,jdbcType=BIT}, 
+      #{title_img,jdbcType=VARCHAR}, #{content_img,jdbcType=VARCHAR}, #{type_img,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{tpl_content,jdbcType=VARCHAR}, #{need_regenerate,jdbcType=BIT}
+      )
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.channel.FrContentExt" >
+    update fr_content_ext
+    set title = #{title,jdbcType=VARCHAR},
+      short_title = #{short_title,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      origin_url = #{origin_url,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      release_date = #{release_date,jdbcType=TIMESTAMP},
+      media_path = #{media_path,jdbcType=VARCHAR},
+      media_type = #{media_type,jdbcType=VARCHAR},
+      title_color = #{title_color,jdbcType=VARCHAR},
+      is_bold = #{is_bold,jdbcType=BIT},
+      title_img = #{title_img,jdbcType=VARCHAR},
+      content_img = #{content_img,jdbcType=VARCHAR},
+      type_img = #{type_img,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      tpl_content = #{tpl_content,jdbcType=VARCHAR},
+      need_regenerate = #{need_regenerate,jdbcType=BIT}
+    where content_id = #{content_id,jdbcType=INTEGER}    
+  </update>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.channel.FrContentExt" >
+    select
+    <include refid="Base_Column_List" />
+    from fr_content_ext
+     where 1 = 1 
+    <if test="content_id != null" >
+       and content_id = #{content_id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+       and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="short_title != null" >
+       and short_title = #{short_title,jdbcType=VARCHAR}
+    </if>
+    <if test="author != null" >
+       and author = #{author,jdbcType=VARCHAR}
+    </if>
+    <if test="origin != null" >
+       and origin = #{origin,jdbcType=VARCHAR}
+    </if>
+    <if test="origin_url != null" >
+       and origin_url = #{origin_url,jdbcType=VARCHAR}
+    </if>
+    <if test="description != null" >
+       and description = #{description,jdbcType=VARCHAR}
+    </if>
+    <if test="release_date != null" >
+       and release_date = #{release_date,jdbcType=TIMESTAMP}
+    </if>
+    <if test="media_path != null" >
+       and media_path = #{media_path,jdbcType=VARCHAR}
+    </if>
+    <if test="media_type != null" >
+       and media_type = #{media_type,jdbcType=VARCHAR}
+    </if>
+    <if test="title_color != null" >
+       and title_color = #{title_color,jdbcType=VARCHAR}
+    </if>
+    <if test="is_bold != null" >
+       and is_bold = #{is_bold,jdbcType=BIT}
+    </if>
+    <if test="title_img != null" >
+       and title_img = #{title_img,jdbcType=VARCHAR}
+    </if>
+    <if test="content_img != null" >
+       and content_img = #{content_img,jdbcType=VARCHAR}
+    </if>
+    <if test="type_img != null" >
+       and type_img = #{type_img,jdbcType=VARCHAR}
+    </if>
+    <if test="link != null" >
+       and link = #{link,jdbcType=VARCHAR}
+    </if>
+    <if test="tpl_content != null" >
+       and tpl_content = #{tpl_content,jdbcType=VARCHAR}
+    </if>
+    <if test="need_regenerate != null" >
+       and need_regenerate = #{need_regenerate,jdbcType=BIT}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,41 @@
+/*公共基础样式*/
+body {font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif; color: #222; font-size: 13px;height:100%;}
+a {color:#222;}
+a.noline:hover {text-decoration: none;}
+.nopadding {padding-left:0px !important; padding-right: 0px !important;}
+.nopadding-left {padding-left:0px !important;}
+.nopadding-right {padding-right:0px !important;}
+
+/*文字颜色*/
+.text-color-default {color: #222;}
+.text-color-gray {color: #aaa;}
+.text-color-gray2 {color: #bbb;}
+.text-color-white {color: #f3f3f3;}
+
+/*列表样式*/
+ul.arrow {list-style-image: url("/image/list-style/li-image-arrow.png"); padding-left:15px;}
+ul.underline li {border-bottom: 1px dashed #ababab; line-height: 28px;}
+ul.height-limit li {height:29px; overflow: hidden;}/*限制行高，第二行隐藏。*/
+ul.height-limit.arrow {list-style-position: inside; padding-left: 2px;}/*既要限制行高，又要保留行首箭头.*/
+ul li {line-height: 29px;}
+ul li span {float: right; text-align:right;}
+
+/*带有标题的模块样式*/
+.news-modal-1 {margin-bottom:30px;}
+.news-modal-1 .news-modal-title-out {padding:0px 1px; background-image: url("/image/news-modal/news-modal-title-border.png"); background-repeat: repeat-x;}/*title外层div主要是为了显示边框*/
+.news-modal-1 .news-modal-title { padding:0px 15px; background-image: url("/image/news-modal/news-modal-title-bg.png"); background-repeat: repeat-x;}
+.news-modal-1 .news-modal-title .news-title-shadow-left {float:left; padding-left:5px; background:url("/image/news-modal/title-shadow-left.png") no-repeat;}
+.news-modal-1 .news-modal-title .news-title-shadow-right {float:left; padding-right:5px; background:url("/image/news-modal/title-shadow-right.png") no-repeat; background-position: top right;}
+.news-modal-1 .news-modal-title .title {float:left; font-size:15px; line-height: 33px; padding:0px 10px; font-weight:bold; color:#f3f3f3; background-image: url("/image/news-modal/news-modal-title-text-bg.png"); background-repeat: repeat-x;}
+.news-modal-1 .news-modal-content {border : 1px solid #e1e1e1; border-top:none; padding:10px 10px 20px 10px;}
+.news-modal-1 .news-modal-content ul {margin:0px;}
+.news-modal-1 .news-modal-content li {line-height: 30px; height: 30px; overflow: hidden;}
+
+/*阴影效果*/
+.box-shadow-1{-webkit-box-shadow:0 0 10px rgba(0, 100, 100, .5); -moz-box-shadow:0 0 10px rgba(0, 100, 100, .5); box-shadow:0 5px 15px rgba(26, 117, 206, .5);}
+
+/*增加popover组件偏移量.*/
+.popover.left {margin-left:-20px;}
+.popover-content {color:#000000;}
+.panel-body {padding:0px}
+legend{font-size:16px;margin-bottom:3px}

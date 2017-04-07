@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.TbConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.sys.TbConfig" >
+    <result column="cf_id" property="cf_id" jdbcType="VARCHAR" />
+    <result column="cf_desc" property="cf_desc" jdbcType="VARCHAR" />
+    <result column="cf_value" property="cf_value" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cf_id, cf_desc, cf_value, create_time
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.sys.TbConfigCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.flyrui.dao.pojo.sys.TbConfigCriteria" >
+    delete from tb_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbConfig" >
+    insert into tb_config (cf_id, cf_desc, cf_value, 
+      create_time)
+    values (#{cf_id,jdbcType=VARCHAR}, #{cf_desc,jdbcType=VARCHAR}, #{cf_value,jdbcType=VARCHAR}, 
+      #{create_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flyrui.dao.pojo.sys.TbConfig" >
+    insert into tb_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cf_id != null" >
+        cf_id,
+      </if>
+      <if test="cf_desc != null" >
+        cf_desc,
+      </if>
+      <if test="cf_value != null" >
+        cf_value,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cf_id != null" >
+        #{cf_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cf_desc != null" >
+        #{cf_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="cf_value != null" >
+        #{cf_value,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.flyrui.dao.pojo.sys.TbConfigCriteria" resultType="java.lang.Integer" >
+    select count(*) from tb_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_config
+    <set >
+      <if test="record.cf_id != null" >
+        cf_id = #{record.cf_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cf_desc != null" >
+        cf_desc = #{record.cf_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cf_value != null" >
+        cf_value = #{record.cf_value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.create_time != null" >
+        create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_config
+    set cf_id = #{record.cf_id,jdbcType=VARCHAR},
+      cf_desc = #{record.cf_desc,jdbcType=VARCHAR},
+      cf_value = #{record.cf_value,jdbcType=VARCHAR},
+      create_time = #{record.create_time,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.common.dao.mapper.InfoServFileMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.common.pojo.InfoServFile" >
+    	<result column="id" property="id" jdbcType="VARCHAR" />
+    	<result column="rela_id" property="rela_id" jdbcType="VARCHAR" />
+    	<result column="rela_type" property="rela_type" jdbcType="VARCHAR" />
+    	<result column="file_id" property="file_id" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="file_name" property="file_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	rela_id,
+    	rela_type,
+    	file_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_id != null  and rela_id != '' " >
+        		and rela_id = #{rela_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_type != null  and rela_type != '' " >
+        		and rela_type = #{rela_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.common.pojo.InfoServFile" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.common.pojo.InfoServFile" >
+    delete from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.common.pojo.InfoServFile" >
+    insert into info_serv_file ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.common.pojo.InfoServFile">
+    update info_serv_file
+    set
+   		<if test="id != null  and id != '' " >
+      		id = #{id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_id != null  and rela_id != '' " >
+      		rela_id = #{rela_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_type != null  and rela_type != '' " >
+      		rela_type = #{rela_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_id != null  and file_id != '' " >
+      		file_id = #{file_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+  
+  <select id="queryServFileByRelaId" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.common.pojo.InfoServFile" >
+    select    
+      a.id ,a.file_id,a.rela_id,a.rela_type,a.state,a.create_date,b.file_name
+    from info_serv_file a join info_file b on a.file_id = b.file_id
+	  where a.rela_id = #{rela_id,jdbcType=VARCHAR} 
+	  		<if test="rela_type != null  and rela_type != '' " >
+      			and a.rela_type = #{rela_type,jdbcType=VARCHAR},
+   			</if>
+  </select>
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.FrContentTxtMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.channel.FrContentTxt" >
+    <id column="content_id" property="content_id" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.flyrui.dao.pojo.channel.FrContentTxt" extends="BaseResultMap" >
+    <result column="txt" property="txt" jdbcType="LONGVARCHAR" />
+    <result column="txt1" property="txt1" jdbcType="LONGVARCHAR" />
+    <result column="txt2" property="txt2" jdbcType="LONGVARCHAR" />
+    <result column="txt3" property="txt3" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    content_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    txt, txt1, txt2, txt3
+  </sql>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.channel.FrContentTxt" >
+    delete from fr_content_txt
+    where content_id = #{content_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.channel.FrContentTxt" >
+    insert into fr_content_txt (content_id, txt, txt1, 
+      txt2, txt3)
+    values (#{content_id,jdbcType=INTEGER}, #{txt,jdbcType=LONGVARCHAR}, #{txt1,jdbcType=LONGVARCHAR}, 
+      #{txt2,jdbcType=LONGVARCHAR}, #{txt3,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.channel.FrContentTxt" >
+    update fr_content_txt
+    set txt = #{txt,jdbcType=LONGVARCHAR},
+      txt1 = #{txt1,jdbcType=LONGVARCHAR},
+      txt2 = #{txt2,jdbcType=LONGVARCHAR},
+      txt3 = #{txt3,jdbcType=LONGVARCHAR}
+    where content_id = #{content_id,jdbcType=INTEGER}
+  </update>
+  <select id="select" resultMap="ResultMapWithBLOBs" parameterType="com.flyrui.dao.pojo.channel.FrContentTxt" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fr_content_txt
+     where 1 = 1 
+    <if test="content_id != null" >
+       and content_id = #{content_id,jdbcType=INTEGER}
+    </if>
+    <if test="txt != null" >
+       and txt = #{txt,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="txt1 != null" >
+       and txt1 = #{txt1,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="txt2 != null" >
+       and txt2 = #{txt2,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="txt3 != null" >
+       and txt3 = #{txt3,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+</mapper>

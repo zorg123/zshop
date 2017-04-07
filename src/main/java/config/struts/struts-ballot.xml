@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="ballot" extends="frcms_default" namespace="/Ballot">    	
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+        <action name="*!*" class="com.flyrui.ballot.action.{1}Action" method="{2}">
+        	<result name="showBallotDetail">
+                /ballot/showBallotDetail.jsp
+            </result>
+            <result name="showBallotResult">
+            	/ballot/showBallotResult.jsp
+            </result>
+            <result name="insertBallotDetail" type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="success" type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="error" type="json">
+            	<param name="root">result</param>
+            </result>
+        </action>      
+    </package>
+</struts>

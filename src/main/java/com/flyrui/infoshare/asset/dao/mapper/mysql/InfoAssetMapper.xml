@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.asset.dao.mapper.InfoAssetMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+    	<result column="asset_id" property="asset_id" jdbcType="VARCHAR" />
+    	<result column="seq" property="seq" jdbcType="INTEGER" />
+    	<result column="asset_code" property="asset_code" jdbcType="VARCHAR" />
+    	<result column="asset_class" property="asset_class" jdbcType="VARCHAR" />
+    	<result column="asset_name" property="asset_name" jdbcType="VARCHAR" />
+    	<result column="make_date" property="make_date" jdbcType="TIMESTAMP" />
+    	<result column="get_date" property="get_date" jdbcType="TIMESTAMP" />
+    	<result column="asset_type" property="asset_type" jdbcType="VARCHAR" />
+    	<result column="asset_amount" property="asset_amount" jdbcType="INTEGER" />
+    	<result column="asset_area" property="asset_area" jdbcType="INTEGER" />
+    	<result column="asset_cost" property="asset_cost" jdbcType="INTEGER" />
+    	<result column="use_department" property="use_department" jdbcType="VARCHAR" />
+    	<result column="get_method" property="get_method" jdbcType="VARCHAR" />
+    	<result column="use_staff" property="use_staff" jdbcType="VARCHAR" />
+    	<result column="place" property="place" jdbcType="VARCHAR" />
+    	<result column="use_direction" property="use_direction" jdbcType="VARCHAR" />
+    	<result column="use_state" property="use_state" jdbcType="VARCHAR" />
+    	<result column="bus_use" property="bus_use" jdbcType="VARCHAR" />
+    	<result column="comments" property="comments" jdbcType="VARCHAR" />
+    	<result column="factory" property="factory" jdbcType="VARCHAR" />
+    	<result column="manage_mode" property="manage_mode" jdbcType="VARCHAR" />
+    	<result column="share_method" property="share_method" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
+    	<result column="oper_staff" property="oper_staff" jdbcType="VARCHAR" />
+    	<result column="asset_class_name" property="asset_class_name" jdbcType="VARCHAR" />
+    	<result column="use_department_name" property="use_department_name" jdbcType="VARCHAR" />
+    	<result column="get_method_name" property="get_method_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	asset_id,
+    	seq,
+    	asset_code,
+    	asset_class,
+    	asset_name,
+    	make_date,
+    	get_date,
+    	asset_type,
+    	asset_amount,
+    	asset_area,
+    	asset_cost,
+    	use_department,
+    	get_method,
+    	use_staff,
+    	place,
+    	use_direction,
+    	use_state,
+    	bus_use,
+    	comments,
+    	factory,
+    	manage_mode,
+    	share_method,
+    	create_date,
+    	state_date,
+    	oper_staff
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="asset_id != null and asset_id != ''" >
+        		and asset_id = #{asset_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="seq != null and seq != ''" >
+        		and seq = #{seq,jdbcType=INTEGER}
+     		</if>
+	    	<if test="asset_code != null and asset_code != ''" >
+        		and asset_code = #{asset_code,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="asset_class != null and asset_class != ''" >
+        		and asset_class = #{asset_class,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="asset_name != null and asset_name != ''" >
+        		and asset_name like #{asset_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="make_date != null " >
+        		and make_date = #{make_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="get_date != null " >
+        		and get_date = #{get_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="asset_type != null and asset_type != ''" >
+        		and asset_type = #{asset_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="asset_amount != null and asset_amount != ''" >
+        		and asset_amount = #{asset_amount,jdbcType=INTEGER}
+     		</if>
+	    	<if test="asset_area != null and asset_area != ''" >
+        		and asset_area = #{asset_area,jdbcType=INTEGER}
+     		</if>
+	    	<if test="asset_cost != null and asset_cost != ''" >
+        		and asset_cost = #{asset_cost,jdbcType=INTEGER}
+     		</if>
+	    	<if test="use_department != null and use_department != ''" >
+        		and use_department = #{use_department,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="get_method != null and get_method != ''" >
+        		and get_method = #{get_method,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="use_staff != null and use_staff != ''" >
+        		and use_staff = #{use_staff,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="place != null and place != ''" >
+        		and place = #{place,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="use_direction != null and use_direction != ''" >
+        		and use_direction = #{use_direction,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="use_state != null and use_state != ''" >
+        		and use_state = #{use_state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="bus_use != null and bus_use != ''" >
+        		and bus_use = #{bus_use,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="comments != null and comments != ''" >
+        		and comments = #{comments,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="factory != null and factory != ''" >
+        		and factory = #{factory,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="manage_mode != null and manage_mode != ''" >
+        		and manage_mode = #{manage_mode,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="share_method != null and share_method != ''" >
+        		and share_method = #{share_method,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="state_date != null " >
+        		and state_date = #{state_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="oper_staff != null and oper_staff != ''" >
+        		and oper_staff = #{oper_staff,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+    select    
+     	a.asset_id,
+    	a.seq,
+    	a.asset_code,
+    	a.asset_class,
+    	a.asset_name,
+    	a.make_date,
+    	a.get_date,
+    	a.asset_type,
+    	a.asset_amount,
+    	a.asset_area,
+    	a.asset_cost,
+    	a.use_department,
+    	a.get_method,
+    	a.use_staff,
+    	a.place,
+    	a.use_direction,
+    	a.use_state,
+    	a.bus_use,
+    	a.comments,
+    	a.factory,
+    	a.manage_mode,
+    	a.share_method,
+    	a.create_date,
+    	a.state_date,
+    	a.oper_staff,
+    	b.dict_value as asset_class_name,
+    	c.dict_value as get_method_name,
+    	d.name as use_department_name
+    from info_asset a left join info_dict b on b.dict_type ='assetClass' and b.dict_code = a.asset_class
+    left join info_dict c on c.dict_type ='assetGetMethod' and c.dict_code = a.asset_class
+    left join core_department d on d.id = a.use_department 
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+    delete from info_asset
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+    insert into info_asset ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{asset_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{seq,jdbcType=INTEGER},     		
+	    	    	
+        	  #{asset_code,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{asset_class,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{asset_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{make_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{get_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{asset_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{asset_amount,jdbcType=INTEGER},     		
+	    	    	
+        	  #{asset_area,jdbcType=INTEGER},     		
+	    	    	
+        	  #{asset_cost,jdbcType=INTEGER},     		
+	    	    	
+        	  #{use_department,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{get_method,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{use_staff,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{place,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{use_direction,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{use_state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{bus_use,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{comments,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{factory,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{manage_mode,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{share_method,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{state_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{oper_staff,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset">
+    update info_asset
+    set
+   		
+   		<if test="seq != null and seq != ''" >
+      		seq = #{seq,jdbcType=INTEGER},
+   		</if>
+   		<if test="asset_code != null and asset_code != ''" >
+      		asset_code = #{asset_code,jdbcType=VARCHAR},
+   		</if>
+   		<if test="asset_class != null and asset_class != ''" >
+      		asset_class = #{asset_class,jdbcType=VARCHAR},
+   		</if>
+   		<if test="asset_name != null and asset_name != ''" >
+      		asset_name = #{asset_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="make_date != null " >
+      		make_date = #{make_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="get_date != null" >
+      		get_date = #{get_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="asset_type != null and asset_type != ''" >
+      		asset_type = #{asset_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="asset_amount != null and asset_amount != ''" >
+      		asset_amount = #{asset_amount,jdbcType=INTEGER},
+   		</if>
+   		<if test="asset_area != null and asset_area != ''" >
+      		asset_area = #{asset_area,jdbcType=INTEGER},
+   		</if>
+   		<if test="asset_cost != null and asset_cost != ''" >
+      		asset_cost = #{asset_cost,jdbcType=INTEGER},
+   		</if>
+   		<if test="use_department != null and use_department != ''" >
+      		use_department = #{use_department,jdbcType=VARCHAR},
+   		</if>
+   		<if test="get_method != null and get_method != ''" >
+      		get_method = #{get_method,jdbcType=VARCHAR},
+   		</if>
+   		<if test="use_staff != null and use_staff != ''" >
+      		use_staff = #{use_staff,jdbcType=VARCHAR},
+   		</if>
+   		<if test="place != null and place != ''" >
+      		place = #{place,jdbcType=VARCHAR},
+   		</if>
+   		<if test="use_direction != null and use_direction != ''" >
+      		use_direction = #{use_direction,jdbcType=VARCHAR},
+   		</if>
+   		<if test="use_state != null and use_state != ''" >
+      		use_state = #{use_state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="bus_use != null and bus_use != ''" >
+      		bus_use = #{bus_use,jdbcType=VARCHAR},
+   		</if>
+   		<if test="comments != null and comments != ''" >
+      		comments = #{comments,jdbcType=VARCHAR},
+   		</if>
+   		<if test="factory != null and factory != ''" >
+      		factory = #{factory,jdbcType=VARCHAR},
+   		</if>
+   		<if test="manage_mode != null and manage_mode != ''" >
+      		manage_mode = #{manage_mode,jdbcType=VARCHAR},
+   		</if>
+   		<if test="share_method != null and share_method != ''" >
+      		share_method = #{share_method,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="state_date != null " >
+      		state_date = #{state_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="oper_staff != null and oper_staff != ''" >
+      		oper_staff = #{oper_staff,jdbcType=VARCHAR},
+   		</if>
+   		<if test="asset_id != null and asset_id != ''" >
+      		asset_id = #{asset_id,jdbcType=VARCHAR}
+   		</if>
+     where asset_id = #{asset_id,jdbcType=VARCHAR} and use_state='1'
+    
+  </update>
+  
+  <select id="queryMaxSeq" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+    select  max(seq) as seq  from info_asset where asset_id = #{asset_id,jdbcType=VARCHAR}
+  </select>
+   <insert id="bakOldRecord" parameterType="com.flyrui.infoshare.asset.pojo.InfoAsset" >
+     insert into info_asset ( <include refid="Base_Column_List" />)
+     select asset_id,#{seq,jdbcType=INTEGER},asset_code,asset_class,asset_name,make_date,get_date,asset_type,asset_amount,asset_area,asset_cost,use_department,get_method,use_staff,place,use_direction,'0',bus_use,comments,factory,manage_mode,share_method,create_date,now(),oper_staff from info_asset where asset_id = #{asset_id,jdbcType=VARCHAR} and use_state = #{use_state,jdbcType=VARCHAR} 
+  </insert>
+</mapper>

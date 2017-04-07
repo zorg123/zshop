@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="salary" extends="frcms_default" namespace="/Salary">    	
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+        <action name="*!*" class="com.flyrui.salary.action.{1}Action" method="{2}">
+        	 <result type="json">
+        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+                <param name="root">result</param>
+            </result>
+        </action>      
+    </package>
+    <package name="bus" extends="frcms_default" namespace="/Bus">    	
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+        <action name="*!*" class="com.flyrui.bus.action.{1}Action" method="{2}">
+        	<result name="busMain"> 
+        	 	/bus/busMan.jsp
+            </result>
+        	 <result type="json">
+        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+                <param name="root">result</param>
+            </result>
+        </action>      
+    </package>
+    <package name="salaryBase" extends="frcms_default" namespace="/SalaryBase">    	
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+        <action name="*!*" class="com.flyrui.salary.action.{1}Action" method="{2}">
+        	<result name="print">
+            	/salary/printSalary.jsp
+            </result>
+        	 <result type="json">
+        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+                <param name="root">result</param>
+            </result>
+        </action>     
+    </package>
+</struts>

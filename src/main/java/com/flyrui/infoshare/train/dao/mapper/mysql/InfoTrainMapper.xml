@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.train.dao.mapper.InfoTrainMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.train.pojo.InfoTrain" >
+    	<result column="train_id" property="train_id" jdbcType="VARCHAR" />
+    	<result column="seq" property="seq" jdbcType="INTEGER" />
+    	<result column="train_name" property="train_name" jdbcType="VARCHAR" />
+    	<result column="train_title" property="train_title" jdbcType="VARCHAR" />
+    	<result column="train_type" property="train_type" jdbcType="VARCHAR" />
+    	<result column="train_content" property="train_content" jdbcType="VARCHAR" />
+    	<result column="train_start" property="train_start" jdbcType="TIMESTAMP" />
+    	<result column="train_end" property="train_end" jdbcType="TIMESTAMP" />
+    	<result column="train_peoples" property="train_peoples" jdbcType="VARCHAR" />
+    	<result column="department" property="department" jdbcType="VARCHAR" />
+    	<result column="people_amount" property="people_amount" jdbcType="INTEGER" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="oper_staff" property="oper_staff" jdbcType="VARCHAR" />
+    	<result column="audit_staff" property="audit_staff" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	train_id,
+    	seq,
+    	train_name,
+    	train_title,
+    	train_type,
+    	train_content,
+    	train_start,
+    	train_end,
+    	train_peoples,
+    	department,
+    	people_amount,
+    	state,
+    	create_date,
+    	oper_staff,
+    	audit_staff
+  </sql>
+  <sql id="Base_Column_List2" >
+    	a.train_id,
+    	a.seq,
+    	a.train_name,
+    	a.train_title,
+    	a.train_type,
+    	a.train_content,
+    	a.train_start,
+    	a.train_end,
+    	a.train_peoples,
+    	a.department,
+    	a.people_amount,
+    	a.state,
+    	a.create_date,
+    	a.oper_staff,
+    	a.audit_staff,
+    	b.dict_value as train_type_name,
+    	c.name as department_name,
+    	d.name as audit_staff_name    	
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="train_id != null  and train_id != '' " >
+        		and train_id = #{train_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="(seq != null  and seq != '') || seq ==0 " >
+        		and seq = #{seq,jdbcType=INTEGER}
+     		</if>
+	    	<if test="train_name != null  and train_name != '' " >
+        		and train_name = #{train_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="train_title != null  and train_title != '' " >
+        		and train_title like #{train_title,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="train_type != null  and train_type != '' " >
+        		and train_type = #{train_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="train_content != null  and train_content != '' " >
+        		and train_content = #{train_content,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="train_start != null " >
+        		and train_start = #{train_start,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="train_end != null " >
+        		and train_end = #{train_end,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="train_peoples != null  and train_peoples != '' " >
+        		and train_peoples = #{train_peoples,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="department != null  and department != '' " >
+        		and department = #{department,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="people_amount != null  and people_amount != '' " >
+        		and people_amount = #{people_amount,jdbcType=INTEGER}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+     		<if test="train_date_start != null and train_date_start != '' " >
+        		and create_date &gt;= str_to_date(#{train_date_start,jdbcType=VARCHAR},'%Y-%m-%d')
+     		</if>
+     		<if test="train_date_end != null and train_date_end != '' " >
+        		and create_date &lt;= str_to_date(#{train_date_end,jdbcType=VARCHAR},'%Y-%m-%d')
+     		</if>
+	    	<if test="oper_staff != null  and oper_staff != '' " >
+        		and oper_staff = #{oper_staff,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="audit_staff != null  and audit_staff != '' " >
+        		and audit_staff = #{audit_staff,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain" >
+    select    
+    <include refid="Base_Column_List2" />
+    from info_train a left join info_dict b on b.dict_code = a.train_type and b.dict_type = 'TrainType'
+    left join core_department c on c.id = a.department 
+    left join core_user d on a.audit_staff = d.id
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain" >
+    delete from info_train
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain" >
+    insert into info_train ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{train_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{seq,jdbcType=INTEGER},     		
+	    	    	
+        	  #{train_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{train_title,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{train_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{train_content,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{train_start,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{train_end,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{train_peoples,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{department,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{people_amount,jdbcType=INTEGER},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{oper_staff,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{audit_staff,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain">
+    update info_train
+    set
+   		
+   		<if test="seq != null  and seq != '' " >
+      		seq = #{seq,jdbcType=INTEGER},
+   		</if>
+   		<if test="train_name != null  and train_name != '' " >
+      		train_name = #{train_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="train_title != null  and train_title != '' " >
+      		train_title = #{train_title,jdbcType=VARCHAR},
+   		</if>
+   		<if test="train_type != null  and train_type != '' " >
+      		train_type = #{train_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="train_content != null  and train_content != '' " >
+      		train_content = #{train_content,jdbcType=VARCHAR},
+   		</if>
+   		<if test="train_start != null " >
+      		train_start = #{train_start,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="train_end != null " >
+      		train_end = #{train_end,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="train_peoples != null  and train_peoples != '' " >
+      		train_peoples = #{train_peoples,jdbcType=VARCHAR},
+   		</if>
+   		<if test="department != null  and department != '' " >
+      		department = #{department,jdbcType=VARCHAR},
+   		</if>
+   		<if test="people_amount != null  and people_amount != '' " >
+      		people_amount = #{people_amount,jdbcType=INTEGER},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="oper_staff != null  and oper_staff != '' " >
+      		oper_staff = #{oper_staff,jdbcType=VARCHAR},
+   		</if>
+   		<if test="audit_staff != null  and audit_staff != '' " >
+      		audit_staff = #{audit_staff,jdbcType=VARCHAR},
+   		</if>
+   		<if test="train_id != null  and train_id != '' " >
+      		train_id = #{train_id,jdbcType=VARCHAR}
+   		</if>
+   where train_id = #{train_id,jdbcType=VARCHAR} and seq= 0;
+    
+  </update>
+  
+  <select id="queryMaxSeq" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain" >
+    select  max(seq) as seq  from info_train where train_id = #{train_id,jdbcType=VARCHAR}
+  </select>
+   <insert id="bakOldRecord" parameterType="com.flyrui.infoshare.train.pojo.InfoTrain" >
+     insert into info_train ( <include refid="Base_Column_List" />)
+     select train_id,#{seq,jdbcType=VARCHAR},train_name,train_title,train_type,train_content,train_start,train_end,train_peoples,department,people_amount,'0',now(),oper_staff,audit_staff from info_train where train_id = #{train_id,jdbcType=VARCHAR} and seq = 0 
+  </insert>
+</mapper>

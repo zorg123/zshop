@@ -1,0 +1,17 @@
+.nav{ background:url(/ress/images/admin/top/navbg.gif) left bottom no-repeat; height:62px; position:relative; z-index:100}
+.nav_content{ z-index:8; width:685px; height:38px;  background:url(/ress/images/admin/top/nav_txtbg.gif) left top no-repeat; overflow:hidden; zoom:1;}
+.nav_content ul{ font-size:14px; font-weight:bold; zoom:1; overflow:hidden;margin-top:5px;padding-left:10px;}
+.nav_content ul li{ float:left;padding-left:21px; cursor:pointer;list-style:none}
+.nav_content ul li span{ background:url(/ress/images/admin/top/nav_xian.gif) right 7px no-repeat; padding-right:21px; height:38px; float:left; position:relative;padding-top:5px;}
+.nav_content ul li span.nav_contentspan{ background:none; padding-right:21px; height:38px; float:left;}
+
+/* .nav_content ul li span a{ display:block; color:#598200; line-height:37px;} */
+.nav_sale{ position:absolute; right:0px; top:0px; background:url(/ress/images/admin/top/sale.gif) left top no-repeat; width:22px; height:11px;}
+.nav_content ul li span a:hover{color:#fff;}
+.nav_content ul li.nav_contenton{ float:left; background:url(/ress/images/admin/top/nav_hbg.gif) left top no-repeat; padding-left:21px;}
+.nav_content ul li.nav_contenton span{ background:url(/ress/images/admin/top/nav_hbgR.gif) right top no-repeat; padding-right:21px; height:38px; float:left;color:#FFFFFF;}
+
+/*
+.nav_content ul li.nav_contenton span a{ display:block; color:#fff; line-height:37px;}
+.nav_content ul li.nav_contenton span a:hover{color:#fff;}
+*/

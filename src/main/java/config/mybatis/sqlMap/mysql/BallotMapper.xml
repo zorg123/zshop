@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.ballot" >
+  <sql id="ballot_columns" >
+    ballot_id,title,content,state,eff_date,exp_date,is_all_area,order_id,create_staff_no,create_date,modify_staff_no,modify_time,finish_hints,has_prize
+  </sql>
+  <sql id="ballot_question_columns" >
+    question_id,user_no,question_content,state,answer_type,eff_date,exp_date,ballot_id,order_id,is_must,is_see,answer_count
+  </sql>
+  <sql id="ballot_answer_columns" >
+    answer_id,answer_content,question_id,order_id,can_input
+  </sql>
+  <sql id="ballot_answer_detail_columns" >
+    question_id,answer_id,ip,create_time,ballot_id,answer_content,login_type,user_no,user_name,user_num,area_code
+  </sql>
+  <select id="queryBallotById" resultType="hashmap" parameterType="string" >
+     select  <include refid="ballot_columns" /> from twb_ballot a where a.ballot_id = #{ballot_id,jdbcType=VARCHAR} order by a.order_id
+  </select>
+  <select id="queryBallotQuestionByBallotId" resultType="hashmap" parameterType="string" >
+     select <include refid="ballot_question_columns" /> from twb_ballot_question a where a.ballot_id =#{ballot_id,jdbcType=VARCHAR} and a.state='1' order by a.order_id
+  </select> 
+  <select id="queryBallotAnswerByQuestionId" resultType="hashmap" parameterType="string" >
+     select <include refid="ballot_answer_columns" /> from twb_ballot_answer a where a.question_id =#{question_id,jdbcType=VARCHAR}  order by a.order_id
+  </select> 
+  <insert id="insertBallotDetail" parameterType="hashmap">
+  	 insert into twb_ballot_detail(<include refid="ballot_answer_detail_columns" />)values(#{question_id},#{answer_id},#{ip},now(),#{ballot_id},#{answer_content},#{login_type},#{user_no},#{user_name},#{user_num},#{area_code})
+  </insert>
+  <select id="queryBallotDetailByBalloatIdAndIp" resultType="hashmap" parameterType="hashmap" >
+     select <include refid="ballot_answer_detail_columns" /> from twb_ballot_detail a where a.ballot_id =#{ballot_id,jdbcType=VARCHAR}  and a.ip = #{ip}
+  </select>
+  <select id="queryBallotStatByBallotId" resultType="hashmap" parameterType="hashmap">
+  	SELECT 	a.question_id,a.answer_id,
+	b.answer_total,a.cur_answer_total,
+	round(cur_answer_total/IFNULL(b.answer_total,1)*100,2) answer_rate
+	FROM (SELECT a.question_id,a.answer_id,SUM(1) cur_answer_total
+		FROM twb_ballot_detail a
+		WHERE  a.ballot_id = #{ballot_id,jdbcType=VARCHAR}
+		GROUP BY a.question_id,a.answer_id) a, (SELECT a.question_id,SUM(1) answer_total
+		FROM twb_ballot_detail a
+		WHERE a.ballot_id = #{ballot_id,jdbcType=VARCHAR}
+		GROUP BY a.question_id) b
+	WHERE a.question_id = b.question_id;
+  </select>
+  <select id="queryBallotQuestionAnswer" resultType="hashmap" parameterType="hashmap">
+  	SELECT a.question_id,a.question_content,c.answer_content,c.create_time
+	FROM twb_ballot_question  a JOIN twb_ballot b ON a.ballot_id = b.ballot_id JOIN  twb_ballot_detail  c ON c.question_id = a.question_id
+	where a.question_id = #{question_id,jdbcType=VARCHAR} and b.ballot_id = #{ballot_id,jdbcType=VARCHAR}
+  </select>
+</mapper>

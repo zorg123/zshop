@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tb_organation" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.sys.TbOrganation" >
+    <result column="org_id" property="org_id" jdbcType="INTEGER" />
+    <result column="org_code" property="org_code" jdbcType="VARCHAR" />
+    <result column="org_name" property="org_name" jdbcType="VARCHAR" />
+    <result column="up_org_id" property="up_org_id" jdbcType="INTEGER" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbOrganation" useGeneratedKeys="true" keyProperty="org_id">
+    insert into tb_organation (org_code, org_name, 
+      up_org_id, create_date, state)
+    values (#{org_code,jdbcType=VARCHAR}, #{org_name,jdbcType=VARCHAR}, 
+      #{up_org_id,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}
+    )
+  </insert>  
+  <select id="select" parameterType="com.flyrui.dao.pojo.sys.TbOrganation" resultType="com.flyrui.dao.pojo.sys.TbOrganation">
+  	select b.org_id,b.org_code, b.org_name, 
+      b.up_org_id, b.create_date, b.state,(case when b.up_org_id =-1 then '根目录' else a.org_name end)  up_org_name
+     from  tb_organation b left outer join tb_organation a on b.up_org_id = a.org_id 
+     where 1=1 
+     <if test="org_id != null and org_id !='' ">
+     	and b.org_id = #{org_id,jdbcType=INTEGER}
+     </if>
+     <if test="org_name != null and org_name !='' ">
+     	and b.org_name = #{org_name,jdbcType=VARCHAR}
+     </if> 
+      <if test="up_org_id != null and up_org_id !='' ">
+     	and b.up_org_id = #{up_org_id,jdbcType=INTEGER}
+     </if>    
+  </select>
+  <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbOrganation">
+  	 update tb_organation set org_code = #{org_code,jdbcType=VARCHAR}, 
+  			org_name= #{org_name,jdbcType=VARCHAR},
+  			<if test="up_org_id != null and up_org_id !='' ">
+     			up_org_id= #{up_org_id,jdbcType=INTEGER},
+     		</if>
+  			state= #{state,jdbcType=VARCHAR}
+     where org_id = #{org_id,jdbcType=INTEGER}
+  </update>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.sys.TbRole" >
+    delete from tb_organation 
+    where org_id = #{org_id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.flyrui.dao.pojo.sys.TbOrganation" >
+    insert into tb_organation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="org_id != null" >
+        org_id,
+      </if>
+      <if test="org_code != null" >
+        org_code,
+      </if>
+      <if test="org_name != null" >
+        org_name,
+      </if>
+      <if test="up_org_id != null" >
+        up_org_id,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="org_id != null" >
+        #{org_id,jdbcType=INTEGER},
+      </if>
+      <if test="org_code != null" >
+        #{org_code,jdbcType=VARCHAR},
+      </if>
+      <if test="org_name != null" >
+        #{org_name,jdbcType=VARCHAR},
+      </if>
+      <if test="up_org_id != null" >
+        #{up_org_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

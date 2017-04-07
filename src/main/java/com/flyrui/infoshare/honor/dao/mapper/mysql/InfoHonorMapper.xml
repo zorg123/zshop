@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.infoshare.honor.dao.mapper.InfoHonorMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.infoshare.honor.pojo.InfoHonor" >
+    	<result column="id" property="id" jdbcType="VARCHAR" />
+    	<result column="seq" property="seq" jdbcType="INTEGER" />
+    	<result column="honor_name" property="honor_name" jdbcType="VARCHAR" />
+    	<result column="unit" property="unit" jdbcType="VARCHAR" />
+    	<result column="honor_peoples" property="honor_peoples" jdbcType="VARCHAR" />
+    	<result column="honor_date" property="honor_date" jdbcType="TIMESTAMP" />
+    	<result column="honor_type" property="honor_type" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	seq,
+    	honor_name,
+    	unit,
+    	honor_peoples,
+    	honor_date,
+    	honor_type,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="seq != null  and seq != '' " >
+        		and seq = #{seq,jdbcType=INTEGER}
+     		</if>
+	    	<if test="honor_name != null  and honor_name != '' " >
+        		and honor_name = #{honor_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="unit != null  and unit != '' " >
+        		and unit = #{unit,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="honor_peoples != null  and honor_peoples != '' " >
+        		and honor_peoples = #{honor_peoples,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="honor_date != null " >
+        		and honor_date = #{honor_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="honor_type != null  and honor_type != '' " >
+        		and honor_type = #{honor_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.infoshare.honor.pojo.InfoHonor" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_honor
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.infoshare.honor.pojo.InfoHonor" >
+    delete from info_honor
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.infoshare.honor.pojo.InfoHonor" >
+    insert into info_honor ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{seq,jdbcType=INTEGER},     		
+	    	    	
+        	  #{honor_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{unit,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{honor_peoples,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{honor_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{honor_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.infoshare.honor.pojo.InfoHonor">
+    update info_honor
+    set
+   		<if test="id != null  and id != '' " >
+      		id = #{id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="seq != null  and seq != '' " >
+      		seq = #{seq,jdbcType=INTEGER},
+   		</if>
+   		<if test="honor_name != null  and honor_name != '' " >
+      		honor_name = #{honor_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="unit != null  and unit != '' " >
+      		unit = #{unit,jdbcType=VARCHAR},
+   		</if>
+   		<if test="honor_peoples != null  and honor_peoples != '' " >
+      		honor_peoples = #{honor_peoples,jdbcType=VARCHAR},
+   		</if>
+   		<if test="honor_date != null " >
+      		honor_date = #{honor_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="honor_type != null  and honor_type != '' " >
+      		honor_type = #{honor_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

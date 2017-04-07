@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.FrChannelExtMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.channel.FrChannelExt" >
+    <id column="channel_id" property="channel_id" jdbcType="INTEGER" />
+    <result column="channel_name" property="channel_name" jdbcType="VARCHAR" />
+    <result column="final_step" property="final_step" jdbcType="TINYINT" />
+    <result column="after_check" property="after_check" jdbcType="TINYINT" />
+    <result column="is_static_channel" property="is_static_channel" jdbcType="CHAR" />
+    <result column="is_static_content" property="is_static_content" jdbcType="CHAR" />
+    <result column="is_access_by_dir" property="is_access_by_dir" jdbcType="CHAR" />
+    <result column="is_list_child" property="is_list_child" jdbcType="CHAR" />
+    <result column="page_size" property="page_size" jdbcType="INTEGER" />
+    <result column="channel_rule" property="channel_rule" jdbcType="VARCHAR" />
+    <result column="content_rule" property="content_rule" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="tpl_channel" property="tpl_channel" jdbcType="VARCHAR" />
+    <result column="tpl_content" property="tpl_content" jdbcType="VARCHAR" />
+    <result column="title_img" property="title_img" jdbcType="VARCHAR" />
+    <result column="content_img" property="content_img" jdbcType="VARCHAR" />
+    <result column="has_title_img" property="has_title_img" jdbcType="BIT" />
+    <result column="has_content_img" property="has_content_img" jdbcType="BIT" />
+    <result column="title_img_width" property="title_img_width" jdbcType="INTEGER" />
+    <result column="title_img_height" property="title_img_height" jdbcType="INTEGER" />
+    <result column="content_img_width" property="content_img_width" jdbcType="INTEGER" />
+    <result column="content_img_height" property="content_img_height" jdbcType="INTEGER" />
+    <result column="comment_control" property="comment_control" jdbcType="INTEGER" />
+    <result column="allow_updown" property="allow_updown" jdbcType="BIT" />
+    <result column="is_blank" property="is_blank" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    channel_id, channel_name, final_step, after_check, is_static_channel, is_static_content, 
+    is_access_by_dir, is_list_child, page_size, channel_rule, content_rule, link, tpl_channel, 
+    tpl_content, title_img, content_img, has_title_img, has_content_img, title_img_width, 
+    title_img_height, content_img_width, content_img_height, comment_control, allow_updown, 
+    is_blank, title, keywords, description
+  </sql>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.channel.FrChannelExt" >
+    delete from fr_channel_ext
+    where channel_id = #{channel_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.channel.FrChannelExt" >
+    insert into fr_channel_ext (channel_id, channel_name, final_step, 
+      after_check, is_static_channel, is_static_content, 
+      is_access_by_dir, is_list_child, page_size, 
+      channel_rule, content_rule, link, 
+      tpl_channel, tpl_content, title_img, 
+      content_img, has_title_img, has_content_img, 
+      title_img_width, title_img_height, content_img_width, 
+      content_img_height, comment_control, allow_updown, 
+      is_blank, title, keywords, 
+      description)
+    values (#{channel_id,jdbcType=INTEGER}, #{channel_name,jdbcType=VARCHAR}, #{final_step,jdbcType=TINYINT}, 
+      #{after_check,jdbcType=TINYINT}, #{is_static_channel,jdbcType=CHAR}, #{is_static_content,jdbcType=CHAR}, 
+      #{is_access_by_dir,jdbcType=CHAR}, #{is_list_child,jdbcType=CHAR}, #{page_size,jdbcType=INTEGER}, 
+      #{channel_rule,jdbcType=VARCHAR}, #{content_rule,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
+      #{tpl_channel,jdbcType=VARCHAR}, #{tpl_content,jdbcType=VARCHAR}, #{title_img,jdbcType=VARCHAR}, 
+      #{content_img,jdbcType=VARCHAR}, #{has_title_img,jdbcType=BIT}, #{has_content_img,jdbcType=BIT}, 
+      #{title_img_width,jdbcType=INTEGER}, #{title_img_height,jdbcType=INTEGER}, #{content_img_width,jdbcType=INTEGER}, 
+      #{content_img_height,jdbcType=INTEGER}, #{comment_control,jdbcType=INTEGER}, #{allow_updown,jdbcType=BIT}, 
+      #{is_blank,jdbcType=BIT}, #{title,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.channel.FrChannelExt" >
+    update fr_channel_ext
+    set channel_name = #{channel_name,jdbcType=VARCHAR},
+      final_step = #{final_step,jdbcType=TINYINT},
+      after_check = #{after_check,jdbcType=TINYINT},
+      is_static_channel = #{is_static_channel,jdbcType=CHAR},
+      is_static_content = #{is_static_content,jdbcType=CHAR},
+      is_access_by_dir = #{is_access_by_dir,jdbcType=CHAR},
+      is_list_child = #{is_list_child,jdbcType=CHAR},
+      page_size = #{page_size,jdbcType=INTEGER},
+      channel_rule = #{channel_rule,jdbcType=VARCHAR},
+      content_rule = #{content_rule,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      tpl_channel = #{tpl_channel,jdbcType=VARCHAR},
+      tpl_content = #{tpl_content,jdbcType=VARCHAR},
+      title_img = #{title_img,jdbcType=VARCHAR},
+      content_img = #{content_img,jdbcType=VARCHAR},
+      has_title_img = #{has_title_img,jdbcType=BIT},
+      has_content_img = #{has_content_img,jdbcType=BIT},
+      title_img_width = #{title_img_width,jdbcType=INTEGER},
+      title_img_height = #{title_img_height,jdbcType=INTEGER},
+      content_img_width = #{content_img_width,jdbcType=INTEGER},
+      content_img_height = #{content_img_height,jdbcType=INTEGER},
+      comment_control = #{comment_control,jdbcType=INTEGER},
+      allow_updown = #{allow_updown,jdbcType=BIT},
+      is_blank = #{is_blank,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where channel_id = #{channel_id,jdbcType=INTEGER}    
+  </update>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.channel.FrChannelExt" >
+    select
+    <include refid="Base_Column_List" />
+    from fr_channel_ext
+     where 1 = 1 
+    <if test="channel_id != null" >
+       and channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+    <if test="channel_name != null" >
+       and channel_name = #{channel_name,jdbcType=VARCHAR}
+    </if>
+    <if test="final_step != null" >
+       and final_step = #{final_step,jdbcType=TINYINT}
+    </if>
+    <if test="after_check != null" >
+       and after_check = #{after_check,jdbcType=TINYINT}
+    </if>
+    <if test="is_static_channel != null" >
+       and is_static_channel = #{is_static_channel,jdbcType=CHAR}
+    </if>
+    <if test="is_static_content != null" >
+       and is_static_content = #{is_static_content,jdbcType=CHAR}
+    </if>
+    <if test="is_access_by_dir != null" >
+       and is_access_by_dir = #{is_access_by_dir,jdbcType=CHAR}
+    </if>
+    <if test="is_list_child != null" >
+       and is_list_child = #{is_list_child,jdbcType=CHAR}
+    </if>
+    <if test="page_size != null" >
+       and page_size = #{page_size,jdbcType=INTEGER}
+    </if>
+    <if test="channel_rule != null" >
+       and channel_rule = #{channel_rule,jdbcType=VARCHAR}
+    </if>
+    <if test="content_rule != null" >
+       and content_rule = #{content_rule,jdbcType=VARCHAR}
+    </if>
+    <if test="link != null" >
+       and link = #{link,jdbcType=VARCHAR}
+    </if>
+    <if test="tpl_channel != null" >
+       and tpl_channel = #{tpl_channel,jdbcType=VARCHAR}
+    </if>
+    <if test="tpl_content != null" >
+       and tpl_content = #{tpl_content,jdbcType=VARCHAR}
+    </if>
+    <if test="title_img != null" >
+       and title_img = #{title_img,jdbcType=VARCHAR}
+    </if>
+    <if test="content_img != null" >
+       and content_img = #{content_img,jdbcType=VARCHAR}
+    </if>
+    <if test="has_title_img != null" >
+       and has_title_img = #{has_title_img,jdbcType=BIT}
+    </if>
+    <if test="has_content_img != null" >
+       and has_content_img = #{has_content_img,jdbcType=BIT}
+    </if>
+    <if test="title_img_width != null" >
+       and title_img_width = #{title_img_width,jdbcType=INTEGER}
+    </if>
+    <if test="title_img_height != null" >
+       and title_img_height = #{title_img_height,jdbcType=INTEGER}
+    </if>
+    <if test="content_img_width != null" >
+       and content_img_width = #{content_img_width,jdbcType=INTEGER}
+    </if>
+    <if test="content_img_height != null" >
+       and content_img_height = #{content_img_height,jdbcType=INTEGER}
+    </if>
+    <if test="comment_control != null" >
+       and comment_control = #{comment_control,jdbcType=INTEGER}
+    </if>
+    <if test="allow_updown != null" >
+       and allow_updown = #{allow_updown,jdbcType=BIT}
+    </if>
+    <if test="is_blank != null" >
+       and is_blank = #{is_blank,jdbcType=BIT}
+    </if>
+    <if test="title != null" >
+       and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="keywords != null" >
+       and keywords = #{keywords,jdbcType=VARCHAR}
+    </if>
+    <if test="description != null" >
+       and description = #{description,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusDataMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.bus.BusData" >
+    <result column="data_id" property="data_id" jdbcType="VARCHAR" />
+    <result column="bus_id" property="bus_id" jdbcType="INTEGER" />
+    <result column="batch_id" property="batch_id" jdbcType="VARCHAR" />
+    <result column="oper_user_id" property="oper_user_id" jdbcType="VARCHAR" />
+    <result column="user_code" property="user_code" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="col1" property="col1" jdbcType="VARCHAR" />
+    <result column="col2" property="col2" jdbcType="VARCHAR" />
+    <result column="col3" property="col3" jdbcType="VARCHAR" />
+    <result column="col4" property="col4" jdbcType="VARCHAR" />
+    <result column="col5" property="col5" jdbcType="TIMESTAMP" />
+    <result column="col6" property="col6" jdbcType="TIMESTAMP" />
+    <result column="col7" property="col7" jdbcType="VARCHAR" />
+    <result column="col8" property="col8" jdbcType="VARCHAR" />
+    <result column="col9" property="col9" jdbcType="VARCHAR" />
+    <result column="col10" property="col10" jdbcType="VARCHAR" />
+    <result column="col11" property="col11" jdbcType="VARCHAR" />
+    <result column="col12" property="col12" jdbcType="VARCHAR" />
+    <result column="col13" property="col13" jdbcType="VARCHAR" />
+    <result column="col14" property="col14" jdbcType="VARCHAR" />
+    <result column="col15" property="col15" jdbcType="VARCHAR" />
+    <result column="col16" property="col16" jdbcType="VARCHAR" />
+    <result column="col17" property="col17" jdbcType="VARCHAR" />
+    <result column="col18" property="col18" jdbcType="VARCHAR" />
+    <result column="col19" property="col19" jdbcType="VARCHAR" />
+    <result column="col20" property="col20" jdbcType="VARCHAR" />
+    <result column="col21" property="col21" jdbcType="VARCHAR" />
+    <result column="col22" property="col22" jdbcType="VARCHAR" />
+    <result column="col23" property="col23" jdbcType="VARCHAR" />
+    <result column="col24" property="col24" jdbcType="VARCHAR" />
+    <result column="col25" property="col25" jdbcType="VARCHAR" />
+    <result column="col26" property="col26" jdbcType="VARCHAR" />
+    <result column="col27" property="col27" jdbcType="VARCHAR" />
+    <result column="col28" property="col28" jdbcType="VARCHAR" />
+    <result column="col29" property="col29" jdbcType="VARCHAR" />
+    <result column="col30" property="col30" jdbcType="VARCHAR" />
+    <result column="col31" property="col31" jdbcType="VARCHAR" />
+    <result column="col32" property="col32" jdbcType="VARCHAR" />
+    <result column="col33" property="col33" jdbcType="VARCHAR" />
+    <result column="col34" property="col34" jdbcType="VARCHAR" />
+    <result column="col35" property="col35" jdbcType="VARCHAR" />
+    <result column="col36" property="col36" jdbcType="VARCHAR" />
+    <result column="col37" property="col37" jdbcType="VARCHAR" />
+    <result column="col38" property="col38" jdbcType="VARCHAR" />
+    <result column="col39" property="col39" jdbcType="VARCHAR" />
+    <result column="col40" property="col40" jdbcType="VARCHAR" />
+    <result column="col41" property="col41" jdbcType="VARCHAR" />
+    <result column="col42" property="col42" jdbcType="VARCHAR" />
+    <result column="col43" property="col43" jdbcType="VARCHAR" />
+    <result column="col44" property="col44" jdbcType="VARCHAR" />
+    <result column="col45" property="col45" jdbcType="VARCHAR" />
+    <result column="col46" property="col46" jdbcType="VARCHAR" />
+    <result column="col47" property="col47" jdbcType="VARCHAR" />
+    <result column="col48" property="col48" jdbcType="VARCHAR" />
+    <result column="col49" property="col49" jdbcType="VARCHAR" />
+    <result column="col50" property="col50" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BusTemplateItem" type="com.flyrui.dao.pojo.bus.BusTemplateItem" >
+    <result column="item_id" property="item_id" jdbcType="INTEGER" />
+    <result column="template_id" property="template_id" jdbcType="VARCHAR" />
+    <result column="item_name" property="item_name" jdbcType="VARCHAR" />
+    <result column="item_type" property="item_type" jdbcType="VARCHAR" />
+    <result column="data_col" property="data_col" jdbcType="VARCHAR" />
+    <result column="rule_id" property="rule_id" jdbcType="INTEGER" />
+    <result column="order_id" property="order_id" jdbcType="INTEGER" />
+    <result column="is_display" property="is_display" jdbcType="VARCHAR" />
+    <result column="col_index" property="col_index" jdbcType="INTEGER" />
+    <result column="is_export" property="is_export" jdbcType="VARCHAR" />
+    <result column="display_width" property="display_width" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BusTemplate" type="com.flyrui.dao.pojo.bus.BusTemplate" >
+    <result column="template_id" property="template_id" jdbcType="VARCHAR" />
+    <result column="template_name" property="template_name" jdbcType="VARCHAR" />
+    <result column="template_type" property="template_type" jdbcType="VARCHAR" />
+    <result column="data_type" property="data_type" jdbcType="VARCHAR" />
+    <result column="sheet_number" property="sheet_number" jdbcType="INTEGER" />
+    <result column="start_row" property="start_row" jdbcType="INTEGER" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BusRule" type="com.flyrui.dao.pojo.bus.BusRule" >
+    <result column="rule_id" property="rule_id" jdbcType="INTEGER" />
+    <result column="rule_name" property="rule_name" jdbcType="VARCHAR" />
+    <result column="rule_type" property="rule_type" jdbcType="VARCHAR" />
+    <result column="rule_content" property="rule_content" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BusInfo" type="com.flyrui.dao.pojo.bus.BusInfo" >
+    <result column="bus_id" property="bus_id" jdbcType="INTEGER" />
+    <result column="bus_name" property="bus_name" jdbcType="VARCHAR" />
+    <result column="imp_tmp" property="imp_tmp" jdbcType="VARCHAR" />
+    <result column="exp_tmp" property="exp_tmp" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    data_id, batch_id, bus_id,oper_user_id,user_code,create_date, col1, col2, col3, col4, col5, col6, col7, col8, col9, 
+    col10, col11, col12, col13, col14, col15, col16, col17, col18, col19, col20, col21, 
+    col22, col23, col24, col25, col26, col27, col28, col29, col30, col31, col32, col33, 
+    col34, col35, col36, col37, col38, col39, col40, col41, col42, col43, col44, col45, 
+    col46, col47, col48, col49, col50
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.bus.BusData" >
+    select
+    
+    <include refid="Base_Column_List" />
+    from bus_data a where 1=1  
+     <if test="data_id != null and data_id != ''" >
+        and data_id = #{data_id,jdbcType=VARCHAR}
+     </if>
+     <if test="batch_id != null and batch_id != ''" >
+       and batch_id = #{batch_id,jdbcType=VARCHAR}
+     </if>
+     <if test="user_code != null and user_code != '' and user_code !='%%' " >
+       and user_code like #{user_code,jdbcType=VARCHAR}
+     </if>  
+     <if test="col5_start !=null and col5_start != '' ">
+    	and a.col5 &gt;= str_to_date(#{col5_start,jdbcType=VARCHAR},'%Y-%m-%d')
+     </if>
+     <if test="col5_end !=null and col5_end != '' ">
+    	and a.col5 &lt;= str_to_date(#{col5_end,jdbcType=VARCHAR},'%Y-%m-%d')
+     </if> 
+     <if test="col6_start !=null and col6_start != '' ">
+    	and a.col6 &gt;= str_to_date(#{col6_start,jdbcType=VARCHAR},'%Y-%m-%d')
+     </if>
+     <if test="col6_end !=null and col6_end != '' ">
+    	and a.col6 &lt;= str_to_date(#{col6_end,jdbcType=VARCHAR},'%Y-%m-%d')
+     </if> 
+     <if test="col1 != null and col1 != '' and col1 !='%%'" >
+       and col1 like #{col1,jdbcType=VARCHAR}
+     </if>
+      and bus_id = #{bus_id,jdbcType=VARCHAR}    
+     order by batch_id,create_date
+  </select>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.bus.BusData" >
+    delete from bus_data
+    where  1=1 
+     <if test="data_id != null and data_id !='' " >
+        and data_id = #{data_id,jdbcType=VARCHAR}
+     </if>
+     <if test="batch_id != null and batch_id !='' " >
+       and batch_id = #{batch_id,jdbcType=VARCHAR}
+     </if>
+     <if test="user_code != null and user_code !='' " >
+       and user_code = #{user_code,jdbcType=VARCHAR}
+     </if>
+     <if test="bus_id != null and bus_id !=''  " >
+       and bus_id = #{bus_id,jdbcType=VARCHAR}
+     </if>
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.bus.BusData" >
+    insert into bus_data (data_id, bus_id,batch_id, oper_user_id,user_code,create_date, 
+      col1, col2, col3, col4, 
+      col5, col6, col7, col8, 
+      col9, col10, col11, 
+      col12, col13, col14, 
+      col15, col16, col17, 
+      col18, col19, col20, 
+      col21, col22, col23, 
+      col24, col25, col26, 
+      col27, col28, col29, 
+      col30, col31, col32, 
+      col33, col34, col35, 
+      col36, col37, col38, 
+      col39, col40, col41, 
+      col42, col43, col44, 
+      col45, col46, col47, 
+      col48, col49, col50
+      )
+    values (#{data_id,jdbcType=VARCHAR}, #{bus_id,jdbcType=INTEGER}, #{batch_id,jdbcType=VARCHAR},
+      #{oper_user_id,jdbcType=VARCHAR}, #{user_code,jdbcType=VARCHAR},#{create_date,jdbcType=TIMESTAMP}, 
+      #{col1,jdbcType=VARCHAR}, #{col2,jdbcType=VARCHAR}, #{col3,jdbcType=VARCHAR}, #{col4,jdbcType=VARCHAR}, 
+      #{col5,jdbcType=VARCHAR}, #{col6,jdbcType=VARCHAR}, #{col7,jdbcType=VARCHAR}, #{col8,jdbcType=VARCHAR}, 
+      #{col9,jdbcType=VARCHAR}, #{col10,jdbcType=VARCHAR}, #{col11,jdbcType=VARCHAR}, 
+      #{col12,jdbcType=VARCHAR}, #{col13,jdbcType=VARCHAR}, #{col14,jdbcType=VARCHAR}, 
+      #{col15,jdbcType=VARCHAR}, #{col16,jdbcType=VARCHAR}, #{col17,jdbcType=VARCHAR}, 
+      #{col18,jdbcType=VARCHAR}, #{col19,jdbcType=VARCHAR}, #{col20,jdbcType=VARCHAR}, 
+      #{col21,jdbcType=VARCHAR}, #{col22,jdbcType=VARCHAR}, #{col23,jdbcType=VARCHAR}, 
+      #{col24,jdbcType=VARCHAR}, #{col25,jdbcType=VARCHAR}, #{col26,jdbcType=VARCHAR}, 
+      #{col27,jdbcType=VARCHAR}, #{col28,jdbcType=VARCHAR}, #{col29,jdbcType=VARCHAR}, 
+      #{col30,jdbcType=VARCHAR}, #{col31,jdbcType=VARCHAR}, #{col32,jdbcType=VARCHAR}, 
+      #{col33,jdbcType=VARCHAR}, #{col34,jdbcType=VARCHAR}, #{col35,jdbcType=VARCHAR}, 
+      #{col36,jdbcType=VARCHAR}, #{col37,jdbcType=VARCHAR}, #{col38,jdbcType=VARCHAR}, 
+      #{col39,jdbcType=VARCHAR}, #{col40,jdbcType=VARCHAR}, #{col41,jdbcType=VARCHAR}, 
+      #{col42,jdbcType=VARCHAR}, #{col43,jdbcType=VARCHAR}, #{col44,jdbcType=VARCHAR}, 
+      #{col45,jdbcType=VARCHAR}, #{col46,jdbcType=VARCHAR}, #{col47,jdbcType=VARCHAR}, 
+      #{col48,jdbcType=VARCHAR}, #{col49,jdbcType=VARCHAR}, #{col50,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flyrui.dao.pojo.bus.BusData" >
+    insert into bus_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="data_id != null" >
+        data_id,
+      </if>
+      <if test="batch_id != null" >
+        batch_id,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+      <if test="col1 != null" >
+        col1,
+      </if>
+      <if test="col2 != null" >
+        col2,
+      </if>
+      <if test="col3 != null" >
+        col3,
+      </if>
+      <if test="col4 != null" >
+        col4,
+      </if>
+      <if test="col5 != null" >
+        col5,
+      </if>
+      <if test="col6 != null" >
+        col6,
+      </if>
+      <if test="col7 != null" >
+        col7,
+      </if>
+      <if test="col8 != null" >
+        col8,
+      </if>
+      <if test="col9 != null" >
+        col9,
+      </if>
+      <if test="col10 != null" >
+        col10,
+      </if>
+      <if test="col11 != null" >
+        col11,
+      </if>
+      <if test="col12 != null" >
+        col12,
+      </if>
+      <if test="col13 != null" >
+        col13,
+      </if>
+      <if test="col14 != null" >
+        col14,
+      </if>
+      <if test="col15 != null" >
+        col15,
+      </if>
+      <if test="col16 != null" >
+        col16,
+      </if>
+      <if test="col17 != null" >
+        col17,
+      </if>
+      <if test="col18 != null" >
+        col18,
+      </if>
+      <if test="col19 != null" >
+        col19,
+      </if>
+      <if test="col20 != null" >
+        col20,
+      </if>
+      <if test="col21 != null" >
+        col21,
+      </if>
+      <if test="col22 != null" >
+        col22,
+      </if>
+      <if test="col23 != null" >
+        col23,
+      </if>
+      <if test="col24 != null" >
+        col24,
+      </if>
+      <if test="col25 != null" >
+        col25,
+      </if>
+      <if test="col26 != null" >
+        col26,
+      </if>
+      <if test="col27 != null" >
+        col27,
+      </if>
+      <if test="col28 != null" >
+        col28,
+      </if>
+      <if test="col29 != null" >
+        col29,
+      </if>
+      <if test="col30 != null" >
+        col30,
+      </if>
+      <if test="col31 != null" >
+        col31,
+      </if>
+      <if test="col32 != null" >
+        col32,
+      </if>
+      <if test="col33 != null" >
+        col33,
+      </if>
+      <if test="col34 != null" >
+        col34,
+      </if>
+      <if test="col35 != null" >
+        col35,
+      </if>
+      <if test="col36 != null" >
+        col36,
+      </if>
+      <if test="col37 != null" >
+        col37,
+      </if>
+      <if test="col38 != null" >
+        col38,
+      </if>
+      <if test="col39 != null" >
+        col39,
+      </if>
+      <if test="col40 != null" >
+        col40,
+      </if>
+      <if test="col41 != null" >
+        col41,
+      </if>
+      <if test="col42 != null" >
+        col42,
+      </if>
+      <if test="col43 != null" >
+        col43,
+      </if>
+      <if test="col44 != null" >
+        col44,
+      </if>
+      <if test="col45 != null" >
+        col45,
+      </if>
+      <if test="col46 != null" >
+        col46,
+      </if>
+      <if test="col47 != null" >
+        col47,
+      </if>
+      <if test="col48 != null" >
+        col48,
+      </if>
+      <if test="col49 != null" >
+        col49,
+      </if>
+      <if test="col50 != null" >
+        col50,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="data_id != null" >
+        #{data_id,jdbcType=VARCHAR},
+      </if>
+      <if test="batch_id != null" >
+        #{batch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="col1 != null" >
+        #{col1,jdbcType=VARCHAR},
+      </if>
+      <if test="col2 != null" >
+        #{col2,jdbcType=VARCHAR},
+      </if>
+      <if test="col3 != null" >
+        #{col3,jdbcType=VARCHAR},
+      </if>
+      <if test="col4 != null" >
+        #{col4,jdbcType=VARCHAR},
+      </if>
+      <if test="col5 != null" >
+        #{col5,jdbcType=VARCHAR},
+      </if>
+      <if test="col6 != null" >
+        #{col6,jdbcType=VARCHAR},
+      </if>
+      <if test="col7 != null" >
+        #{col7,jdbcType=VARCHAR},
+      </if>
+      <if test="col8 != null" >
+        #{col8,jdbcType=VARCHAR},
+      </if>
+      <if test="col9 != null" >
+        #{col9,jdbcType=VARCHAR},
+      </if>
+      <if test="col10 != null" >
+        #{col10,jdbcType=VARCHAR},
+      </if>
+      <if test="col11 != null" >
+        #{col11,jdbcType=VARCHAR},
+      </if>
+      <if test="col12 != null" >
+        #{col12,jdbcType=VARCHAR},
+      </if>
+      <if test="col13 != null" >
+        #{col13,jdbcType=VARCHAR},
+      </if>
+      <if test="col14 != null" >
+        #{col14,jdbcType=VARCHAR},
+      </if>
+      <if test="col15 != null" >
+        #{col15,jdbcType=VARCHAR},
+      </if>
+      <if test="col16 != null" >
+        #{col16,jdbcType=VARCHAR},
+      </if>
+      <if test="col17 != null" >
+        #{col17,jdbcType=VARCHAR},
+      </if>
+      <if test="col18 != null" >
+        #{col18,jdbcType=VARCHAR},
+      </if>
+      <if test="col19 != null" >
+        #{col19,jdbcType=VARCHAR},
+      </if>
+      <if test="col20 != null" >
+        #{col20,jdbcType=VARCHAR},
+      </if>
+      <if test="col21 != null" >
+        #{col21,jdbcType=VARCHAR},
+      </if>
+      <if test="col22 != null" >
+        #{col22,jdbcType=VARCHAR},
+      </if>
+      <if test="col23 != null" >
+        #{col23,jdbcType=VARCHAR},
+      </if>
+      <if test="col24 != null" >
+        #{col24,jdbcType=VARCHAR},
+      </if>
+      <if test="col25 != null" >
+        #{col25,jdbcType=VARCHAR},
+      </if>
+      <if test="col26 != null" >
+        #{col26,jdbcType=VARCHAR},
+      </if>
+      <if test="col27 != null" >
+        #{col27,jdbcType=VARCHAR},
+      </if>
+      <if test="col28 != null" >
+        #{col28,jdbcType=VARCHAR},
+      </if>
+      <if test="col29 != null" >
+        #{col29,jdbcType=VARCHAR},
+      </if>
+      <if test="col30 != null" >
+        #{col30,jdbcType=VARCHAR},
+      </if>
+      <if test="col31 != null" >
+        #{col31,jdbcType=VARCHAR},
+      </if>
+      <if test="col32 != null" >
+        #{col32,jdbcType=VARCHAR},
+      </if>
+      <if test="col33 != null" >
+        #{col33,jdbcType=VARCHAR},
+      </if>
+      <if test="col34 != null" >
+        #{col34,jdbcType=VARCHAR},
+      </if>
+      <if test="col35 != null" >
+        #{col35,jdbcType=VARCHAR},
+      </if>
+      <if test="col36 != null" >
+        #{col36,jdbcType=VARCHAR},
+      </if>
+      <if test="col37 != null" >
+        #{col37,jdbcType=VARCHAR},
+      </if>
+      <if test="col38 != null" >
+        #{col38,jdbcType=VARCHAR},
+      </if>
+      <if test="col39 != null" >
+        #{col39,jdbcType=VARCHAR},
+      </if>
+      <if test="col40 != null" >
+        #{col40,jdbcType=VARCHAR},
+      </if>
+      <if test="col41 != null" >
+        #{col41,jdbcType=VARCHAR},
+      </if>
+      <if test="col42 != null" >
+        #{col42,jdbcType=VARCHAR},
+      </if>
+      <if test="col43 != null" >
+        #{col43,jdbcType=VARCHAR},
+      </if>
+      <if test="col44 != null" >
+        #{col44,jdbcType=VARCHAR},
+      </if>
+      <if test="col45 != null" >
+        #{col45,jdbcType=VARCHAR},
+      </if>
+      <if test="col46 != null" >
+        #{col46,jdbcType=VARCHAR},
+      </if>
+      <if test="col47 != null" >
+        #{col47,jdbcType=VARCHAR},
+      </if>
+      <if test="col48 != null" >
+        #{col48,jdbcType=VARCHAR},
+      </if>
+      <if test="col49 != null" >
+        #{col49,jdbcType=VARCHAR},
+      </if>
+      <if test="col50 != null" >
+        #{col50,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.flyrui.dao.pojo.bus.BusDataCriteria" resultType="java.lang.Integer" >
+    select count(*) from bus_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_data
+    <set >
+      <if test="record.data_id != null" >
+        data_id = #{record.data_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batch_id != null" >
+        batch_id = #{record.batch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.create_date != null" >
+        create_date = #{record.create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.col1 != null" >
+        col1 = #{record.col1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col2 != null" >
+        col2 = #{record.col2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col3 != null" >
+        col3 = #{record.col3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col4 != null" >
+        col4 = #{record.col4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col5 != null" >
+        col5 = #{record.col5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col6 != null" >
+        col6 = #{record.col6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col7 != null" >
+        col7 = #{record.col7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col8 != null" >
+        col8 = #{record.col8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col9 != null" >
+        col9 = #{record.col9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col10 != null" >
+        col10 = #{record.col10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col11 != null" >
+        col11 = #{record.col11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col12 != null" >
+        col12 = #{record.col12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col13 != null" >
+        col13 = #{record.col13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col14 != null" >
+        col14 = #{record.col14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col15 != null" >
+        col15 = #{record.col15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col16 != null" >
+        col16 = #{record.col16,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col17 != null" >
+        col17 = #{record.col17,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col18 != null" >
+        col18 = #{record.col18,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col19 != null" >
+        col19 = #{record.col19,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col20 != null" >
+        col20 = #{record.col20,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col21 != null" >
+        col21 = #{record.col21,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col22 != null" >
+        col22 = #{record.col22,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col23 != null" >
+        col23 = #{record.col23,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col24 != null" >
+        col24 = #{record.col24,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col25 != null" >
+        col25 = #{record.col25,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col26 != null" >
+        col26 = #{record.col26,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col27 != null" >
+        col27 = #{record.col27,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col28 != null" >
+        col28 = #{record.col28,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col29 != null" >
+        col29 = #{record.col29,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col30 != null" >
+        col30 = #{record.col30,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col31 != null" >
+        col31 = #{record.col31,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col32 != null" >
+        col32 = #{record.col32,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col33 != null" >
+        col33 = #{record.col33,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col34 != null" >
+        col34 = #{record.col34,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col35 != null" >
+        col35 = #{record.col35,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col36 != null" >
+        col36 = #{record.col36,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col37 != null" >
+        col37 = #{record.col37,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col38 != null" >
+        col38 = #{record.col38,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col39 != null" >
+        col39 = #{record.col39,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col40 != null" >
+        col40 = #{record.col40,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col41 != null" >
+        col41 = #{record.col41,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col42 != null" >
+        col42 = #{record.col42,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col43 != null" >
+        col43 = #{record.col43,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col44 != null" >
+        col44 = #{record.col44,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col45 != null" >
+        col45 = #{record.col45,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col46 != null" >
+        col46 = #{record.col46,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col47 != null" >
+        col47 = #{record.col47,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col48 != null" >
+        col48 = #{record.col48,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col49 != null" >
+        col49 = #{record.col49,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col50 != null" >
+        col50 = #{record.col50,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_data
+    set data_id = #{record.data_id,jdbcType=VARCHAR},
+      batch_id = #{record.batch_id,jdbcType=VARCHAR},
+      create_date = #{record.create_date,jdbcType=TIMESTAMP},
+      col1 = #{record.col1,jdbcType=VARCHAR},
+      col2 = #{record.col2,jdbcType=VARCHAR},
+      col3 = #{record.col3,jdbcType=VARCHAR},
+      col4 = #{record.col4,jdbcType=VARCHAR},
+      col5 = #{record.col5,jdbcType=VARCHAR},
+      col6 = #{record.col6,jdbcType=VARCHAR},
+      col7 = #{record.col7,jdbcType=VARCHAR},
+      col8 = #{record.col8,jdbcType=VARCHAR},
+      col9 = #{record.col9,jdbcType=VARCHAR},
+      col10 = #{record.col10,jdbcType=VARCHAR},
+      col11 = #{record.col11,jdbcType=VARCHAR},
+      col12 = #{record.col12,jdbcType=VARCHAR},
+      col13 = #{record.col13,jdbcType=VARCHAR},
+      col14 = #{record.col14,jdbcType=VARCHAR},
+      col15 = #{record.col15,jdbcType=VARCHAR},
+      col16 = #{record.col16,jdbcType=VARCHAR},
+      col17 = #{record.col17,jdbcType=VARCHAR},
+      col18 = #{record.col18,jdbcType=VARCHAR},
+      col19 = #{record.col19,jdbcType=VARCHAR},
+      col20 = #{record.col20,jdbcType=VARCHAR},
+      col21 = #{record.col21,jdbcType=VARCHAR},
+      col22 = #{record.col22,jdbcType=VARCHAR},
+      col23 = #{record.col23,jdbcType=VARCHAR},
+      col24 = #{record.col24,jdbcType=VARCHAR},
+      col25 = #{record.col25,jdbcType=VARCHAR},
+      col26 = #{record.col26,jdbcType=VARCHAR},
+      col27 = #{record.col27,jdbcType=VARCHAR},
+      col28 = #{record.col28,jdbcType=VARCHAR},
+      col29 = #{record.col29,jdbcType=VARCHAR},
+      col30 = #{record.col30,jdbcType=VARCHAR},
+      col31 = #{record.col31,jdbcType=VARCHAR},
+      col32 = #{record.col32,jdbcType=VARCHAR},
+      col33 = #{record.col33,jdbcType=VARCHAR},
+      col34 = #{record.col34,jdbcType=VARCHAR},
+      col35 = #{record.col35,jdbcType=VARCHAR},
+      col36 = #{record.col36,jdbcType=VARCHAR},
+      col37 = #{record.col37,jdbcType=VARCHAR},
+      col38 = #{record.col38,jdbcType=VARCHAR},
+      col39 = #{record.col39,jdbcType=VARCHAR},
+      col40 = #{record.col40,jdbcType=VARCHAR},
+      col41 = #{record.col41,jdbcType=VARCHAR},
+      col42 = #{record.col42,jdbcType=VARCHAR},
+      col43 = #{record.col43,jdbcType=VARCHAR},
+      col44 = #{record.col44,jdbcType=VARCHAR},
+      col45 = #{record.col45,jdbcType=VARCHAR},
+      col46 = #{record.col46,jdbcType=VARCHAR},
+      col47 = #{record.col47,jdbcType=VARCHAR},
+      col48 = #{record.col48,jdbcType=VARCHAR},
+      col49 = #{record.col49,jdbcType=VARCHAR},
+      col50 = #{record.col50,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+   <select id="queryBusTemplateItem" resultMap="BusTemplateItem" parameterType="com.flyrui.dao.pojo.bus.BusTemplateItem" >
+    	select item_id, template_id, item_name, item_type, data_col, rule_id, order_id,is_display,col_index,is_export,display_width
+    	   from bus_template_item
+    where 1=1 
+    <if test="item_id != null" >
+        and item_id = #{item_id,jdbcType=INTEGER}
+      </if>
+      <if test="template_id != null" >
+        and template_id = #{template_id,jdbcType=VARCHAR}
+      </if>
+      <if test="item_name != null" >
+        and item_name = #{item_name,jdbcType=VARCHAR}
+      </if>
+      <if test="item_type != null" >
+        and item_type = #{item_type,jdbcType=VARCHAR}
+      </if>
+      <if test="data_col != null" >
+        and data_col = #{data_col,jdbcType=VARCHAR}
+      </if>
+      <if test="rule_id != null" >
+        and rule_id = #{rule_id,jdbcType=INTEGER}
+      </if>
+      <if test="order_id != null" >
+        and order_id = #{order_id,jdbcType=INTEGER
+      </if>
+      order by order_id
+  </select>    
+ 
+  <select id="queryBusRule" resultMap="BusRule" parameterType="com.flyrui.dao.pojo.bus.BusRule" >
+    select
+    	rule_id, rule_name, rule_type, rule_content, create_date
+    from bus_rule
+    where 1=1 
+   	  <if test="rule_id != null" >
+        and rule_id = #{rule_id,jdbcType=INTEGER} 
+      </if>
+      <if test="rule_name != null" >
+        and rule_name = #{rule_name,jdbcType=VARCHAR} 
+      </if>
+      <if test="rule_type != null" >
+        and rule_type = #{rule_type,jdbcType=VARCHAR}
+      </if>
+      <if test="rule_content != null" >
+        and rule_content = #{rule_content,jdbcType=VARCHAR}
+      </if>
+      <if test="create_date != null" >
+        and create_date = #{create_date,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+   
+  <select id="queryBusInfo" resultMap="BusInfo" parameterType="com.flyrui.dao.pojo.bus.BusInfo" >
+    select
+    	bus_id, bus_name, imp_tmp, exp_tmp, create_date
+      from bus_info where 1=1 
+   	  <if test="bus_id != null" >
+        and bus_id = #{bus_id,jdbcType=INTEGER}
+      </if>
+      <if test="bus_name != null" >
+        and bus_name = #{bus_name,jdbcType=VARCHAR}
+      </if>
+      <if test="imp_tmp != null" >
+        and imp_tmp = #{imp_tmp,jdbcType=VARCHAR}
+      </if>
+      <if test="exp_tmp != null" >
+        and exp_tmp = #{exp_tmp,jdbcType=VARCHAR}
+      </if>
+      <if test="create_date != null" >
+        and create_date = #{create_date,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  
+  
+  <select id="queryBusTemplate" resultMap="BusTemplate" parameterType="com.flyrui.dao.pojo.bus.BusTemplate" >
+    select 
+    	template_id, template_name, template_type, data_type, sheet_number, start_row, create_date
+    from bus_template where 1=1
+  	<if test="template_id != null" >
+        and template_id = #{template_id,jdbcType=VARCHAR}
+    </if>
+    <if test="template_name != null" >
+      and template_name = #{template_name,jdbcType=VARCHAR}
+    </if>
+    <if test="template_type != null" >
+      and template_type = #{template_type,jdbcType=VARCHAR}
+    </if>
+    <if test="data_type != null" >
+      and data_type = #{data_type,jdbcType=VARCHAR}
+    </if>
+    <if test="sheet_number != null" >
+      and sheet_number = #{sheet_number,jdbcType=INTEGER}
+    </if>
+    <if test="start_row != null" >
+      and start_row = #{start_row,jdbcType=INTEGER}
+    </if>
+    <if test="create_date != null" >
+      and create_date = #{create_date,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+</mapper>

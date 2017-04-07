@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tb_menu" >
+  <cache></cache>
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.sys.TbMenu" >
+    <result column="menu_id" property="menu_id" jdbcType="INTEGER" />
+    <result column="menu_name" property="menu_name" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menu_url" jdbcType="VARCHAR" />
+    <result column="url_open_type" property="url_open_type" jdbcType="INTEGER" />
+    <result column="up_menu_id" property="up_menu_id" jdbcType="INTEGER" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modify_date" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="menu_desc" property="menu_desc" jdbcType="VARCHAR" />
+    <result column="order_id" property="order_id" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbMenu" useGeneratedKeys="true" keyProperty="menu_id">
+    insert into tb_menu (menu_name, menu_url, 
+      url_open_type, up_menu_id, create_date, 
+      modify_date, state, menu_desc, 
+      order_id)
+    values (#{menu_name,jdbcType=VARCHAR}, #{menu_url,jdbcType=VARCHAR}, 
+      #{url_open_type,jdbcType=INTEGER}, #{up_menu_id,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, 
+      #{modify_date,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{menu_desc,jdbcType=VARCHAR}, 
+      #{order_id,jdbcType=INTEGER})
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbMenu" >
+     update tb_menu set menu_name = #{menu_name,jdbcType=VARCHAR}, 
+    	menu_url = #{menu_url,jdbcType=VARCHAR},     	      	
+      	url_open_type = #{url_open_type,jdbcType=INTEGER}, 
+      	up_menu_id = #{up_menu_id,jdbcType=INTEGER}, 
+      	state = #{state,jdbcType=VARCHAR}, 
+      	modify_date = #{modify_date,jdbcType=TIMESTAMP},  
+      	menu_desc = #{menu_desc,jdbcType=VARCHAR},
+      	order_id = #{order_id,jdbcType=INTEGER}
+      where menu_id = #{menu_id,jdbcType=INTEGER}
+  </update>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.sys.TbMenu" >
+    delete from tb_menu 
+    where menu_id = #{menu_id,jdbcType=INTEGER}
+  </delete>
+  
+   <!-- 获取用户有权限的上级菜单 -->
+  <select id="getRootMenuListByRole" parameterType="string" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  		select a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a ,tb_role_menu b 
+       where a.menu_id = b.menu_id  and a.up_menu_id = '-1' 
+       		 and state='1' and b.role_id = #{role_id,jdbcType=INTEGER}
+       order by  a.order_id
+  </select>
+  
+  <select id="getRootMenuListByRoles" parameterType="List" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  		select distinct a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a ,tb_role_menu b 
+       where a.menu_id = b.menu_id  and a.up_menu_id = '-1' 
+       		 and state='1' and b.role_id in <foreach collection="list" item="role" index="index"
+            open="(" close=")" separator=",">
+           		#{role.role_id,jdbcType=INTEGER}
+    		</foreach>
+       order by  a.order_id
+  </select>
+  
+  <!-- 获取用户有权限的子菜单 -->
+  <select id="getSubMenuListByUpId" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  	  select distinct a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a 
+       where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
+       		and a.menu_id in ( select menu_id from tb_role_menu b where  b.role_id in ( select role_id from tb_user_role where user_id = #{user_id,jdbcType=VARCHAR} ) ) 
+       		order by  a.order_id     		
+  </select>
+  
+  <!-- 获取用户有权限的子菜单 -->
+  <select id="getSubMenuListByUpIdAndRole" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  	  select a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a 
+       where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
+       		and a.menu_id in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER}  ) 
+       		order by  a.order_id     		
+  </select>
+  
+  <!-- 查询下级菜单  -->
+  <select id="getSubMenuListByUpId2" parameterType="com.flyrui.dao.pojo.sys.TbMenu" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  	  select a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a 
+       where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 获取 用户未选择的权限菜单 -->
+  <select id="getNoSelectRootMenuByRole" parameterType="string" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  	  select a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a  
+       where a.menu_id not in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER} )
+       		 and a.up_menu_id = '-1' 
+       		 and state='1'
+  </select>
+  <!-- 获取用户有权限的子菜单 -->
+  <select id="getNoSelectSubMenuListByUpId" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
+  	  select a.menu_id, a.menu_name, a.menu_url, 
+      	a.url_open_type,a.up_menu_id, a.create_date, 
+      	a.modify_date, a.state, a.menu_desc,a.order_id
+       from tb_menu a 
+       where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
+       		and a.menu_id not in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER} )       		       		
+  </select>
+</mapper>

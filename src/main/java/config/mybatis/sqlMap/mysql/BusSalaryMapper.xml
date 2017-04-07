@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.BusSalary" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.salary.BusSalary" >
+    <result column="salary_id" property="salary_id" jdbcType="VARCHAR" />
+    <result column="user_code" property="user_code" jdbcType="VARCHAR" />
+    <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    <result column="salary_schedule" property="salary_schedule" jdbcType="VARCHAR" />
+    <result column="org_name" property="org_name" jdbcType="VARCHAR" />
+    <result column="salary_type" property="salary_type" jdbcType="VARCHAR" />
+    <result column="base_salary" property="base_salary" jdbcType="REAL" />
+    <result column="level_salary" property="level_salary" jdbcType="REAL" />
+    <result column="bus_salary" property="bus_salary" jdbcType="REAL" />
+    <result column="traffic_allowance" property="traffic_allowance" jdbcType="REAL" />
+    <result column="gas_allowance" property="gas_allowance" jdbcType="REAL" />
+    <result column="life_allowance" property="life_allowance" jdbcType="REAL" />
+    <result column="dinner_allowance" property="dinner_allowance" jdbcType="REAL" />
+    <result column="proper_allowance" property="proper_allowance" jdbcType="REAL" />
+    <result column="wash_fee" property="wash_fee" jdbcType="REAL" />
+    <result column="book_fee" property="book_fee" jdbcType="REAL" />
+    <result column="profession_allowance" property="profession_allowance" jdbcType="REAL" />
+    <result column="left_award" property="left_award" jdbcType="REAL" />
+    <result column="allowance_sum" property="allowance_sum" jdbcType="REAL" />
+    <result column="civi_award" property="civi_award" jdbcType="REAL" />
+    <result column="energy_allowance" property="energy_allowance" jdbcType="REAL" />
+    <result column="one_child_fee" property="one_child_fee" jdbcType="REAL" />
+    <result column="house_allownace" property="house_allownace" jdbcType="REAL" />
+    <result column="pre_allowance" property="pre_allowance" jdbcType="REAL" />
+    <result column="other_allowance" property="other_allowance" jdbcType="REAL" />
+    <result column="salary_little_sum" property="salary_little_sum" jdbcType="REAL" />
+    <result column="job_allowance" property="job_allowance" jdbcType="REAL" />
+    <result column="re_job_allowance" property="re_job_allowance" jdbcType="REAL" />
+    <result column="oil_allowance" property="oil_allowance" jdbcType="REAL" />
+    <result column="mobile_allowance" property="mobile_allowance" jdbcType="REAL" />
+    <result column="buy_house_allowance" property="buy_house_allowance" jdbcType="REAL" />
+    <result column="salary_sum" property="salary_sum" jdbcType="REAL" />
+    <result column="house_fee" property="house_fee" jdbcType="REAL" />
+    <result column="warm_fee" property="warm_fee" jdbcType="REAL" />
+    <result column="water_fee" property="water_fee" jdbcType="REAL" />
+    <result column="pure_water_fee" property="pure_water_fee" jdbcType="REAL" />
+    <result column="gas_fee" property="gas_fee" jdbcType="REAL" />
+    <result column="endowment_insurance" property="endowment_insurance" jdbcType="REAL" />
+    <result column="unemployment_insurance" property="unemployment_insurance" jdbcType="REAL" />
+    <result column="medical_insurance" property="medical_insurance" jdbcType="REAL" />
+    <result column="house_fund" property="house_fund" jdbcType="REAL" />
+    <result column="re_house_fund" property="re_house_fund" jdbcType="REAL" />
+    <result column="loan_fee" property="loan_fee" jdbcType="REAL" />
+    <result column="tax_fee" property="tax_fee" jdbcType="REAL" />
+    <result column="kmq_fee" property="kmq_fee" jdbcType="REAL" />
+    <result column="kds_fee" property="kds_fee" jdbcType="REAL" />
+    <result column="other_fee" property="other_fee" jdbcType="REAL" />
+    <result column="kk_sum" property="kk_sum" jdbcType="REAL" />
+    <result column="real_salary_sum" property="real_salary_sum" jdbcType="REAL" />
+    <result column="tax_sum" property="tax_sum" jdbcType="REAL" />
+    <result column="fx_allowance" property="fx_allowance" jdbcType="REAL" />
+    <result column="yd_allowance" property="yd_allowance" jdbcType="REAL" />
+    <result column="gqzq" property="gqzq" jdbcType="REAL" />
+    <result column="sj_award" property="sj_award" jdbcType="REAL" />
+    <result column="zfygyzg" property="zfygyzg" jdbcType="REAL" />
+    <result column="cqj" property="cqj" jdbcType="REAL" />
+    <result column="jxj" property="jxj" jdbcType="REAL" />
+    <result column="jwf" property="jwf" jdbcType="REAL" />
+    <result column="gwbt" property="gwbt" jdbcType="REAL" />
+    <result column="dhb" property="dhb" jdbcType="REAL" />
+    <result column="bjrcjt" property="bjrcjt" jdbcType="REAL" />
+    <result column="mbkhj" property="mbkhj" jdbcType="REAL" />
+    <result column="other6" property="other6" jdbcType="REAL" />
+    <result column="other5" property="other5" jdbcType="REAL" />
+    <result column="other4" property="other4" jdbcType="REAL" />
+    <result column="other3" property="other3" jdbcType="VARCHAR" />
+    <result column="other2" property="other2" jdbcType="REAL" />
+    <result column="notes" property="notes" jdbcType="REAL" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="oper_user_id" property="oper_user_id" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batch_id" jdbcType="VARCHAR" />
+    <result column="all_total" property="all_total" jdbcType="REAL" />
+    <result column="other" property="other" jdbcType="REAL" />
+    <result column="other11" property="other11" jdbcType="REAL" />
+    <result column="other12" property="other12" jdbcType="REAL" />
+    <result column="other13" property="other13" jdbcType="REAL" />
+    <result column="other14" property="other14" jdbcType="REAL" />
+    <result column="other15" property="other15" jdbcType="REAL" />
+    <result column="other16" property="other16" jdbcType="VARCHAR" />
+    <result column="other17" property="other17" jdbcType="VARCHAR" />
+    <result column="other18" property="other18" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseLevelResultMap" type="com.flyrui.dao.pojo.salary.BusSalaryLevel" >
+    <result column="salary_id" property="salary_id" jdbcType="VARCHAR" />
+    <result column="user_code" property="user_code" jdbcType="VARCHAR" />
+    <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    <result column="salary_schedule" property="salary_schedule" jdbcType="VARCHAR" />
+    <result column="org_name" property="org_name" jdbcType="VARCHAR" />
+    <result column="salary_type" property="salary_type" jdbcType="VARCHAR" />
+    <result column="base_salary" property="base_salary" jdbcType="REAL" />
+    <result column="level_salary" property="level_salary" jdbcType="REAL" />
+    <result column="bus_salary" property="bus_salary" jdbcType="REAL" />
+    <result column="traffic_allowance" property="traffic_allowance" jdbcType="REAL" />
+    <result column="gas_allowance" property="gas_allowance" jdbcType="REAL" />
+    <result column="life_allowance" property="life_allowance" jdbcType="REAL" />
+    <result column="dinner_allowance" property="dinner_allowance" jdbcType="REAL" />
+    <result column="proper_allowance" property="proper_allowance" jdbcType="REAL" />
+    <result column="wash_fee" property="wash_fee" jdbcType="REAL" />
+    <result column="book_fee" property="book_fee" jdbcType="REAL" />
+    <result column="profession_allowance" property="profession_allowance" jdbcType="REAL" />
+    <result column="left_award" property="left_award" jdbcType="REAL" />
+    <result column="allowance_sum" property="allowance_sum" jdbcType="REAL" />
+    <result column="civi_award" property="civi_award" jdbcType="REAL" />
+    <result column="energy_allowance" property="energy_allowance" jdbcType="REAL" />
+    <result column="one_child_fee" property="one_child_fee" jdbcType="REAL" />
+    <result column="house_allownace" property="house_allownace" jdbcType="REAL" />
+    <result column="pre_allowance" property="pre_allowance" jdbcType="REAL" />
+    <result column="other_allowance" property="other_allowance" jdbcType="REAL" />
+    <result column="salary_little_sum" property="salary_little_sum" jdbcType="REAL" />
+    <result column="job_allowance" property="job_allowance" jdbcType="REAL" />
+    <result column="re_job_allowance" property="re_job_allowance" jdbcType="REAL" />
+    <result column="oil_allowance" property="oil_allowance" jdbcType="REAL" />
+    <result column="mobile_allowance" property="mobile_allowance" jdbcType="REAL" />
+    <result column="buy_house_allowance" property="buy_house_allowance" jdbcType="REAL" />
+    <result column="salary_sum" property="salary_sum" jdbcType="REAL" />
+    <result column="house_fee" property="house_fee" jdbcType="REAL" />
+    <result column="warm_fee" property="warm_fee" jdbcType="REAL" />
+    <result column="water_fee" property="water_fee" jdbcType="REAL" />
+    <result column="pure_water_fee" property="pure_water_fee" jdbcType="REAL" />
+    <result column="gas_fee" property="gas_fee" jdbcType="REAL" />
+    <result column="endowment_insurance" property="endowment_insurance" jdbcType="REAL" />
+    <result column="unemployment_insurance" property="unemployment_insurance" jdbcType="REAL" />
+    <result column="medical_insurance" property="medical_insurance" jdbcType="REAL" />
+    <result column="house_fund" property="house_fund" jdbcType="REAL" />
+    <result column="re_house_fund" property="re_house_fund" jdbcType="REAL" />
+    <result column="loan_fee" property="loan_fee" jdbcType="REAL" />
+    <result column="tax_fee" property="tax_fee" jdbcType="REAL" />
+    <result column="kmq_fee" property="kmq_fee" jdbcType="REAL" />
+    <result column="kds_fee" property="kds_fee" jdbcType="REAL" />
+    <result column="other_fee" property="other_fee" jdbcType="REAL" />
+    <result column="kk_sum" property="kk_sum" jdbcType="REAL" />
+    <result column="real_salary_sum" property="real_salary_sum" jdbcType="REAL" />
+    <result column="tax_sum" property="tax_sum" jdbcType="REAL" />
+    <result column="fx_allowance" property="fx_allowance" jdbcType="REAL" />
+    <result column="yd_allowance" property="yd_allowance" jdbcType="REAL" />
+    <result column="gqzq" property="gqzq" jdbcType="REAL" />
+    <result column="sj_award" property="sj_award" jdbcType="REAL" />
+    <result column="zfygyzg" property="zfygyzg" jdbcType="REAL" />
+    <result column="cqj" property="cqj" jdbcType="REAL" />
+    <result column="jxj" property="jxj" jdbcType="REAL" />
+    <result column="jwf" property="jwf" jdbcType="REAL" />
+    <result column="gwbt" property="gwbt" jdbcType="REAL" />
+    <result column="dhb" property="dhb" jdbcType="REAL" />
+    <result column="bjrcjt" property="bjrcjt" jdbcType="REAL" />
+    <result column="mbkhj" property="mbkhj" jdbcType="REAL" />
+    <result column="other6" property="other6" jdbcType="REAL" />
+    <result column="other5" property="other5" jdbcType="REAL" />
+    <result column="other4" property="other4" jdbcType="REAL" />
+    <result column="other3" property="other3" jdbcType="VARCHAR" />
+    <result column="other2" property="other2" jdbcType="REAL" />
+    <result column="notes" property="notes" jdbcType="REAL" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="oper_user_id" property="oper_user_id" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batch_id" jdbcType="VARCHAR" />
+    <result column="all_total" property="all_total" jdbcType="REAL" />
+    <result column="other" property="other" jdbcType="REAL" />
+    <result column="other11" property="other11" jdbcType="REAL" />
+    <result column="other12" property="other12" jdbcType="REAL" />
+    <result column="other13" property="other13" jdbcType="REAL" />
+    <result column="other14" property="other14" jdbcType="REAL" />
+    <result column="other15" property="other15" jdbcType="REAL" />
+    <result column="other16" property="other16" jdbcType="VARCHAR" />
+    <result column="other17" property="other17" jdbcType="VARCHAR" />
+    <result column="other18" property="other18" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    salary_id, user_code, user_name, salary_schedule, org_name, salary_type, base_salary, 
+    level_salary, bus_salary, traffic_allowance, gas_allowance, life_allowance, dinner_allowance, 
+    proper_allowance, wash_fee, book_fee, profession_allowance, left_award, allowance_sum, 
+    civi_award, energy_allowance, one_child_fee, house_allownace, pre_allowance, other_allowance, 
+    salary_little_sum, job_allowance, re_job_allowance, oil_allowance, mobile_allowance, 
+    buy_house_allowance, salary_sum, house_fee, warm_fee, water_fee, pure_water_fee, 
+    gas_fee, endowment_insurance, unemployment_insurance, medical_insurance, house_fund, 
+    re_house_fund, loan_fee, tax_fee, kmq_fee, kds_fee, other_fee, kk_sum, real_salary_sum, 
+    tax_sum, fx_allowance, yd_allowance, gqzq, sj_award, zfygyzg, cqj, jxj, jwf, gwbt, 
+    dhb, bjrcjt, mbkhj, other6, other5, other4, other3, other2, notes, create_date, oper_user_id,batch_id,other,other11,other12,other13,other14,other15,other16,other17,other18
+  </sql>
+  <sql id="Base_Column_List2" >
+    a.salary_id, a.user_code, a.user_name, a.salary_schedule,  a.salary_type, a.base_salary, 
+    a.level_salary, a.bus_salary, a.traffic_allowance, a.gas_allowance, a.life_allowance, a.dinner_allowance, 
+    a.proper_allowance, a.wash_fee, a.book_fee, a.profession_allowance, a.left_award, a.allowance_sum, 
+    a.civi_award, a.energy_allowance, a.one_child_fee, a.house_allownace, a.pre_allowance, a.other_allowance, 
+    a.salary_little_sum, a.job_allowance, a.re_job_allowance, a.oil_allowance, a.mobile_allowance, 
+    a.buy_house_allowance, a.salary_sum, a.house_fee, a.warm_fee, a.water_fee, a.pure_water_fee, 
+    a.gas_fee, a.endowment_insurance, a.unemployment_insurance, a.medical_insurance, a.house_fund, 
+    a.re_house_fund, a.loan_fee, a.tax_fee, a.kmq_fee, a.kds_fee, a.other_fee, a.kk_sum, a.real_salary_sum, 
+    a.tax_sum, a.fx_allowance, a.yd_allowance, a.gqzq, a.sj_award, a.zfygyzg, a.cqj, a.jxj, a.jwf, a.gwbt,
+    a.dhb, a.bjrcjt, a.mbkhj, a.other6, a.other5, a.other4, a.other3, a.other2, a.notes, a.create_date, a.oper_user_id,a.batch_id,b.name,a.org_name,(a.other6+a.real_salary_sum) all_total,b.position_level,a.other,a.other11,a.other12,a.other13,a.other14,a.other15,a.other16,a.other17,a.other18
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalaryCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_salary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalary" >
+    select    
+    <include refid="Base_Column_List2" />
+    from bus_salary a   
+    	join tb_user b  on a.user_code = b.bank_account
+    where 1=1
+    <if test="salary_id !=null and salary_id != '' ">
+    	and a.salary_id = #{salary_id,jdbcType=VARCHAR}
+    </if>
+    <if test="user_code !=null and user_code != '' ">
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+    </if>  
+    <if test="salary_type !=null and salary_type != ''  and  salary_type != '-1'">
+    	and a.salary_type = #{salary_type,jdbcType=VARCHAR}
+    </if>
+    <if test="salary_schedule_start !=null and salary_schedule_start != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &gt;= str_to_date(#{salary_schedule_start,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="salary_schedule_end !=null and salary_schedule_end != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &lt;= str_to_date(#{salary_schedule_end,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="batch_id !=null and batch_id != '' ">
+    	and a.batch_id = #{batch_id,jdbcType=VARCHAR}
+    </if>
+    <if test="user_name !=null and user_name != '' ">
+    	and a.user_name like #{user_name,jdbcType=VARCHAR}
+    </if>
+    <if test="org_name !=null and org_name != '' ">
+    	and a.org_name like #{org_name,jdbcType=VARCHAR}
+    </if> 
+    <if test="position_level !=null and position_level != '' ">
+    	and b.position_level = #{position_level,jdbcType=VARCHAR}
+    </if>   
+    order by a.salary_schedule desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bus_salary
+    where salary_id = #{salary_id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.flyrui.dao.pojo.salary.BusSalaryCriteria" >
+    delete from bus_salary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.salary.BusSalary" >
+    insert into bus_salary (salary_id, user_code, user_name, 
+      salary_schedule, org_name, salary_type, 
+      base_salary, level_salary, bus_salary, 
+      traffic_allowance, gas_allowance, life_allowance, 
+      dinner_allowance, proper_allowance, wash_fee, 
+      book_fee, profession_allowance, left_award, 
+      allowance_sum, civi_award, energy_allowance, 
+      one_child_fee, house_allownace, pre_allowance, 
+      other_allowance, salary_little_sum, job_allowance, 
+      re_job_allowance, oil_allowance, mobile_allowance, 
+      buy_house_allowance, salary_sum, house_fee, 
+      warm_fee, water_fee, pure_water_fee, 
+      gas_fee, endowment_insurance, unemployment_insurance, 
+      medical_insurance, house_fund, re_house_fund, 
+      loan_fee, tax_fee, kmq_fee, 
+      kds_fee, other_fee, kk_sum, 
+      real_salary_sum, tax_sum, fx_allowance, 
+      yd_allowance, gqzq, sj_award, 
+      zfygyzg, cqj, jxj, jwf, 
+      gwbt, dhb, bjrcjt, mbkhj, 
+      other6, other5, other4, other3, 
+      other2, notes, create_date, 
+      oper_user_id,batch_id,other,other11,other12,other13,other14,other15,other16,other17,other18)
+    values (#{salary_id,jdbcType=VARCHAR}, #{user_code,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, 
+      #{salary_schedule,jdbcType=VARCHAR}, #{org_name,jdbcType=VARCHAR}, #{salary_type,jdbcType=VARCHAR}, 
+      #{base_salary,jdbcType=REAL}, #{level_salary,jdbcType=REAL}, #{bus_salary,jdbcType=REAL}, 
+      #{traffic_allowance,jdbcType=REAL}, #{gas_allowance,jdbcType=REAL}, #{life_allowance,jdbcType=REAL}, 
+      #{dinner_allowance,jdbcType=REAL}, #{proper_allowance,jdbcType=REAL}, #{wash_fee,jdbcType=REAL}, 
+      #{book_fee,jdbcType=REAL}, #{profession_allowance,jdbcType=REAL}, #{left_award,jdbcType=REAL}, 
+      #{allowance_sum,jdbcType=REAL}, #{civi_award,jdbcType=REAL}, #{energy_allowance,jdbcType=REAL}, 
+      #{one_child_fee,jdbcType=REAL}, #{house_allownace,jdbcType=REAL}, #{pre_allowance,jdbcType=REAL}, 
+      #{other_allowance,jdbcType=REAL}, #{salary_little_sum,jdbcType=REAL}, #{job_allowance,jdbcType=REAL}, 
+      #{re_job_allowance,jdbcType=REAL}, #{oil_allowance,jdbcType=REAL}, #{mobile_allowance,jdbcType=REAL}, 
+      #{buy_house_allowance,jdbcType=REAL}, #{salary_sum,jdbcType=REAL}, #{house_fee,jdbcType=REAL}, 
+      #{warm_fee,jdbcType=REAL}, #{water_fee,jdbcType=REAL}, #{pure_water_fee,jdbcType=REAL}, 
+      #{gas_fee,jdbcType=REAL}, #{endowment_insurance,jdbcType=REAL}, #{unemployment_insurance,jdbcType=REAL}, 
+      #{medical_insurance,jdbcType=REAL}, #{house_fund,jdbcType=REAL}, #{re_house_fund,jdbcType=REAL}, 
+      #{loan_fee,jdbcType=REAL}, #{tax_fee,jdbcType=REAL}, #{kmq_fee,jdbcType=REAL}, 
+      #{kds_fee,jdbcType=REAL}, #{other_fee,jdbcType=REAL}, #{kk_sum,jdbcType=REAL}, 
+      #{real_salary_sum,jdbcType=REAL}, #{tax_sum,jdbcType=REAL}, #{fx_allowance,jdbcType=REAL}, 
+      #{yd_allowance,jdbcType=REAL}, #{gqzq,jdbcType=REAL}, #{sj_award,jdbcType=REAL}, 
+      #{zfygyzg,jdbcType=REAL}, #{cqj,jdbcType=REAL}, #{jxj,jdbcType=REAL}, #{jwf,jdbcType=REAL}, 
+      #{gwbt,jdbcType=REAL}, #{dhb,jdbcType=REAL}, #{bjrcjt,jdbcType=REAL}, #{mbkhj,jdbcType=REAL}, 
+      #{other6,jdbcType=REAL}, #{other5,jdbcType=REAL}, #{other4,jdbcType=REAL}, #{other3,jdbcType=VARCHAR}, 
+      #{other2,jdbcType=REAL}, #{notes,jdbcType=REAL}, #{create_date,jdbcType=TIMESTAMP}, 
+      #{oper_user_id,jdbcType=VARCHAR},#{batch_id,jdbcType=VARCHAR}, #{other,jdbcType=REAL}, #{other11,jdbcType=REAL},
+      #{other12,jdbcType=REAL}, #{other13,jdbcType=REAL}, #{other14,jdbcType=REAL}, #{other15,jdbcType=REAL}, 
+      #{other16,jdbcType=VARCHAR}, #{other17,jdbcType=VARCHAR}, #{other18,jdbcType=VARCHAR})
+  </insert> 
+  
+  <sql id="Base_Column_List3" >
+    '-1' salary_id,'合计' user_code, '' user_name,'' salary_schedule, '' salary_type, sum(a.base_salary) as  base_salary, 
+    sum(a.level_salary) as  level_salary, sum(a.bus_salary) bus_salary, sum(a.traffic_allowance) traffic_allowance,sum(a.gas_allowance) gas_allowance, sum(a.life_allowance) life_allowance, sum(a.dinner_allowance) dinner_allowance, 
+    sum(a.proper_allowance) proper_allowance, sum(a.wash_fee) wash_fee, sum(a.book_fee) book_fee, sum(a.profession_allowance) profession_allowance, sum(a.left_award) left_award, sum(a.allowance_sum) allowance_sum, 
+    sum(a.civi_award) civi_award, sum(a.energy_allowance) energy_allowance, sum(a.one_child_fee) one_child_fee, sum(a.house_allownace) house_allownace, sum(a.pre_allowance) pre_allowance, sum(a.other_allowance) other_allowance, 
+    sum(a.salary_little_sum) salary_little_sum,sum(a.job_allowance) job_allowance, sum(a.re_job_allowance) re_job_allowance, sum(a.oil_allowance) oil_allowance, sum(a.mobile_allowance) mobile_allowance, 
+    sum(a.buy_house_allowance) buy_house_allowance, sum(a.salary_sum) salary_sum, sum(a.house_fee) house_fee, sum(a.warm_fee) warm_fee, sum(a.water_fee) water_fee, sum(a.pure_water_fee) pure_water_fee, 
+    sum(a.gas_fee) gas_fee, sum(a.endowment_insurance) endowment_insurance, sum(a.unemployment_insurance) unemployment_insurance, sum(a.medical_insurance) medical_insurance, sum(a.house_fund) house_fund, 
+    sum(a.re_house_fund) re_house_fund, sum(a.loan_fee) loan_fee, sum(a.tax_fee) tax_fee, sum(a.kmq_fee) kmq_fee, sum(a.kds_fee) kds_fee, sum(a.other_fee) other_fee, sum(a.kk_sum) kk_sum, sum(a.real_salary_sum) real_salary_sum, 
+    sum(a.tax_sum) tax_sum, sum(a.fx_allowance) fx_allowance, sum(a.yd_allowance) yd_allowance, sum(a.gqzq) gqzq, sum(a.sj_award) sj_award, sum(a.zfygyzg) zfygyzg, sum(a.cqj) cqj, sum(a.jxj) jxj, sum(a.jwf) jwf, sum(a.gwbt) gwbt,
+    sum(a.dhb) dhb, sum(a.bjrcjt) bjrcjt, sum(a.mbkhj) mbkhj, sum(a.other6) other6, sum(a.other5) other5, sum(a.other4) other4, '' other3, sum(a.other2) other2,  '' notes,  null create_date, '' oper_user_id, '' batch_id, '' name, '' org_name,sum(a.other6+a.real_salary_sum) all_total,'' position_level,
+    sum(a.other) other,sum(a.other11) other11,sum(a.other12) other12,sum(a.other13) other13,sum(a.other14) other14,sum(a.other15) other15,'' other16 ,'' other17,'' other18
+  </sql>
+  <select id="selectSum" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalary" >
+    select    
+    <include refid="Base_Column_List3" />
+    from bus_salary a
+    	 join tb_user b ON a.user_code = b.bank_account
+    where 1=1
+    <if test="salary_id !=null and salary_id != '' ">
+    	and a.salary_id = #{salary_id,jdbcType=VARCHAR}
+    </if>
+    <if test="user_code !=null and user_code != '' ">
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+    </if>  
+    <if test="salary_type !=null and salary_type != ''  and  salary_type != '-1'">
+    	and a.salary_type = #{salary_type,jdbcType=VARCHAR}
+    </if>
+    <if test="salary_schedule_start !=null and salary_schedule_start != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &gt;= str_to_date(#{salary_schedule_start,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="salary_schedule_end !=null and salary_schedule_end != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &lt;= str_to_date(#{salary_schedule_end,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="batch_id !=null and batch_id != '' ">
+    	and a.batch_id = #{batch_id,jdbcType=VARCHAR}
+    </if>
+     <if test="user_name !=null and user_name != '' ">
+    	and a.user_name like #{user_name,jdbcType=VARCHAR}
+    </if>
+    <if test="org_name !=null and org_name != '' ">
+    	and a.org_name like #{org_name,jdbcType=VARCHAR}
+    </if>
+    <if test="position_level !=null and position_level != '' ">
+    	and b.position_level = #{position_level,jdbcType=VARCHAR}
+    </if> 
+    order by a.salary_schedule desc
+  </select>
+  
+  <sql id="Base_Column_List4" >
+    '-1' salary_id,a.user_code user_code, b.name user_name,'' salary_schedule, '' salary_type, sum(a.base_salary) as  base_salary, 
+    sum(a.level_salary) as  level_salary, sum(a.bus_salary) bus_salary, sum(a.traffic_allowance) traffic_allowance,sum(a.gas_allowance) gas_allowance, sum(a.life_allowance) life_allowance, sum(a.dinner_allowance) dinner_allowance, 
+    sum(a.proper_allowance) proper_allowance, sum(a.wash_fee) wash_fee, sum(a.book_fee) book_fee, sum(a.profession_allowance) profession_allowance, sum(a.left_award) left_award, sum(a.allowance_sum) allowance_sum, 
+    sum(a.civi_award) civi_award, sum(a.energy_allowance) energy_allowance, sum(a.one_child_fee) one_child_fee, sum(a.house_allownace) house_allownace, sum(a.pre_allowance) pre_allowance, sum(a.other_allowance) other_allowance, 
+    sum(a.salary_little_sum) salary_little_sum,sum(a.job_allowance) job_allowance, sum(a.re_job_allowance) re_job_allowance, sum(a.oil_allowance) oil_allowance, sum(a.mobile_allowance) mobile_allowance, 
+    sum(a.buy_house_allowance) buy_house_allowance, sum(a.salary_sum) salary_sum, sum(a.house_fee) house_fee, sum(a.warm_fee) warm_fee, sum(a.water_fee) water_fee, sum(a.pure_water_fee) pure_water_fee, 
+    sum(a.gas_fee) gas_fee, sum(a.endowment_insurance) endowment_insurance, sum(a.unemployment_insurance) unemployment_insurance, sum(a.medical_insurance) medical_insurance, sum(a.house_fund) house_fund, 
+    sum(a.re_house_fund) re_house_fund, sum(a.loan_fee) loan_fee, sum(a.tax_fee) tax_fee, sum(a.kmq_fee) kmq_fee, sum(a.kds_fee) kds_fee, sum(a.other_fee) other_fee, sum(a.kk_sum) kk_sum, sum(a.real_salary_sum) real_salary_sum, 
+    sum(a.tax_sum) tax_sum, sum(a.fx_allowance) fx_allowance, sum(a.yd_allowance) yd_allowance, sum(a.gqzq) gqzq, sum(a.sj_award) sj_award, sum(a.zfygyzg) zfygyzg, sum(a.cqj) cqj, sum(a.jxj) jxj, sum(a.jwf) jwf, sum(a.gwbt) gwbt,
+    sum(a.dhb) dhb, sum(a.bjrcjt) bjrcjt, sum(a.mbkhj) mbkhj, sum(a.other6) other6, sum(a.other5) other5, sum(a.other4) other4, '' other3, sum(a.other2) other2,  '' notes,  null create_date, '' oper_user_id, '' batch_id, '' name, '' org_name,sum(a.other6+a.real_salary_sum) all_total,b.position_level position_level,
+    sum(a.other) other,sum(a.other11) other11,sum(a.other12) other12,sum(a.other13) other13,sum(a.other14) other14,sum(a.other15) other15,'' other16 ,'' other17,'' other18
+  </sql>
+  <select id="selectSumLevel" resultMap="BaseLevelResultMap" parameterType="com.flyrui.dao.pojo.salary.BusSalaryLevel" >
+    select    
+    <include refid="Base_Column_List4" />
+    from bus_salary a
+    	 join tb_user b ON a.user_code = b.bank_account
+    where 1=1
+    <if test="salary_id !=null and salary_id != '' ">
+    	and a.salary_id = #{salary_id,jdbcType=VARCHAR}
+    </if>
+    <if test="user_code !=null and user_code != '' ">
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+    </if>  
+    <if test="salary_type !=null and salary_type != ''  and  salary_type != '-1'">
+    	and a.salary_type = #{salary_type,jdbcType=VARCHAR}
+    </if>
+    <if test="salary_schedule_start !=null and salary_schedule_start != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &gt;= str_to_date(#{salary_schedule_start,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="salary_schedule_end !=null and salary_schedule_end != '' ">
+    	and str_to_date(LEFT(concat(a.salary_schedule,'01'),8),'%Y%m%d') &lt;= str_to_date(#{salary_schedule_end,jdbcType=VARCHAR},'%Y-%m-%d')
+    </if>
+    <if test="batch_id !=null and batch_id != '' ">
+    	and a.batch_id = #{batch_id,jdbcType=VARCHAR}
+    </if>
+     <if test="user_name !=null and user_name != '' ">
+    	and a.user_name like #{user_name,jdbcType=VARCHAR}
+    </if>
+    <if test="org_name !=null and org_name != '' ">
+    	and a.org_name like #{org_name,jdbcType=VARCHAR}
+    </if>
+    <if test="position_level !=null and position_level != '' ">
+    	and b.position_level = #{position_level,jdbcType=VARCHAR}
+    </if> 
+    GROUP BY a.user_code,b.name,b.position_level
+  </select>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.salary.BusSalary" >
+    delete from bus_salary
+    where salary_id = #{salary_id,jdbcType=VARCHAR}
+  </delete>  
+</mapper>

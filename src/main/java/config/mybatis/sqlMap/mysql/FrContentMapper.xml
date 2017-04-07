@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.FrContentMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.dao.pojo.channel.FrContent" >
+    <id column="content_id" property="content_id" jdbcType="INTEGER" />
+    <result column="channel_id" property="channel_id" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+    <result column="type_id" property="type_id" jdbcType="INTEGER" />
+    <result column="site_id" property="site_id" jdbcType="INTEGER" />
+    <result column="sort_date" property="sort_date" jdbcType="TIMESTAMP" />
+    <result column="top_level" property="top_level" jdbcType="TINYINT" />
+    <result column="has_title_img" property="has_title_img" jdbcType="BIT" />
+    <result column="is_recommend" property="is_recommend" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="views_day" property="views_day" jdbcType="INTEGER" />
+    <result column="comments_day" property="comments_day" jdbcType="SMALLINT" />
+    <result column="downloads_day" property="downloads_day" jdbcType="SMALLINT" />
+    <result column="ups_day" property="ups_day" jdbcType="SMALLINT" />
+  </resultMap>
+  <resultMap id="AllResultMap" type="com.flyrui.dao.pojo.channel.FrContent" extends="BaseResultMap" >   
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="short_title" property="short_title" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="origin_url" property="origin_url" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="release_date" property="release_date" jdbcType="TIMESTAMP" />
+    <result column="media_path" property="media_path" jdbcType="VARCHAR" />
+    <result column="media_type" property="media_type" jdbcType="VARCHAR" />
+    <result column="title_color" property="title_color" jdbcType="VARCHAR" />
+    <result column="is_bold" property="is_bold" jdbcType="BIT" />
+    <result column="title_img" property="title_img" jdbcType="VARCHAR" />
+    <result column="content_img" property="content_img" jdbcType="VARCHAR" />
+    <result column="type_img" property="type_img" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="tpl_content" property="tpl_content" jdbcType="VARCHAR" />
+    <result column="need_regenerate" property="need_regenerate" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    content_id, channel_id, user_id, type_id, site_id, sort_date, top_level, has_title_img, 
+    is_recommend, status, views_day, comments_day, downloads_day, ups_day
+  </sql>
+  <sql id="ALL_Column_List" >
+    b.content_id, b.channel_id, b.user_id, b.type_id, b.site_id, b.sort_date, b.top_level, b.has_title_img, 
+    b.is_recommend, b.status, b.views_day, b.comments_day, b.downloads_day, b.ups_day, a.title, a.short_title, a.author, a.origin, a.origin_url, a.description, a.release_date, 
+    a.media_path, a.media_type, a.title_color, a.is_bold, a.title_img, a.content_img, a.type_img, a.link, 
+    a.tpl_content, a.need_regenerate
+  </sql>
+  <delete id="delete" parameterType="com.flyrui.dao.pojo.channel.FrContent" >
+    delete from fr_content
+    where content_id = #{content_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flyrui.dao.pojo.channel.FrContent" >
+    insert into fr_content (content_id, channel_id, user_id, 
+      type_id, site_id, sort_date, 
+      top_level, has_title_img, is_recommend, 
+      status, views_day, comments_day, 
+      downloads_day, ups_day)
+    values (#{content_id,jdbcType=INTEGER}, #{channel_id,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, 
+      #{type_id,jdbcType=INTEGER}, #{site_id,jdbcType=INTEGER}, #{sort_date,jdbcType=TIMESTAMP}, 
+      #{top_level,jdbcType=TINYINT}, #{has_title_img,jdbcType=BIT}, #{is_recommend,jdbcType=BIT}, 
+      #{status,jdbcType=TINYINT}, #{views_day,jdbcType=INTEGER}, #{comments_day,jdbcType=SMALLINT}, 
+      #{downloads_day,jdbcType=SMALLINT}, #{ups_day,jdbcType=SMALLINT})
+  </insert>
+  <update id="update" parameterType="com.flyrui.dao.pojo.channel.FrContent" >
+    update fr_content
+    set channel_id = #{channel_id,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER},
+      type_id = #{type_id,jdbcType=INTEGER},
+      site_id = #{site_id,jdbcType=INTEGER},
+      sort_date = #{sort_date,jdbcType=TIMESTAMP},
+      top_level = #{top_level,jdbcType=TINYINT},
+      has_title_img = #{has_title_img,jdbcType=BIT},
+      is_recommend = #{is_recommend,jdbcType=BIT},
+      status = #{status,jdbcType=TINYINT},
+      views_day = #{views_day,jdbcType=INTEGER},
+      comments_day = #{comments_day,jdbcType=SMALLINT},
+      downloads_day = #{downloads_day,jdbcType=SMALLINT},
+      ups_day = #{ups_day,jdbcType=SMALLINT}
+    where content_id = #{content_id,jdbcType=INTEGER}
+  </update>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.channel.FrContent" >
+    select
+    <include refid="Base_Column_List" />
+    from fr_content
+     where 1 = 1 
+    <if test="content_id != null" >
+       and content_id = #{content_id,jdbcType=INTEGER}
+    </if>
+    <if test="channel_id != null" >
+       and channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="queryAllWithExt" resultMap="AllResultMap" parameterType="com.flyrui.dao.pojo.channel.FrContent" >
+    select
+    <include refid="ALL_Column_List" />
+    from fr_content b left join fr_content_ext a on b.content_id = a.content_id
+     where 1 = 1 
+    <if test="content_id != null" >
+       and b.content_id = #{content_id,jdbcType=INTEGER}
+    </if>
+    <if test="channel_id != null" >
+       and b.channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+    <if test="title != null" >
+       and a.title like #{title,jdbcType=VARCHAR}
+    </if>
+    order by release_date desc
+  </select>
+</mapper>

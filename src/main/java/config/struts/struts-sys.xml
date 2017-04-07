@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="login" extends="frcms_default" namespace="/Sys">
+    
+    	<action name="main" class="com.flyrui.sys.action.SysAction" method="adminIdxInit">
+        	<result name="login">        	  
+                 /admin/login/
+            </result>
+            <result name="main">        	  
+                /admin/main_new/main.jsp
+            </result>             
+        </action>
+        
+    	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
+    	<!-- result配置:name-方法名称,type:返回类型 -->
+    	<action name="Sys!*" class="com.flyrui.sys.action.SysAction" method="{1}">
+        	
+        	 <result type="json">
+        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+                <param name="root">result</param>
+            </result>
+            <interceptor-ref name="json">
+            	  <param name="root">menuOptBean</param>
+            </interceptor-ref>
+			<interceptor-ref name="systemInterceptorStack"></interceptor-ref> 
+        </action> 
+        <action name="*!*" class="com.flyrui.sys.action.{1}Action" method="{2}">
+        	 <result type="json">
+        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+                <param name="root">result</param>
+            </result>             
+        </action> 
+    </package>
+    <package name="common" extends="frcms_default" namespace="/Common">    
+    	 <action name="uploadImg" class="com.flyrui.common.upload.UploadImgAction" method="upload">
+        	 <result type="json">   
+        	 	<param name="contentType">text/html</param>     	  
+                <param name="root">result</param>
+            </result>
+            <result name="error" type="json">  
+            	<param name="contentType">text/html</param>       	  
+                <param name="root">result</param>
+            </result>             
+        </action>  
+        <action name="uploadUEIMG" class="com.flyrui.common.upload.UploadImgAction" method="uploadUEIMG">
+        	 <result type="json">   
+        	 	<param name="contentType">text/html</param>     	  
+                <param name="root">result</param>
+            </result>
+            <result name="error" type="json">  
+            	<param name="contentType">text/html</param>       	  
+                <param name="root">result</param>
+            </result>             
+        </action> 
+        <action name="uploadUEFile" class="com.flyrui.common.upload.UploadImgAction" method="uploadUEFile">
+        	 <result type="json">   
+        	 	<param name="contentType">text/html</param>     	  
+                <param name="root">result</param>
+            </result>
+            <result name="error" type="json">  
+            	<param name="contentType">text/html</param>       	  
+                <param name="root">result</param>
+            </result>             
+        </action>  	
+    </package>
+    <package name="web" extends="frcms_default" namespace="/">    
+    	<action name="index" class="com.flyrui.web.action.WebAction" method="index">
+        	<result name="index"> 
+        	 	/web/home.jsp
+            </result>          
+        </action>                  
+        <action name="web_*" class="com.flyrui.web.action.WebAction" method="{1}">
+        	<result name="commonNavHeader"> 
+        	 	/web/commonNavHeader.jsp
+            </result> 
+            <result name="showList"> 
+        	 	/web/channelList.jsp
+            </result>
+            <result name="showContentDetail"> 
+        	 	/web/detail.jsp
+            </result>
+            <result name="commonFooter"> 
+        	 	/web/footer.jsp
+            </result>    
+            <result name="showDetailWithSub"> 
+        	 	/web/channelListWithSub.jsp
+            </result> 
+            <result name="search"> 
+        	 	/web/searchResult.jsp
+            </result> 
+        </action> 
+    </package>
+</struts>

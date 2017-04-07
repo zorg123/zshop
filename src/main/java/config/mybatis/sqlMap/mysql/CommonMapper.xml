@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.common" >  
+  <select id="getSequence" resultType="hashmap" parameterType="hashmap">
+  	SELECT nextval(#{sequence_name,jdbcType=VARCHAR}) as seq FROM DUAL;
+  </select>
+  <insert id="insertEventLog" parameterType="com.flyrui.framework.web.filter.vo.PageLogVO">
+  	insert into fr_event(event_id,event_time,user_no,login_type,visit_url,object_id,visit_ip,login_prod_no,opr_prod_no,opr_user_no,login_area_code,opr_area_code,custgroup,custbrand,logon_name,session_id,sequ,oper_system,screen_size,browser_name,serv_kind,serv_type,serv_no,source_url,servid,businessid)
+  	values(getSequence('seq_event_id',3,20),#{event_time,jdbcType=TIMESTAMP},#{user_no,jdbcType=VARCHAR},#{login_type,jdbcType=VARCHAR},
+  	#{visit_url,jdbcType=VARCHAR},#{object_id,jdbcType=VARCHAR},#{visit_ip,jdbcType=VARCHAR},#{login_prod_no,jdbcType=VARCHAR},
+  	#{opr_prod_no,jdbcType=VARCHAR},#{opr_user_no,jdbcType=VARCHAR},#{login_area_code,jdbcType=VARCHAR},#{opr_area_code,jdbcType=VARCHAR},#{custgroup,jdbcType=VARCHAR},
+  	#{custbrand,jdbcType=VARCHAR},#{logon_name,jdbcType=VARCHAR},#{session_id,jdbcType=VARCHAR},#{sequ,jdbcType=INTEGER},#{oper_system,jdbcType=VARCHAR},#{screen_size,jdbcType=VARCHAR},
+  	#{browser_name,jdbcType=VARCHAR},#{serv_kind,jdbcType=VARCHAR},#{serv_type,jdbcType=VARCHAR},
+  	#{serv_no,jdbcType=VARCHAR},#{source_url,jdbcType=VARCHAR},'','')
+  </insert>
+  <update id="updateWebVisitCount" parameterType="hashmap">
+  		UPDATE fr_config SET cf_value = cf_value+1 WHERE cf_id = 'web_visit_count'
+  </update>
+  <select id="queryWebVisitCount" resultType="hashmap" parameterType="hashmap">
+  		select cf_value from  fr_config WHERE cf_id = 'web_visit_count'
+  </select>
+   <select id="queryFrCfgList" resultType="hashmap" parameterType="hashmap">
+  		select cf_id,cf_value,cf_desc from  fr_config
+  </select>
+</mapper>
