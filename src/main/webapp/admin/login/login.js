@@ -28,7 +28,7 @@ var Login={
                     if(!result||reply==result) alert("系统超时未返回，请重试!");	  
           		 
           		  	if(result.code=='0'){          		  		
-          		  		window.location.href=base+"/Sys/main.do?r="+(new Date());
+          		  		window.location.href=base+"/Sys/main.do?r="+(new Date()).getTime();
           		  	}else{  	    
           		  		Login.refreshValidCode();
           		  		alert(result.msg);
