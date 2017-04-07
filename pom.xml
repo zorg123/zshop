@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.flyrui</groupId>
-	<artifactId>HkyInfoShare</artifactId>
+	<artifactId>FrCMSMaven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>HkyInfoShare</name>
-	<description>Hky Info Share Project</description>
+	<name>FrCMSMaven</name>
+	<description>Fr CMS Maven Project</description>
 	<properties>
     	<org.springframework.version>4.3.4.RELEASE</org.springframework.version>
     	<org.apache.struts.version>2.3.32</org.apache.struts.version>
