@@ -1,8 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
-<%@ page import="org.jasig.cas.client.validation.Assertion" %>
-<%@ page import="org.jasig.cas.client.util.AssertionHolder" %>
 <%@ page import="java.util.*" %>
 <%
 	String baseUri = request.getContextPath();	
