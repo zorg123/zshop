@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.jasig.cas.client.authentication.AttributePrincipal;
-import org.jasig.cas.client.validation.Assertion;
+//import org.jasig.cas.client.authentication.AttributePrincipal;
+//import org.jasig.cas.client.validation.Assertion;
 
 import com.flyrui.common.SpringBeans;
 import com.flyrui.dao.pojo.sys.User;
@@ -63,7 +63,7 @@ public class LoginAuthInterceptor extends AbstractInterceptor {
 		String actionName = ctx.getName();
 		Map<String,Object> session = ctx.getSession();
 		Object user = session.get("user");
-		if(user == null){
+		/*if(user == null){
 			HttpSession s = ServletActionContext.getRequest().getSession();
 			Assertion assertion = (Assertion) s.getAttribute("_const_cas_assertion_");
 			//从单点过来的用户，直接
@@ -85,10 +85,10 @@ public class LoginAuthInterceptor extends AbstractInterceptor {
 				user = tUser;
 			}
 			
-		}
+		}*/
 		
 		Object sararyUser = session.get("sararyUser");
-		if(sararyUser == null){
+		/*if(sararyUser == null){
 			HttpSession s = ServletActionContext.getRequest().getSession();
 			Assertion assertion = (Assertion) s.getAttribute("_const_cas_assertion_");
 			//从单点过来的用户，直接
@@ -108,7 +108,7 @@ public class LoginAuthInterceptor extends AbstractInterceptor {
 					s.setAttribute("sararyUser", salaryUser);
 				}				
 			}			
-		}
+		}*/
 		
 		//validateLogin
 		if(user!=null || !isNeed|| "validateLogin".equals(method) || "loginOut".equals(method)){
