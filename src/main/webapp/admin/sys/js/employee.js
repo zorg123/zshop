@@ -426,7 +426,25 @@ $(function () {
                     	url:base+'/Sys/User!queryRoleList.do',
                     	loadFilter:function(data){			
             				return Employee.loadFilter(data);
-            			}
+            			},
+            			width:'100%',
+            			height:'100%',
+            			columns:[[  
+            			          	{field:'ck',checkbox:true},
+            						{field:'role_id',title:'角色id'},    
+            						{field:'role_name',title:'角色名称'},
+            						{field:'role_desc',title:'描述'},
+            						{field:'create_date',title:'角色维护时间',formatter:function(value, row, index){
+            						    if(value){
+	            							if (value.indexOf("T")>0) {
+	            						        return value.replace("T"," ");
+	            						    }
+	            						    else {
+	            						        return value;
+	            						    }
+            						    }
+            					}}          
+            		   ]] 
                     })
                 }
             },
@@ -442,11 +460,36 @@ $(function () {
                     }
                     $('#user_role_info').show();
                     $('#user_role_info').window({
-                        width: 700,
-                        height: 430,
+                        width: 500,
+                        height: 450,
                         modal: true
                     });
-                    Employee.initUserRole();
+                    //Employee.initUserRole();
+                    $('#employee_role_list').datagrid({
+                    	url:base+'/Sys/User!queryRoleIdByUserId.do',
+                    	loadFilter:function(data){			
+            				return Employee.loadFilter(data);
+            			},
+            			queryParams: {'user.user_id': row.user_id},
+            			width:'100%',
+            			height:'100%',
+            			columns:[[
+            			          	{field:'ck',checkbox:true},
+            						{field:'role_id',title:'角色id'},    
+            						{field:'role_name',title:'角色名称'},
+            						{field:'role_desc',title:'描述'},
+            						{field:'create_date',title:'角色维护时间',formatter:function(value, row, index){
+            						    if(value){
+	            							if (value.indexOf("T")>0) {
+	            						        return value.replace("T"," ");
+	            						    }
+	            						    else {
+	            						        return value;
+	            						    }
+            						    }
+            					}}          
+            		   ]] 
+                    })
                 }
             },
             '-',

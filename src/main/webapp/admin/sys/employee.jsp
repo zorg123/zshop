@@ -61,18 +61,9 @@
         	 <a style="margin-right:10px;" href="javascript:void(0);" class="easyui-linkbutton" id="search_role_btn" iconCls="icon-search">搜索</a>
         </div>
     </div>
-    <div region="center" style="height: 350px;">
+    <div region="center" style="height:350px">
         <table id="roleList" rownumbers="true" pagination="true"
-               fitColumns="false" nowrap="false" showFooter="true" singleSelect="false" checkbox="true"  loadFilter="Employee.loadFilter" style="height:350px">
-            <thead>
-            <tr>
-                <th checkbox="true"></th>
-                <th field="role_id" width="70">角色ID</th>
-                <th field="role_name" width="150">角色名称</th>
-                <th field="role_desc" width="150">描述</th>
-                <th field="create_date" width="200">角色维护时间</th>
-            </tr>
-            </thead>
+               fit="true" fitcolumns="false" nowrap="false" showFooter="true" singleSelect="false" checkbox="true"  loadFilter="Employee.loadFilter" style="height:100%">           
         </table>
     </div>
     <div region="center" style="margin-top: 5px;text-align:center;margin-bottom: 5px;" >
@@ -262,16 +253,7 @@
 <div id="user_role_info" rgion="center" style="display: none;" title="用户角色">
     <div region="center"  style="height: 350px;">
         <table id="employee_role_list" rownumbers="true" pagination="true"
-               fitColumns="false" nowrap="false" showFooter="true" singleSelect="false" checkbox="true" style="height:330px">
-            <thead>
-            <tr>
-                <th checkbox="true"></th>
-                <th field="role_id" width="80" hidden>角色ID</th>
-                <th field="role_name" width="150">角色名称</th>
-                <th field="role_desc" width="180">描述</th>
-                <th field="create_time" width="160">角色维护时间</th>
-            </tr>
-            </thead>
+               fit="true" fitColumns="false" nowrap="false" showFooter="true" singleSelect="false" checkbox="true" loadFilter="Employee.loadFilter" style="height:100%">
         </table>
     </div>
     <div region="bottom"  style="height: 40px;text-align:center" >
