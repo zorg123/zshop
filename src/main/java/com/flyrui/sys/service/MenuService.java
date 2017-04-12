@@ -19,7 +19,7 @@ public interface MenuService {
      * Administrator
      * Jul 6, 2012
      */
-    public List getSubMenuListByUpId(Map<String,String> param);
+    public List<TbMenu> getSubMenuListByUpId(Map<String,String> param);
     
     /**
 	 * 根据角色查询角色拥有的菜单信息

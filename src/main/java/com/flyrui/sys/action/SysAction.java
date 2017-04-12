@@ -181,4 +181,51 @@ public class SysAction extends BaseAction {
     }
 	
 
+    /**
+	 * 
+	 * 新版管理页面初始化
+	 * 根据登陆的角色，查询最上层功能模块和下级模块
+	 * @return
+	 * @throws FRException [返回类型说明]
+	 * 
+	 * rover.lee
+	 * Sep 27, 2014
+	 */
+    @SessionCheckAnnotation(needCheckSession="false")
+    public String adminIdxInitWap() throws FRException{
+    	String resultName= "main";
+    	User user = getLoginUserInfo();
+    	if(user != null){
+    		List<TbRole> role = getUserRole(user);
+    		if(role!=null){
+    			MenuService menuService = (MenuService)SpringBeans.getBean("menuService");
+    			menuList = menuService.getRootMenuListByRoles(role);  
+    			if(menuList!=null && menuList.size()>0){
+    				//查找子菜单
+    				for( int i=0;i<menuList.size();i++){
+    					TbMenu menu = (TbMenu)menuList.get(i);
+    					Map<String,String> param = new HashMap<String,String>();
+    					param.put("user_id", user.getUser_id());
+    					param.put("menu_id", menu.getMenu_id()+"");    					
+    				    List<TbMenu> retList = menuService.getSubMenuListByUpId(param);
+    				    /*for(TbMenu subMenu : retList){//增加查询三层菜单
+    				    	Map<String,String> paramSub = new HashMap<String,String>();
+    				    	paramSub.put("user_id", user.getUser_id());
+    				    	paramSub.put("menu_id", subMenu.getMenu_id()+"");    					
+        				    List<TbMenu> retSubList = menuService.getSubMenuListByUpId(param);
+        				    subMenu.setSub_menu_list(retSubList);
+    				    }*/
+    				    
+    				    menu.setSub_menu_list(retList);
+    				}
+    			}
+    		}else{
+    			FRException frException = new FRException(new FRError(ErrorConstants.SYS_ROLE_NOT_FOUND));
+    			throw frException;
+    		}
+    	}else{
+    		resultName = "login";
+    	}
+    	return resultName;
+    }
 }
