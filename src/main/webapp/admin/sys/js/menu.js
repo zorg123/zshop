@@ -174,6 +174,23 @@ $(function(){
 			editIndex = undefined;
 			return Menu.loadFilter(data);
 		},
+		columns:[[  {field:'ck',checkbox:true},
+					{field:'menu_id',title:'菜单ID',editor:'text'},    
+					{field:'menu_name',title:'菜单名称',editor:'text'},
+					{field:'menu_url',title:'菜单链接',editor:'text'},
+					{field:'url_open_type',title:'打开方式',editor:'text'},
+					{field:'menu_desc',title:'功能描述',editor:'text'},
+					{field:'state',title:'菜单状态',formatter:Menu.formatState,editor:{
+						type:'combobox',
+						options:{
+							valueField:'state',
+							textField:'stateName',
+							url:'state.json',
+							required:true
+						}}},
+					{field:'order_id',title:'排序ID',editor:'text'}
+						          
+		 ]] ,
 		toolbar:[{
 			text:'新增',
 			iconCls:'icon-add',
