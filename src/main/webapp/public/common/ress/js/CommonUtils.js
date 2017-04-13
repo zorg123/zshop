@@ -3,9 +3,6 @@ $.ajaxSetup({
 });
 var CommonUtils={
 	invokeAction:function(action,param,callBack,isSync,v_contentType){
-	    if(!isSync){
-	    	isSync = true;
-	    }	   
 	    if(!v_contentType){
 	    	v_contentType = "application/x-www-form-urlencoded;charset=UTF-8"
 	    }
