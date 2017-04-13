@@ -20,7 +20,7 @@ public class CoinTrackDto implements Serializable {
 	
 	private Float coin_num;
 	
-	private String create_type;
+	private Integer create_type;
 	
 	private Integer oper_user_id;
 	
@@ -30,7 +30,13 @@ public class CoinTrackDto implements Serializable {
 	
 	private Date create_time;
 	
+	private String comments;
+	
 	private String file_info;
+	
+	private String start_time;
+	
+	private String end_time;
 
 	public Integer getId() {
 		return id;
@@ -64,11 +70,11 @@ public class CoinTrackDto implements Serializable {
 		this.coin_num = coin_num;
 	}
 
-	public String getCreate_type() {
+	public Integer getCreate_type() {
 		return create_type;
 	}
 
-	public void setCreate_type(String create_type) {
+	public void setCreate_type(Integer create_type) {
 		this.create_type = create_type;
 	}
 
@@ -130,6 +136,30 @@ public class CoinTrackDto implements Serializable {
 
 	public void setOper_user_name(String oper_user_name) {
 		this.oper_user_name = oper_user_name;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
 	}
 	
 }

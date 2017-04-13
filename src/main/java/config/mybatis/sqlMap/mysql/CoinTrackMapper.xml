@@ -6,13 +6,15 @@
     	<result column="user_id" property="user_id" jdbcType="INTEGER" />
     	<result column="coin_type" property="coin_type" jdbcType="INTEGER" />
     	<result column="coin_num" property="coin_num" jdbcType="DOUBLE" />
-    	<result column="create_type" property="create_type" jdbcType="VARCHAR" />
+    	<result column="create_type" property="create_type" jdbcType="INTEGER" />
     	<result column="oper_user_id" property="oper_user_id" jdbcType="INTEGER" />
     	<result column="oper_user_name" property="oper_user_name" jdbcType="VARCHAR" />
     	<result column="order_id" property="order_id" jdbcType="INTEGER" />
     	<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
     	<result column="comments" property="comments" jdbcType="VARCHAR" />
     	<result column="file_info" property="file_info" jdbcType="VARCHAR" />
+    	<result column="start_time" property="start_time" jdbcType="VARCHAR" />
+    	<result column="end_time" property="end_time" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	id,
@@ -54,8 +56,17 @@
 	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name
 	FROM coin_track a
 	JOIN tb_user b ON a.`user_id` = b.`user_id`
-	WHERE a.`coin_type` = 1
+	WHERE a.`coin_type` = 2
 	AND a.`create_type` = 4
+	<if test="user_code != null  and user_code != '' " >
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="start_time !=null and start_time != '' ">
+    	and a.create_time &gt;= str_to_date(#{start_time,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="end_time !=null and end_time != '' ">
+    	and a.create_time &lt;= str_to_date(#{end_time,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
+    </if>
   </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
@@ -66,20 +77,25 @@
   </delete>
   
   <insert id="insert" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
-    insert into info_serv_file ( <include refid="Base_Column_List" />)
-    values (	    	
-        	  #{id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{rela_id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{rela_type,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{file_id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{state,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{create_date,jdbcType=TIMESTAMP}     		
-	    )
+	INSERT INTO `coin_track` (
+		`user_id`, 
+		`coin_type`,
+		`coin_num`, 
+		`create_type`,
+		`oper_user_id`,
+		`order_id`,
+		`comments`, 
+		`file_info`) 
+	VALUES(
+		#{user_id,jdbcType=INTEGER},
+		#{coin_type,jdbcType=INTEGER},
+		#{coin_num,jdbcType=DOUBLE},
+		#{create_type,jdbcType=INTEGER},
+		#{oper_user_id,jdbcType=INTEGER},
+		#{order_id,jdbcType=INTEGER},
+		#{comments,jdbcType=VARCHAR},
+		#{file_info,jdbcType=VARCHAR}
+	)
   </insert>
   
   <update id="update" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto">
