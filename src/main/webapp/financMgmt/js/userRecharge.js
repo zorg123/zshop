@@ -1,9 +1,33 @@
 var RechargeMng = {
     save: function () {
         var user_code = $('input[name="user_code"]').val();
+        var parampd ={};
+        parampd["coinTrackDto.user_code"] = user_code;
         //判断工号在系统中是否存在,不存在提示
-        var isExist=1;
-        if(isExist==1){
+        var isExist=0;
+        CommonUtils.invokeAsyncAction(base+'/FinancMgmt/getUserByCode.do', parampd, function (reply) {
+			if((reply || '') !=''){
+				var code = reply._code;
+                if(code=='0'){
+                	var retobj = reply.ret;
+                	if(retobj.retCode=='-1'){
+                		$.messager.alert('系统提示', '输入的会员编号不存在!', 'info');
+                	}
+                	if(retobj.retCode=='0'){
+                		$.messager.alert('系统提示', '输入的会员未激活!', 'info');
+                	}
+                	if(retobj.retCode=='1'){
+                		isExist='1';
+                	}
+                }else{
+                	$.messager.alert('系统提示', '查询用户失败!', 'info');
+                }
+			}			
+		});
+        if(isExist=='0'){
+        	return;
+        }
+        if(isExist=='1'){
         	var param ={};
         	param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
             param["coinTrackDto.coin_num"] = $('input[name="coin_num"]').val();
@@ -34,8 +58,6 @@ var RechargeMng = {
 	                }
 				}			
 			});       
-        }else{
-        	$.messager.alert('系统提示', '充值会员编号在系统中不存在,请重新输入!', 'info');
         }
     },
     refresh: function () {
