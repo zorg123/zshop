@@ -76,29 +76,18 @@
   </insert>
   
   <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">
-    update info_serv_file
+    update accout_Info
     set
-   		<if test="id != null  and id != '' " >
-      		id = #{id,jdbcType=VARCHAR},
+   		<if test="bonus_coin != null  and bonus_coin != '' " >
+      		bonus_coin = IFNULL(bonus_coin,0)+#{bonus_coin,jdbcType=DOUBLE},
    		</if>
-   		<if test="rela_id != null  and rela_id != '' " >
-      		rela_id = #{rela_id,jdbcType=VARCHAR},
+   		<if test="elect_coin != null  and elect_coin != '' " >
+      		elect_coin = IFNULL(elect_coin,0)+#{elect_coin,jdbcType=DOUBLE},
    		</if>
-   		<if test="rela_type != null  and rela_type != '' " >
-      		rela_type = #{rela_type,jdbcType=VARCHAR},
+   		<if test="reconsmp_coin != null  and reconsmp_coin != '' " >
+      		reconsmp_coin = IFNULL(reconsmp_coin,0)+#{reconsmp_coin,jdbcType=VARCHAR},
    		</if>
-   		<if test="file_id != null  and file_id != '' " >
-      		file_id = #{file_id,jdbcType=VARCHAR},
-   		</if>
-   		<if test="state != null  and state != '' " >
-      		state = #{state,jdbcType=VARCHAR},
-   		</if>
-   		<if test="create_date != null " >
-      		create_date = #{create_date,jdbcType=TIMESTAMP}
-   		</if>
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
-    
+   		comments = ''
+    where user_id = #{user_id,jdbcType=INTEGER}
   </update>
 </mapper>

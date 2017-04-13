@@ -1,6 +1,11 @@
 package com.flyrui.financMgmt.action;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -11,11 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.flyrui.bus.service.BusService;
 import com.flyrui.common.action.BaseAction;
+import com.flyrui.common.excel.ExcelExport;
 import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.salary.BusSalary;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.service.CoinTrackService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
+import com.flyrui.salary.service.SalaryService;
 
 @ParentPackage("frcms_default")
 @Namespace("/FinancMgmt") //访问路径的包名
@@ -55,6 +63,24 @@ public class FinancMgmtAction extends BaseAction {
     	return SUCCESS;
     }
 	
+	@Action(value="getUserByCode")
+	public String getUserByCode(){
+		HashMap retmap = coinTrackService.getUserByCode(coinTrackDto);
+		setResult(retmap);
+    	return SUCCESS;
+    }
+	
+	@Action(value="eportCoinTrack")
+	public  String eportCoinTrack() throws Exception{  
+    	ExcelExport<CoinTrackDto> excelExport = new ExcelExport<CoinTrackDto>();    	
+    	List<CoinTrackDto> retList = coinTrackService.getListByCon(coinTrackDto);
+    	ByteArrayOutputStream os=new ByteArrayOutputStream();
+    	excelExport.exportExcel("会员充值", retList, os);
+        byte[] content=os.toByteArray();
+        setExcelName("会员充值");
+        inputStream =new ByteArrayInputStream(content);
+        return "excel";    	   	
+    }
 	
 	
     public CoinTrackDto getCoinTrackDto() {

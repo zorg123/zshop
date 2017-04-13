@@ -1,5 +1,6 @@
 package com.flyrui.financMgmt.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.flyrui.dao.common.page.PageModel;
@@ -20,4 +21,6 @@ public interface CoinTrackService {
 	public PageModel getPagerListByCon(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
 	public int insertCoinTrack(User loginUser,CoinTrackDto coinTrackDto);
+	
+	public HashMap getUserByCode(CoinTrackDto coinTrackDto);
 }

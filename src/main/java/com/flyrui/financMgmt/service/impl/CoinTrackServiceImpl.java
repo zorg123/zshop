@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.service.CoinTrackService;
 
@@ -17,22 +18,22 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	}
 	
 	//根据用户编码查找用户
-	public HashMap getUserIdByCode(CoinTrackDto coinTrackDto){
+	public HashMap getUserByCode(CoinTrackDto coinTrackDto){
 		HashMap map = new HashMap();
 		String retCode = "";
         String retString = ""; 
 		String user_code = coinTrackDto.getUser_code();
 		TbUser user = new TbUser();
 		user.setUser_code(user_code);
-		TbUser retUser = (User)baseDao.selectOne("com.flyrui.dao.pojo.sys.tb_user"+".queryUserByCode", user);
-		if(user!=null){
-			String state = user.getState();
+		TbUser retUser = (User)baseDao.selectOne("com.flyrui.dao.pojo.sys.tb_user"+".select", user);
+		if(retUser!=null){
+			String state = retUser.getState();
 			if(state.equals("0")){
 				retCode = "0";
 				retString = "未激活";
 			}else if(state.equals("1")){
 				retCode = "1";
-				retString = "已激活";
+				retString = retUser.getUser_id();
 			}
 		}else{
 			retCode = "-1";
@@ -61,7 +62,12 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		String coin_track_orderid = getSequence("coin_track_orderid");
 		Integer order_id = Integer.valueOf(coin_track_orderid).intValue();
 		coinTrackDto.setOrder_id(order_id);
-		return baseDao.insert(this.getNameSpace()+".insert", coinTrackDto);
+		baseDao.insert(this.getNameSpace()+".insert", coinTrackDto);
+		//更新会员账户电子币金额
+		AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
+		accoutInfoDto.setElect_coin(coinTrackDto.getCoin_num());
+		accoutInfoDto.setUser_id(coinTrackDto.getUser_id());
+		return baseDao.update("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".update", accoutInfoDto);
 	}
 	
 }

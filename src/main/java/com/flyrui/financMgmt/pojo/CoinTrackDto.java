@@ -12,13 +12,16 @@ public class CoinTrackDto implements Serializable {
 	
 	private Integer user_id;
 	
+	@ExcelAnnotation(exportName = "会员编号")
 	private String user_code;
 	
+	@ExcelAnnotation(exportName = "会员名称")
 	private String user_name;
 	
 	private Integer coin_type;
 	
-	private Float coin_num;
+	@ExcelAnnotation(exportName = "金额")
+	private Double coin_num;
 	
 	private Integer create_type;
 	
@@ -28,6 +31,7 @@ public class CoinTrackDto implements Serializable {
 	
 	private Integer order_id;
 	
+	@ExcelAnnotation(exportName = "时间")
 	private Date create_time;
 	
 	private String comments;
@@ -62,11 +66,11 @@ public class CoinTrackDto implements Serializable {
 		this.coin_type = coin_type;
 	}
 
-	public Float getCoin_num() {
+	public Double getCoin_num() {
 		return coin_num;
 	}
 
-	public void setCoin_num(Float coin_num) {
+	public void setCoin_num(Double coin_num) {
 		this.coin_num = coin_num;
 	}
 
