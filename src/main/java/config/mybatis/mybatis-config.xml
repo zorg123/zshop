@@ -78,6 +78,8 @@
             <mapper resource="config/mybatis/sqlMap/mysql/BusDataMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/BusSalaryBaseMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/BusSalaryExtendMapper.xml"/>
+            <mapper resource="config/mybatis/sqlMap/mysql/AccoutInfoMapper.xml"/>
+            <mapper resource="config/mybatis/sqlMap/mysql/CoinTrackMapper.xml"/>
             <!-- <mapper resource="com/flyrui/infoshare/staff/dao/mapper/mysql/CoreUserMapper.xml"/>
             <mapper resource="/com/flyrui/infoshare/staff/dao/mapper/mysql/InfoUserExtMapper.xml"/>
             <mapper resource="/com/flyrui/infoshare/common/dao/mapper/mysql/InfoSqlConfigMapper.xml" /> -->

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.financMgmt.dao.mapper.CoinTrackMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    	<result column="id" property="id" jdbcType="INTEGER" />
+    	<result column="user_id" property="user_id" jdbcType="INTEGER" />
+    	<result column="coin_type" property="coin_type" jdbcType="INTEGER" />
+    	<result column="coin_num" property="coin_num" jdbcType="DOUBLE" />
+    	<result column="create_type" property="create_type" jdbcType="VARCHAR" />
+    	<result column="oper_user_id" property="oper_user_id" jdbcType="INTEGER" />
+    	<result column="oper_user_name" property="oper_user_name" jdbcType="VARCHAR" />
+    	<result column="order_id" property="order_id" jdbcType="INTEGER" />
+    	<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    	<result column="comments" property="comments" jdbcType="VARCHAR" />
+    	<result column="file_info" property="file_info" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	rela_id,
+    	rela_type,
+    	file_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_id != null  and rela_id != '' " >
+        		and rela_id = #{rela_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_type != null  and rela_type != '' " >
+        		and rela_type = #{rela_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+    a.id,  
+	b.user_code,
+	b.name AS user_name,
+	a.coin_num,
+	a.create_time,
+	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id`
+	WHERE a.`coin_type` = 1
+	AND a.`create_type` = 4
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    delete from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    insert into info_serv_file ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto">
+    update info_serv_file
+    set
+   		<if test="id != null  and id != '' " >
+      		id = #{id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_id != null  and rela_id != '' " >
+      		rela_id = #{rela_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_type != null  and rela_type != '' " >
+      		rela_type = #{rela_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_id != null  and file_id != '' " >
+      		file_id = #{file_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

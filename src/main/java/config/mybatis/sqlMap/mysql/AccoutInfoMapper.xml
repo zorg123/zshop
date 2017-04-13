@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    	<result column="id" property="id" jdbcType="INTEGER" />
+    	<result column="user_id" property="user_id" jdbcType="INTEGER" />
+    	<result column="bonus_coin" property="bonus_coin" jdbcType="DOUBLE" />
+    	<result column="elect_coin" property="elect_coin" jdbcType="DOUBLE" />
+    	<result column="reconsmp_coin" property="reconsmp_coin" jdbcType="DOUBLE" />
+    	<result column="account_bank" property="account_bank" jdbcType="VARCHAR" />
+    	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
+    	<result column="account_name" property="account_name" jdbcType="VARCHAR" />
+    	<result column="comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	rela_id,
+    	rela_type,
+    	file_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_id != null  and rela_id != '' " >
+        		and rela_id = #{rela_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_type != null  and rela_type != '' " >
+        		and rela_type = #{rela_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    select    
+    <include refid="Base_Column_List" />
+    from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    delete from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    insert into info_serv_file ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rela_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{file_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">
+    update info_serv_file
+    set
+   		<if test="id != null  and id != '' " >
+      		id = #{id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_id != null  and rela_id != '' " >
+      		rela_id = #{rela_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rela_type != null  and rela_type != '' " >
+      		rela_type = #{rela_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="file_id != null  and file_id != '' " >
+      		file_id = #{file_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>
