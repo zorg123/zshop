@@ -1,11 +1,17 @@
 var RechargeMng = {
     save: function () {
+    	var user_id;
         var user_code = $('input[name="user_code"]').val();
+        //判断用户是否为空
+        if(user_code.length<=0){
+        	$.messager.alert('系统提示', '请输入会员编号!', 'info');
+        	return;
+        }
         var parampd ={};
         parampd["coinTrackDto.user_code"] = user_code;
         //判断工号在系统中是否存在,不存在提示
         var isExist=0;
-        CommonUtils.invokeAsyncAction(base+'/FinancMgmt/getUserByCode.do', parampd, function (reply) {
+        CommonUtils.invokeSyncAction(base+'/FinancMgmt/getUserByCode.do', parampd, function (reply) {
 			if((reply || '') !=''){
 				var code = reply._code;
                 if(code=='0'){
@@ -18,6 +24,7 @@ var RechargeMng = {
                 	}
                 	if(retobj.retCode=='1'){
                 		isExist='1';
+                		user_id = retobj.retString;
                 	}
                 }else{
                 	$.messager.alert('系统提示', '查询用户失败!', 'info');
@@ -28,36 +35,49 @@ var RechargeMng = {
         	return;
         }
         if(isExist=='1'){
-        	var param ={};
-        	param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
-            param["coinTrackDto.coin_num"] = $('input[name="coin_num"]').val();
-            //附件id
-            var fileid;
-            var fileName;
-            $("#fileDownload ul li").each(function(i,v){
-            	var $this = $(v);
-            	if($this.attr("fileid")){
-            		fileid = $this.attr("fileid");
-            	}
-            	if($this.attr("fileName")){
-            		fileName = $this.attr("fileName");
-            	}
-            });
-            var file_info = "<a name='upFile'  target='_blank' href='/Attachement/download.do?fid="+fileid+"'>"+fileName+"</a>";
-            param["coinTrackDto.file_info"] = file_info;
-            var me = this;
-            CommonUtils.invokeAsyncAction(base+'/FinancMgmt/insertCoinTrack.do', param, function (reply) {
-				if((reply || '') !=''){
-					var code = reply._code;
-	                if(code=='0'){
-	                	$.messager.alert('系统提示', '添加成功!', 'info');
-	                	me.close();
-	                    me.refresh();
-	                }else{
-	                	$.messager.alert('系统提示', '添加失败!', 'info');
-	                }
-				}			
-			});       
+        	//判断输入的金额
+        	var coin_num = $('input[name="coin_num"]').val();
+        	 if(!/^[0-9]+$/.test(coin_num)){
+        		 $.messager.alert('系统提示', '充值金额请输入数字!', 'info');
+        		 return;
+        	 }else{
+        		 var param ={};
+             	 param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
+                 param["coinTrackDto.coin_num"] = $('input[name="coin_num"]').val();
+                 //附件id
+                 var file_info;
+                 if ($("#fileDownload ul li").length>0){
+                    var fileid;
+                    var fileName;
+                 	$("#fileDownload ul li").each(function(i,v){
+                     	var $this = $(v);
+                     	if($this.attr("fileid")){
+                     		fileid = $this.attr("fileid");
+                     	}
+                     	if($this.attr("fileName")){
+                     		fileName = $this.attr("fileName");
+                     	}
+                     });
+                     file_info = "<a name='upFile'  target='_blank' href='/Attachement/download.do?fid="+fileid+"'>"+fileName+"</a>";
+                 }else{
+                 	file_info = "";
+                 }
+                 param["coinTrackDto.file_info"] = file_info;
+                 param["coinTrackDto.user_id"] = user_id;
+                 var me = this;
+                 CommonUtils.invokeAsyncAction(base+'/FinancMgmt/insertCoinTrack.do', param, function (reply) {
+     				if((reply || '') !=''){
+     					var code = reply._code;
+     	                if(code=='0'){
+     	                	$.messager.alert('系统提示', '添加成功!', 'info');
+     	                	me.close();
+     	                    me.refresh();
+     	                }else{
+     	                	$.messager.alert('系统提示', '添加失败!', 'info');
+     	                }
+     				}			
+     			});       
+        	 }
         }
     },
     refresh: function () {
@@ -142,10 +162,32 @@ $(function () {
                     $("#_easyui_textbox_input1").attr("value","");
                     $('#win_save').show();
                     $('#win_save').window({
-                        width: 550,
-                        height: 500,
+                        width: 450,
+                        height: 300,
                         modal: true
                     });
+                }
+            },'-',
+            {
+            	text: '导出',
+                iconCls: 'icon-redo',
+                handler: function () {                 
+                	var user_code = $('input[name="query_user_code"]').val();
+	                var start_time = $('input[name="start_time"]').val();
+	                var end_time = $('input[name="end_time"]').val();
+	                
+            	    var strParam = "coinTrackDto.user_code="+user_code;
+            	    strParam += "&coinTrackDto.start_time="+start_time;
+            	    strParam += "&coinTrackDto.end_time="+end_time;  
+            	    var url = base+"/FinancMgmt/eportCoinTrack.do?"+strParam;
+            	    //alert(url);
+            	    if(parent.parent.document){
+						parent.document.location.href=url;
+					}else if(parent.document){
+						parent.document.location.href=url;
+					}else{
+						document.location.href=url;
+					}                    
                 }
             }
         ]

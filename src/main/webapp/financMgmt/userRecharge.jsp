@@ -32,8 +32,8 @@
             	<th field="id" width="40" hidden>充值记录ID</th>
                 <th field="user_code" width="40">会员编号</th>  
                 <th field="user_name" width="40">会员名称</th>
-                <th field="coin_num" width="40">充值金额</th>              
-                <th field="create_time" width="40">充值时间</th>
+                <th field="coin_num" width="40">金额</th>              
+                <th field="create_time" width="40">时间</th>
                 <th field="oper_user_name" width="40">充值人名称</th>
                 <th field="file_info" width="40">文件</th>
             </tr>
