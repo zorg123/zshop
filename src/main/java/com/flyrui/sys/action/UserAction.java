@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.flyrui.common.BeanUtils;
 import com.flyrui.common.SpringBeans;
@@ -25,6 +31,10 @@ import com.flyrui.sys.service.OrganationService;
 import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
 
+@ParentPackage("frcms_default")
+@Namespace("/Sys/User") //访问路径的包名
+@Results({		
+		@Result(type="json", params={"root","result"})}) 
 public class UserAction extends BaseAction {	
 
 	public User user  = new User();
@@ -86,6 +96,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("insertUser")
     public String insertUser() throws FRException{
     	UserService userService = getUserService();
     	String ip = getIp();
@@ -120,6 +131,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("queryUser")
     public String queryUser(){
     	UserService userService = getUserService();
     	if(user!=null && user.getName()!=null && !user.getName().equals("")){
@@ -138,6 +150,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("queryUserById")
     public String queryUserById(){
     	UserService userService = getUserService();    	    	
     	List retList = userService.getListByCon(user);
@@ -152,6 +165,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("deleteUser")
     public String deleteUser(){
     	UserService userService = getUserService();
     	userService.delete(user);
@@ -166,6 +180,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("updateUser")
     public String updateUser(){
     	UserService userService = getUserService();
     	userService.update(user);
@@ -180,6 +195,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("queryRoleList")
     public String queryRoleList(){
     	RoleService roleService = getRoleService();
     	if(role.getRole_name()!=null && !"".equals(role.getRole_name())){
@@ -200,6 +216,7 @@ public class UserAction extends BaseAction {
      * Administrator
      * Jul 6, 2012
      */
+    @Action("queryRoleListFilterByUser")
     public String queryRoleListFilterByUser(){
     	RoleService roleService = getRoleService();
     	if(role.getRole_name()!=null && !"".equals(role.getRole_name())){
@@ -220,6 +237,7 @@ public class UserAction extends BaseAction {
      * @return [返回类型说明]      
      *  
      */
+    @Action("saveUserRole")
     public String saveUserRole() throws FRException{
     	UserService userService = getUserService();
     	if( ids != null && ids.length()>0){
@@ -236,6 +254,7 @@ public class UserAction extends BaseAction {
     	return SUCCESS;
     }
     
+    @Action("queryRoleIdByUserId")
     public String queryRoleIdByUserId() {
     	RoleService roleService = getRoleService();
     	PageModel pageModel = roleService.queryRoleIdByUserCode(user, page, rows);
@@ -243,6 +262,7 @@ public class UserAction extends BaseAction {
     	return SUCCESS;
     }
     
+    @Action("deleteUserRole")
     public String deleteUserRole() throws FRException{
     	UserService userService = getUserService();
     	if( ids != null && ids.length()>0){
@@ -256,7 +276,8 @@ public class UserAction extends BaseAction {
     	setResult(null);
     	return SUCCESS;
     }
-        
+      
+    @Action("importUser")
     public String importUser(){
     	UserService userService = getUserService();    	
     	ImportExcel<UserInfoDto> importExcel = new ImportExcel(
@@ -349,6 +370,7 @@ public class UserAction extends BaseAction {
     	return SUCCESS;    	
     }
     
+    
     public Integer selectOrgByName(List<TbOrganation> orgList,String orgName){
     	Integer orgId = null;
     	for(TbOrganation org : orgList){
@@ -360,6 +382,7 @@ public class UserAction extends BaseAction {
     	return orgId;
     }
     
+     
     public boolean checkUserExist(List<User> userList,User localUser){
     	boolean isExist = false;
     	for(User user : userList){
@@ -383,6 +406,7 @@ public class UserAction extends BaseAction {
     }
     
     
+    @Action("getUserCodeStr")
     public String getUserCodeStr(List<User> userList){
     	StringBuffer userCodeStr= new StringBuffer();
     	for(User user : userList){
@@ -393,5 +417,66 @@ public class UserAction extends BaseAction {
     		}
     	}
     	return userCodeStr.toString();
+    }
+    
+    /**      
+     * 添加用户       
+     * @param user
+     * @return [返回类型说明]      
+     * Administrator
+     * Jul 6, 2012
+     */
+    @Action("registerUser")
+    @SkipValidation
+    public String registerUser() throws FRException{
+    	UserService userService = getUserService();
+    	String ip = getIp();
+    	//user.setUser_id(UUIDHexGenerator.generator());
+    	user.setRegister_ip(ip);
+    	user.setRegister_date(new Date());
+    	User u = new User();
+    	u.setUser_code(user.getUser_code());
+    	List<User> retList = userService.getListByCon(u);
+    	if(retList!=null &&retList.size() >0){
+    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_EXISTS));
+    		throw frException;
+    	}
+    	
+    	//再查银行账号
+    	/*u = new User();
+    	u.setBank_account(user.getBank_account());
+    	retList = userService.getListByCon(u);
+    	if(retList!=null &&retList.size() >0){
+    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_BANK_ACCOUNT_EXISTS));
+    		throw frException;
+    	}*/
+    	//根据注册人的账号查询注册人的id
+    	/*u = new User();
+    	u.setUser_code(user.getRegister_id()+"");
+    	retList = userService.getListByCon(u);
+    	if(retList == null || retList.size()==0){
+    		FRException frException = new FRException(new FRError("USER_001"));
+    		throw frException;
+    	}
+    	User tempUser = retList.get(0);
+    	user.setRegister_id(Integer.getInteger(tempUser.getUser_id())); */
+    	user.setRegister_id(getUserId());
+    	//根据注册人的账号查询注册人的id
+    	u = new User();
+    	u.setUser_code(user.getPid()+"");
+    	retList = userService.getListByCon(u);
+    	if(retList == null || retList.size()==0){
+    		FRException frException = new FRException(new FRError("USER_002"));
+    		throw frException;
+    	}
+    	User tempUser = retList.get(0);
+    	user.setPid(tempUser.getUser_id());
+    	user.setState("1");
+    	user.setCreate_time(new Date());
+    	user.setRegister_date(new Date());
+    	user.setRegister_ip(super.getIp());
+    	userService.insert(user);
+    	setCommonSuccessReturn();
+    	return SUCCESS;
     }
 }

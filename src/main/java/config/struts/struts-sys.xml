@@ -39,13 +39,14 @@
             </interceptor-ref>
 			<interceptor-ref name="systemInterceptorStack"></interceptor-ref> 
         </action> 
+        <!-- -->
         <action name="*!*" class="com.flyrui.sys.action.{1}Action" method="{2}">
         	 <result type="json">
-        	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
-               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
+        	    <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+               <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性  -->
                 <param name="root">result</param>
             </result>             
-        </action> 
+        </action>  
     </package>
     <package name="common" extends="frcms_default" namespace="/Common">    
     	 <action name="uploadImg" class="com.flyrui.common.upload.UploadImgAction" method="upload">

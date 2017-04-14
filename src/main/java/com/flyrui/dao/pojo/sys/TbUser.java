@@ -40,6 +40,39 @@ public class TbUser implements Serializable {
     
     private String cas_account;
     
+    /** 手机号码 */
+	private String user_phone;
+
+	/** 交易密码 */
+	private String trans_pwd;
+
+	/** 父节点id */
+	private String pid;
+
+	/** 证件类型 */
+	private String cert_type;
+
+	/** 用户等级 -1到10 */
+	private Integer user_level;
+
+	/** 证件编码 */
+	private String cert_id;
+
+	/** 0:不参与结算 1:参与结算 */
+	private Integer bus_state;
+
+	/**  */
+	private Date create_time;
+
+	/** 注册人id */
+	private String register_id;
+
+	/** 激活时间 */
+	private Date act_time;
+
+	/**  */
+	private Integer allchild_num;
+    
     private static final long serialVersionUID = 1L;
 
     public String getUser_id() {
@@ -186,6 +219,92 @@ public class TbUser implements Serializable {
 		this.cas_account = cas_account;
 	}
    
-	
+	public String getUser_phone() {
+		return this.user_phone;
+	}
+
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
+
+	public String getTrans_pwd() {
+		return this.trans_pwd;
+	}
+
+	public void setTrans_pwd(String trans_pwd) {
+		this.trans_pwd = trans_pwd;
+	}
+
+	public String getPid() {
+		return this.pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
+
+	public String getCert_type() {
+		return this.cert_type;
+	}
+
+	public void setCert_type(String cert_type) {
+		this.cert_type = cert_type;
+	}
+
+	public Integer getUser_level() {
+		return this.user_level;
+	}
+
+	public void setUser_level(Integer user_level) {
+		this.user_level = user_level;
+	}
+
+	public String getCert_id() {
+		return this.cert_id;
+	}
+
+	public void setCert_id(String cert_id) {
+		this.cert_id = cert_id;
+	}
+
+	public Integer getBus_state() {
+		return this.bus_state;
+	}
+
+	public void setBus_state(Integer bus_state) {
+		this.bus_state = bus_state;
+	}
+
+	public Date getCreate_time() {
+		return this.create_time;
+	}
+
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+
+	public String getRegister_id() {
+		return this.register_id;
+	}
+
+	public void setRegister_id(String register_id) {
+		this.register_id = register_id;
+	}
+
+	public Date getAct_time() {
+		return this.act_time;
+	}
+
+	public void setAct_time(Date act_time) {
+		this.act_time = act_time;
+	}
+
+	public Integer getAllchild_num() {
+		return this.allchild_num;
+	}
+
+	public void setAllchild_num(Integer allchild_num) {
+		this.allchild_num = allchild_num;
+	}
     
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.pojo.sys.User;
@@ -40,4 +41,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   return baseDao.update(getNameSpace()+".modifyPwd", param);
    }
    
+   @Transactional
+   @Override
+   public int insert(User user){
+	   return super.insert(user);
+   }
 }

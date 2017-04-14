@@ -11,8 +11,7 @@
 <link rel="stylesheet" type="text/css" href="<%=baseUri %>/public/easyui/themes/bootstrap/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=baseUri %>/public/common/ress/css/jq/jquery.loadmask.css">
 <link rel="stylesheet" type="text/css" href="<%=baseUri %>/public/easyui/themes/icon.css">
-<!-- <script type="text/javascript" src="<%=baseUri %>/ress/js/jquery/jquery-1.8.0.min.js"></script> -->
-<script type="text/javascript" src="<%=baseUri %>/public/common/ress/js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="<%=baseUri %>/public/infoShare/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=baseUri %>/public/common/ress/js/jquery.loadmask.min.js"></script>
 <script type="text/javascript" src="<%=baseUri %>/public/common/ress/js/jquery.form.js"></script>
 <script type="text/javascript" src="<%=baseUri %>/public/easyui/jquery.easyui.min.js"></script>
