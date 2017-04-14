@@ -18,9 +18,15 @@ public interface CoinTrackService {
 	
 	public List<CoinTrackDto> getListByCon(CoinTrackDto coinTrackDto);
 	
+	public List<CoinTrackDto> getListByConExtConf(CoinTrackDto coinTrackDto);
+	
 	public PageModel getPagerListByCon(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
+	public PageModel getPagerListByConExtConf(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	
 	public int insertCoinTrack(User loginUser,CoinTrackDto coinTrackDto);
+	
+	public int updateCoinTrack(User loginUser,CoinTrackDto coinTrackDto);
 	
 	public HashMap getUserByCode(CoinTrackDto coinTrackDto);
 }
