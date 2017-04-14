@@ -54,7 +54,14 @@ public class FinancMgmtAction extends BaseAction {
     	setResult(pageModel);
     	return SUCCESS;
     }
-	
+	//提现确认分页查询
+	@Action(value="getPagerListByConExtConf")
+	public String getPagerListByConExtConf(){
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConExtConf(coinTrackDto, page, rows);
+    	setResult(pageModel);
+    	return SUCCESS;
+    }
+	 
 	@Action(value="insertCoinTrack")
 	public String insertCoinTrack(){
 		User loginUser = getLoginUserInfo();
@@ -81,7 +88,26 @@ public class FinancMgmtAction extends BaseAction {
         inputStream =new ByteArrayInputStream(content);
         return "excel";    	   	
     }
+	//提现确认导出
+	@Action(value="eportExtConfCoinTrack")
+	public  String eportExtConfCoinTrack() throws Exception{  
+    	ExcelExport<CoinTrackDto> excelExport = new ExcelExport<CoinTrackDto>();    	
+    	List<CoinTrackDto> retList = coinTrackService.getListByConExtConf(coinTrackDto);
+    	ByteArrayOutputStream os=new ByteArrayOutputStream();
+    	excelExport.exportExcel("提现确认", retList, os);
+        byte[] content=os.toByteArray();
+        setExcelName("提现确认");
+        inputStream =new ByteArrayInputStream(content);
+        return "excel";    	   	
+    }
 	
+	@Action(value="updateCoinTrack")
+	public String updateCoinTrack(){
+		User loginUser = getLoginUserInfo();
+		int ret = coinTrackService.updateCoinTrack(loginUser,coinTrackDto);
+		setResult(ret);
+    	return SUCCESS;
+    }
 	
     public CoinTrackDto getCoinTrackDto() {
 		return coinTrackDto;
@@ -90,5 +116,4 @@ public class FinancMgmtAction extends BaseAction {
 	public void setCoinTrackDto(CoinTrackDto coinTrackDto) {
 		this.coinTrackDto = coinTrackDto;
 	}
-   
 }

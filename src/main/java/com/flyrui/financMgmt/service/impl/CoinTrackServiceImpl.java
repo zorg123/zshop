@@ -1,10 +1,12 @@
 package com.flyrui.financMgmt.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.flyrui.common.service.BaseService;
+import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
@@ -15,6 +17,11 @@ import com.flyrui.financMgmt.service.CoinTrackService;
 public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements CoinTrackService {	
 	public CoinTrackServiceImpl(){
 		super.setNameSpace("com.flyrui.financMgmt.dao.mapper.CoinTrackMapper");
+	}
+	
+	//提现确认分页查询
+	public PageModel getPagerListByConExtConf(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectExtConf",pageNo,pageSize);
 	}
 	
 	//根据用户编码查找用户
@@ -70,4 +77,18 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		return baseDao.update("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".update", accoutInfoDto);
 	}
 	
+	
+	public int updateCoinTrack(User loginUser,CoinTrackDto coinTrackDto){
+		coinTrackDto.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
+		baseDao.update(this.getNameSpace()+".update", coinTrackDto);
+		//更新会员账户电子币金额
+		AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
+		accoutInfoDto.setBonus_coin(coinTrackDto.getCoin_num());
+		accoutInfoDto.setUser_id(coinTrackDto.getUser_id());
+		return baseDao.update("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".update", accoutInfoDto);
+	}
+	
+	public List<CoinTrackDto> getListByConExtConf(CoinTrackDto coinTrackDto) {
+		return baseDao.selectList(nameSpace+".selectExtConf", coinTrackDto);		
+	}
 }

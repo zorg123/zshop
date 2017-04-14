@@ -41,6 +41,20 @@ public class CoinTrackDto implements Serializable {
 	private String start_time;
 	
 	private String end_time;
+	
+	private Date oper_time;
+	
+	@ExcelAnnotation(exportName = "手续费")
+	private Double counter_num;
+	
+	@ExcelAnnotation(exportName = "打款金额")
+	private Double act_num;
+	
+	@ExcelAnnotation(exportName = "流水号")
+	private String serial_num;
+	
+	@ExcelAnnotation(exportName = "是否打款")
+	private String apply_state;
 
 	public Integer getId() {
 		return id;
@@ -164,6 +178,46 @@ public class CoinTrackDto implements Serializable {
 
 	public void setEnd_time(String end_time) {
 		this.end_time = end_time;
+	}
+
+	public Date getOper_time() {
+		return oper_time;
+	}
+
+	public void setOper_time(Date oper_time) {
+		this.oper_time = oper_time;
+	}
+
+	public Double getCounter_num() {
+		return counter_num;
+	}
+
+	public void setCounter_num(Double counter_num) {
+		this.counter_num = counter_num;
+	}
+
+	public Double getAct_num() {
+		return act_num;
+	}
+
+	public void setAct_num(Double act_num) {
+		this.act_num = act_num;
+	}
+
+	public String getSerial_num() {
+		return serial_num;
+	}
+
+	public void setSerial_num(String serial_num) {
+		this.serial_num = serial_num;
+	}
+
+	public String getApply_state() {
+		return apply_state;
+	}
+
+	public void setApply_state(String apply_state) {
+		this.apply_state = apply_state;
 	}
 	
 }

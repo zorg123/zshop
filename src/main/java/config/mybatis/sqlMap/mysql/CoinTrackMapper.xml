@@ -15,6 +15,11 @@
     	<result column="file_info" property="file_info" jdbcType="VARCHAR" />
     	<result column="start_time" property="start_time" jdbcType="VARCHAR" />
     	<result column="end_time" property="end_time" jdbcType="VARCHAR" />
+    	<result column="oper_time" property="oper_time" jdbcType="TIMESTAMP" />
+    	<result column="counter_num" property="counter_num" jdbcType="DOUBLE" />
+    	<result column="act_num" property="act_num" jdbcType="DOUBLE" />
+    	<result column="serial_num" property="serial_num" jdbcType="VARCHAR" />
+    	<result column="apply_state" property="apply_state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	id,
@@ -70,6 +75,36 @@
     </if>
     order by a.create_time desc
   </select>
+  <select id="selectExtConf" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+    a.id,
+    a.user_id,  
+	b.user_code,
+	b.name AS user_name,
+	a.create_time,
+	ABS(a.coin_num) coin_num,
+	a.counter_num,
+	a.act_num,
+	CASE apply_state WHEN 1 THEN '已打款' WHEN 0 THEN '未打款' END AS apply_state,
+	a.serial_num
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id`
+	WHERE a.`coin_type` = 1
+	AND a.`create_type` = 3
+	<if test="user_code != null  and user_code != '' " >
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="start_time !=null and start_time != '' ">
+    	and a.create_time &gt;= str_to_date(#{start_time,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="end_time !=null and end_time != '' ">
+    	and a.create_time &lt;= str_to_date(#{end_time,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="apply_state !=null and apply_state != '' ">
+    	and a.apply_state = #{apply_state,jdbcType=VARCHAR}
+    </if>
+    order by a.create_time desc
+  </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     delete from info_serv_file
@@ -101,29 +136,21 @@
   </insert>
   
   <update id="update" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto">
-    update info_serv_file
+    update coin_track
     set
-   		<if test="id != null  and id != '' " >
-      		id = #{id,jdbcType=VARCHAR},
+   		<if test="serial_num != null  and serial_num != '' " >
+      		serial_num = #{serial_num,jdbcType=VARCHAR},
    		</if>
-   		<if test="rela_id != null  and rela_id != '' " >
-      		rela_id = #{rela_id,jdbcType=VARCHAR},
+   		<if test="apply_state != null  and apply_state != '' " >
+      		apply_state = #{apply_state,jdbcType=VARCHAR},
    		</if>
-   		<if test="rela_type != null  and rela_type != '' " >
-      		rela_type = #{rela_type,jdbcType=VARCHAR},
+   		column1 = ''
+    where 1=1
+    	<if test="id != null  and id != '' " >
+      		and id = #{id,jdbcType=INTEGER}
    		</if>
-   		<if test="file_id != null  and file_id != '' " >
-      		file_id = #{file_id,jdbcType=VARCHAR},
+   		<if test="user_id != null  and user_id != '' " >
+      		and user_id = #{user_id,jdbcType=INTEGER}
    		</if>
-   		<if test="state != null  and state != '' " >
-      		state = #{state,jdbcType=VARCHAR},
-   		</if>
-   		<if test="create_date != null " >
-      		create_date = #{create_date,jdbcType=TIMESTAMP}
-   		</if>
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
-    
   </update>
 </mapper>
