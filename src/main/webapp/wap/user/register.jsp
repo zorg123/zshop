@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
 	String baseUri = request.getContextPath();	
+	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
 
 <div class="tpl-content-wrapper">           
@@ -67,7 +68,7 @@
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">接点人账号</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid"  name="user.pid" placeholder="请输入接点人账号或手机号" />                                        
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid" value="<%=pUserCode %>" name="user.pid" placeholder="请输入接点人账号或手机号" />                                        
                                     </div>
                                 </div>
                                 <div class="am-form-group">

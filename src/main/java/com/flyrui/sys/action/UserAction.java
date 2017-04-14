@@ -27,6 +27,7 @@ import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
 import com.flyrui.sys.dto.UserInfoDto;
+import com.flyrui.sys.dto.UserNetTree;
 import com.flyrui.sys.service.OrganationService;
 import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
@@ -478,5 +479,148 @@ public class UserAction extends BaseAction {
     	userService.insert(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
+    }
+    
+    /**      
+     * 添加用户       
+     * @param user
+     * @return [返回类型说明]      
+     * Administrator
+     * Jul 6, 2012
+     */
+    @Action("getUserNetWork")   
+    public String getUserNetWork() throws FRException{
+    	UserNetTree userNetTree = new UserNetTree();
+    	UserService userService = getUserService();    
+    	if(user.getUser_id()==null){
+    		user.setUser_id(getUserId());
+    	}
+    	User u = new User();
+    	u.setUser_id(user.getUser_id());
+    	List<User> retList = userService.selectUserNetTree(u);
+    	if(retList==null || retList.size() == 0){
+    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    		throw frException;
+    	}    	
+    	User curUser = retList.get(0);
+    	userNetTree.setId(curUser.getUser_id());
+    	userNetTree.setTitle(curUser.getName());
+    	userNetTree.setClassName(getUserNetClass(curUser.getState()+""));
+    	userNetTree.setStar(curUser.getUser_star());
+    	userNetTree.setStarName(curUser.getUser_star_name());
+    	userNetTree.setUserCode(curUser.getUser_code());
+    	userNetTree.setAllchild_num((curUser.getAllchild_num()==null?0:curUser.getAllchild_num())+"");
+    	//获取下级节点    	
+    	u = new User();
+    	u.setPid(curUser.getUser_id());
+    	retList = userService.selectUserNetTree(u);
+    	List<UserNetTree> subUserNetTreeList = new ArrayList<UserNetTree>();
+    	for(User us : retList){
+    		UserNetTree userNetTreeTemp = new UserNetTree();
+    		userNetTreeTemp.setId(us.getUser_id());
+    		userNetTreeTemp.setTitle(us.getName());
+    		userNetTreeTemp.setClassName(getUserNetClass(us.getState()+""));
+    		userNetTreeTemp.setStar(us.getUser_star());
+    		userNetTreeTemp.setStarName(us.getUser_star_name());
+    		userNetTreeTemp.setUserCode(us.getUser_code());
+    		userNetTreeTemp.setAllchild_num((us.getAllchild_num()==null?0:us.getAllchild_num())+"");
+    		u = new User();
+        	u.setPid(us.getUser_id());
+        	retList = userService.selectUserNetTree(u);
+        	List<UserNetTree> subUserNetTreeList2 = new ArrayList<UserNetTree>();
+    		for(User us2 : retList){
+        		UserNetTree userNetTreeTemp2 = new UserNetTree();
+        		userNetTreeTemp2.setId(us2.getUser_id());
+        		userNetTreeTemp2.setTitle(us2.getName());
+        		userNetTreeTemp2.setClassName(getUserNetClass(us2.getState()+""));
+        		userNetTreeTemp2.setStar(us2.getUser_star());
+        		userNetTreeTemp2.setStarName(us2.getUser_star_name());
+        		userNetTreeTemp2.setUserCode(us2.getUser_code());
+        		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
+        		subUserNetTreeList2.add(userNetTreeTemp2);
+        	}
+    		userNetTreeTemp.setChildren(subUserNetTreeList2);
+    		subUserNetTreeList.add(userNetTreeTemp);
+    	}
+    	userNetTree.setChildren(subUserNetTreeList);
+    	setResult(userNetTree);
+    	return SUCCESS;
+    }
+    
+    /**      
+     * 获取上级网络架构    
+     * @param user
+     * @return [返回类型说明]      
+     * Administrator
+     * Jul 6, 2012
+     */
+    @Action("getUpUserNetWork")   
+    public String getUpUserNetWork() throws FRException{
+    	UserNetTree userNetTree = new UserNetTree();
+    	UserService userService = getUserService();    
+    	if(user.getUser_id()==null){
+    		user.setUser_id(getUserId());
+    	}
+    	User u = new User();
+    	u.setUser_id(user.getUser_id());
+    	List<User> retList = userService.getListByCon(u);
+    	if(retList!=null &&retList.size() >0){
+    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_EXISTS));
+    		throw frException;
+    	}    	
+    	User curUser = retList.get(0);
+    	userNetTree.setId(curUser.getUser_id());
+    	userNetTree.setTitle(curUser.getName());
+    	userNetTree.setClassName(getUserNetClass(curUser.getBus_state()+""));
+    	userNetTree.setStar(curUser.getUser_star());
+    	userNetTree.setStarName(curUser.getUser_star_name());
+    	userNetTree.setUserCode(curUser.getUser_code());
+    	userNetTree.setAllchild_num((curUser.getAllchild_num()==null?0:curUser.getAllchild_num())+"");
+    	//获取下级节点    	
+    	u = new User();
+    	u.setPid(curUser.getUser_id());
+    	retList = userService.getListByCon(u);
+    	List<UserNetTree> subUserNetTreeList = new ArrayList<UserNetTree>();
+    	for(User us : retList){
+    		UserNetTree userNetTreeTemp = new UserNetTree();
+    		userNetTreeTemp.setId(us.getUser_id());
+    		userNetTreeTemp.setTitle(us.getName());
+    		userNetTreeTemp.setClassName(getUserNetClass(us.getBus_state()+""));
+    		userNetTreeTemp.setStar(us.getUser_star());
+    		userNetTreeTemp.setStarName(us.getUser_star_name());
+    		userNetTreeTemp.setAllchild_num((us.getAllchild_num()==null?0:us.getAllchild_num())+"");
+    		userNetTreeTemp.setUserCode(us.getUser_code());
+    		u = new User();
+        	u.setPid(getUserId());
+        	retList = userService.getListByCon(u);
+        	List<UserNetTree> subUserNetTreeList2 = new ArrayList<UserNetTree>();
+    		for(User us2 : retList){
+        		UserNetTree userNetTreeTemp2 = new UserNetTree();
+        		userNetTreeTemp2.setId(us2.getUser_id());
+        		userNetTreeTemp2.setTitle(us2.getName());
+        		userNetTreeTemp2.setClassName(getUserNetClass(us2.getBus_state()+""));
+        		userNetTreeTemp2.setStar(us2.getUser_star());
+        		userNetTreeTemp2.setStarName(us2.getUser_star_name());
+        		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
+        		userNetTreeTemp2.setUserCode(us2.getUser_code());
+        		subUserNetTreeList2.add(userNetTreeTemp2);
+        	}
+    		userNetTreeTemp.setChildren(subUserNetTreeList2);
+    		subUserNetTreeList.add(userNetTreeTemp);
+    	}
+    	userNetTree.setChildren(subUserNetTreeList);
+    	setResult(userNetTree);
+    	return SUCCESS;
+    }
+    
+    private String getUserNetClass(String state){
+    	String retV = "state_green";
+    	if("0".equals(state)){
+    		retV = "state_white";
+    	}else{
+    		retV = "state_green";
+    	}
+    	
+    	return retV;
     }
 }

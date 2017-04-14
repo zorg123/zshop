@@ -47,23 +47,8 @@ $(function() {
     });
     $(".tpl-left-nav-sub-menu a").on('click', function() {
     	$url = $(this).attr("url");
-    	$main = $("#mainContent");
-    	$main.empty();
-    	$.ajax({
-			type:"post",//设置提交方式
-			url:$url,//提交URL
-			async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
-			contentType:"application/x-www-form-urlencoded;charset=UTF-8",			
-			//调用失败回调函数
-			error:function(XMLHttpRequest, textStatus, errorThrown) {
-				//alert("服务调用失败" + "\n" + errorThrown);
-				$main.html("服务调用失败" + "\n" + errorThrown);
-	        },
-			//调用成功的回调函数
-			success:function(html) {
-				$main.html(html);
-			}
-		});
+    	pageData.openContent($url);
+    	
         return false;
     })
 });
@@ -156,6 +141,32 @@ var pageData={
   	         });
 			 return false;
 		 })
+	 },
+	 openContent:function($url){
+		 $main = $("#mainContent");
+		 if($url==null || $url==""){
+			 return;
+		 }
+		 $main.empty();
+	     $.ajax({
+				type:"post",//设置提交方式
+				url:$url,//提交URL
+				async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
+				contentType:"application/x-www-form-urlencoded;charset=UTF-8",			
+				//调用失败回调函数
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					//alert("服务调用失败" + "\n" + errorThrown);
+					$main.html("服务调用失败" + "\n" + errorThrown);
+		        },
+				//调用成功的回调函数
+				success:function(html) {
+					$main.html(html);
+				}
+		 });
+	 },
+	 openIndex:function(){
+		 $this = $(this);
+		 this.openContent($this.attr("url"));
 	 }
 }
     

@@ -239,4 +239,69 @@
       	from tb_user a left join tb_organation b on a.org_id = b.org_id where a.cas_account = #{cas_account,jdbcType=VARCHAR} and a.state = #{state,jdbcType=VARCHAR}
   </select>
   
+   <select id="selectUserNetTree" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
+    
+   SELECT a.*,b.`dict_name` as user_star_name FROM ( 
+  	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,
+  	 		a.phone, a.org_id, a.register_date,a.register_ip, 
+  	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
+  	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,f_get_userstar(a.user_id) AS user_star
+      	from tb_user a left join tb_organation b on a.org_id = b.org_id 
+     where  1=1
+     <if test="user_id !=null and user_id != ''">
+     	and a.user_id = #{user_id,jdbcType=VARCHAR} 
+     </if>
+     <if test="state !=null and state != '' and state != '-1'">
+     	and a.state = #{state,jdbcType=VARCHAR}
+     </if>
+     <if test="org_id !=null and org_id !='' ">
+     	and a.org_id = #{org_id,jdbcType=VARCHAR}
+     </if> 
+     <if test="name !=null and name !='' ">
+     	and a.name like #{name,jdbcType=VARCHAR}
+     </if> 
+     <if test="user_code !=null and user_code !='' ">
+     	and user_code = #{user_code,jdbcType=VARCHAR}
+     </if>  
+     <if test="bank_account !=null and bank_account !='' ">
+     	and bank_account = #{bank_account,jdbcType=VARCHAR}
+     </if> 
+     <if test="cas_account != null  and cas_account != '' " >
+        		and cas_account = #{cas_account,jdbcType=VARCHAR}
+  	 </if>
+  	<if test="user_phone != null  and user_phone != '' " >
+     		and user_phone = #{user_phone,jdbcType=VARCHAR}
+  		</if>
+  	<if test="trans_pwd != null  and trans_pwd != '' " >
+     		and trans_pwd = #{trans_pwd,jdbcType=VARCHAR}
+  		</if>
+  	<if test="pid != null  and pid != '' " >
+     		and pid = #{pid,jdbcType=INTEGER}
+  		</if>
+  	<if test="cert_type != null  and cert_type != '' " >
+     		and cert_type = #{cert_type,jdbcType=VARCHAR}
+  		</if>
+  	<if test="user_level != null  and user_level != '' " >
+     		and user_level = #{user_level,jdbcType=INTEGER}
+  		</if>
+  	<if test="cert_id != null  and cert_id != '' " >
+     		and cert_id = #{cert_id,jdbcType=VARCHAR}
+  		</if>
+  	<if test="bus_state != null  and bus_state != '' " >
+     		and bus_state = #{bus_state,jdbcType=INTEGER}
+  		</if>
+  	<if test="create_time != null " >
+     		and create_time = #{create_time,jdbcType=TIMESTAMP}
+  		</if>
+  	<if test="register_id != null  and register_id != '' " >
+     		and register_id = #{register_id,jdbcType=INTEGER}
+  		</if>
+  	<if test="act_time != null " >
+     		and act_time = #{act_time,jdbcType=TIMESTAMP}
+  		</if>
+  	<if test="allchild_num != null  and allchild_num != '' " >
+     		and allchild_num = #{allchild_num,jdbcType=INTEGER}
+  	</if> ) a LEFT JOIN info_dict b ON a.user_star = b.dict_code AND b.dict_type ='starRate'
+  </select>
 </mapper>

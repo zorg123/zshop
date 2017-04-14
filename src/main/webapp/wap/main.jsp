@@ -76,6 +76,14 @@
         </div>
         <div class="tpl-left-nav-list">
             <ul class="tpl-left-nav-menu">
+               <li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
+	               	<a href="javascript:void(0);" onclick="pageData.openIndex();" url="/wap/index/index.jsp" class="nav-link tpl-left-nav-link-list">
+                        <i class="am-icon-home"></i>
+                        <span>首页</span>
+                        <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                    </a>                   
+                     
+                </li>
 	           <s:iterator  value="menuList"  id="menu" status="st">	
 	               <li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
 	               	 <a class="nav-link tpl-left-nav-link-list">

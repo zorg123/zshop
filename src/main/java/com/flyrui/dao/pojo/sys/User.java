@@ -18,6 +18,8 @@ public class User extends TbUser
     private String org_name;
     private String cur_role;
     private String cur_role_name;
+    private String user_star;
+    private String user_star_name;
     
     public List<TbRole> getRoleList()
     {
@@ -59,8 +61,17 @@ public class User extends TbUser
     public void setCur_role_name(String curRoleName)
     {
         cur_role_name = curRoleName;
-    }    
-    
-    
-    
+    }
+	public String getUser_star() {
+		return user_star;
+	}
+	public void setUser_star(String user_star) {
+		this.user_star = user_star;
+	}
+	public String getUser_star_name() {
+		return user_star_name;
+	}
+	public void setUser_star_name(String user_star_name) {
+		this.user_star_name = user_star_name;
+	}
 }

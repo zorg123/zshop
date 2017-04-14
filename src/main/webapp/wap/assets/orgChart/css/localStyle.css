@@ -1,0 +1,45 @@
+--网络组织图样式
+.orgchart {
+  background: #fff; 
+}
+.orgchart td.left, .orgchart td.right, .orgchart td.top {
+  border-color: #aaa;
+}
+.orgchart td>.down {
+  background-color: #aaa;
+}
+.orgchart .state_green .title {
+  background-color: green;
+}
+.orgchart .state_green .content {
+  border-color: green;
+}
+.orgchart .state_white .title {
+  background-color: red;
+}
+.orgchart .state_white .content {
+  border-color: red;
+}
+.orgchart .rd-dept .title {
+  background-color: #993366;
+}
+.orgchart .rd-dept .content {
+  border-color: #993366;
+}
+.orgchart .pipeline1 .title {
+  background-color: #996633;
+}
+.orgchart .pipeline1 .content {
+  border-color: #996633;
+}
+.orgchart .frontend1 .title {
+  background-color: #cc0066;
+}
+.orgchart .frontend1 .content {
+  border-color: #cc0066;
+}
+
+.orgchart .node .contentMid{
+	 border-bottom-width: 0px;
+   border-radius: 0px;
+}

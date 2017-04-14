@@ -2,6 +2,7 @@ package com.flyrui.sys.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -45,5 +46,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    @Override
    public int insert(User user){
 	   return super.insert(user);
+   }
+   
+   public List<User> selectUserNetTree(User user){
+	   return baseDao.selectList(getNameSpace()+".selectUserNetTree",user);
    }
 }
