@@ -61,7 +61,7 @@ public class FinancMgmtAction extends BaseAction {
     	setResult(pageModel);
     	return SUCCESS;
     }
-	
+	 
 	@Action(value="insertCoinTrack")
 	public String insertCoinTrack(){
 		User loginUser = getLoginUserInfo();
