@@ -13,13 +13,13 @@
                 <li class="am-active">安置网络</li>
             </ol>
             <div class="tpl-portlet-components">
-                <div class="portlet-title">
-                    <span>激活：</span><span style="display: inline-block; background-color: green;border: 1px solid #eee;width: 100px;text-align:center">绿色</span> 
+                <div class="am-breadcrumb">
+                    <span>激活：</span><span style="display: inline-block; background-color: green;border: 1px solid #eee;width: 100px;text-align:center">绿色</span>
                     <span>未激活：</span><span style="display: inline-block; background-color: red;border: 1px solid #eee;width: 100px;text-align:center">白色</span>
                 </div>
 
                 <div class="tpl-block">
-					<div id="chart-container" style="width:100%"></div>
+					<div id="chart-container" style="width:100%;height:100%"></div>
                 </div>
                 <div class="tpl-block">
 					<div class="am-u-sm-8 am-u-sm-push-3">
@@ -36,7 +36,7 @@
 			var d = $this.data["node"];
 			console.log($("#register").data['node']);
 			if(d instanceof Object){
-				CommonUtils.showAlert("/wap/user/register.jsp?puserCode="+d.userCode);
+				//CommonUtils.showAlert("/wap/user/register.jsp?puserCode="+d.userCode);
 				pageData.openContent("/wap/user/register.jsp?puserCode="+d.userCode)
 			}
 			//pageData.openContent("/wap/user/register.jsp?");
@@ -52,29 +52,30 @@
                	  var $chart = $('#chart-container').orgchart({
           		      'data' : result,
           		      'nodeTitle':'title',
-          		      'direction':'t2b',     
-          		      'createNode': function($node, data) {		   
+          		      'direction':'t2b',
+          		      'createNode': function($node, data) {	
+          		    	   
 	          		      	$node.find(".content").addClass("contentMid");
 	          		      	var d = $node.data["data"]
           				    var starDidv = '<div class="content contentMid">用户星级：'+d.starName+'</div>';
           				    $node.append(starDidv);
           				  	var childNumDidv = '<div class="content">所有人数：'+d.allchild_num+'</div>';
         				    $node.append(childNumDidv);
+        				    $node.on('click',function() { 
+        				    	  var chilren =data.children;
+        	          		      //console.log(chilrenCnt.length);
+        	          		      console.log(data);
+        	          		      if(chilren == null || chilren.length<3){
+        	          		    	  $("#register").show();
+        	          		    	  $("#register").data["node"]=data;
+        	          		    	
+        	          		      }else{
+        	          		    	  $("#register").hide();
+        	          		    	  $("#register").data["node"] = null;
+        	          		      }
+        	          		      
+        	          		});
           			  }
-          		    }).on('click', '.node', function() {
-          		      var $this = $(this);          		      
-          		      var $children = $('#chart-container').orgchart('getRelatedNodes',$this,"children"); 
-          		      console.log($children.length);
-          		      console.log($this.data["data"]);
-          		      if($children.length<3){
-          		    	  $("#register").show();
-          		    	  $("#register").data["node"]= $this.data["data"];
-          		    	
-          		      }else{
-          		    	  $("#register").hide();
-          		    	  $("#register").data["node"] = null;
-          		      }
-          		      
           		    })
            		    .on('click', '.orgchart', function(event) {
            		      if (!$(event.target).closest('.node').length) {
@@ -83,7 +84,8 @@
            		      }           		   	 
            		  });
                	 $('.orgchart').addClass('noncollapsable')
-      		     $('.orgchart').css("width","100%")
+      		     $('.orgchart').css("width","100%");
+                 $('.orgchart').css("height","100%")
                 }
 			}			
 		});

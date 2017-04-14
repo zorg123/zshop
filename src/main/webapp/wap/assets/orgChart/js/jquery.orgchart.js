@@ -619,8 +619,7 @@
   }
 
   // create node
-  function createNode(nodeData, level, opts) {
-	 console.log(nodeData);
+  function createNode(nodeData, level, opts) {	
 	 if(!typeof(nodeData.children) == "undefined"){
 	    $.each(nodeData.children, function (index, child) {
 	      child.parentId = nodeData.id;
