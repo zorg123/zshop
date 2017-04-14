@@ -116,5 +116,4 @@ public class FinancMgmtAction extends BaseAction {
 	public void setCoinTrackDto(CoinTrackDto coinTrackDto) {
 		this.coinTrackDto = coinTrackDto;
 	}
-   
 }
