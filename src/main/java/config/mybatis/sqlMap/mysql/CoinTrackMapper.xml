@@ -122,7 +122,12 @@
 		`oper_user_id`,
 		`order_id`,
 		`comments`, 
-		`file_info`) 
+		`file_info`,
+		`counter_num`,
+		`act_num`,
+		`serial_num`,
+		`apply_state`
+		) 
 	VALUES(
 		#{user_id,jdbcType=INTEGER},
 		#{coin_type,jdbcType=INTEGER},
@@ -132,6 +137,10 @@
 		#{order_id,jdbcType=INTEGER},
 		#{comments,jdbcType=VARCHAR},
 		#{file_info,jdbcType=VARCHAR}
+		#{counter_num,jdbcType=VARCHAR}
+		#{act_num,jdbcType=VARCHAR}
+		#{serial_num,jdbcType=VARCHAR}
+		#{apply_state,jdbcType=VARCHAR}
 	)
   </insert>
   
