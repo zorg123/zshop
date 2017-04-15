@@ -57,7 +57,7 @@
           		    	   
 	          		      	$node.find(".content").addClass("contentMid");
 	          		      	var d = $node.data["data"]
-          				    var starDidv = '<div class="content contentMid">用户星级：'+d.starName+'</div>';
+          				    var starDidv = '<div class="content contentMid">'+d.starName+'</div>';
           				    $node.append(starDidv);
           				  	var childNumDidv = '<div class="content">所有人数：'+d.allchild_num+'</div>';
         				    $node.append(childNumDidv);
