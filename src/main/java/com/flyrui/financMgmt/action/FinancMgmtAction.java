@@ -48,9 +48,10 @@ public class FinancMgmtAction extends BaseAction {
 	@Autowired
 	public CoinTrackService coinTrackService;
 	
-	@Action(value="getPagerListByCon")
+	//会员充值分页查询
+	@Action(value="getPagerListByConRec")
 	public String getPagerListByCon(){
-    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByCon(coinTrackDto, page, rows);
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConRec(coinTrackDto, page, rows);
     	setResult(pageModel);
     	return SUCCESS;
     }
@@ -76,11 +77,11 @@ public class FinancMgmtAction extends BaseAction {
 		setResult(retmap);
     	return SUCCESS;
     }
-	
-	@Action(value="eportCoinTrack")
-	public  String eportCoinTrack() throws Exception{  
+	//会员充值导出
+	@Action(value="eportCoinTrackRec")
+	public  String eportCoinTrackRec() throws Exception{  
     	ExcelExport<CoinTrackDto> excelExport = new ExcelExport<CoinTrackDto>();    	
-    	List<CoinTrackDto> retList = coinTrackService.getListByCon(coinTrackDto);
+    	List<CoinTrackDto> retList = coinTrackService.getListByConRec(coinTrackDto);
     	ByteArrayOutputStream os=new ByteArrayOutputStream();
     	excelExport.exportExcel("会员充值", retList, os);
         byte[] content=os.toByteArray();
@@ -89,8 +90,8 @@ public class FinancMgmtAction extends BaseAction {
         return "excel";    	   	
     }
 	//提现确认导出
-	@Action(value="eportExtConfCoinTrack")
-	public  String eportExtConfCoinTrack() throws Exception{  
+	@Action(value="eportCoinTrackExtConf")
+	public  String eportCoinTrackExtConf() throws Exception{  
     	ExcelExport<CoinTrackDto> excelExport = new ExcelExport<CoinTrackDto>();    	
     	List<CoinTrackDto> retList = coinTrackService.getListByConExtConf(coinTrackDto);
     	ByteArrayOutputStream os=new ByteArrayOutputStream();

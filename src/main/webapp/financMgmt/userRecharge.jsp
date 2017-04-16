@@ -64,7 +64,7 @@
 				<form action="" id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
 					<input type="file" name="uploadFile" value="" id="uploadFile" style="display:none">
 					<div class="input-group" style="float:left"> 
-						<input id="photoCover" class="easyui-textbox" type="text" > 
+						<input id="photoCover" class="easyui-textbox" type="text" style="width:120px"/> 
 						<span class="input-group-btn">
 					    	<a class="easyui-linkbutton color2" href="javascript:void(0)" onclick="$('input[id=uploadFile]').click();" style="width:80px">选择文件</a>									        
 					     </span>

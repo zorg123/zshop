@@ -59,20 +59,25 @@
   </delete>
   
   <insert id="insert" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
-    insert into info_serv_file ( <include refid="Base_Column_List" />)
-    values (	    	
-        	  #{id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{rela_id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{rela_type,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{file_id,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{state,jdbcType=VARCHAR},     		
-	    	    	
-        	  #{create_date,jdbcType=TIMESTAMP}     		
-	    )
+	 insert into `accout_info` ( 
+		 `user_id`, 
+		 `bonus_coin`, 
+		 `elect_coin`, 
+		 `reconsmp_coin`, 
+		 `account_bank`, 
+		 `account_id`, 
+		 `account_name`, 
+		 `comments`) 
+	 values(
+	 	#{user_id,jdbcType=INTEGER},
+	 	#{bonus_coin,jdbcType=DOUBLE},
+	 	#{elect_coin,jdbcType=DOUBLE},
+	 	#{reconsmp_coin,jdbcType=DOUBLE},
+	 	#{account_bank,jdbcType=VARCHAR},
+	 	#{account_id,jdbcType=VARCHAR},
+	 	#{account_name,jdbcType=VARCHAR},
+	 	#{comments,jdbcType=VARCHAR}
+	 )
   </insert>
   
   <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">

@@ -87,7 +87,7 @@ $(function () {
             	    strParam += "&coinTrackDto.start_time="+start_time;
             	    strParam += "&coinTrackDto.end_time="+end_time;
             	    strParam += "&coinTrackDto.apply_state="+apply_state;
-            	    var url = base+"/FinancMgmt/eportExtConfCoinTrack.do?"+strParam;
+            	    var url = base+"/FinancMgmt/eportCoinTrackExtConf.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){
 						parent.document.location.href=url;

@@ -24,7 +24,7 @@ var RechargeMng = {
                 	}
                 	if(retobj.retCode=='1'){
                 		isExist='1';
-                		user_id = retobj.retString;
+                		user_id = retobj.retUserId;
                 	}
                 }else{
                 	$.messager.alert('系统提示', '查询用户失败!', 'info');
@@ -37,8 +37,8 @@ var RechargeMng = {
         if(isExist=='1'){
         	//判断输入的金额
         	var coin_num = $('input[name="coin_num"]').val();
-        	 if(!/^[0-9]+$/.test(coin_num)){
-        		 $.messager.alert('系统提示', '充值金额请输入数字!', 'info');
+        	 if(!/^\+?[1-9][0-9]*$/.test(coin_num)){
+        		 $.messager.alert('系统提示', '充值金额请输入整数值!', 'info');
         		 return;
         	 }else{
         		 var param ={};
@@ -64,6 +64,10 @@ var RechargeMng = {
                  }
                  param["coinTrackDto.file_info"] = file_info;
                  param["coinTrackDto.user_id"] = user_id;
+                 //1:奖金币 2:电子币 3:重消币
+                 param["coinTrackDto.coin_type"] = 2;
+                 //1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消
+                 param["coinTrackDto.create_type"] = 4;
                  var me = this;
                  CommonUtils.invokeAsyncAction(base+'/FinancMgmt/insertCoinTrack.do', param, function (reply) {
      				if((reply || '') !=''){
@@ -88,10 +92,10 @@ var RechargeMng = {
         $('#win_save').hide();
     },
     clear: function () {
-    	//$('input[name="title"]').val('');
-    	//$("#eff_date").datebox('setValue','');
-    	//$("#exp_date").datebox('setValue','');//$('input[name="exp_date"]').val('');
-        //$('select[name="state"]').val('1');
+    	$('input[name="user_code"]').val('');
+    	$('input[name="coin_num"]').val('');
+    	$("#fileDownload ul").html("");
+    	$("#_easyui_textbox_input1").val('');
     },
     upload:function(){
     	var options = {
@@ -135,14 +139,14 @@ var RechargeMng = {
 	   var $this = $(o);
 	   $this.parent().remove();
 	   $("#fileDownload ul").html("");
-	   $("#_easyui_textbox_input1").attr("value","");
+	   $("#_easyui_textbox_input1").val('');
    }
 }
 
 
 $(function () {
     $('#coinTrackList').datagrid({
-        url: base+'/FinancMgmt/getPagerListByCon.do',
+        url: base+'/FinancMgmt/getPagerListByConRec.do',
         loadFilter:function(data){
         	var jsonStr = JSON.stringify(data);
         	if (jsonStr.indexOf("T")>0) {
@@ -158,8 +162,7 @@ $(function () {
                 handler: function () {
                     sign = 'save';
                     $('#win_save').attr('title', '会员充值');
-                    $("#fileDownload ul").html("");
-                    $("#_easyui_textbox_input1").attr("value","");
+                    RechargeMng.clear();
                     $('#win_save').show();
                     $('#win_save').window({
                         width: 450,
@@ -179,7 +182,7 @@ $(function () {
             	    var strParam = "coinTrackDto.user_code="+user_code;
             	    strParam += "&coinTrackDto.start_time="+start_time;
             	    strParam += "&coinTrackDto.end_time="+end_time;  
-            	    var url = base+"/FinancMgmt/eportCoinTrack.do?"+strParam;
+            	    var url = base+"/FinancMgmt/eportCoinTrackRec.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){
 						parent.document.location.href=url;

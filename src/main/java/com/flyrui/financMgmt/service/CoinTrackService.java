@@ -16,11 +16,11 @@ public interface CoinTrackService {
 	
 	public int delete(CoinTrackDto coinTrackDto);
 	
-	public List<CoinTrackDto> getListByCon(CoinTrackDto coinTrackDto);
+	public List<CoinTrackDto> getListByConRec(CoinTrackDto coinTrackDto);
 	
 	public List<CoinTrackDto> getListByConExtConf(CoinTrackDto coinTrackDto);
 	
-	public PageModel getPagerListByCon(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	public PageModel getPagerListByConRec(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
 	public PageModel getPagerListByConExtConf(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	

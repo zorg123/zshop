@@ -51,7 +51,7 @@
      		</if>
     </where>
   </sql>
-  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+  <select id="selectRec" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
     a.id,  
 	b.user_code,
@@ -136,10 +136,10 @@
 		#{oper_user_id,jdbcType=INTEGER},
 		#{order_id,jdbcType=INTEGER},
 		#{comments,jdbcType=VARCHAR},
-		#{file_info,jdbcType=VARCHAR}
-		#{counter_num,jdbcType=VARCHAR}
-		#{act_num,jdbcType=VARCHAR}
-		#{serial_num,jdbcType=VARCHAR}
+		#{file_info,jdbcType=VARCHAR},
+		#{counter_num,jdbcType=VARCHAR},
+		#{act_num,jdbcType=VARCHAR},
+		#{serial_num,jdbcType=VARCHAR},
 		#{apply_state,jdbcType=VARCHAR}
 	)
   </insert>
