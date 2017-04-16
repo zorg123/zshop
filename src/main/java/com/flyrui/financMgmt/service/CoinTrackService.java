@@ -24,9 +24,18 @@ public interface CoinTrackService {
 	
 	public PageModel getPagerListByConExtConf(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
+	public PageModel getPagerListByConBonusAct(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	
+	public PageModel getPagerListByConBonusInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	
+	public PageModel getPagerListByConElectInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	
 	public int insertCoinTrack(User loginUser,CoinTrackDto coinTrackDto);
 	
 	public int updateCoinTrack(User loginUser,CoinTrackDto coinTrackDto);
 	
 	public HashMap getUserByCode(CoinTrackDto coinTrackDto);
+	
+	public HashMap getBonusActSum(CoinTrackDto coinTrackDto);
+	
 }

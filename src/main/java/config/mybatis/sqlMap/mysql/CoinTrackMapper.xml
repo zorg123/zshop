@@ -7,6 +7,7 @@
     	<result column="coin_type" property="coin_type" jdbcType="INTEGER" />
     	<result column="coin_num" property="coin_num" jdbcType="DOUBLE" />
     	<result column="create_type" property="create_type" jdbcType="INTEGER" />
+    	<result column="create_type_name" property="create_type_name" jdbcType="VARCHAR" />
     	<result column="oper_user_id" property="oper_user_id" jdbcType="INTEGER" />
     	<result column="oper_user_name" property="oper_user_name" jdbcType="VARCHAR" />
     	<result column="order_id" property="order_id" jdbcType="INTEGER" />
@@ -20,6 +21,13 @@
     	<result column="act_num" property="act_num" jdbcType="DOUBLE" />
     	<result column="serial_num" property="serial_num" jdbcType="VARCHAR" />
     	<result column="apply_state" property="apply_state" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BonusActResultMap" type="com.flyrui.financMgmt.pojo.BonusActDto" >
+  		<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+  		<result column="gg_fee" property="gg_fee" jdbcType="DOUBLE" />
+  		<result column="fd_fee" property="fd_fee" jdbcType="DOUBLE" />
+  		<result column="re_fee" property="re_fee" jdbcType="DOUBLE" />
+  		<result column="act_fee" property="act_fee" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     	id,
@@ -61,7 +69,7 @@
 	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name,
 	a.file_info
 	FROM coin_track a
-	JOIN tb_user b ON a.`user_id` = b.`user_id`
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	WHERE a.`coin_type` = 2
 	AND a.`create_type` = 4
 	<if test="user_code != null  and user_code != '' " >
@@ -88,7 +96,7 @@
 	CASE apply_state WHEN 1 THEN '已打款' WHEN 0 THEN '未打款' END AS apply_state,
 	a.serial_num
 	FROM coin_track a
-	JOIN tb_user b ON a.`user_id` = b.`user_id`
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	WHERE a.`coin_type` = 1
 	AND a.`create_type` = 3
 	<if test="user_code != null  and user_code != '' " >
@@ -104,6 +112,48 @@
     	and a.apply_state = #{apply_state,jdbcType=VARCHAR}
     </if>
     order by a.create_time desc
+  </select>
+  
+  <select id="selectBonusAct" resultMap="BonusActResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT t.create_time,t.gg_fee,t.fd_fee,t.re_fee,(t.gg_fee+t.fd_fee-t.re_fee) act_fee
+	FROM (
+	SELECT
+	(SELECT MAX(create_time) FROM coin_track t WHERE a.order_id = t.order_id) create_time,
+	(SELECT IFNULL(SUM(coin_num),0) FROM coin_track g WHERE a.order_id = g.order_id AND g.create_type='1') gg_fee,
+	(SELECT IFNULL(SUM(coin_num),0) FROM coin_track f WHERE a.order_id = f.order_id AND f.create_type='2') fd_fee,
+	(SELECT IFNULL(SUM(coin_num),0) FROM coin_track r WHERE a.order_id = r.order_id AND r.create_type='8') re_fee
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.`state` = 1 AND b.`bus_state` = 1 
+	WHERE a.coin_type IN(1,3)
+	AND a.coin_num>0
+	AND a.user_id = #{user_id,jdbcType=INTEGER}
+	GROUP BY a.order_id
+	ORDER BY a.`id` DESC) t
+  </select>
+  
+  <select id="selectBonusInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+	a.create_time,
+	a.coin_num,
+	CASE a.create_type WHEN 1 THEN '广告费' WHEN 2 THEN '辅导奖' WHEN 3 THEN '提现' WHEN 6 THEN '转电子币' END AS create_type_name
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	WHERE a.`coin_type` = 1
+	AND a.user_id = #{user_id,jdbcType=INTEGER}
+	ORDER BY a.`create_time` DESC
+  </select>
+  
+  <select id="selectElectInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+	a.create_time,
+	a.coin_num,
+	CASE a.create_type WHEN 4 THEN '充值' WHEN 5 THEN '互转' WHEN 6 THEN '转电子币' WHEN 7 THEN '购物' WHEN 9 THEN '报单' END AS create_type_name,
+	a.comments
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	WHERE a.`coin_type` = 2
+	AND a.user_id = #{user_id,jdbcType=INTEGER}
+	ORDER BY a.`create_time` DESC
   </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
@@ -162,4 +212,29 @@
       		and user_id = #{user_id,jdbcType=INTEGER}
    		</if>
   </update>
+  
+  <select id="getBonusActSum" resultType="hashmap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+  	SELECT t.bonusActSum,t.reconsmpActSum,(t.bonusActSum-t.reconsmpActSum) AS actSum
+	FROM (
+		SELECT 
+		(SELECT IFNULL(SUM(a.coin_num),0) bonusActSum
+		    FROM coin_track a
+			JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.`state` = 1 AND b.`bus_state` = 1 
+			WHERE a.coin_type IN(1)
+			AND a.create_type IN(1,2)
+			AND a.coin_num>0
+			AND a.user_id = #{user_id,jdbcType=INTEGER}
+		) AS bonusActSum,
+		(
+		SELECT IFNULL(SUM(a.coin_num),0) reconsmpActSum
+		    FROM coin_track a
+			JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.`state` = 1 AND b.`bus_state` = 1 
+			WHERE a.coin_type IN(3)
+			AND a.create_type IN(8)
+			AND a.coin_num>0
+			AND a.user_id = #{user_id,jdbcType=INTEGER}
+		) AS reconsmpActSum
+		FROM DUAL
+		)t
+  </select>
 </mapper>

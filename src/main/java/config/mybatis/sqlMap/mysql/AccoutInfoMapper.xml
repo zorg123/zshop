@@ -43,12 +43,15 @@
     </where>
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
-    select    
-    <include refid="Base_Column_List" />
-    from info_serv_file
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
+    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments
+    from accout_info
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryAccountInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments
+    from accout_info
+    where user_id = #{user_id,jdbcType=INTEGER}
   </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >

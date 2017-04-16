@@ -14,4 +14,8 @@ public class AccoutInfoServiceImpl extends BaseService<AccoutInfoDto> implements
 	public AccoutInfoServiceImpl(){
 		super.setNameSpace("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper");
 	}
+	
+	public AccoutInfoDto queryAccountInfo(AccoutInfoDto accoutInfo){
+		return baseDao.selectOne(this.nameSpace+".queryAccountInfo", accoutInfo);
+	}
 }

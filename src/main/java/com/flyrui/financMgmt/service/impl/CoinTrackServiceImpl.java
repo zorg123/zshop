@@ -30,6 +30,21 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		return getPagerList(coinTrackDto,nameSpace+".selectExtConf",pageNo,pageSize);
 	}
 	
+	//奖金实收分页查询
+	public PageModel getPagerListByConBonusAct(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectBonusAct",pageNo,pageSize);
+	}
+	
+	//奖金币明细分页查询
+	public PageModel getPagerListByConBonusInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectBonusInfo",pageNo,pageSize);
+	}
+	
+	//电子币明细分页查询
+	public PageModel getPagerListByConElectInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectElectInfo",pageNo,pageSize);
+	}
+	
 	//根据用户编码查找用户
 	public HashMap getUserByCode(CoinTrackDto coinTrackDto){
 		HashMap map = new HashMap();
@@ -117,5 +132,10 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	//提现确认查询
 	public List<CoinTrackDto> getListByConExtConf(CoinTrackDto coinTrackDto) {
 		return baseDao.selectList(nameSpace+".selectExtConf", coinTrackDto);		
+	}
+	
+	//得到实收奖金总额
+	public HashMap getBonusActSum(CoinTrackDto coinTrackDto) {
+		return (HashMap)baseDao.selectOne(nameSpace+".getBonusActSum", coinTrackDto);
 	}
 }

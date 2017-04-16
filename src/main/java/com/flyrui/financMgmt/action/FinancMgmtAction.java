@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
@@ -20,15 +21,20 @@ import com.flyrui.common.excel.ExcelExport;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.salary.BusSalary;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
+import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
 import com.flyrui.salary.service.SalaryService;
+import com.flyrui.sys.service.UserService;
 
 @ParentPackage("frcms_default")
 @Namespace("/FinancMgmt") //访问路径的包名
 @Results({
-		@Result(name="manageEdit", location = "/manage/manageEdit.jsp"),
+		@Result(name="queryBonusAct", location = "/wap/financMgmt/bonusAct.jsp"),
+		@Result(name="queryBonusInfo", location = "/wap/financMgmt/bonusInfo.jsp"),
+		@Result(name="queryElectInfo", location = "/wap/financMgmt/electInfo.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
 		
@@ -48,6 +54,9 @@ public class FinancMgmtAction extends BaseAction {
 	@Autowired
 	public CoinTrackService coinTrackService;
 	
+	@Autowired
+	public AccoutInfoService accoutInfoService;
+	
 	//会员充值分页查询
 	@Action(value="getPagerListByConRec")
 	public String getPagerListByCon(){
@@ -61,6 +70,95 @@ public class FinancMgmtAction extends BaseAction {
     	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConExtConf(coinTrackDto, page, rows);
     	setResult(pageModel);
     	return SUCCESS;
+    }
+	
+	//奖金实收分页查询
+	@Action("queryBonusAct")    
+    public String queryBonusAct(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==coinTrackDto){
+			coinTrackDto = new CoinTrackDto();
+		}
+		coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConBonusAct(coinTrackDto, page, rows);
+    	//查找实收总额 (只包含正值)
+    	HashMap bonusActMap = coinTrackService.getBonusActSum(coinTrackDto);
+    	Double bonusActSum = (Double)bonusActMap.get("bonusActSum");
+    	Double reconsmpActSum = (Double)bonusActMap.get("reconsmpActSum");
+    	Double actSum = (Double)bonusActMap.get("actSum");
+    	//返回值设置
+    	result.put("ret",pageModel);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("bonusActSum", bonusActSum);
+		result.put("reconsmpActSum", reconsmpActSum);
+		result.put("actSum", actSum);
+    	return "queryBonusAct";
+    }
+	
+	//奖金币明细
+	@Action("queryBonusInfo")    
+    public String queryBonusInfo(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==coinTrackDto){
+			coinTrackDto = new CoinTrackDto();
+		}
+		coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConBonusInfo(coinTrackDto, page, rows);
+    	//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	//返回值设置
+    	result.put("ret",pageModel);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("bonusCoin", bonusCoin);
+    	return "queryBonusInfo";
+    }
+	
+	//电子币明细
+	@Action("queryElectInfo")    
+    public String queryElectInfo(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==coinTrackDto){
+			coinTrackDto = new CoinTrackDto();
+		}
+		coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConElectInfo(coinTrackDto, page, rows);
+    	//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
+    	//返回值设置
+    	result.put("ret",pageModel);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("electCoin", electCoin);
+    	return "queryElectInfo";
     }
 	 
 	@Action(value="insertCoinTrack")
