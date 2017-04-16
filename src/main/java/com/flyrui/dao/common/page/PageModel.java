@@ -62,5 +62,12 @@ public class PageModel <T>{
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
 	}
+	public int getPageCount() {
+		return pageCount;
+	}
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+	
 	
 }

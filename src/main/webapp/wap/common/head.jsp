@@ -26,6 +26,7 @@
     <script src="<%=baseUri %>/wap/assets/js/echarts.min.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/jquery.min.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/amazeui.min.js"></script>
+    <script src="<%=baseUri %>/wap/assets/js/amazeui.page.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/iscroll.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/app.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/CommonUtils.js"></script>

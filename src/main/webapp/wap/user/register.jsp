@@ -24,23 +24,11 @@
                         <div class="tpl-form-body tpl-form-line">
                             <form class="am-form tpl-form-line-form" id="registerForm">
                                 <div class="am-form-group">
-                                    <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
-                                    <div class="am-u-sm-8">
-                                        <input type="text" class="tpl-form-input" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填">                                        
-                                    </div>
-                                </div>
-								<div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">姓名 </label>
-                                    <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.name"  name="user.name" placeholder="请输入用户账号" />                                        
-                                    </div>
-                                </div>
-                                <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
                                         <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" />                                        
                                     </div>
-                                </div>
+                                </div> 
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">登录密码 </label>
                                     <div class="am-u-sm-8">
@@ -64,7 +52,19 @@
                                     <div class="am-u-sm-8">
                                         <input type="password" class="am-form-field tpl-form-no-bg"   name="user.confirm_trans_pwd" placeholder="请输入确认交易密码" />                                        
                                     </div>
-                                </div>                                 
+                                </div>   
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
+                                    <div class="am-u-sm-8">
+                                        <input type="text" class="tpl-form-input" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填">                                        
+                                    </div>
+                                </div>
+								<div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">姓名 </label>
+                                    <div class="am-u-sm-8">
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.name"  name="user.name" placeholder="请输入用户账号" />                                        
+                                    </div>
+                                </div>                              
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">接点人账号</label>
                                     <div class="am-u-sm-8">

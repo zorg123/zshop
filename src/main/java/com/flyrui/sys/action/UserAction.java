@@ -34,7 +34,8 @@ import com.flyrui.sys.service.UserService;
 
 @ParentPackage("frcms_default")
 @Namespace("/Sys/User") //访问路径的包名
-@Results({		
+@Results({	
+		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class UserAction extends BaseAction {	
 
@@ -82,8 +83,14 @@ public class UserAction extends BaseAction {
     public void setCaption(String caption) {
         this.caption = caption;
     }
-    
-    public UserService getUserService(){
+        
+    public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public UserService getUserService(){
     	return (UserService)SpringBeans.getBean("userService");
     }
     
@@ -547,70 +554,23 @@ public class UserAction extends BaseAction {
     	return SUCCESS;
     }
     
-    /**      
-     * 获取上级网络架构    
-     * @param user
-     * @return [返回类型说明]      
-     * Administrator
-     * Jul 6, 2012
-     */
-    @Action("getUpUserNetWork")   
-    public String getUpUserNetWork() throws FRException{
-    	UserNetTree userNetTree = new UserNetTree();
-    	UserService userService = getUserService();    
-    	if(user.getUser_id()==null){
-    		user.setUser_id(getUserId());
+        
+    @Action("queryRegisterUser")    
+    public String queryRegisterUser(){
+    	UserService userService = getUserService();
+    	user.setRegister_id(getUserId());
+    	if(user.getState()==null){
+    		user.setState("1");
+    	}   
+    	if(rows==0){
+    		rows=5;
     	}
-    	User u = new User();
-    	u.setUser_id(user.getUser_id());
-    	List<User> retList = userService.getListByCon(u);
-    	if(retList!=null &&retList.size() >0){
-    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_EXISTS));
-    		throw frException;
-    	}    	
-    	User curUser = retList.get(0);
-    	userNetTree.setId(curUser.getUser_id());
-    	userNetTree.setTitle(curUser.getName());
-    	userNetTree.setClassName(getUserNetClass(curUser.getBus_state()+""));
-    	userNetTree.setStar(curUser.getUser_star());
-    	userNetTree.setStarName(curUser.getUser_star_name());
-    	userNetTree.setUserCode(curUser.getUser_code());
-    	userNetTree.setAllchild_num((curUser.getAllchild_num()==null?0:curUser.getAllchild_num())+"");
-    	//获取下级节点    	
-    	u = new User();
-    	u.setPid(curUser.getUser_id());
-    	retList = userService.getListByCon(u);
-    	List<UserNetTree> subUserNetTreeList = new ArrayList<UserNetTree>();
-    	for(User us : retList){
-    		UserNetTree userNetTreeTemp = new UserNetTree();
-    		userNetTreeTemp.setId(us.getUser_id());
-    		userNetTreeTemp.setTitle(us.getName());
-    		userNetTreeTemp.setClassName(getUserNetClass(us.getBus_state()+""));
-    		userNetTreeTemp.setStar(us.getUser_star());
-    		userNetTreeTemp.setStarName(us.getUser_star_name());
-    		userNetTreeTemp.setAllchild_num((us.getAllchild_num()==null?0:us.getAllchild_num())+"");
-    		userNetTreeTemp.setUserCode(us.getUser_code());
-    		u = new User();
-        	u.setPid(getUserId());
-        	retList = userService.getListByCon(u);
-        	List<UserNetTree> subUserNetTreeList2 = new ArrayList<UserNetTree>();
-    		for(User us2 : retList){
-        		UserNetTree userNetTreeTemp2 = new UserNetTree();
-        		userNetTreeTemp2.setId(us2.getUser_id());
-        		userNetTreeTemp2.setTitle(us2.getName());
-        		userNetTreeTemp2.setClassName(getUserNetClass(us2.getBus_state()+""));
-        		userNetTreeTemp2.setStar(us2.getUser_star());
-        		userNetTreeTemp2.setStarName(us2.getUser_star_name());
-        		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
-        		userNetTreeTemp2.setUserCode(us2.getUser_code());
-        		subUserNetTreeList2.add(userNetTreeTemp2);
-        	}
-    		userNetTreeTemp.setChildren(subUserNetTreeList2);
-    		subUserNetTreeList.add(userNetTreeTemp);
+    	if(page==0){
+    		page = 1;
     	}
-    	userNetTree.setChildren(subUserNetTreeList);
-    	setResult(userNetTree);
-    	return SUCCESS;
+    	PageModel pageModel = userService.getPagerListByCon(user, page, rows);
+    	setResult(pageModel);
+    	return "queryRegisterUser";
     }
     
     private String getUserNetClass(String state){

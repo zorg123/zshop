@@ -41,7 +41,7 @@ $(function() {
         // 头部导航隐藏菜单
         // ==========================
 
-    $('.tpl-header-nav-hover-ico').on('click', function() {
+    $('#menuToggle').on('click', function() {
         $('.tpl-left-nav').toggle();
         $('.tpl-content-wrapper').toggleClass('tpl-content-wrapper-hover');
     });
@@ -142,15 +142,20 @@ var pageData={
 			 return false;
 		 })
 	 },
-	 openContent:function($url){
+	 openContent:function($url,data){
 		 $main = $("#mainContent");
 		 if($url==null || $url==""){
 			 return;
+		 }
+		 var params={};
+		 if(data){
+			 params = data;
 		 }
 		 $main.empty();
 	     $.ajax({
 				type:"post",//设置提交方式
 				url:$url,//提交URL
+				data:params,
 				async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",			
 				//调用失败回调函数
