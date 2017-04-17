@@ -6,7 +6,7 @@
 <s:set name="bonusInfoListPage" value="result.ret"/>
 <s:set name="bonusCoin" value="result.bonusCoin"/>
 <s:set name="bonusInfoList" value="#bonusInfoListPage.rows"/>
-<s:set name="total" value="#bonusActList.total"/> 
+<s:set name="total" value="#bonusInfoList.total"/> 
 <s:set var="pageCount" value="bonusInfoListPage.pageCount"/>
 <s:set var="pageIndex" value="bonusInfoListPage.pageIndex"/>
 <div class="tpl-content-wrapper">           

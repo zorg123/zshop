@@ -8,7 +8,7 @@
 <s:set name="reconsmpActSum" value="result.reconsmpActSum"/>
 <s:set name="actSum" value="result.actSum"/>
 <s:set name="bonusActList" value="#bonusActListPage.rows"/>
-<s:set name="total" value="#bonusActList.total"/> 
+<s:set name="total" value="#bonusActList.total"/>
 <s:set var="pageCount" value="bonusActListPage.pageCount"/>
 <s:set var="pageIndex" value="bonusActListPage.pageIndex"/>
 <div class="tpl-content-wrapper">           

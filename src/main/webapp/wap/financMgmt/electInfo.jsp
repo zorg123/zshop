@@ -42,12 +42,12 @@
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody>
-	                                        <s:iterator  value="#bonusInfoList"  id="bonusInfoIter" status="st">   
+	                                        <s:iterator  value="#electInfoList"  id="electInfoIter" status="st">   
 		                                        <tr>
-		                                            <td><s:date name="#bonusInfoIter.create_time" format="yyyy-MM-dd HH:mm:ss"/></td>
-		                                            <td><s:property value="#bonusInfoIter.create_type_name"/></td>
-		                                            <td><s:property value="#bonusInfoIter.coin_num"/></td>
-		                                            <td><s:property value="#bonusInfoIter.comments"/></td>
+		                                            <td><s:date name="#electInfoIter.create_time" format="yyyy-MM-dd HH:mm:ss"/></td>
+		                                            <td><s:property value="#electInfoIter.create_type_name"/></td>
+		                                            <td><s:property value="#electInfoIter.coin_num"/></td>
+		                                            <td><s:property value="#electInfoIter.comments"/></td>
 		                                        </tr>
 	                                        </s:iterator>                                        
 	                                    </tbody>

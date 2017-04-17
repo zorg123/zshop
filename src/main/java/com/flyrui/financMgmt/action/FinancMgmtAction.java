@@ -57,6 +57,9 @@ public class FinancMgmtAction extends BaseAction {
 	@Autowired
 	public AccoutInfoService accoutInfoService;
 	
+	@Autowired
+	public UserService userService;
+	
 	//会员充值分页查询
 	@Action(value="getPagerListByConRec")
 	public String getPagerListByCon(){
@@ -167,6 +170,81 @@ public class FinancMgmtAction extends BaseAction {
 		int ret = coinTrackService.insertCoinTrack(loginUser,coinTrackDto);
 		setResult(ret);
     	return SUCCESS;
+    }
+	
+	//电子币互转写表
+	@Action(value="insertElectTrans")
+	public String insertElectTrans(){
+		HashMap retMap = new HashMap();
+		//retCode:retString -1:输入的工号不存在 0:未激活 1:转入的电子币大于当前账户的电子币 2:输入的交易密码错误!3:成功
+		//获取接收方用户编码
+		String rec_user_code = coinTrackDto.getUser_code();
+		//获取转账电子币金额
+		Double trans_elect_coin = coinTrackDto.getCoin_num();
+		//获取当前用户的交易密码
+		String trans_pwd = coinTrackDto.getComments();
+		//判断接收方用户是否存在
+		CoinTrackDto recCoinTrackDto = new CoinTrackDto();
+		recCoinTrackDto.setUser_code(rec_user_code);
+		HashMap recMap = coinTrackService.getUserByCode(recCoinTrackDto);
+		String retCode = (String)recMap.get("retCode");
+		if(!retCode.equals("1")){
+			if(retCode.equals("-1")){
+				retMap.put("retCode", "-1");
+				retMap.put("retString", "输入的会员编号不存在");
+			}else if(retCode.equals("0")){
+				retMap.put("retCode", "0");
+				retMap.put("retString", "输入的会员编号未激活");
+			}
+			setResult(retMap);
+	    	return SUCCESS; 
+		}else{
+			//查询当前用户的电子币
+			AccoutInfoDto accoutInfo = new AccoutInfoDto();
+	    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+	    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+	    	Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
+	    	if(electCoin<trans_elect_coin){
+	    		retMap.put("retCode", "1");
+				retMap.put("retString", "转入的电子币大于当前账户的电子币");
+				setResult(retMap);
+		    	return SUCCESS; 
+	    	}else{
+	    		//判断当前用户的交易密码
+	    		User queryUser = new User();
+	    		queryUser.setUser_id(getLoginUserInfo().getUser_id());
+	    		List <User> userlist = userService.getListByCon(queryUser);
+	    		User retUser = userlist.get(0);
+	    		String userTransPwd = retUser.getTrans_pwd();
+	    		if(!trans_pwd.equals(userTransPwd)){
+	    			retMap.put("retCode", "2");
+					retMap.put("retString", "输入的交易密码错误!");
+					setResult(retMap);
+			    	return SUCCESS; 
+	    		}else{
+	    			//接收方
+	    			//1:奖金币 2:电子币 3:重消币
+	    			recCoinTrackDto.setCoin_type(2);
+	    			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
+	    			recCoinTrackDto.setCreate_type(5);
+	    			recCoinTrackDto.setCoin_num(trans_elect_coin);
+	    			recCoinTrackDto.setComments(getLoginUserInfo().getUser_code()+"转入");
+	    			int order_id = coinTrackService.insertCoinTrack(getLoginUserInfo(), recCoinTrackDto);
+	    			//发送方
+	    			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
+	    			sendCoinTrackDto.setCoin_type(2);
+	    			sendCoinTrackDto.setCreate_type(5);
+	    			sendCoinTrackDto.setCoin_num(trans_elect_coin*-1);
+	    			sendCoinTrackDto.setOrder_id(order_id);
+	    			sendCoinTrackDto.setComments("转入"+recCoinTrackDto.getUser_code());
+	    			coinTrackService.insertCoinTrack(getLoginUserInfo(), sendCoinTrackDto);
+	    			retMap.put("retCode", "3");
+					retMap.put("retString", "成功");
+					setResult(retMap);
+			    	return SUCCESS;
+	    		}
+	    	}
+		}
     }
 	
 	@Action(value="getUserByCode")

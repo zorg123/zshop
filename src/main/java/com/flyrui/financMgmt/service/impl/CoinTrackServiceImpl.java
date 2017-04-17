@@ -79,6 +79,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	}
 	
 	public int insertCoinTrack(User loginUser,CoinTrackDto coinTrackDto){
+		int order_id = 0;
 		//如果user_code不为空，根据user_code查询user_id
 		if(null!=coinTrackDto.getUser_code() && coinTrackDto.getUser_code().length()>0){
 			TbUser queryUser = new TbUser();
@@ -92,17 +93,10 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		coinTrackDto.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
 		if(null==coinTrackDto.getOrder_id()){
 			//从序列中取
-			coinTrackDto.setOrder_id(Integer.valueOf(getSequence("coin_track_orderid")));
-		}
-		//电子币转账,接收方送user_code，发送方不送user_code
-		if(null!=coinTrackDto.getCoin_type() && coinTrackDto.getCoin_type()==2 && null!=coinTrackDto.getCreate_type() && coinTrackDto.getCreate_type()==5){
-			String comments = "转入";
-			if(null!=coinTrackDto.getUser_code() && coinTrackDto.getUser_code().length()>0){
-				comments=loginUser.getUser_code()+comments;
-			}else{
-				comments=comments+coinTrackDto.getUser_code();
-			}
-			coinTrackDto.setComments(comments);
+			order_id = Integer.valueOf(getSequence("coin_track_orderid"));
+			coinTrackDto.setOrder_id(order_id);
+		}else{
+			order_id = coinTrackDto.getOrder_id();
 		}
 		baseDao.insert(this.getNameSpace()+".insert", coinTrackDto);
 		//更新会员账户电子币金额
@@ -115,7 +109,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 			accoutInfoDto.setReconsmp_coin(coinTrackDto.getCoin_num());
 		}
 		accoutInfoDto.setUser_id(coinTrackDto.getUser_id());
-		return baseDao.update("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".update", accoutInfoDto);
+		baseDao.update("com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".update", accoutInfoDto);
+		return order_id;
 	}
 	
 	public int updateCoinTrack(User loginUser,CoinTrackDto coinTrackDto){
