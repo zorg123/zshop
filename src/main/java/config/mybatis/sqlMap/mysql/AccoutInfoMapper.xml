@@ -49,7 +49,7 @@
   </select>
   
   <select id="queryAccountInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
-    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments
+    select id,user_id,IFNULL(bonus_coin,0),IFNULL(elect_coin,0),IFNULL(reconsmp_coin,0),account_bank,account_id,account_name,comments
     from accout_info
     where user_id = #{user_id,jdbcType=INTEGER}
   </select>
