@@ -247,6 +247,61 @@ public class FinancMgmtAction extends BaseAction {
 		}
     }
 	
+	//电子币互转写表
+	@Action(value="bonusToElect")
+	public String bonusToElect(){
+		//获取转入的奖金币
+		Double trans_bonus_coin = coinTrackDto.getCoin_num();
+		//获取当前用户的交易密码
+		String trans_pwd = coinTrackDto.getComments();
+		HashMap retMap = new HashMap();
+		//retCode:retString -1:转入的奖金币大于当前账户的奖金币 3:成功
+		//查询当前用户的奖金币
+		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	if(bonusCoin<trans_bonus_coin){
+    		retMap.put("retCode", "1");
+			retMap.put("retString", "转入的奖金币大于当前账户的奖金币 ");
+			setResult(retMap);
+	    	return SUCCESS; 
+    	}else{
+    		//判断当前用户的交易密码
+    		User queryUser = new User();
+    		queryUser.setUser_id(getLoginUserInfo().getUser_id());
+    		List <User> userlist = userService.getListByCon(queryUser);
+    		User retUser = userlist.get(0);
+    		String userTransPwd = retUser.getTrans_pwd();
+    		if(!trans_pwd.equals(userTransPwd)){
+    			retMap.put("retCode", "2");
+				retMap.put("retString", "输入的交易密码错误!");
+				setResult(retMap);
+		    	return SUCCESS; 
+    		}else{
+    			//接收方
+        		CoinTrackDto recCoinTrackDto = new CoinTrackDto();
+    			//1:奖金币 2:电子币 3:重消币
+    			recCoinTrackDto.setCoin_type(2);
+    			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
+    			recCoinTrackDto.setCreate_type(6);
+    			recCoinTrackDto.setCoin_num(trans_bonus_coin);
+    			int order_id = coinTrackService.insertCoinTrack(getLoginUserInfo(), recCoinTrackDto);
+    			//发送方
+    			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
+    			sendCoinTrackDto.setCoin_type(1);
+    			sendCoinTrackDto.setCreate_type(6);
+    			sendCoinTrackDto.setCoin_num(trans_bonus_coin*-1);
+    			sendCoinTrackDto.setOrder_id(order_id);
+    			coinTrackService.insertCoinTrack(getLoginUserInfo(), sendCoinTrackDto);
+    			retMap.put("retCode", "3");
+    			retMap.put("retString", "成功");
+    			setResult(retMap);
+    	    	return SUCCESS;
+    		}
+    	}
+    }
+	
 	@Action(value="getUserByCode")
 	public String getUserByCode(){
 		HashMap retmap = coinTrackService.getUserByCode(coinTrackDto);
