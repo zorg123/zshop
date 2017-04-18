@@ -80,17 +80,21 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	
 	public int insertCoinTrack(User loginUser,CoinTrackDto coinTrackDto){
 		int order_id = 0;
-		//如果user_code不为空，根据user_code查询user_id
-		if(null!=coinTrackDto.getUser_code() && coinTrackDto.getUser_code().length()>0){
-			TbUser queryUser = new TbUser();
-			queryUser.setUser_code(coinTrackDto.getUser_code());
-			TbUser retUser = (User)baseDao.selectOne("com.flyrui.dao.pojo.sys.tb_user"+".select", queryUser);
-			coinTrackDto.setUser_id(Integer.valueOf(retUser.getUser_id()));
-		}else{
-			//从session中获取用户user_id
-			coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+		if(null==coinTrackDto.getUser_id()){
+			//如果user_code不为空，根据user_code查询user_id
+			if(null!=coinTrackDto.getUser_code() && coinTrackDto.getUser_code().length()>0){
+				TbUser queryUser = new TbUser();
+				queryUser.setUser_code(coinTrackDto.getUser_code());
+				TbUser retUser = (User)baseDao.selectOne("com.flyrui.dao.pojo.sys.tb_user"+".select", queryUser);
+				coinTrackDto.setUser_id(Integer.valueOf(retUser.getUser_id()));
+			}else{
+				//从session中获取用户user_id
+				coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+			}
 		}
-		coinTrackDto.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
+		if(null==coinTrackDto.getOper_user_id()){
+			coinTrackDto.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
+		}
 		if(null==coinTrackDto.getOrder_id()){
 			//从序列中取
 			order_id = Integer.valueOf(getSequence("coin_track_orderid"));

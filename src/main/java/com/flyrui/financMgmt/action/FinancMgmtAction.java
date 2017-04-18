@@ -27,6 +27,7 @@ import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
 import com.flyrui.salary.service.SalaryService;
+import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.UserService;
 
 @ParentPackage("frcms_default")
@@ -35,6 +36,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="queryBonusAct", location = "/wap/financMgmt/bonusAct.jsp"),
 		@Result(name="queryBonusInfo", location = "/wap/financMgmt/bonusInfo.jsp"),
 		@Result(name="queryElectInfo", location = "/wap/financMgmt/electInfo.jsp"),
+		@Result(name="initExtract", location = "/wap/financMgmt/extract.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
 		
@@ -56,6 +58,9 @@ public class FinancMgmtAction extends BaseAction {
 	
 	@Autowired
 	public AccoutInfoService accoutInfoService;
+	
+	@Autowired
+	public FrconfigService frconfigService;
 	
 	@Autowired
 	public UserService userService;
@@ -229,6 +234,8 @@ public class FinancMgmtAction extends BaseAction {
 	    			recCoinTrackDto.setCreate_type(5);
 	    			recCoinTrackDto.setCoin_num(trans_elect_coin);
 	    			recCoinTrackDto.setComments(getLoginUserInfo().getUser_code()+"转入");
+	    			//发送方用户id写入接收方oper_user_id中
+	    			recCoinTrackDto.setOper_user_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
 	    			int order_id = coinTrackService.insertCoinTrack(getLoginUserInfo(), recCoinTrackDto);
 	    			//发送方
 	    			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
@@ -237,6 +244,8 @@ public class FinancMgmtAction extends BaseAction {
 	    			sendCoinTrackDto.setCoin_num(trans_elect_coin*-1);
 	    			sendCoinTrackDto.setOrder_id(order_id);
 	    			sendCoinTrackDto.setComments("转入"+recCoinTrackDto.getUser_code());
+	    			//接收方用户id写入发送方oper_user_id中
+	    			recCoinTrackDto.setOper_user_id((Integer)recMap.get("retUserId"));
 	    			coinTrackService.insertCoinTrack(getLoginUserInfo(), sendCoinTrackDto);
 	    			retMap.put("retCode", "3");
 					retMap.put("retString", "成功");
@@ -247,7 +256,7 @@ public class FinancMgmtAction extends BaseAction {
 		}
     }
 	
-	//电子币互转写表
+	//奖金币转电子币
 	@Action(value="bonusToElect")
 	public String bonusToElect(){
 		//获取转入的奖金币
@@ -301,7 +310,89 @@ public class FinancMgmtAction extends BaseAction {
     		}
     	}
     }
-	
+	//查询当前可提现的金额=账户中奖金币-账户中重消币
+	@Action(value="initExtract")
+	public String initExtract(){
+		//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("able_coin_num", able_coin_num);
+		return "initExtract";
+	}
+	//写入
+	@Action(value="insertExtract")
+	public String insertExtract(){
+		//获取提现的奖金币
+		Double extract_bonus_coin = coinTrackDto.getCoin_num();
+		//获取当前用户的交易密码
+		String trans_pwd = coinTrackDto.getComments();
+		HashMap retMap = new HashMap();
+		//retCode:retString -1:转入的奖金币大于当前账户的奖金币 3:成功
+		//手续费
+		HashMap map = new HashMap();
+		map.put("cf_id", "counterFee");
+		List list = frconfigService.queryFrCfgList(map);
+		HashMap confRetMap = (HashMap)list.get(0);
+		String cf_value = (String)confRetMap.get("cf_value");
+		Double counter_num = Double.valueOf(cf_value);
+		//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	if(able_coin_num<extract_bonus_coin){
+    		retMap.put("retCode", "0");
+			retMap.put("retString", "提现金额大于可提现额度 ");
+			setResult(retMap);
+	    	return SUCCESS; 
+    	}else{
+    		//判断可提取的是否小于手续费
+    		if(extract_bonus_coin<counter_num){
+    			retMap.put("retCode", "1");
+    			retMap.put("retString", "提现金额小于手续费 "+counter_num+"元");
+    			setResult(retMap);
+    	    	return SUCCESS; 
+    		}else{
+    			//判断当前用户的交易密码
+        		User queryUser = new User();
+        		queryUser.setUser_id(getLoginUserInfo().getUser_id());
+        		List <User> userlist = userService.getListByCon(queryUser);
+        		User retUser = userlist.get(0);
+        		String userTransPwd = retUser.getTrans_pwd();
+        		if(!trans_pwd.equals(userTransPwd)){
+        			retMap.put("retCode", "2");
+    				retMap.put("retString", "输入的交易密码错误!");
+    				setResult(retMap);
+    		    	return SUCCESS; 
+        		}else{
+        			//写一条提现记录
+        			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
+        			sendCoinTrackDto.setCoin_type(1);
+        			sendCoinTrackDto.setCreate_type(3);
+        			sendCoinTrackDto.setCoin_num(extract_bonus_coin*-1);
+        			sendCoinTrackDto.setCounter_num(counter_num);
+        			//实际打款
+        			Double act_num = extract_bonus_coin-counter_num;
+        			sendCoinTrackDto.setAct_num(act_num);
+        			//状态
+        			sendCoinTrackDto.setApply_state("0");
+        			coinTrackService.insertCoinTrack(getLoginUserInfo(), sendCoinTrackDto);
+        			retMap.put("retCode", "3");
+        			retMap.put("retString", "成功");
+        			setResult(retMap);
+        	    	return SUCCESS;
+        		}
+    		}
+    	}
+	}
 	@Action(value="getUserByCode")
 	public String getUserByCode(){
 		HashMap retmap = coinTrackService.getUserByCode(coinTrackDto);
