@@ -191,6 +191,7 @@ public class FinancMgmtAction extends BaseAction {
 		//判断接收方用户是否存在
 		CoinTrackDto recCoinTrackDto = new CoinTrackDto();
 		recCoinTrackDto.setUser_code(rec_user_code);
+		recCoinTrackDto.setUser_name(coinTrackDto.getUser_name());
 		HashMap recMap = coinTrackService.getUserByCode(recCoinTrackDto);
 		String retCode = (String)recMap.get("retCode");
 		if(!retCode.equals("1")){

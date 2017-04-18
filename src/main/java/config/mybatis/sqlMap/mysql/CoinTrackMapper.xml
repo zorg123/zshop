@@ -21,6 +21,8 @@
     	<result column="act_num" property="act_num" jdbcType="DOUBLE" />
     	<result column="serial_num" property="serial_num" jdbcType="VARCHAR" />
     	<result column="apply_state" property="apply_state" jdbcType="VARCHAR" />
+    	<result column="account_bank" property="account_bank" jdbcType="VARCHAR" />
+    	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BonusActResultMap" type="com.flyrui.financMgmt.pojo.BonusActDto" >
   		<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
@@ -85,6 +87,8 @@
   </select>
   <select id="selectExtConf" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
+    c.account_bank,
+    c.account_id,
     a.id,
     a.user_id,  
 	b.user_code,
@@ -97,6 +101,7 @@
 	a.serial_num
 	FROM coin_track a
 	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	join accout_info c on a.`user_id` = c.`user_id`
 	WHERE a.`coin_type` = 1
 	AND a.`create_type` = 3
 	<if test="user_code != null  and user_code != '' " >

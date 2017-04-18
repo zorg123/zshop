@@ -38,6 +38,8 @@
             <tr>
             	<th field="id" width="40" hidden>提现ID</th>
             	<th field="user_id" width="40" hidden>用户id</th>
+            	<th field="account_bank" width="40">银行名称</th>
+            	<th field="account_id" width="40">银行账号</th>
                 <th field="user_code" width="40">会员编号</th>  
                 <th field="user_name" width="40">会员名称</th>
                 <th field="create_time" width="40">提现时间</th>              

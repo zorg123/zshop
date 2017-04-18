@@ -7,8 +7,15 @@ var RechargeMng = {
         	$.messager.alert('系统提示', '请输入会员编号!', 'info');
         	return;
         }
+        var user_name = $('input[name="user_name"]').val();
+      //判断用户名称是否为空
+        if(user_name.length<=0){
+        	$.messager.alert('系统提示', '请输入会员名称!', 'info');
+        	return;
+        }
         var parampd ={};
         parampd["coinTrackDto.user_code"] = user_code;
+        parampd["coinTrackDto.user_name"] = user_name;
         //判断工号在系统中是否存在,不存在提示
         var isExist=0;
         CommonUtils.invokeSyncAction(base+'/FinancMgmt/getUserByCode.do', parampd, function (reply) {
@@ -93,6 +100,7 @@ var RechargeMng = {
     },
     clear: function () {
     	$('input[name="user_code"]').val('');
+    	$('input[name="user_name"]').val('');
     	$('input[name="coin_num"]').val('');
     	$("#fileDownload ul").html("");
     	$("#_easyui_textbox_input1").val('');

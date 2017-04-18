@@ -49,6 +49,10 @@
     		<td colspan="3"> <input class="easyui-validatebox" type="text" name="user_code" style="width:140px"/></td>
     	</tr>
     	<tr>
+    		<td>会员名称:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="user_name" style="width:140px"/></td>
+    	</tr>
+    	<tr>
     		<td>充值金额:</td>
     		<td colspan="3"> <input class="easyui-validatebox" type="text" name="coin_num" style="width:140px"/></td>
     	</tr>

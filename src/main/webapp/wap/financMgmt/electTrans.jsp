@@ -30,6 +30,13 @@
                                     </div>
                                 </div>
                                 <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label">会员名称</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" id="user_name" placeholder="会员名称">
+                                        <small>输入要转入的会员名称</small>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">电子币金额</label>
                                     <div class="am-u-sm-9">
                                         <input type="number" pattern="[0-9]" id="coin_num" placeholder="电子币金额">
@@ -63,6 +70,7 @@
 		if(check()){
 			var param ={};
 			param["coinTrackDto.user_code"] = $('#user_code').val();
+			param["coinTrackDto.user_name"] = $('#user_name').val();
 			param["coinTrackDto.coin_num"] = $('#coin_num').val();
 			param["coinTrackDto.comments"] = $('#trans_pwd').val();
 	        CommonUtils.invokeSyncAction(base+'/FinancMgmt/insertElectTrans.do', param, function (reply) {
@@ -91,6 +99,11 @@
 		var user_code = $('#user_code').val();
 		if(user_code.length<=0){
 			CommonUtils.showAlert('会员编号不能为空!');
+        	return false;
+        }
+		var user_name = $('#user_name').val();
+		if(user_name.length<=0){
+			CommonUtils.showAlert('会员名称不能为空!');
         	return false;
         }
 		var coin_num = $('#coin_num').val();

@@ -55,6 +55,9 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		String user_code = coinTrackDto.getUser_code();
 		TbUser user = new TbUser();
 		user.setUser_code(user_code);
+		if(null!=coinTrackDto.getUser_name() && coinTrackDto.getUser_name().length()>0){
+			user.setName("%"+coinTrackDto.getUser_name()+"%");
+		}
 		TbUser retUser = (User)baseDao.selectOne("com.flyrui.dao.pojo.sys.tb_user"+".select", user);
 		if(retUser!=null){
 			String state = retUser.getState();
