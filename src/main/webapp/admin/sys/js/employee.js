@@ -80,7 +80,7 @@ var Employee = {
     	    	
         var search_code = $('input[name="search_code"]').val();
         var search_name = $('input[name="search_name"]').val();       
-        var search_state = $('input[name="search_state"]').val();        
+        var search_state = $('input[name="search_state"]').val();
         if(!orgId){
         	var node = $('#organizationTree').tree('getSelected');
         	if(node != null){
@@ -91,7 +91,7 @@ var Employee = {
         }
         
         $('#staffList').datagrid({
-            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.org_id':orgId}
+            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.org_id':orgId,'user.bus_state': 0}
        })
     },
     queryByStaffNo: function (id) {
@@ -346,6 +346,7 @@ $(function () {
 	});
     $('#staffList').datagrid({
         url: base+'/Sys/User!queryUser.do',
+        queryParams: {'user.bus_state':0},
         loadFilter:function(data){			
 			return Employee.loadFilter(data);
 		},

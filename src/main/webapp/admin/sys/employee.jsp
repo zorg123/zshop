@@ -42,7 +42,7 @@
 	                <%--            <th field="site_name" width="40">受理点名称</th>--%>	               
 	                <th field="state" width="60" formatter="Employee.formatState">是否有效</th>
 	                <th field="bank_account" width="140">银行账户</th>
-	                <th field="id_card" width="80">省份证号</th>
+	                <th field="id_card" width="80">身份证号</th>
 	                <th field="position_level" width="80">员工级别</th>
 	            </tr>
 	            </thead>
