@@ -87,7 +87,7 @@
     <if test="coin_type != null  and coin_type != '' " >
     	and a.coin_type = #{coin_type,jdbcType=INTEGER}
  	</if>
-    order by a.create_time desc
+    order by a.order_id desc
   </select>
   <select id="selectRec" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
