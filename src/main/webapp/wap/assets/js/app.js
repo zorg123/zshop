@@ -53,7 +53,9 @@ $(function() {
     	$this.addClass("active");
     	$(".tpl-left-nav-item >a").removeClass("active");
     	//$this.parent().parent().parent().find("a:first").addClass("active");
-    	$('#menuToggle').trigger("click");
+    	if (browser.versions.mobile){
+    		$('#menuToggle').trigger("click");
+    	}
     	if($url != ''){
     		pageData.openContent($url);
     	}
@@ -164,7 +166,9 @@ var pageData={
 		 this.openContent($this.attr("url"));
 		 $this.addClass("active");
 		 $(".tpl-left-nav-sub-menu a").removeClass("active");
-		 $('#menuToggle').trigger("click");
+		 if (browser.versions.mobile){
+			 $('#menuToggle').trigger("click");
+		 }
 	 },
 	 "refresh":function(){		
 		 var url =$("div[data-url]").attr("data-url");		
