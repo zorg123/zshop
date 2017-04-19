@@ -48,11 +48,11 @@
 	                                    <tbody>
 	                                        <s:iterator  value="#bonusActList"  id="bonusActIter" status="st">   
 		                                        <tr>
-		                                            <td><s:date name="#bonusActIter.create_time" format="yyyy-MM-dd HH:mm:ss"/></td>
-		                                            <td><s:property value="#bonusActIter.gg_fee"/></td>
-		                                            <td><s:property value="#bonusActIter.fd_fee"/></td>
-		                                            <td><s:property value="#bonusActIter.re_fee"/></td>
-		                                            <td><s:property value="#bonusActIter.act_fee"/></td>
+		                                            <td ><s:date name="#bonusActIter.create_time" format="yyyy-MM-dd HH:mm:ss"/></td>
+		                                            <td class="font-green bold"><s:property value="#bonusActIter.gg_fee"/></td>
+		                                            <td class="font-green bold"><s:property value="#bonusActIter.fd_fee"/></td>
+		                                            <td class="font-green bold"><s:property value="#bonusActIter.re_fee"/></td>
+		                                            <td class="font-green bold"><s:property value="#bonusActIter.act_fee"/></td>
 		                                        </tr>
 	                                        </s:iterator>                                        
 	                                    </tbody>
