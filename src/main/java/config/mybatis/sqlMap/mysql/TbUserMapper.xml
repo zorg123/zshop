@@ -184,7 +184,7 @@
   	<if test="cert_id != null  and cert_id != '' " >
      		and cert_id = #{cert_id,jdbcType=VARCHAR}
   		</if>
-  	<if test="bus_state != null  and bus_state != '' " >
+  	<if test="bus_state != null" >
      		and bus_state = #{bus_state,jdbcType=INTEGER}
   		</if>
   	<if test="create_time != null " >
