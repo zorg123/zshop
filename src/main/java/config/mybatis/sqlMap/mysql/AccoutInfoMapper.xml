@@ -49,17 +49,28 @@
   </select>
   
   <select id="queryAccountInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
-    select id,
-    user_id,
-    IFNULL(bonus_coin,0) bonus_coin,
-    IFNULL(elect_coin,0) elect_coin,
-    IFNULL(reconsmp_coin,0) reconsmp_coin,
-    account_bank,
-    account_id,
-    account_name,
-    comments
-    from accout_info
-    where user_id = #{user_id,jdbcType=INTEGER}
+    select a.id,
+    a.user_id,
+    b.user_code,
+    b.name AS user_name,
+    IFNULL(a.bonus_coin,0) bonus_coin,
+    IFNULL(a.elect_coin,0) elect_coin,
+    IFNULL(a.reconsmp_coin,0) reconsmp_coin,
+    IFNULL(a.bonusact_sum,0) bonusact_sum,
+    IFNULL(a.reconsmpact_sum,0) reconsmpact_sum,
+    a.account_bank,
+    a.account_id,
+    a.account_name,
+    a.comments
+    from accout_info a
+    join tb_user b on a.user_id = b.user_id
+    where 1=1
+    <if test="user_id != null" >
+	 	and b.user_id = #{user_id,jdbcType=INTEGER}
+	</if>
+    <if test="user_code != null and user_code != '' " >
+	 	and b.user_code = #{user_code,jdbcType=VARCHAR}
+	</if>
   </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >

@@ -12,6 +12,10 @@ public class AccoutInfoDto implements Serializable {
 	
 	private Integer user_id;
 	
+	private String user_code;
+	
+	private String user_name;
+	
 	private Double bonus_coin;
 	
 	private Double elect_coin;
@@ -25,6 +29,10 @@ public class AccoutInfoDto implements Serializable {
 	private String account_name;
 	
 	private String comments;
+	
+	private Double bonusact_sum;
+	
+	private Double reconsmpact_sum;
 
 	public Integer getId() {
 		return id;
@@ -100,6 +108,38 @@ public class AccoutInfoDto implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Double getBonusact_sum() {
+		return bonusact_sum;
+	}
+
+	public void setBonusact_sum(Double bonusact_sum) {
+		this.bonusact_sum = bonusact_sum;
+	}
+
+	public Double getReconsmpact_sum() {
+		return reconsmpact_sum;
+	}
+
+	public void setReconsmpact_sum(Double reconsmpact_sum) {
+		this.reconsmpact_sum = reconsmpact_sum;
+	}
+
+	public String getUser_code() {
+		return user_code;
+	}
+
+	public void setUser_code(String user_code) {
+		this.user_code = user_code;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	
 }
