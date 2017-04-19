@@ -11,6 +11,7 @@ public class UserNetTree {
 	private String starName;
 	private String allchild_num;
 	private String userCode;
+	private String userState;
 	
 	public String getId() {
 		return id;
@@ -60,6 +61,12 @@ public class UserNetTree {
 	}
 	public String getStarName() {
 		return starName;
+	}
+	public String getUserState() {
+		return userState;
+	}
+	public void setUserState(String userState) {
+		this.userState = userState;
 	}
 	
 }

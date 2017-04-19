@@ -21,6 +21,7 @@
     <link rel="apple-touch-icon-precomposed" href="<%=baseUri %>/wap/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/validate.css">
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/admin.css">
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/app.css">
     <script src="<%=baseUri %>/wap/assets/js/echarts.min.js"></script>
@@ -31,7 +32,8 @@
     <script src="<%=baseUri %>/wap/assets/js/app.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/CommonUtils.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/layer.js"></script>
-     <script src="<%=baseUri %>/wap/assets/js/iscroll.js"></script>
+    <script src="<%=baseUri %>/wap/assets/js/iscroll.js"></script>
+    <script src="<%=baseUri %>/wap/assets/js/jquery-mvalidate.js"></script>
 </head>
 <script language="javascript" type="text/javascript" >
 	var base="<%=baseUri%>";

@@ -28,7 +28,7 @@ a:hover {
 
 .am-breadcrumb {
     padding: 0;
-    margin-top: 10px;
+    margin-bottom:0.5rem;
 }
 
 .am-topbar-inverse {
@@ -465,7 +465,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .tpl-content-wrapper {
     padding-left: 255px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .tpl-content-wrapper-hover {
@@ -1429,7 +1429,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .tpl-portlet-components .portlet-title .caption {
     float: left;
     display: inline-block;
-    font-size: 18px;
+    font-size: 13px;
     line-height: 18px;
     color: #666;
     padding: 10px 0;

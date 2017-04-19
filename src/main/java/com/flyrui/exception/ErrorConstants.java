@@ -49,4 +49,7 @@ public class ErrorConstants {
 	
  	/** 上传的文件类型不正确  **/
  	public static final String UPLOAD_FILE_TYPE_NOT_SUPPORT = "UPLOAD_FILE_TYPE_NOT_SUPPORT";
+ 	
+ 	/** 用户不存在 **/
+ 	public static final String SYS_USER_NOT_EXISTS = "SYS_ERR006";
 }

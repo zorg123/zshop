@@ -1,6 +1,5 @@
 package com.flyrui.common;
 
-import java.io.PrintStream;
 import java.security.MessageDigest;
 
 public class CASMd5Utils
@@ -44,7 +43,9 @@ public class CASMd5Utils
     }
     return null;
   }
-  
+  public static final String getPwd(String password,String userCode){
+	  return CASMd5Utils.getMdResults(password, "12",userCode);
+  }
   public static void main(String[] args)
   {
     System.out.println(getMdResults("123456", "402880bd52b43c210152b43c913e002a", "gushuangmei"));

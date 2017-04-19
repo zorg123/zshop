@@ -29,4 +29,6 @@ public interface UserService {
 	public int deleteRolesByUser(String user_id);
 	
 	public List<User> selectUserNetTree(User user);
+	
+	public void activeUser(String[] ids,User loginUser);
 }

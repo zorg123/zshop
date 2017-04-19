@@ -567,6 +567,15 @@ var CommonUtils={
     			}
     	    }
     	  });
+    },
+    showLoading:function(msg,successFunc){
+    	layer.open({
+    	    type: 2,shadeClose: false
+    	    ,content: '加载中'
+    	  });
+    },
+    closeLoading:function(){
+    	layer.closeAll();
     }
 }
 

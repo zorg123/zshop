@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
+import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.Constants;
 import com.flyrui.common.MapUtils;
 import com.flyrui.common.service.BaseService;
@@ -47,7 +48,8 @@ public class LoginServiceImpl  extends BaseService implements LoginService
         if(user!=null){
             String tPwd = user.getPassword(); 
             //校验成功
-            if(tPwd!=null && tPwd.equals(pwd)){
+            String enPwd = CASMd5Utils.getPwd(pwd,userCode);
+            if(tPwd!=null && (tPwd.equals(pwd) || tPwd.equals(enPwd))){
                 //获取用户的所属角色
                 List<TbRole> roleList = baseDao.selectList(SQLMapConstant.QUERY_ROLE_INFO_BY_USER_ID, user);                
                 user.setRoleList(roleList);

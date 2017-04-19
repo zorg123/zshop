@@ -3,7 +3,6 @@
 <%
 	String baseUri = request.getContextPath();	
 %>
-<jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
 
 <div class="tpl-content-wrapper">
         <!-- <div class="tpl-content-page-title">

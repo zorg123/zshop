@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.flyrui.common.BeanUtils;
+import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.SpringBeans;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.excel.ImportExcel;
@@ -26,8 +27,11 @@ import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
+import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.sys.dto.UserInfoDto;
 import com.flyrui.sys.dto.UserNetTree;
+import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.OrganationService;
 import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
@@ -36,6 +40,7 @@ import com.flyrui.sys.service.UserService;
 @Namespace("/Sys/User") //访问路径的包名
 @Results({	
 		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
+		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class UserAction extends BaseAction {	
 
@@ -127,6 +132,7 @@ public class UserAction extends BaseAction {
     		FRException frException = new FRException(new FRError(ErrorConstants.SYS_BANK_ACCOUNT_EXISTS));
     		throw frException;
     	}
+    	user.setPassword(CASMd5Utils.getMdResults(user.getPassword(), "12", user.getUser_code()));
     	userService.insert(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
@@ -450,14 +456,6 @@ public class UserAction extends BaseAction {
     		throw frException;
     	}
     	
-    	//再查银行账号
-    	/*u = new User();
-    	u.setBank_account(user.getBank_account());
-    	retList = userService.getListByCon(u);
-    	if(retList!=null &&retList.size() >0){
-    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_BANK_ACCOUNT_EXISTS));
-    		throw frException;
-    	}*/
     	//根据注册人的账号查询注册人的id
     	/*u = new User();
     	u.setUser_code(user.getRegister_id()+"");
@@ -478,11 +476,19 @@ public class UserAction extends BaseAction {
     		throw frException;
     	}
     	User tempUser = retList.get(0);
+    	if("0".equals(tempUser.getState())){
+    		FRException frException = new FRException(new FRError("USER_008"));
+    		throw frException;
+    	}
     	user.setPid(tempUser.getUser_id());
-    	user.setState("1");
+    	user.setState("0");
+    	user.setUser_level(-1);
+    	user.setBus_state(1);
     	user.setCreate_time(new Date());
     	user.setRegister_date(new Date());
     	user.setRegister_ip(super.getIp());
+    	user.setPassword(CASMd5Utils.getPwd(user.getPassword(),user.getUser_code()));
+    	user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),user.getUser_code()));
     	userService.insert(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
@@ -499,14 +505,17 @@ public class UserAction extends BaseAction {
     public String getUserNetWork() throws FRException{
     	UserNetTree userNetTree = new UserNetTree();
     	UserService userService = getUserService();    
-    	if(user.getUser_id()==null){
+    	if(user.getUser_id()==null && user.getUser_code()==null){
     		user.setUser_id(getUserId());
     	}
     	User u = new User();
     	u.setUser_id(user.getUser_id());
+    	if(user.getUser_code()!=null){
+    		u.setUser_code(user.getUser_code());
+    	}
     	List<User> retList = userService.selectUserNetTree(u);
     	if(retList==null || retList.size() == 0){
-    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_NOT_EXISTS));
     		throw frException;
     	}    	
     	User curUser = retList.get(0);
@@ -517,6 +526,7 @@ public class UserAction extends BaseAction {
     	userNetTree.setStarName(curUser.getUser_star_name());
     	userNetTree.setUserCode(curUser.getUser_code());
     	userNetTree.setAllchild_num((curUser.getAllchild_num()==null?0:curUser.getAllchild_num())+"");
+    	userNetTree.setUserState(curUser.getState());
     	//获取下级节点    	
     	u = new User();
     	u.setPid(curUser.getUser_id());
@@ -531,6 +541,7 @@ public class UserAction extends BaseAction {
     		userNetTreeTemp.setStarName(us.getUser_star_name());
     		userNetTreeTemp.setUserCode(us.getUser_code());
     		userNetTreeTemp.setAllchild_num((us.getAllchild_num()==null?0:us.getAllchild_num())+"");
+    		userNetTreeTemp.setUserState(us.getState());
     		u = new User();
         	u.setPid(us.getUser_id());
         	retList = userService.selectUserNetTree(u);
@@ -545,6 +556,7 @@ public class UserAction extends BaseAction {
         		userNetTreeTemp2.setUserCode(us2.getUser_code());
         		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
         		subUserNetTreeList2.add(userNetTreeTemp2);
+        		userNetTreeTemp2.setUserState(us2.getState());
         	}
     		userNetTreeTemp.setChildren(subUserNetTreeList2);
     		subUserNetTreeList.add(userNetTreeTemp);
@@ -582,5 +594,121 @@ public class UserAction extends BaseAction {
     	}
     	
     	return retV;
+    }
+    
+    @Action("activeUser")  
+    public String activeUser() throws FRException{
+    	if(ids==null){
+    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    	}
+    	String userId = getUserId();
+    	
+    	//校验是否是当前用户注册的
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setRegister_id(userId);
+    	String[] idStr = ids.split(";");
+    	for(String idTemp : idStr){
+    		uu.setUser_id(idTemp);
+    		List<User> userList = userService.getListByCon(uu);
+    		if(userList==null || userList.size() == 0){
+    			throw new FRException(new FRError("USER_003"));
+    		}
+    		User uuTemp = userList.get(0);
+    		if("1".equals(uuTemp.getState())){
+    			throw new FRException(new FRError("USER_004"));
+    		}
+    	}
+    	
+    	//激活之前要判断一下，登录用户的账户上电子币是否小于600，小于600不能激活，提示充值。   
+    	AccoutInfoService accoutInfoService = (AccoutInfoService)SpringBeans.getBean("accoutInfoService");
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
+    	
+    	FrconfigService frconfigService = (FrconfigService)SpringBeans.getBean("frconfigService");
+    	HashMap param =new HashMap();
+    	param.put("cf_id", "userInNetAmout");
+    	List<HashMap> cfgList = frconfigService.queryFrCfgList(param);
+    	if(cfgList!=null && cfgList.size()>0){
+    		Double userInNetAmount = Double.parseDouble((String)cfgList.get(0).get("cf_value"));
+    		if(electCoin<userInNetAmount){
+    			throw new FRException(new FRError("USER_005"));
+    		}
+    	}else{
+    		throw new FRException(new FRError("SYS_ERR006"));
+    	}
+    	userService.activeUser(idStr,getLoginUserInfo());
+    	setCommonSuccessReturn();
+    	return SUCCESS;
+    }
+    
+    @Action("userProfile")  
+    public String userProfile() throws FRException{
+    	String userId = getUserId();
+    	
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setUser_id(userId);
+    	List<User> userList = userService.getListByCon(uu);
+    	user = userList.get(0);
+    	return "userProfile";
+    }
+    @Action("ModifyUser")  
+    public String ModifyUser() throws FRException{
+    	String userId = getUserId();
+    	
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setUser_id(userId);
+    	List<User> userList = userService.getListByCon(uu);
+    	User curUser = userList.get(0);
+    	user.setUser_id(curUser.getUser_id());
+    	userService.update(user);
+    	setCommonSuccessReturn();
+    	return SUCCESS;
+    }
+    
+    @Action("modifyPwd")
+    public String modifyPwd() throws FRException{
+    	
+    	String userId = getUserId();
+    	
+    	//校验是否是当前用户注册的
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setUser_id(userId);
+    	List<User> userList = userService.getListByCon(uu);
+    	User curUser = userList.get(0);
+    	boolean isModify = true;
+    	if(user.getPassword()!=null&&user.getPassword().length()>0 && user.getOld_password()!=null &&user.getOld_password().length() >0 ){
+    		String oldPwd = CASMd5Utils.getPwd(user.getOld_password(),curUser.getUser_code());
+    		if(!oldPwd.equals(curUser.getPassword()) && !curUser.getPassword().equals(user.getOld_password())){
+    			throw new FRException(new FRError("USER_006"));
+    		}
+    		user.setPassword( CASMd5Utils.getPwd(user.getPassword(),curUser.getUser_code()));
+    	}else{
+    		isModify = false;
+    	}
+    	if(user.getTrans_pwd()!=null&&user.getTrans_pwd().length()>0 && user.getOld_trans_pwd()!=null &&user.getOld_trans_pwd().length() >0 ){
+    		String oldTrasPwd = CASMd5Utils.getPwd(user.getOld_password(),curUser.getUser_code());
+    		if(!oldTrasPwd.equals(curUser.getTrans_pwd()) && !curUser.getTrans_pwd().equals(user.getOld_trans_pwd()) ){
+    			throw new FRException(new FRError("USER_007"));
+    		}
+    		user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),curUser.getUser_code()));
+    	}else{
+    		if(!isModify){
+    			isModify = false;
+    		}
+    	}
+    	if(isModify){
+	    	user.setUser_id(curUser.getUser_id());
+	    	userService.update(user);
+	    	setCommonSuccessReturn();
+    	}else{
+    		throw new FRException(new FRError("SYS_ERR005"));
+    	}
+    	return SUCCESS;
     }
 }

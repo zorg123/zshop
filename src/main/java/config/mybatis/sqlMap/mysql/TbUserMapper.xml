@@ -62,21 +62,41 @@
     </foreach>
   </insert>
   <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbUser" >
-     update tb_user set user_code = #{user_code,jdbcType=VARCHAR}, 
-    	name = #{name,jdbcType=VARCHAR}, 
+     update tb_user set 
+        <if test="user_code != null and user_code !='' ">
+        	user_code = #{user_code,jdbcType=VARCHAR}, 
+        </if>
+        <if test="name != null and name !='' ">
+          	name = #{name,jdbcType=VARCHAR}, 
+        </if>
+    	
     	<if test="password != null and password !='' ">
     		password = #{password,jdbcType=VARCHAR}, 
-    	</if>      	
-      	sex = #{sex,jdbcType=VARCHAR}, 
-      	mail = #{mail,jdbcType=VARCHAR}, 
-      	phone = #{phone,jdbcType=VARCHAR}, 
+    	</if>  
+    	<if test="sex != null and sex !='' ">    	
+      		sex = #{sex,jdbcType=VARCHAR}, 
+      	</if>
+      	<if test="mail != null and mail !='' ">    	
+      		mail = #{mail,jdbcType=VARCHAR}, 
+      	</if>
+      	<if test="phone != null and phone !='' ">    	
+      		phone = #{phone,jdbcType=VARCHAR}, 
+      	</if>      	 
       	<if test="org_id != null and org_id !='' ">
     		org_id = #{org_id,jdbcType=INTEGER},  
-    	</if>      	 
-      	state = #{state,jdbcType=VARCHAR},
-      	bank_account = #{bank_account,jdbcType=VARCHAR},
-      	id_card = #{id_card,jdbcType=VARCHAR},
-      	position_level = #{position_level,jdbcType=VARCHAR},
+    	</if>  
+    	<if test="state != null and state !='' ">    	
+      		state = #{state,jdbcType=VARCHAR}, 
+      	</if>  
+      	<if test="bank_account != null and bank_account !='' ">    	
+      		bank_account = #{bank_account,jdbcType=VARCHAR}, 
+      	</if> 
+      	<if test="id_card != null and id_card !='' ">    	
+      		id_card = #{id_card,jdbcType=VARCHAR}, 
+      	</if> 
+      	<if test="position_level != null and position_level !='' ">    	
+      		position_level = #{position_level,jdbcType=VARCHAR}, 
+      	</if> 
       	<if test="cas_account != null  and cas_account != '' " >
       		cas_account = #{cas_account,jdbcType=VARCHAR},
    		</if>
@@ -111,8 +131,9 @@
       		act_time = #{act_time,jdbcType=TIMESTAMP},
    		</if>
    		<if test="allchild_num != null  and allchild_num != '' " >
-      		allchild_num = #{allchild_num,jdbcType=INTEGER}
+      		allchild_num = #{allchild_num,jdbcType=INTEGER},
    		</if>
+   		user_id = #{user_id,jdbcType=VARCHAR}
       where user_id = #{user_id,jdbcType=VARCHAR}
   </update>
   <select id="select" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
@@ -163,7 +184,7 @@
   	<if test="cert_id != null  and cert_id != '' " >
      		and cert_id = #{cert_id,jdbcType=VARCHAR}
   		</if>
-  	<if test="bus_state != null " >
+  	<if test="bus_state != null  and bus_state != '' " >
      		and bus_state = #{bus_state,jdbcType=INTEGER}
   		</if>
   	<if test="create_time != null " >
@@ -246,7 +267,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,f_get_userstar(a.user_id) AS user_star
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.user_level AS user_star
       	from tb_user a left join tb_organation b on a.org_id = b.org_id 
      where  1=1
      <if test="user_id !=null and user_id != ''">
@@ -304,4 +325,11 @@
      		and allchild_num = #{allchild_num,jdbcType=INTEGER}
   	</if> ) a LEFT JOIN info_dict b ON a.user_star = b.dict_code AND b.dict_type ='starRate'
   </select>
+ <parameterMap type="map" id="produreParam">  
+   <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="login_userid" jdbcType="INTEGER" mode="IN"/> 
+ </parameterMap>
+  <update id="activeUser" parameterMap="produreParam" statementType="CALLABLE">  
+   {call pro_user_settle(?, ?)}  
+ </update>
 </mapper>
