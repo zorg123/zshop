@@ -247,27 +247,10 @@
   </update>
   
   <select id="getBonusActSum" resultType="hashmap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
-  	SELECT t.bonusActSum,t.reconsmpActSum,(t.bonusActSum-t.reconsmpActSum) AS actSum
-	FROM (
-		SELECT 
-		(SELECT IFNULL(SUM(a.coin_num),0) bonusActSum
-		    FROM coin_track a
-			JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.`state` = 1 AND b.`bus_state` = 1 
-			WHERE a.coin_type IN(1)
-			AND a.create_type IN(1,2)
-			AND a.coin_num>0
-			AND a.user_id = #{user_id,jdbcType=INTEGER}
-		) AS bonusActSum,
-		(
-		SELECT IFNULL(SUM(a.coin_num),0) reconsmpActSum
-		    FROM coin_track a
-			JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.`state` = 1 AND b.`bus_state` = 1 
-			WHERE a.coin_type IN(3)
-			AND a.create_type IN(8)
-			AND a.coin_num>0
-			AND a.user_id = #{user_id,jdbcType=INTEGER}
-		) AS reconsmpActSum
-		FROM DUAL
-		)t
+		select IFNULL(bonusact_sum,0) as bonusActSum, 
+		IFNULL(reconsmpact_sum,0) as reconsmpActSum,
+		(IFNULL(bonusact_sum,0)-IFNULL(reconsmpact_sum,0)) AS actSum
+		from accout_info 
+		where user_id = #{user_id,jdbcType=INTEGER}
   </select>
 </mapper>
