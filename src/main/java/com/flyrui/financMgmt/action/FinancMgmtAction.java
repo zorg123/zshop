@@ -79,6 +79,13 @@ public class FinancMgmtAction extends BaseAction {
     	setResult(pageModel);
     	return SUCCESS;
     }
+	//报表统计--账户流水
+	@Action(value="getPagerListByConAccountFlow")
+	public String getPagerListByConAccountFlow(){
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConAccountFlow(coinTrackDto, page, rows);
+    	setResult(pageModel);
+    	return SUCCESS;
+    }
 	
 	//奖金实收分页查询
 	@Action("queryBonusAct")    

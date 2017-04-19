@@ -62,6 +62,8 @@ public class CoinTrackDto implements Serializable {
 	@ExcelAnnotation(exportName = "是否打款")
 	private String apply_state;
 	
+	private String coin_type_name;
+	
 	private String create_type_name;
 
 	public Integer getId() {
@@ -250,6 +252,14 @@ public class CoinTrackDto implements Serializable {
 
 	public void setAccount_id(String account_id) {
 		this.account_id = account_id;
+	}
+
+	public String getCoin_type_name() {
+		return coin_type_name;
+	}
+
+	public void setCoin_type_name(String coin_type_name) {
+		this.coin_type_name = coin_type_name;
 	}
 	
 }

@@ -61,6 +61,34 @@
      		</if>
     </where>
   </sql>
+  <select id="selectAccountFlow" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+    a.id,
+    a.user_id,
+	b.user_code,
+	b.name AS user_name,
+	a.order_id,
+	(SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinType' AND idt.`dict_value` = a.coin_type) AS coin_type_name,
+	a.coin_type,
+	(SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+	a.create_type,
+	a.coin_num,
+	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name,
+	a.create_time
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	WHERE 1=1
+	<if test="user_code != null  and user_code != '' " >
+    	and b.user_code = #{user_code,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="user_name !=null and user_name != '' ">
+    	and b.name like #{user_name,jdbcType=VARCHAR}
+    </if>
+    <if test="coin_type != null  and coin_type != '' " >
+    	and a.coin_type = #{coin_type,jdbcType=INTEGER}
+ 	</if>
+    order by a.create_time desc
+  </select>
   <select id="selectRec" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
     a.id,  

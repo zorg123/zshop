@@ -45,6 +45,11 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		return getPagerList(coinTrackDto,nameSpace+".selectElectInfo",pageNo,pageSize);
 	}
 	
+	//报表统计--账户流水分页查询
+	public PageModel getPagerListByConAccountFlow(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectAccountFlow",pageNo,pageSize);
+	}
+	
 	//根据用户编码查找用户
 	public HashMap getUserByCode(CoinTrackDto coinTrackDto){
 		HashMap map = new HashMap();
