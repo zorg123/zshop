@@ -122,26 +122,7 @@ var pageData={
 	                }
 				}			
 			});    	  
-	  },
-	 'register':function(){
-		 $("#registerSubmit").bind("click",function(){
-			 var params = CommonUtils.getParam("registerForm",false);
-			 CommonUtils.invokeAsyncAction(base+'/Sys/User!registerUser.do', params, function (reply) {           
-  	           if ((reply || '') != '') {
-  	               var code = reply._code;               
-  	               if (code == '0') {  
-  	            	   CommonUtils.showAlert('操作成功!');
-  	                      	                   
-  	               } else  {
-  	            	  CommonUtils.showAlert(reply._msg);
-  	               }              
-  	           } else  {
-  	        	      CommonUtils.showAlert('操作失败!');
-  	           }
-  	         });
-			 return false;
-		 })
-	 },
+	  },	 
 	 openContent:function($url,data){
 		 $main = $("#mainContent");
 		 if($url==null || $url==""){

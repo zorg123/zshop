@@ -20,6 +20,8 @@ public class User extends TbUser
     private String cur_role_name;
     private String user_star;
     private String user_star_name;
+    private String old_password;
+    private String old_trans_pwd;
     
     public List<TbRole> getRoleList()
     {
@@ -73,5 +75,17 @@ public class User extends TbUser
 	}
 	public void setUser_star_name(String user_star_name) {
 		this.user_star_name = user_star_name;
+	}
+	public String getOld_password() {
+		return old_password;
+	}
+	public void setOld_password(String old_password) {
+		this.old_password = old_password;
+	}
+	public String getOld_trans_pwd() {
+		return old_trans_pwd;
+	}
+	public void setOld_trans_pwd(String old_trans_pwd) {
+		this.old_trans_pwd = old_trans_pwd;
 	}
 }

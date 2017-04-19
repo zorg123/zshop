@@ -5,15 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flyrui.common.SpringBeans;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.sys.service.UserService;
 
 @Service(value="userService")
-public class UserServiceImpl extends BaseService<User> implements UserService {	
+public class UserServiceImpl extends BaseService<User> implements UserService {
+	
+   @Autowired
+   AccoutInfoService accoutInfoService;
    public UserServiceImpl(){
 	   super.setNameSpace("com.flyrui.dao.pojo.sys.tb_user");
    }
@@ -44,11 +51,30 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    
    @Transactional
    @Override
-   public int insert(User user){
-	   return super.insert(user);
+   public int insert(User user){	   
+	   super.insert(user);
+	   AccoutInfoDto accoutInfo = new AccoutInfoDto();
+   	   accoutInfo.setUser_id(Integer.valueOf(user.getUser_id()));
+   	   accoutInfo.setBonus_coin(0d);
+   	   accoutInfo.setElect_coin(0d);
+   	   accoutInfo.setReconsmp_coin(0d);
+   	   return accoutInfoService.insert(accoutInfo);
    }
    
    public List<User> selectUserNetTree(User user){
 	   return baseDao.selectList(getNameSpace()+".selectUserNetTree",user);
    }
+
+	@Override
+	@Transactional
+	public void activeUser(String[] ids, User loginUser) {
+		for(String id : ids){
+			Map param = new HashMap();
+			param.put("in_id", id);
+			param.put("login_userid", loginUser.getUser_id());
+			baseDao.update(getNameSpace()+".activeUser",param);
+		}	
+	}
+   
+   
 }
