@@ -38,5 +38,4 @@
 	    </div>
     </div>
 </div>
-<jsp:include page="/admin/main/foot.jsp"></jsp:include>
 <script type="text/javascript" src="js/reportUserInfo.js"></script>

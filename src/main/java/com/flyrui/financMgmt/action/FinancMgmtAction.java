@@ -176,7 +176,51 @@ public class FinancMgmtAction extends BaseAction {
 		setResult(ret);
     	return SUCCESS;
     }
-	
+	//财务充值
+	@Action(value="recharge")
+	public String recharge(){
+		HashMap retMap = new HashMap();
+		//获取收入的会员编号
+		String user_code = coinTrackDto.getUser_code();
+		//获取收入的会员名称
+		String user_name = coinTrackDto.getUser_name();
+		//获取充值的金额
+		Double elect_coin = coinTrackDto.getCoin_num();
+		//获取附件
+		String file_info = coinTrackDto.getFile_info();
+		//判断接收方用户是否存在
+		CoinTrackDto recCoinTrackDto = new CoinTrackDto();
+		recCoinTrackDto.setUser_code(user_code);
+		recCoinTrackDto.setUser_name(user_name);
+		HashMap recMap = coinTrackService.getUserByCode(recCoinTrackDto);
+		String retCode = (String)recMap.get("retCode");
+		if(!retCode.equals("1")){
+			if(retCode.equals("-1")){
+				retMap.put("retCode", "-1");
+				retMap.put("retString", "输入的会员编号不存在");
+			}else if(retCode.equals("0")){
+				retMap.put("retCode", "0");
+				retMap.put("retString", "输入的会员编号未激活");
+			}
+			setResult(retMap);
+	    	return SUCCESS; 
+		}else{
+			//接收方
+    		CoinTrackDto paramCoinTrackDto = new CoinTrackDto();
+    		paramCoinTrackDto.setUser_code(user_code);
+			//1:奖金币 2:电子币 3:重消币
+    		paramCoinTrackDto.setCoin_type(2);
+			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
+    		paramCoinTrackDto.setCreate_type(4);
+    		paramCoinTrackDto.setCoin_num(elect_coin);
+    		paramCoinTrackDto.setFile_info(file_info);
+			coinTrackService.insertCoinTrack(getLoginUserInfo(), paramCoinTrackDto);
+			retMap.put("retCode", "3");
+			retMap.put("retString", "成功");
+			setResult(retMap);
+	    	return SUCCESS;
+		}
+    }
 	//电子币互转写表
 	@Action(value="insertElectTrans")
 	public String insertElectTrans(){
