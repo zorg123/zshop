@@ -48,13 +48,16 @@ $(function() {
     $(".tpl-left-nav-sub-menu a").on('click', function() {
     	var $this = $(this);
     	$url = $this.attr("url");
+    	
     	$(".tpl-left-nav-sub-menu a").removeClass("active");
     	$this.addClass("active");
     	$(".tpl-left-nav-item >a").removeClass("active");
     	//$this.parent().parent().parent().find("a:first").addClass("active");
+    	$('#menuToggle').trigger("click");
     	if($url != ''){
     		pageData.openContent($url);
     	}
+    	
         return false;
     })
 });
@@ -160,7 +163,8 @@ var pageData={
 		 var $this = $(o);		 
 		 this.openContent($this.attr("url"));
 		 $this.addClass("active");
-		 $(".tpl-left-nav-sub-menu a").removeClass("active")
+		 $(".tpl-left-nav-sub-menu a").removeClass("active");
+		 $('#menuToggle').trigger("click");
 	 },
 	 "refresh":function(){		
 		 var url =$("div[data-url]").attr("data-url");		

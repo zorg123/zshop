@@ -15,7 +15,7 @@
 <s:set name="total" value="#userList.total"/> 
 <s:set var="pageCount" value="userListPage.pageCount"/>
 <s:set var="pageIndex" value="userListPage.pageIndex"/>
-<div class="tpl-content-wrapper" data-url="/Sys/User/queryRegisterUser.do?user.state=<s:property value="user.state" />">           
+<div   data-url="/Sys/User/queryRegisterUser.do?user.state=<s:property value="user.state" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>

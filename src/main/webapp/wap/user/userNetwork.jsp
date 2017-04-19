@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="<%=baseUri %>/wap/assets/orgChart/css/jquery.orgchart.css">
 <link rel="stylesheet" href="<%=baseUri %>/wap/assets/orgChart/css/localStyle.css">
 <script src="<%=baseUri %>/wap/assets/orgChart/js/jquery.orgchart.js"></script>
-<div class="tpl-content-wrapper" data-url="/wap/user/userNetwork.jsp">           
+<div  data-url="/wap/user/userNetwork.jsp">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>

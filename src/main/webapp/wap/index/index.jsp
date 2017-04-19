@@ -4,7 +4,7 @@
 	String baseUri = request.getContextPath();	
 %>
 
-<div class="tpl-content-wrapper">
+<div >
         <!-- <div class="tpl-content-page-title">
             Amaze UI 首页组件
         </div> -->

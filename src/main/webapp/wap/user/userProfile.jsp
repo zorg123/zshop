@@ -5,7 +5,7 @@
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
 
-<div class="tpl-content-wrapper" data-url="/Sys/User/userProfile.do">           
+<div data-url="/Sys/User/userProfile.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">资料管理</a></li>

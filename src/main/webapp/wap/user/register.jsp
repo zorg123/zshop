@@ -5,7 +5,7 @@
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
 
-<div class="tpl-content-wrapper" data-url="/wap/user/register.jsp">           
+<div  data-url="/wap/user/register.jsp">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>

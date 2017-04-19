@@ -65,8 +65,7 @@
             
         </div>
     </div>
-	<div id="mainContent">
-		<div class="tpl-content-wrapper">
+	<div id="mainContent" class="tpl-content-wrapper">		
         <!-- <div class="tpl-content-page-title">
             Amaze UI 首页组件
         </div> -->
@@ -187,7 +186,7 @@
 				pageData["index"]();
 			});
 		</script>		
-	</div>    
+	  
     </div>
 </div>
 <jsp:include page="/wap/common/footer.jsp"></jsp:include>
