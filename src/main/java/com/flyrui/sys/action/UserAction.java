@@ -40,6 +40,7 @@ import com.flyrui.sys.service.UserService;
 @Namespace("/Sys/User") //访问路径的包名
 @Results({	
 		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
+		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class UserAction extends BaseAction {	
 
@@ -475,6 +476,10 @@ public class UserAction extends BaseAction {
     		throw frException;
     	}
     	User tempUser = retList.get(0);
+    	if("0".equals(tempUser.getState())){
+    		FRException frException = new FRException(new FRError("USER_008"));
+    		throw frException;
+    	}
     	user.setPid(tempUser.getUser_id());
     	user.setState("0");
     	user.setUser_level(-1);
@@ -521,6 +526,7 @@ public class UserAction extends BaseAction {
     	userNetTree.setStarName(curUser.getUser_star_name());
     	userNetTree.setUserCode(curUser.getUser_code());
     	userNetTree.setAllchild_num((curUser.getAllchild_num()==null?0:curUser.getAllchild_num())+"");
+    	userNetTree.setUserState(curUser.getState());
     	//获取下级节点    	
     	u = new User();
     	u.setPid(curUser.getUser_id());
@@ -535,6 +541,7 @@ public class UserAction extends BaseAction {
     		userNetTreeTemp.setStarName(us.getUser_star_name());
     		userNetTreeTemp.setUserCode(us.getUser_code());
     		userNetTreeTemp.setAllchild_num((us.getAllchild_num()==null?0:us.getAllchild_num())+"");
+    		userNetTreeTemp.setUserState(us.getState());
     		u = new User();
         	u.setPid(us.getUser_id());
         	retList = userService.selectUserNetTree(u);
@@ -549,6 +556,7 @@ public class UserAction extends BaseAction {
         		userNetTreeTemp2.setUserCode(us2.getUser_code());
         		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
         		subUserNetTreeList2.add(userNetTreeTemp2);
+        		userNetTreeTemp2.setUserState(us2.getState());
         	}
     		userNetTreeTemp.setChildren(subUserNetTreeList2);
     		subUserNetTreeList.add(userNetTreeTemp);
@@ -636,6 +644,17 @@ public class UserAction extends BaseAction {
     	return SUCCESS;
     }
     
+    @Action("userProfile")  
+    public String userProfile() throws FRException{
+    	String userId = getUserId();
+    	
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setUser_id(userId);
+    	List<User> userList = userService.getListByCon(uu);
+    	user = userList.get(0);
+    	return "userProfile";
+    }
     @Action("ModifyUser")  
     public String ModifyUser() throws FRException{
     	String userId = getUserId();

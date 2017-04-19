@@ -8,7 +8,7 @@
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
         <a href="javascript:;" class="tpl-logo">
-            <img src="<%=baseUri %>/wap/assets/img/logo.png" alt="">
+            <img src="<%=baseUri %>/wap/assets/img/myLogo.png" alt="">
         </a>
     </div>    
     <div class="am-fr am-margin-right">
@@ -27,7 +27,7 @@
         <div class="tpl-left-nav-list">
             <ul class="tpl-left-nav-menu">
                <li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
-	               	<a href="javascript:void(0);" onclick="pageData.openIndex();" url="/wap/index/index.jsp" class="nav-link active">
+	               	<a href="javascript:void(0);" onclick="pageData.openIndex(this);" url="/wap/index/index.jsp" class="nav-link active">
                         <i class="am-icon-home"></i>
                         <span>首页</span>
                     </a>                   
@@ -54,6 +54,13 @@
                     </ul>	  
                    </li>     			
 	       		</s:iterator>
+	       		<li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
+	               	<a href="javascript:void(0);" onclick="pageData.loginOut(this);" url="/wap/index/index.jsp" class="nav-link">
+                        <i class="am-icon-key"></i>
+                        <span>退出</span>
+                    </a>                   
+                     
+               </li>
         	</ul>        
             
         </div>

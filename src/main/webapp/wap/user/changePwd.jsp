@@ -5,16 +5,16 @@
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
 
-<div class="tpl-content-wrapper">           
+<div class="tpl-content-wrapper" data-url="/wap/user/changePwd.jsp">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>
-                <li class="am-active">用户注册</li>
+                <li class="am-active">密码修改</li>
             </ol>
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
                     <div class="caption font-green bold">
-                        <span class="am-icon-code"></span>注册信息
+                        <span class="am-icon-code"></span>密码修改
                     </div>
                 </div>
 
@@ -120,7 +120,7 @@
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
 				  	            	   CommonUtils.showAlert('操作成功!');
-				  	                      	                   
+				  	            	 pageData["refresh"]()   	                   
 				  	               } else  {
 				  	            	  CommonUtils.showAlert(reply._msg);
 				  	             }              

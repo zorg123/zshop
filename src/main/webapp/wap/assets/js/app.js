@@ -46,9 +46,15 @@ $(function() {
         $('.tpl-content-wrapper').toggleClass('tpl-content-wrapper-hover');
     });
     $(".tpl-left-nav-sub-menu a").on('click', function() {
-    	$url = $(this).attr("url");
-    	pageData.openContent($url);
-    	
+    	var $this = $(this);
+    	$url = $this.attr("url");
+    	$(".tpl-left-nav-sub-menu a").removeClass("active");
+    	$this.addClass("active");
+    	$(".tpl-left-nav-item >a").removeClass("active");
+    	//$this.parent().parent().parent().find("a:first").addClass("active");
+    	if($url != ''){
+    		pageData.openContent($url);
+    	}
         return false;
     })
 });
@@ -150,9 +156,22 @@ var pageData={
 				}
 		 });
 	 },
-	 openIndex:function(){
-		 $this = $(this);
+	 openIndex:function(o){
+		 var $this = $(o);		 
 		 this.openContent($this.attr("url"));
+		 $this.addClass("active");
+		 $(".tpl-left-nav-sub-menu a").removeClass("active")
+	 },
+	 "refresh":function(){		
+		 var url =$("div[data-url]").attr("data-url");		
+		 if(url!=''){
+			 this.openContent(url);
+		 }
+	 },
+	 "loginOut":function(){
+		 CommonUtils.invokeAsyncAction(base+'/Sys/Login!loginOut.do',{},function(reply){
+	           window.location.href=base+'/wap/login/login.jsp';
+	     })
 	 }
 }
     

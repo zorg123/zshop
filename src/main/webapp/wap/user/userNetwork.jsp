@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="<%=baseUri %>/wap/assets/orgChart/css/jquery.orgchart.css">
 <link rel="stylesheet" href="<%=baseUri %>/wap/assets/orgChart/css/localStyle.css">
 <script src="<%=baseUri %>/wap/assets/orgChart/js/jquery.orgchart.js"></script>
-<div class="tpl-content-wrapper">           
+<div class="tpl-content-wrapper" data-url="/wap/user/userNetwork.jsp">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>
@@ -125,9 +125,8 @@
 				  	var childNumDidv = '<div class="content">所有人数：'+d.allchild_num+'</div>';
 				    $node.append(childNumDidv);
 				    $node.on('click',function() { 
-				    	  var chilren =data.children;	          		     
-	          		      console.log(data);
-	          		      if(chilren == null || chilren.length<3){
+				    	  var chilren =data.children;
+	          		      if((chilren == null || chilren.length<3) && data.userState =='1'){
 	          		    	  $("#register").show();	          		    	
 	          		      }else{
 	          		    	  $("#register").hide();

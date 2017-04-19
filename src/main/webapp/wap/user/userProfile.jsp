@@ -5,7 +5,7 @@
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
 
-<div class="tpl-content-wrapper">           
+<div class="tpl-content-wrapper" data-url="/Sys/User/userProfile.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">资料管理</a></li>
@@ -26,19 +26,19 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
-                                        <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="#session.user.user_code" /></span> 
+                                        <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="user.user_code" /></span> 
                                      </div>
                                 </div> 
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">姓名 </label>
                                     <div class="am-u-sm-8">
-                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="#session.user.name" /></span>
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="user.name" /></span>
                                     </div>
                                 </div>                                  
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description" value="<s:property value="#session.user.user_phone" />"/>                                        
+                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description" value="<s:property value="user.user_phone" />"/>                                        
                                     	<small id="user.user_phone-description"></small>  
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">邮箱</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.mail" value="<s:property value="#session.user.mail" />" name="user.mail" placeholder="请输入邮箱" data-pattern="[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$" data-descriptions="user.mail" data-describedby="user.mail-description"/>                                        
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.mail" value="<s:property value="user.mail" />" name="user.mail" placeholder="请输入邮箱" data-pattern="[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$" data-descriptions="user.mail" data-describedby="user.mail-description"/>                                        
                                     	<small id="user.mail-description"></small>  
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                 <div class="am-form-group">
                                     <label for="user-phone" class="am-u-sm-4 am-form-label">证件类型</label>
                                     <div class="am-u-sm-8">
-                                        <select data-am-selected="{searchBox: 1}" db_field="user.cert_type" value="<s:property value="#session.user.cert_type" />" name="user.cert_type"  data-descriptions="user.cert_type" data-describedby="user.cert_type-description">
+                                        <select data-am-selected="{searchBox: 1}" db_field="user.cert_type" value="<s:property value="user.cert_type" />" name="user.cert_type"  data-descriptions="user.cert_type" data-describedby="user.cert_type-description">
 										  <option value="1">身份证</option>
 										  <option value="2">军官证</option>
 										</select>	
@@ -65,7 +65,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">证件号码：</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.cert_id" value="<s:property value="#session.user.cert_id" />" name="user.cert_id" placeholder="请输入证件号码" />                                        
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.cert_id" value="<s:property value="user.cert_id" />" name="user.cert_id" placeholder="请输入证件号码" />                                        
                                      </div>
                                 </div>
                                 <div class="am-form-group">
@@ -99,7 +99,7 @@
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
 				  	            	   CommonUtils.showAlert('操作成功!');
-				  	                      	                   
+				  	            	   pageData["refresh"]();   	                   
 				  	               } else  {
 				  	            	  CommonUtils.showAlert(reply._msg);
 				  	             }              

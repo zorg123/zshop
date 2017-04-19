@@ -15,7 +15,7 @@
 <s:set name="total" value="#userList.total"/> 
 <s:set var="pageCount" value="userListPage.pageCount"/>
 <s:set var="pageIndex" value="userListPage.pageIndex"/>
-<div class="tpl-content-wrapper">           
+<div class="tpl-content-wrapper" data-url="/Sys/User/queryRegisterUser.do?user.state=<s:property value="user.state" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">团队管理</a></li>
@@ -108,6 +108,10 @@
 				CommonUtils.showAlert("请先选择要激活的用户!");
 				return;
 			}
+			if(actUserList.length>1){
+				CommonUtils.showAlert("只能选择一个用户激活!");
+				return;
+			}
 			var param={};
 			param["ids"] = actUserList.join(",");
 			CommonUtils.showConfirm("确定要激活吗?",function(){
@@ -116,7 +120,7 @@
 		  	               var code = reply._code;               
 		  	               if (code == '0') {  
 		  	            	   CommonUtils.showAlert('操作成功!');
-		  	                      	                   
+		  	            	 pageData["refresh"]() 	                   
 		  	               } else  {
 		  	            	  CommonUtils.showAlert(reply._msg);
 		  	               }              
