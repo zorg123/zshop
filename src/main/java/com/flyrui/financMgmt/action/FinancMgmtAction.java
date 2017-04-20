@@ -304,7 +304,7 @@ public class FinancMgmtAction extends BaseAction {
 	    			sendCoinTrackDto.setOrder_id(order_id);
 	    			sendCoinTrackDto.setComments("转入"+recCoinTrackDto.getUser_code());
 	    			//接收方用户id写入发送方oper_user_id中
-	    			recCoinTrackDto.setOper_user_id((Integer)recMap.get("retUserId"));
+	    			recCoinTrackDto.setOper_user_id(Integer.valueOf((String)recMap.get("retUserId")));
 	    			coinTrackService.insertCoinTrack(getLoginUserInfo(), sendCoinTrackDto);
 	    			retMap.put("retCode", "3");
 					retMap.put("retString", "成功");
