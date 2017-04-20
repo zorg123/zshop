@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>飞锐电子科技-CMS管理系统</title>
+<title>CMS管理系统</title>
 <link rel="stylesheet" href="<%=baseUri%>/public/common/ress/css/reset.css" type="text/css" />
 <link rel="stylesheet" href="<%=baseUri%>/public/common/ress/css/login.css" type="text/css" />
 <script language="javascript" type="text/javascript" >

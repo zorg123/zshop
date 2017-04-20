@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>黄河水利科学研究院-工资查询系统</title>
+    <title>FRCMS-后台管理系统</title>
     <link rel="stylesheet" type="text/css" href="<%=baseUri%>/public/common/ress/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<%=baseUri%>/public/easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="<%=baseUri%>/public/common/ress/css/jq/jquery.loadmask.css">
@@ -99,7 +99,7 @@
         
     </div>
     <div  style="height:32px; line-height:32px; text-align:center;">
-            Copyright @ 2011-2016 黄河水利科学研究院
+            Copyright @ 2011-2017 未名科技
     </div>
     <div style="display:none" id="pwd_win">
 	<div>
