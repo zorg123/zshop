@@ -4,7 +4,7 @@
 	String baseUri = request.getContextPath();
 %>
 <s:set name="able_coin_num" value="result.able_coin_num"/>
-<div class="tpl-content-wrapper">
+<div>
 			<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">财务管理</a></li>

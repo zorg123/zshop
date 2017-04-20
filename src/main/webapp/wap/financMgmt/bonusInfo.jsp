@@ -9,7 +9,7 @@
 <s:set name="total" value="#bonusInfoList.total"/> 
 <s:set var="pageCount" value="bonusInfoListPage.pageCount"/>
 <s:set var="pageIndex" value="bonusInfoListPage.pageIndex"/>
-<div class="tpl-content-wrapper">           
+<div>           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">财务管理</a></li>
@@ -57,7 +57,7 @@
 	                </div>
                 </div> 
         </div>
-        
+</div>    
 <script language="javascript" type="text/javascript" >
 	var jump = function(context,first) {
 		//CommonUtils.showAlert('当前第：' + context.option.curr + "页");
