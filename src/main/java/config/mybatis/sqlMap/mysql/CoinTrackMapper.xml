@@ -161,7 +161,7 @@
 	AND a.coin_num>0
 	AND a.user_id = #{user_id,jdbcType=INTEGER}
 	GROUP BY a.order_id
-	ORDER BY a.`id` DESC) t
+	ORDER BY a.`order_id` DESC) t
   </select>
   
   <select id="selectBonusInfo" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >

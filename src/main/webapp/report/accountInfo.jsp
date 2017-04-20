@@ -20,8 +20,8 @@
 	            <tr>
 	                <th field="user_code" width="140">会员编号</th>
 	                <th field="user_name" width="140">会员名称</th>
-	                <th field="elect_coin" width="100">奖金币</th>
-	                <th field="bonus_coin" width="100">电子币</th>
+	                <th field="bonus_coin" width="100">奖金币</th>
+	                <th field="elect_coin" width="100">电子币</th>
 	                <th field="reconsmp_coin" width="100">重消币</th>
 	                <th field="bonusact_sum" width="100">奖金实收</th>
 	                <th field="reconsmpact_sum" width="100">重消币实收</th>
