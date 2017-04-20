@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flyrui.common.SpringBeans;
 import com.flyrui.common.service.BaseService;
+import com.flyrui.dao.pojo.sys.TbRole;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
+import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
 
 @Service(value="userService")
@@ -21,6 +22,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	
    @Autowired
    AccoutInfoService accoutInfoService;
+   
+   @Autowired
+   RoleService roleService;
+   
+   
    public UserServiceImpl(){
 	   super.setNameSpace("com.flyrui.dao.pojo.sys.tb_user");
    }
@@ -58,6 +64,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    	   accoutInfo.setBonus_coin(0d);
    	   accoutInfo.setElect_coin(0d);
    	   accoutInfo.setReconsmp_coin(0d);
+   	   this.saveUserRole(user.getUser_id(),"4");
    	   return accoutInfoService.insert(accoutInfo);
    }
    

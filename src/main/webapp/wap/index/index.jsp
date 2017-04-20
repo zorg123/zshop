@@ -3,7 +3,7 @@
 <%
 	String baseUri = request.getContextPath();	
 %>
-
+<s:set name="accountInfo" value="result.ret"/>
 <div >
         <!-- <div class="tpl-content-page-title">
             Amaze UI 首页组件
@@ -19,11 +19,11 @@
                         <i class="am-icon-comments-o"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> 1349 </div>
-                        <div class="desc"> 奖金币 </div>
+                        <div class="number"> <s:property value="#accountInfo.bonus_coin"/> </div>
+                        <div class="desc">奖金币  </div>
                     </div>
-                    <a class="more" href="#"> 查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
+                    <!-- <a class="more" href="#"> 查看更多
+                <i class="m-icon-swapright m-icon-white"></i> -->
             </a>
                 </div>
             </div>
@@ -33,11 +33,11 @@
                         <i class="am-icon-bar-chart-o"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> 120 </div>
+                        <div class="number"><s:property value="#accountInfo.elect_coin"/> </div>
                         <div class="desc"> 电子币 </div>
                     </div>
-                    <a class="more" href="#"> 查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
+                    <!-- <a class="more" href="#"> 查看更多
+                <i class="m-icon-swapright m-icon-white"></i>  -->
             </a>
                 </div>
             </div>
@@ -47,11 +47,11 @@
                         <i class="am-icon-apple"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> 653 </div>
+                        <div class="number"> <s:property value="#accountInfo.reconsmp_coin"/> </div>
                         <div class="desc"> 重消币 </div>
                     </div>
-                    <a class="more" href="#"> 查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
+                    <!-- <a class="more" href="#"> 查看更多
+                <i class="m-icon-swapright m-icon-white"></i>  -->
             </a>
                 </div>
             </div>
@@ -61,11 +61,11 @@
                         <i class="am-icon-android"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> 786 </div>
-                        <div class="desc"> 奖金</div>
+                        <div class="number"> <s:property value="#accountInfo.comments"/> </div>
+                        <div class="desc"> 奖金实收</div>
                     </div>
-                    <a class="more" href="#"> 查看更多
-                <i class="m-icon-swapright m-icon-white"></i>
+                    <!-- <a class="more" href="#"> 查看更多
+                <i class="m-icon-swapright m-icon-white"></i>  -->
             </a>
                 </div>
             </div>

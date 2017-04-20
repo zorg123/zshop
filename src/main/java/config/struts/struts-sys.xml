@@ -28,7 +28,9 @@
     	<!-- 使用通配符来简化配置{1}!{2}.{1}:action名称,{2}:method名称 -->
     	<!-- result配置:name-方法名称,type:返回类型 -->
     	<action name="Sys!*" class="com.flyrui.sys.action.SysAction" method="{1}">
-        	
+        	<result name="index">        	  
+                /wap/index/index.jsp
+            </result>
         	 <result type="json">
         	   <!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
                <!-- 默认将会序列所有有返回值的getter方法的值，而无论该方法是否有对应属性 -->
