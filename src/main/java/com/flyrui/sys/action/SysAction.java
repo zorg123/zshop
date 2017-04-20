@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.flyrui.common.CommonUtils;
 import com.flyrui.common.SpringBeans;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.bean.MenuOptBean;
@@ -17,6 +16,10 @@ import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
+import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.pojo.CoinTrackDto;
+import com.flyrui.financMgmt.service.AccoutInfoService;
+import com.flyrui.financMgmt.service.CoinTrackService;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
 import com.flyrui.sys.service.MenuService;
 import com.flyrui.sys.service.RoleService;
@@ -227,5 +230,32 @@ public class SysAction extends BaseAction {
     		resultName = "login";
     	}
     	return resultName;
+    }
+    
+    /**
+	 * 
+	 * 新版管理页面初始化
+	 * 根据登陆的角色，查询最上层功能模块和下级模块
+	 * @return
+	 * @throws FRException [返回类型说明]
+	 * 
+	 * rover.lee
+	 * Sep 27, 2014
+	 */
+    @SessionCheckAnnotation(needCheckSession="true")
+    public String index() throws FRException{
+    	AccoutInfoService accoutInfoService = (AccoutInfoService)SpringBeans.getBean("accoutInfoService");
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	
+    	CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
+    	CoinTrackDto coinTrackDto = new CoinTrackDto();
+    	coinTrackDto.setUser_id(Integer.valueOf(getUserId()));
+    	HashMap bonusActMap = coinTrackService.getBonusActSum(coinTrackDto);    	
+    	Double actSum = (Double)bonusActMap.get("actSum");
+    	retAccoutInfoDto.setComments(actSum+"");
+    	setResult(retAccoutInfoDto);
+    	return "index";
     }
 }
