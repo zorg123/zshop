@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.dao.mapper.InfodictMapper" >
+<resultMap id="BaseResultMap" type="com.flyrui.sys.dto.InfodictDto" >
+    	<result column="dict_id" property="dict_id" jdbcType="INTEGER" />
+    	<result column="dict_name" property="dict_name" jdbcType="VARCHAR" />
+    	<result column="dict_type" property="dict_type" jdbcType="VARCHAR" />
+    	<result column="dict_code" property="dict_code" jdbcType="VARCHAR" />
+    	<result column="dict_value" property="dict_value" jdbcType="VARCHAR" />
+    	<result column="dict_desc" property="dict_desc" jdbcType="VARCHAR" />
+    	<result column="order_id" property="order_id" jdbcType="INTEGER" />
+    	<result column="up_dict_type" property="up_dict_type" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+</resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	rela_id,
+    	rela_type,
+    	file_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_id != null  and rela_id != '' " >
+        		and rela_id = #{rela_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_type != null  and rela_type != '' " >
+        		and rela_type = #{rela_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="queryInfoDictList" resultMap="BaseResultMap" parameterType="com.flyrui.sys.dto.InfodictDto">
+   		SELECT (SELECT b.user_id FROM tb_user b WHERE b.user_code = a.dict_code AND b.state=1 AND b.bus_state=1) AS dict_id,
+  		(SELECT b.NAME FROM tb_user b WHERE b.user_code = a.dict_code AND b.state=1 AND b.bus_state=1) AS dict_name,
+  		a.dict_type,
+  		(SELECT c.user_code FROM tb_user c WHERE c.user_code = a.dict_code AND c.state=1 AND c.bus_state=1) AS dict_code,
+  		a.dict_value,
+  		a.dict_desc,
+  		a.order_id,
+  		a.up_dict_type,
+  		a.state,
+  		a.create_date
+  		FROM info_dict a
+  		WHERE 1=1
+  		<if test="dict_type != null  and dict_type != '' " >
+      		and a.dict_type = #{dict_type,jdbcType=VARCHAR}
+   		</if>
+  		<if test="dict_code != null  and dict_code != '' " >
+      		and a.dict_code = #{dict_code,jdbcType=VARCHAR}
+   		</if>
+  		AND a.dict_type ='starInit'
+  		AND EXISTS(SELECT 1 FROM tb_user d WHERE a.`dict_code` = d.`user_code` AND d.state=1 AND d.bus_state=1)
+  </select>
+  
+   <update id="updateInfoDict" parameterType="com.flyrui.sys.dto.InfodictDto">
+    update info_dict set dict_value=#{dict_value,jdbcType=VARCHAR}
+    where
+    dict_type=#{dict_type,jdbcType=VARCHAR}
+    and 
+    dict_code=#{dict_code,jdbcType=VARCHAR}
+  </update>
+  
+   <delete id="delete" parameterType="com.flyrui.sys.dto.InfodictDto" >
+    delete from info_dict
+    where
+   	dict_type=#{dict_type,jdbcType=VARCHAR}
+    and 
+    dict_code=#{dict_code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertInfoDict" parameterType="com.flyrui.sys.dto.InfodictDto" >
+	 insert into `info_dict` 
+	 select max(dict_id)+1,
+	 '初始化星级',
+	 'starInit',
+	 #{dict_code,jdbcType=VARCHAR},
+	 #{dict_value,jdbcType=VARCHAR},
+	 '',
+	 1,
+	 '',
+	 1,
+	 now()
+	 from info_dict
+  </insert>
+</mapper>
