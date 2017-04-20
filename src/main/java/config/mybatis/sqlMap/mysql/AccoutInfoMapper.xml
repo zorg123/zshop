@@ -103,7 +103,7 @@
   </insert>
   
   <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">
-    update accout_Info
+    update accout_info
     set
    		<if test="bonus_coin != null  and bonus_coin != '' " >
       		bonus_coin = IFNULL(bonus_coin,0)+#{bonus_coin,jdbcType=DOUBLE},
