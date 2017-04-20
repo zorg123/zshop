@@ -178,7 +178,7 @@ var pageData={
 	 },
 	 "loginOut":function(){
 		 CommonUtils.invokeAsyncAction(base+'/Sys/Login!loginOut.do',{},function(reply){
-	           window.location.href=base+'/wap/login/login.jsp';
+	           window.location.href=base+'/wap/login/';
 	     })
 	 }
 }
