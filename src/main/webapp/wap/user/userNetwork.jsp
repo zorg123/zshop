@@ -18,13 +18,13 @@
                     <span>未激活：</span><span style="display: inline-block; background-color: red;border: 1px solid #eee;width: 100px;text-align:center">白色</span>
                 </div>
 				<div class="tpl-block">
-					<div class="am-u-sm-4">
-					    <button type="button" id="subNetWork" class="am-btn am-btn-primary tpl-btn-bg-color-success "  >向下置顶</button>                    
-                        <button type="button" id="register" class="am-btn am-btn-primary tpl-btn-bg-color-success "  style="display:none">注册</button>
+					<div class="am-u-sm-6">
+					    <button type="button" id="subNetWork" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-xs "  >向下置顶</button>                    
+                        <button type="button" id="register" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-xs"  style="display:none">注册</button>
                         </div>
-                     <div class="am-u-sm-8 am-u-md-3">
+                     <div class="am-u-sm-6">
                           <div class="am-input-group am-input-group-sm">
-                              <input type="text" class="am-form-field" id="searchContent" placeholder="请输入要查询的账号" value="<s:property value="user.name"/>"/>
+                              <input type="text" class="am-form-field" id="searchContent" placeholder="请输入账号" value="<s:property value="user.name"/>"/>
                               <span class="am-input-group-btn">
           						<button id="searchBtn" class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
         						</span>

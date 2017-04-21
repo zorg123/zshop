@@ -18,7 +18,7 @@
         </action>
         <action name="mainwap" class="com.flyrui.sys.action.SysAction" method="adminIdxInitWap">
         	<result name="login">        	  
-                 /wap/login/login.jsp
+                 /wap/login/index.jsp
             </result>
             <result name="main">        	  
                /wap/main.jsp
