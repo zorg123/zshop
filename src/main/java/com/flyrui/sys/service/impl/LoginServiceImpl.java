@@ -40,10 +40,12 @@ public class LoginServiceImpl  extends BaseService implements LoginService
         String retCode = "-1";
         String retString = "验证失败";
         String userCode = MapUtils.getStrFromMap(param, "user_code");
-        String pwd = MapUtils.getStrFromMap(param, "password");   
+        String pwd = MapUtils.getStrFromMap(param, "password");  
+        String bus_state = MapUtils.getStrFromMap(param, "bus_state"); 
         TbUser paraUser = new TbUser();
         paraUser.setUser_code(userCode);
         paraUser.setState(Constants.NORMAL_RECORD_STATE);
+        paraUser.setBus_state(Integer.parseInt(bus_state));
         User user = (User)baseDao.selectOne(SQLMapConstant.QUERY_USER_BY_CODE, paraUser);
         if(user!=null){
             String tPwd = user.getPassword(); 

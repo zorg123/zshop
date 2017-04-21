@@ -23,7 +23,7 @@ var Login={
             if(!sign){
             	sign = true;
             	
-            	CommonUtils.invokeAsyncAction(base+'/Sys/Login!validateLogin.do',param,function(reply){
+            	CommonUtils.invokeAsyncAction(base+'/Sys/Login!validateWapLogin.do',param,function(reply){
             		
                     var result=reply.ret;                    
                     sign=false;                    

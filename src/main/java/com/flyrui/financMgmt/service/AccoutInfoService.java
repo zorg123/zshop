@@ -18,4 +18,6 @@ public interface AccoutInfoService {
 	public PageModel getPagerListByCon(AccoutInfoDto accoutInfo,int pageNo,int pageSize);
 	
 	public AccoutInfoDto queryAccountInfo(AccoutInfoDto accoutInfo);
+	
+	public int deleteByUserId(AccoutInfoDto accoutInfo);
 }

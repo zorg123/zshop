@@ -54,10 +54,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    public int modifyPwd(Map<String,String> param){
 	   return baseDao.update(getNameSpace()+".modifyPwd", param);
    }
-   
+  
+     
    @Transactional
    @Override
-   public int insert(User user){	   
+   public int insertRegister(User user){	   
 	   super.insert(user);
 	   AccoutInfoDto accoutInfo = new AccoutInfoDto();
    	   accoutInfo.setUser_id(Integer.valueOf(user.getUser_id()));
@@ -82,6 +83,15 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			baseDao.update(getNameSpace()+".activeUser",param);
 		}	
 	}
-   
+	
+	@Override
+	@Transactional
+	public int delUnActiveUser(User user){		
+		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+	   	accoutInfo.setUser_id(Integer.valueOf(user.getUser_id()));
+		accoutInfoService.deleteByUserId(accoutInfo);
+		deleteRolesByUser(user.getUser_id());
+		return super.delete(user);
+	}
    
 }

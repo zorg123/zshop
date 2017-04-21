@@ -111,7 +111,7 @@ public class LoginAuthInterceptor extends AbstractInterceptor {
 		}*/
 		
 		//validateLogin
-		if(user!=null || !isNeed|| "validateLogin".equals(method) || "loginOut".equals(method)){
+		if(user!=null || !isNeed|| "validateLogin".equals(method) || "loginOut".equals(method) || "validateWapLogin".equals(method)){
 			String retunStr ="";
 			try{
 				retunStr = invocation.invoke();

@@ -18,4 +18,10 @@ public class AccoutInfoServiceImpl extends BaseService<AccoutInfoDto> implements
 	public AccoutInfoDto queryAccountInfo(AccoutInfoDto accoutInfo){
 		return baseDao.selectOne(this.nameSpace+".queryAccountInfo", accoutInfo);
 	}
+
+	@Override
+	public int deleteByUserId(AccoutInfoDto accoutInfo) {
+		return baseDao.delete(this.nameSpace+".deleteByUserId", accoutInfo);
+	}
+	
 }

@@ -117,7 +117,7 @@ public class UserAction extends BaseAction {
     	user.setRegister_ip(ip);
     	user.setRegister_date(new Date());
     	User u = new User();
-    	u.setUser_code(user.getUser_code());
+    	u.setUser_code(user.getUser_code());    	
     	List retList = userService.getListByCon(u);
     	if(retList!=null &&retList.size() >0){
     		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_EXISTS));
@@ -133,6 +133,7 @@ public class UserAction extends BaseAction {
     		throw frException;
     	}
     	user.setPassword(CASMd5Utils.getMdResults(user.getPassword(), "12", user.getUser_code()));
+    	user.setBus_state(0);
     	userService.insert(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
@@ -489,7 +490,7 @@ public class UserAction extends BaseAction {
     	user.setRegister_ip(super.getIp());
     	user.setPassword(CASMd5Utils.getPwd(user.getPassword(),user.getUser_code()));
     	user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),user.getUser_code()));
-    	userService.insert(user);
+    	userService.insertRegister(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
     }
@@ -708,6 +709,30 @@ public class UserAction extends BaseAction {
 	    	setCommonSuccessReturn();
     	}else{
     		throw new FRException(new FRError("SYS_ERR005"));
+    	}
+    	return SUCCESS;
+    }
+    
+    @Action("delUnActiveUser")
+    public String delUnActiveUser() throws FRException{
+    	
+    	if(ids==null){
+    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    	}    	
+    	String userId = getUserId();
+    	String[] idStr = ids.split(";");
+    	//校验是否是当前用户注册的
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setRegister_id(userId);
+    	uu.setUser_id(idStr[0]);
+    	uu.setBus_state(1);
+    	uu.setState("0");
+    	int cnt = userService.delUnActiveUser(uu);
+    	if(cnt==0){
+    		throw new FRException(new FRError("SYS_ERR010"));
+    	}else{
+    		setCommonSuccessReturn();
     	}
     	return SUCCESS;
     }

@@ -113,10 +113,8 @@
 			            firstInvalidFocus:true,
 			            valid:function(event,options){
 			                //点击提交按钮时,表单通过验证触发函数
-			                 var params = CommonUtils.getParam("registerForm",false);
-			                 CommonUtils.showLoading();
-							 CommonUtils.invokeAsyncAction(base+'/Sys/User!registerUser.do', params, function (reply) {           
-				  	            CommonUtils.closeLoading();
+			                 var params = CommonUtils.getParam("registerForm",false);			                 
+							 CommonUtils.invokeAsyncAction(base+'/Sys/User!registerUser.do', params, function (reply) { 
 								if ((reply || '') != '') {
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
@@ -128,7 +126,7 @@
 				  	           } else  {
 				  	        	      CommonUtils.showAlert('操作失败!');
 				  	           }
-				  	         });
+				  	         },true);
 					 
 			                event.preventDefault();
 			                return false;

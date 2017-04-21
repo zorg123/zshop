@@ -2,11 +2,14 @@ $.ajaxSetup({
   contentType: "application/x-www-form-urlencoded;charset=UTF-8"
 });
 var CommonUtils={
-	invokeAction:function(action,param,callBack,isSync,v_contentType){		
+	invokeAction:function(action,param,callBack,isSync,v_contentType,isLoadingShow){		
 	    if(!isSync){
 	    	isSync = true;
-	    }	   
-	    if(!v_contentType){
+	    }
+	    if(!isLoadingShow || isLoadingShow == null){
+	    	isLoadingShow = false;
+	    }
+	    if(!v_contentType || v_contentType == null){
 	    	v_contentType = "application/x-www-form-urlencoded;charset=UTF-8"
 	    }
 		var callbackProxy=function(data){
@@ -30,6 +33,9 @@ var CommonUtils={
 			}
 			callBack&&callBack(data);
 		}
+		if(isLoadingShow){
+			CommonUtils.showLoading();
+		}
 		$.ajax({
 			type:"post",//设置提交方式
 			url:action,//提交URL
@@ -38,28 +44,34 @@ var CommonUtils={
 			data:param,//请求参数
 			//调用失败回调函数
 			error:function(XMLHttpRequest, textStatus, errorThrown) {
+				if(isLoadingShow){
+					CommonUtils.closeLoading();
+				}
 				alert("服务调用失败" + "\n" + errorThrown);
 	        },
 			//调用成功的回调函数
 			success:function(json) {
+				if(isLoadingShow){
+					CommonUtils.closeLoading();
+				}
 	        	callbackProxy(json);
 			}
 		});
 	},
-	invokeSyncAction:function(action,param,callBack){
-		CommonUtils.invokeAction(action,param,callBack,false);
+	invokeSyncAction:function(action,param,callBack,isShowLoading){
+		CommonUtils.invokeAction(action,param,callBack,false,null,isShowLoading);
 	},
-	invokeAsyncAction:function(action,param,callBack){
-		CommonUtils.invokeAction(action,param,callBack,true);
+	invokeAsyncAction:function(action,param,callBack,isShowLoading){
+		CommonUtils.invokeAction(action,param,callBack,true,null,isShowLoading);
 	},
-	invokeSyncJsonAction:function(action,param,callBack){
+	invokeSyncJsonAction:function(action,param,callBack,isShowLoading){
 		var tParam = JSON.stringify($.toJSON(param));
-		CommonUtils.invokeAction(action,tParam,callBack,false,"application/json");
+		CommonUtils.invokeAction(action,tParam,callBack,false,"application/json",isShowLoading);
 	},
-	invokeAsyncJsonAction:function(action,param,callBack){
+	invokeAsyncJsonAction:function(action,param,callBack,isShowLoading){
 		var tParam = JSON.stringify(param);
 		//alert(tParam);
-		CommonUtils.invokeAction(action,tParam,callBack,true,"application/json");
+		CommonUtils.invokeAction(action,tParam,callBack,true,"application/json",isShowLoading);
 	},
 	dumpObject:function(arr,level) {
 	    var dumped_text = "";
@@ -562,6 +574,7 @@ var CommonUtils={
     	    content: msg
     	    ,btn: btns
     	    ,yes: function(index){
+    	    	layer.close(index);
     	    	if($.isFunction(successFunc)) {
     				successFunc();
     			}

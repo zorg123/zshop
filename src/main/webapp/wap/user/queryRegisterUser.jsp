@@ -36,6 +36,9 @@
 	                                <div class="am-btn-group am-btn-group-xs">
 	                                    <button type="button" id="activeBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>激活</button>
 	                                </div>
+	                                <div class="am-btn-group am-btn-group-xs">
+	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>删除</button>
+	                                </div>
 	                            </div>
 	                        </div>
                    		</s:if>
@@ -127,9 +130,43 @@
 		  	           } else  {
 		  	        	      CommonUtils.showAlert('操作失败!');
 		  	           }
-		  	    });
+		  	    },true);
 			});
 		}
+		
+		function delUser(){
+			var actUserList=[];
+			$.each($("#listForm input:checked"),function(i,v){
+				var userId = $(this).attr("userId");
+				actUserList.push(userId);
+			});
+			if(actUserList.length==0){
+				CommonUtils.showAlert("请先选择要删除的用户!");
+				return;
+			}
+			if(actUserList.length>1){
+				CommonUtils.showAlert("只能选择一个用户删除!");
+				return;
+			}
+			var param={};
+			param["ids"] = actUserList.join(",");
+			CommonUtils.showConfirm("确定要删除吗?",function(){				
+				CommonUtils.invokeAsyncAction(base+'/Sys/User/delUnActiveUser.do', param, function (reply) {
+		  	           if ((reply || '') != '') {
+		  	               var code = reply._code;               
+		  	               if (code == '0') {  
+		  	            	 CommonUtils.showAlert('操作成功!');
+		  	            	 pageData["refresh"]() 	                   
+		  	               } else  {
+		  	            	  CommonUtils.showAlert(reply._msg);
+		  	               }              
+		  	           } else  {
+		  	        	      CommonUtils.showAlert('操作失败!');
+		  	           }
+		  	    },true);
+			});
+		}
+		
 	</s:if>
 	function searchUser(){
 		var searchContentV= $("#searchContent").val();
@@ -152,6 +189,9 @@
 	<s:if test="user.state != 1">
 		$("#activeBtn").on("click",function(){
 			activeUser();
+		})
+		$("#delBtn").on("click",function(){
+			delUser();
 		})
 	</s:if>
 	$("#page").page({pages:<s:property value="#userListPage.pageCount"/>,curr:<s:property value="#userListPage.pageIndex"/>,jump:jump});

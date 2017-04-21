@@ -117,4 +117,9 @@
    		comments = ''
     where user_id = #{user_id,jdbcType=INTEGER}
   </update>
+  
+   <delete id="deleteByUserId" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    delete from accout_info
+   	where user_id = #{user_id,jdbcType=INTEGER}
+  </delete>
 </mapper>

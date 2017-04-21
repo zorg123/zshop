@@ -22,6 +22,7 @@ import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
+import com.flyrui.framework.annotation.SessionCheckAnnotation;
 import com.flyrui.sys.service.LoginService;
 import com.flyrui.sys.service.MenuService;
 import com.flyrui.sys.service.UserService;
@@ -125,6 +126,7 @@ public class LoginAction extends BaseAction {
     	return SUCCESS;
     }
     
+    @SessionCheckAnnotation(needCheckSession="false")
     public String validateLogin() throws FRException{
     	LoginService loginService = (LoginService)SpringBeans.getBean("loginService");
     	String sessionValidCode= (String)super.getSessionAttribute("valid_code");
@@ -139,6 +141,7 @@ public class LoginAction extends BaseAction {
         	param.put("user_code", user_name);
         	param.put("password", user_pass);
         	param.put("ip", getIp());
+        	param.put("bus_state","0");
         	param.put("url", getHttpReqeust().getRequestURI());
         	retMap = loginService.validateLogin(param);
     	}
@@ -146,6 +149,32 @@ public class LoginAction extends BaseAction {
     	setResult(retMap);
     	return SUCCESS;
     }
+    
+    @SessionCheckAnnotation(needCheckSession="false")
+    public String validateWapLogin() throws FRException{
+    	LoginService loginService = (LoginService)SpringBeans.getBean("loginService");
+    	String sessionValidCode= (String)super.getSessionAttribute("valid_code");
+    	Map retMap = new HashMap();
+    	   
+    	if(sessionValidCode == null || !sessionValidCode.equals(valid_code)){
+    		retMap.put("code", "-4");
+            retMap.put("msg", "验证码输入错误");         
+    	}else{
+    		getHttpSession().removeAttribute("valid_code");
+    		Map param = new HashMap();
+        	param.put("user_code", user_name);
+        	param.put("password", user_pass);
+        	param.put("ip", getIp());
+        	param.put("bus_state","1");
+        	param.put("url", getHttpReqeust().getRequestURI());
+        	retMap = loginService.validateLogin(param);
+    	}
+    	
+    	setResult(retMap);
+    	return SUCCESS;
+    }
+    
+    
     
     public String getLoginSessionInfo(){    	
     	setResult(getLoginUserInfo());

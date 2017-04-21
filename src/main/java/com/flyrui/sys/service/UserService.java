@@ -31,4 +31,6 @@ public interface UserService {
 	public List<User> selectUserNetTree(User user);
 	
 	public void activeUser(String[] ids,User loginUser);
+	public int insertRegister(User user);
+	public int delUnActiveUser(User user);
 }
