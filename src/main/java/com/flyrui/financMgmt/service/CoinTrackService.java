@@ -42,4 +42,13 @@ public interface CoinTrackService {
 	
 	public HashMap getBonusActSum(CoinTrackDto coinTrackDto);
 	
+	public HashMap recharge(User loginUser,CoinTrackDto coinTrackDto);
+	
+	public HashMap insertElectTrans(User loginUser,CoinTrackDto coinTrackDto);
+	
+	public HashMap bonusToElect(User loginUser,CoinTrackDto coinTrackDto);
+	
+	public HashMap insertExtract(User loginUser,CoinTrackDto coinTrackDto);
+	
+	
 }
