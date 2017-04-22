@@ -87,6 +87,7 @@ var RechargeMng = {
 	         		$('input[name="user_name"]').val(retobj.retUserName);
 	         	}else{
 	         		$.messager.alert('系统提示', retobj.retString, 'info');
+	         		$('input[name="user_name"]').val('');
 	         	}
 	         }else{
 	        	$.messager.alert('系统提示', '添加失败!', 'info');

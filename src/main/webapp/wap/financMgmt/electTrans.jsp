@@ -143,6 +143,7 @@
 		        		return;
 		        	}else{
 		        		CommonUtils.showAlert(retobj.retString);
+		        		$('#user_name').val('');
 		        		return;
 		        	}
 		        }else{
