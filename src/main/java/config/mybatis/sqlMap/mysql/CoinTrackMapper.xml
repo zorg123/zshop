@@ -132,6 +132,9 @@
 	join accout_info c on a.`user_id` = c.`user_id`
 	WHERE a.`coin_type` = 1
 	AND a.`create_type` = 3
+	<if test="user_id != null" >
+    	and b.user_id = #{user_id,jdbcType=VARCHAR}
+ 	</if>
 	<if test="user_code != null  and user_code != '' " >
     	and b.user_code = #{user_code,jdbcType=VARCHAR}
  	</if>

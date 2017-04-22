@@ -27,7 +27,6 @@
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">可提现额度</label>
                                     <div class="am-u-sm-9">
                                         <input type="text" placeholder='<s:property value="able_coin_num"/>' readOnly="true">
-                                        <small>可提现总额=奖金币-重消币</small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">

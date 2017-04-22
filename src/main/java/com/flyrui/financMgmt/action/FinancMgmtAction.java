@@ -37,6 +37,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="queryBonusInfo", location = "/wap/financMgmt/bonusInfo.jsp"),
 		@Result(name="queryElectInfo", location = "/wap/financMgmt/electInfo.jsp"),
 		@Result(name="initExtract", location = "/wap/financMgmt/extract.jsp"),
+		@Result(name="queryUserExtractInfo", location = "/wap/financMgmt/userExtractInfo.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
 		
@@ -181,6 +182,29 @@ public class FinancMgmtAction extends BaseAction {
     	result.put("_msg", "成功");
 		result.put("electCoin", electCoin);
     	return "queryElectInfo";
+    }
+	
+	//手机前台查询充值记录
+	@Action("queryUserExtractInfo")    
+    public String queryUserExtractInfo(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==coinTrackDto){
+			coinTrackDto = new CoinTrackDto();
+		}
+		coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConExtConf(coinTrackDto, page, rows);
+    	//返回值设置
+    	result.put("ret",pageModel);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+    	return "queryUserExtractInfo";
     }
 	 
 	@Action(value="insertCoinTrack")

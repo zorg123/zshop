@@ -32,8 +32,8 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-3 am-form-label">会员名称</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" id="user_name" placeholder="会员名称">
-                                        <small>输入要转入的会员名称</small>
+                                        <input type="text" id="user_name" placeholder="会员名称" readonly="true">
+                                        <span class="label label-danger" onclick ="checkUser()">校验用户</span>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
@@ -120,7 +120,36 @@
 	}
 	function clear(){
 		$('#user_code').val('');
+		$('#user_name').val('');
 		$('#coin_num').val('');
 		$('#trans_pwd').val('');
+	}
+	function checkUser(){
+		var user_code = $('#user_code').val();
+		if(user_code.length<=0){
+			CommonUtils.showAlert('会员编号不能为空!');
+        	return false;
+        }
+		var param ={};
+		param["coinTrackDto.user_code"] = user_code;
+		CommonUtils.invokeSyncAction(base+'/FinancMgmt/getUserByCode.do', param, function (reply) {
+			if((reply || '') !=''){
+				var code = reply._code;
+		        if(code=='0'){
+		        	var retobj = reply.ret;
+		        	//-1:输入的工号不存在 0:未激活 1:转入的电子币大于当前账户的电子币 2:输入的交易密码错误!3:成功
+		        	if(retobj.retCode=='1'){
+		        		$('#user_name').val(retobj.retUserName);
+		        		return;
+		        	}else{
+		        		CommonUtils.showAlert(retobj.retString);
+		        		return;
+		        	}
+		        }else{
+		        	CommonUtils.showAlert('操作失败!');
+			   		return false;
+		        }
+			}			
+		});
 	}
 </script>	

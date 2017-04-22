@@ -50,7 +50,7 @@
     	</tr>
     	<tr>
     		<td>会员名称:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="user_name" style="width:140px"/></td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="user_name" style="width:140px" readonly="true"/><a href="javascript:void(0);" id="check" iconCls="icon-search" class="easyui-linkbutton">校验用户</a></td>
     	</tr>
     	<tr>
     		<td>充值金额:</td>

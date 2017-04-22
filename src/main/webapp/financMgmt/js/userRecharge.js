@@ -67,6 +67,34 @@ var RechargeMng = {
     refresh: function () {
         $('#coinTrackList').datagrid('reload');
     },
+    check: function () {
+    	var user_id;
+        var user_code = $('input[name="user_code"]').val();
+        //判断用户是否为空
+        if(user_code.length<=0){
+        	$.messager.alert('系统提示', '请输入会员编号!', 'info');
+        	return;
+        }
+        var param ={};
+    	param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
+        CommonUtils.invokeAsyncAction(base+'/FinancMgmt/getUserByCode.do', param, function (reply) {
+		if((reply || '') !=''){
+			var code = reply._code;
+	         if(code=='0'){
+	         	var retobj = reply.ret;
+	         	//3:成功
+	         	if(retobj.retCode=='1'){
+	         		$('input[name="user_name"]').val(retobj.retUserName);
+	         	}else{
+	         		$.messager.alert('系统提示', retobj.retString, 'info');
+	         	}
+	         }else{
+	        	$.messager.alert('系统提示', '添加失败!', 'info');
+	 	   		return false;
+	         }
+			}			
+        });      
+    },
     close: function () {
         $('#win_save').window('close');
         $('#win_save').hide();
@@ -178,6 +206,9 @@ $(function () {
     });
     $('#save').click(function () {
         RechargeMng.save();
+    });
+    $('#check').click(function () {
+        RechargeMng.check();
     });
     $('#search_btn').bind('click', function () {
         var param = {};
