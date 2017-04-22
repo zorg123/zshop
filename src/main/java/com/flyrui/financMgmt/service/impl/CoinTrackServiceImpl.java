@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbUser;
@@ -259,6 +260,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	    		List <User> userlist = userService.getListByCon(queryUser);
 	    		User retUser = userlist.get(0);
 	    		String userTransPwd = retUser.getTrans_pwd();
+	    		trans_pwd = CASMd5Utils.getPwd(trans_pwd,retUser.getUser_code());
 	    		if(!trans_pwd.equals(userTransPwd)){
 	    			retMap.put("retCode", "2");
 					retMap.put("retString", "输入的交易密码错误!");
@@ -318,6 +320,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     		List <User> userlist = userService.getListByCon(queryUser);
     		User retUser = userlist.get(0);
     		String userTransPwd = retUser.getTrans_pwd();
+    		trans_pwd = CASMd5Utils.getPwd(trans_pwd,retUser.getUser_code());
     		if(!trans_pwd.equals(userTransPwd)){
     			retMap.put("retCode", "2");
 				retMap.put("retString", "输入的交易密码错误!");
@@ -381,6 +384,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
         		List <User> userlist = userService.getListByCon(queryUser);
         		User retUser = userlist.get(0);
         		String userTransPwd = retUser.getTrans_pwd();
+        		trans_pwd = CASMd5Utils.getPwd(trans_pwd,retUser.getUser_code());
         		if(!trans_pwd.equals(userTransPwd)){
         			retMap.put("retCode", "2");
     				retMap.put("retString", "输入的交易密码错误!");

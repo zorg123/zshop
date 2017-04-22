@@ -26,35 +26,35 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description"/> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" data-pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,8}$" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description"/> 
                                         <small id="user.user_code-description"></small>                                       
                                     </div>
                                 </div> 
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">登录密码 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.password"  name="user.password" placeholder="请输入登录密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.password" data-describedby="user.password-description"/>  
+                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.password"  name="user.password" value="111111" placeholder="请输入登录密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.password" data-describedby="user.password-description"/>  
                                         <small id="user.password-description"></small>                                        
                                     </div>
                                 </div>
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">确认登录密码 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="password" class="am-form-field tpl-form-no-bg"  name="user.confirm_password" placeholder="请输入确认登录密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.confirm_password" data-describedby="user.confirm_password-description" data-conditional="confirmPwd"/>                                        
+                                        <input type="password" class="am-form-field tpl-form-no-bg"  name="user.confirm_password"  value="111111" placeholder="请输入确认登录密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.confirm_password" data-describedby="user.confirm_password-description" data-conditional="confirmPwd"/>                                        
                                     	<small id="user.confirm_password-description"></small>  
                                     </div>
                                 </div>
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">交易密码 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.trans_pwd"  name="user.trans_pwd" placeholder="请输入交易密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.trans_pwd" data-describedby="user.trans_pwd-description"/>                                        
+                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.trans_pwd"  name="user.trans_pwd"  value="222222" placeholder="请输入交易密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.trans_pwd" data-describedby="user.trans_pwd-description"/>                                        
                                     	<small id="user.trans_pwd-description"></small>  
                                     </div>
                                 </div>
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">确认交易密码 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="password" class="am-form-field tpl-form-no-bg"   name="user.confirm_trans_pwd" placeholder="请输入确认交易密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.confirm_trans_pwd" data-describedby="user.confirm_trans_pwd-description" data-conditional="confirmTransPwd"/>                                        
+                                        <input type="password" class="am-form-field tpl-form-no-bg"   name="user.confirm_trans_pwd" value="222222"  placeholder="请输入确认交易密码" data-pattern="[0-9]{6,6}" data-required="true" data-descriptions="user.confirm_trans_pwd" data-describedby="user.confirm_trans_pwd-description" data-conditional="confirmTransPwd"/>                                        
                                     	<small id="user.confirm_trans_pwd-description"></small>  
                                     </div>
                                 </div>   
@@ -142,6 +142,7 @@
 			            descriptions:{
 			                "user.user_code":{
 			                    required : '<div class="field-invalidmsg">请输入用户账号</div>',
+			                    pattern : '<div class="field-invalidmsg">用户账号不对，必须为6-8位数字或字母</div>',
 			                    valid : '<div class="field-validmsg">验证通过</div>'
 			                },
 			                "user.password" : {

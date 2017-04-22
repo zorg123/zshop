@@ -38,6 +38,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="queryElectInfo", location = "/wap/financMgmt/electInfo.jsp"),
 		@Result(name="initExtract", location = "/wap/financMgmt/extract.jsp"),
 		@Result(name="queryUserExtractInfo", location = "/wap/financMgmt/userExtractInfo.jsp"),
+		@Result(name="accoutInfo", location = "/wap/user/accountInfo.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
 		
@@ -49,6 +50,8 @@ public class FinancMgmtAction extends BaseAction {
 	private static final Logger log = Logger.getLogger(FinancMgmtAction.class);	
 	
 	private CoinTrackDto coinTrackDto;
+	
+	private AccoutInfoDto accoutInfo;
 	
 	public int rows; //每页大小
 	
@@ -301,6 +304,22 @@ public class FinancMgmtAction extends BaseAction {
     	return SUCCESS;
     }
 	
+	@Action(value="getAccountInfo")
+	public String getAccountInfo(){
+		AccoutInfoDto ParamAccoutInfoDto = new AccoutInfoDto();
+		ParamAccoutInfoDto.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+		accoutInfo = accoutInfoService.queryAccountInfo(ParamAccoutInfoDto);
+		return "accoutInfo";
+    }
+	
+	@Action(value="updateAccountInfo")
+	public String updateAccountInfo(){
+		accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+		int ret = accoutInfoService.update(accoutInfo);
+		setResult(ret);
+    	return SUCCESS;
+    }
+	
     public CoinTrackDto getCoinTrackDto() {
 		return coinTrackDto;
 	}
@@ -308,4 +327,11 @@ public class FinancMgmtAction extends BaseAction {
 	public void setCoinTrackDto(CoinTrackDto coinTrackDto) {
 		this.coinTrackDto = coinTrackDto;
 	}
+	public AccoutInfoDto getAccoutInfo() {
+		return accoutInfo;
+	}
+	public void setAccoutInfo(AccoutInfoDto accoutInfo) {
+		this.accoutInfo = accoutInfo;
+	}
+	
 }

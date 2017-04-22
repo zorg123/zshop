@@ -8,6 +8,7 @@
     	<result column="elect_coin" property="elect_coin" jdbcType="DOUBLE" />
     	<result column="reconsmp_coin" property="reconsmp_coin" jdbcType="DOUBLE" />
     	<result column="account_bank" property="account_bank" jdbcType="VARCHAR" />
+    	<result column="account_bank_brc" property="account_bank_brc" jdbcType="VARCHAR" />
     	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
     	<result column="account_name" property="account_name" jdbcType="VARCHAR" />
     	<result column="comments" property="comments" jdbcType="VARCHAR" />
@@ -59,6 +60,7 @@
     IFNULL(a.bonusact_sum,0) bonusact_sum,
     IFNULL(a.reconsmpact_sum,0) reconsmpact_sum,
     a.account_bank,
+    a.account_bank_brc,
     a.account_id,
     a.account_name,
     a.comments
@@ -89,7 +91,8 @@
 		 `account_bank`, 
 		 `account_id`, 
 		 `account_name`, 
-		 `comments`) 
+		 `comments`,
+		 `account_bank_brc`) 
 	 values(
 	 	#{user_id,jdbcType=INTEGER},
 	 	#{bonus_coin,jdbcType=DOUBLE},
@@ -98,7 +101,8 @@
 	 	#{account_bank,jdbcType=VARCHAR},
 	 	#{account_id,jdbcType=VARCHAR},
 	 	#{account_name,jdbcType=VARCHAR},
-	 	#{comments,jdbcType=VARCHAR}
+	 	#{comments,jdbcType=VARCHAR},
+	 	#{account_bank_brc,jdbcType=VARCHAR}
 	 )
   </insert>
   
@@ -113,6 +117,18 @@
    		</if>
    		<if test="reconsmp_coin != null  and reconsmp_coin != '' " >
       		reconsmp_coin = IFNULL(reconsmp_coin,0)+#{reconsmp_coin,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_bank != null  and account_bank != '' " >
+      		account_bank = #{account_bank,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_bank_brc != null  and account_bank_brc != '' " >
+      		account_bank_brc = #{account_bank_brc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_id != null  and account_id != '' " >
+      		account_id = #{account_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_name != null  and account_name != '' " >
+      		account_name = #{account_name,jdbcType=VARCHAR},
    		</if>
    		comments = ''
     where user_id = #{user_id,jdbcType=INTEGER}

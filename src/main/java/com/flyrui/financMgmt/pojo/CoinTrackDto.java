@@ -18,6 +18,12 @@ public class CoinTrackDto implements Serializable {
 	@ExcelAnnotation(exportName = "银行账号")
 	private String account_id;
 	
+	@ExcelAnnotation(exportName = "开户支行")
+	private String account_bank_brc;
+	
+	@ExcelAnnotation(exportName = "开户人姓名")
+	private String account_name;
+	
 	@ExcelAnnotation(exportName = "会员编号")
 	private String user_code;
 	
@@ -65,7 +71,7 @@ public class CoinTrackDto implements Serializable {
 	private String coin_type_name;
 	
 	private String create_type_name;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -260,6 +266,22 @@ public class CoinTrackDto implements Serializable {
 
 	public void setCoin_type_name(String coin_type_name) {
 		this.coin_type_name = coin_type_name;
+	}
+
+	public String getAccount_bank_brc() {
+		return account_bank_brc;
+	}
+
+	public void setAccount_bank_brc(String account_bank_brc) {
+		this.account_bank_brc = account_bank_brc;
+	}
+
+	public String getAccount_name() {
+		return account_name;
+	}
+
+	public void setAccount_name(String account_name) {
+		this.account_name = account_name;
 	}
 	
 }

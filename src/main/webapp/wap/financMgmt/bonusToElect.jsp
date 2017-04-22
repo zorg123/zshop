@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary" id="save">转入</button>
+                                        <button type="button" class="am-btn am-btn-primary" id="save">提交</button>
                                     </div>
                                 </div>
                             </form>

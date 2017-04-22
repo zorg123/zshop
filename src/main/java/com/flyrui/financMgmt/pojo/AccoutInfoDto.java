@@ -24,6 +24,8 @@ public class AccoutInfoDto implements Serializable {
 	
 	private String account_bank;
 	
+	private String account_bank_brc;
+	
 	private String account_id;
 	
 	private String account_name;
@@ -140,6 +142,14 @@ public class AccoutInfoDto implements Serializable {
 
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+
+	public String getAccount_bank_brc() {
+		return account_bank_brc;
+	}
+
+	public void setAccount_bank_brc(String account_bank_brc) {
+		this.account_bank_brc = account_bank_brc;
 	}
 	
 }

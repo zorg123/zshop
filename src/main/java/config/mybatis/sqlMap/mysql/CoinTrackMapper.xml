@@ -22,6 +22,8 @@
     	<result column="serial_num" property="serial_num" jdbcType="VARCHAR" />
     	<result column="apply_state" property="apply_state" jdbcType="VARCHAR" />
     	<result column="account_bank" property="account_bank" jdbcType="VARCHAR" />
+    	<result column="account_bank_brc" property="account_bank_brc" jdbcType="VARCHAR" />
+    	<result column="account_name" property="account_name" jdbcType="VARCHAR" />
     	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BonusActResultMap" type="com.flyrui.financMgmt.pojo.BonusActDto" >
@@ -115,8 +117,10 @@
   </select>
   <select id="selectExtConf" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
-    c.account_bank,
+    CASE c.account_bank WHEN 1 THEN '工商银行' WHEN 2 THEN '建设银行' WHEN 3 THEN '农业银行' WHEN 4 THEN '中国银行' END AS account_bank,
+    c.account_bank_brc,
     c.account_id,
+    c.account_name,
     a.id,
     a.user_id,  
 	b.user_code,
