@@ -37,7 +37,7 @@
 	                                    <button type="button" id="activeBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>激活</button>
 	                                </div>
 	                                <div class="am-btn-group am-btn-group-xs">
-	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>删除</button>
+	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
 	                                </div>
 	                            </div>
 	                        </div>
