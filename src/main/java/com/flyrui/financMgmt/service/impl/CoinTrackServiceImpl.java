@@ -84,6 +84,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		String user_code = coinTrackDto.getUser_code();
 		TbUser user = new TbUser();
 		user.setUser_code(user_code);
+		user.setBus_state(1);
 		if(null!=coinTrackDto.getUser_name() && coinTrackDto.getUser_name().length()>0){
 			user.setName("%"+coinTrackDto.getUser_name()+"%");
 		}
