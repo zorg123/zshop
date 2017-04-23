@@ -306,12 +306,14 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		Double trans_bonus_coin = coinTrackDto.getCoin_num();
 		//获取当前用户的交易密码
 		String trans_pwd = coinTrackDto.getComments();
-		//查询当前用户的奖金币
-		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
     	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
-    	if(bonusCoin<trans_bonus_coin){
+    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	if(able_coin_num<trans_bonus_coin){
     		retMap.put("retCode", "1");
 			retMap.put("retString", "转入的奖金币大于当前账户的奖金币 ");
     	}else{

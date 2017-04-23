@@ -36,6 +36,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="queryBonusAct", location = "/wap/financMgmt/bonusAct.jsp"),
 		@Result(name="queryBonusInfo", location = "/wap/financMgmt/bonusInfo.jsp"),
 		@Result(name="queryElectInfo", location = "/wap/financMgmt/electInfo.jsp"),
+		@Result(name="initBonusToElect", location = "/wap/financMgmt/bonusToElect.jsp"),
 		@Result(name="initExtract", location = "/wap/financMgmt/extract.jsp"),
 		@Result(name="queryUserExtractInfo", location = "/wap/financMgmt/userExtractInfo.jsp"),
 		@Result(name="accoutInfo", location = "/wap/user/accountInfo.jsp"),
@@ -242,6 +243,21 @@ public class FinancMgmtAction extends BaseAction {
 		setResult(retMap);
     	return SUCCESS;
     }
+	//查询当前可提现的金额=账户中奖金币-账户中重消币
+	@Action(value="initBonusToElect")
+	public String initBonusToElect(){
+		//查找账户奖金币总额
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("able_coin_num", able_coin_num);
+		return "initBonusToElect";
+	}
 	//查询当前可提现的金额=账户中奖金币-账户中重消币
 	@Action(value="initExtract")
 	public String initExtract(){

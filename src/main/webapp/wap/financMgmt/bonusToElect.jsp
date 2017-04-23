@@ -3,6 +3,7 @@
 <%
 	String baseUri = request.getContextPath();
 %>    
+<s:set name="able_coin_num" value="result.able_coin_num"/>
 <div>
 			<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
@@ -22,6 +23,12 @@
 
                         <div class="am-u-sm-12 am-u-md-9">
                             <form class="am-form am-form-horizontal">
+                            	<div class="am-form-group">
+                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">可提现额度</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" placeholder='<s:property value="able_coin_num"/>' readOnly="true">
+                                    </div>
+                                </div>
                                 <div class="am-form-group">
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">奖金币</label>
                                     <div class="am-u-sm-9">
