@@ -16,11 +16,11 @@ public class AutoGeneratorMain{
 
         // 配置包名
         /* */
-        cg.setEntityPackage("com.flyrui.financMgm.pojo");
-        cg.setMapperPackage("com.flyrui.financMgm.dao.mapper"); 
-        cg.setServicePackage("com.flyrui.financMgm.service");
-        cg.setXmlPackage("com.flyrui.financMgm.dao.mapper.mysql");
-        cg.setServiceImplPackage("com.flyrui.financMgm.service.impl");
+        cg.setEntityPackage("com.flyrui.goods.pojo");
+        cg.setMapperPackage("com.flyrui.goods.dao.mapper"); 
+        cg.setServicePackage("com.flyrui.goods.service");
+        cg.setXmlPackage("com.flyrui.goods.dao.mapper.mysql");
+        cg.setServiceImplPackage("com.flyrui.goods.service.impl");
         
         /*cg.setEntityPackage("test");
         cg.setMapperPackage("test");
@@ -28,12 +28,12 @@ public class AutoGeneratorMain{
         cg.setXmlPackage("test");
         cg.setServiceImplPackage("test.impl"); */
         
-        cg.setTableNames(new String[]{"accout_info"});
+        cg.setTableNames(new String[]{"goods_rev_addr"});
         cg.setDbColumnUnderline(true);//设置数据库是否为下划线
         cg.setIdType(IdType.INPUT);//设置ID主键策略
 
         // 配置保存路径
-        cg.setSaveDir("E:\\work\\github\\frcmsmaven\\src\\main\\resources");
+        cg.setSaveDir("E:\\work\\github\\frcmsmaven\\src\\main\\java");
 
         // 其他参数请根据上面的参数说明自行配置，当所有配置完善后，运行AutoGenerator.run()方法生成Code
         // 生成代码

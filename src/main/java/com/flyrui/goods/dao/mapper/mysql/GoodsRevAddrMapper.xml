@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.goods.dao.mapper.GoodsRevAddrMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.goods.pojo.GoodsRevAddr" >
+    	<result column="addr_id" property="addr_id" jdbcType="INTEGER" />
+    	<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    	<result column="rev_people" property="rev_people" jdbcType="VARCHAR" />
+    	<result column="rev_link_phone" property="rev_link_phone" jdbcType="VARCHAR" />
+    	<result column="rev_addr" property="rev_addr" jdbcType="VARCHAR" />
+    	<result column="rev_provice" property="rev_provice" jdbcType="VARCHAR" />
+    	<result column="rev_city" property="rev_city" jdbcType="VARCHAR" />
+    	<result column="rev_zone" property="rev_zone" jdbcType="VARCHAR" />
+    	<result column="rev_street" property="rev_street" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="is_default" property="is_default" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	addr_id,
+    	user_id,
+    	rev_people,
+    	rev_link_phone,
+    	rev_addr,
+    	rev_provice,
+    	rev_city,
+    	rev_zone,
+    	rev_street,
+    	state,
+    	is_default,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="addr_id != null  and addr_id != '' " >
+        		and addr_id = #{addr_id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="user_id != null  and user_id != '' " >
+        		and user_id = #{user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_people != null  and rev_people != '' " >
+        		and rev_people = #{rev_people,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_link_phone != null  and rev_link_phone != '' " >
+        		and rev_link_phone = #{rev_link_phone,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_addr != null  and rev_addr != '' " >
+        		and rev_addr = #{rev_addr,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_provice != null  and rev_provice != '' " >
+        		and rev_provice = #{rev_provice,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_city != null  and rev_city != '' " >
+        		and rev_city = #{rev_city,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_zone != null  and rev_zone != '' " >
+        		and rev_zone = #{rev_zone,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_street != null  and rev_street != '' " >
+        		and rev_street = #{rev_street,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="is_default != null  and is_default != '' " >
+        		and is_default = #{is_default,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsRevAddr" >
+    select    
+    <include refid="Base_Column_List" />
+    from goods_rev_addr
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.goods.pojo.GoodsRevAddr" >
+    delete from goods_rev_addr
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.goods.pojo.GoodsRevAddr" >
+    insert into goods_rev_addr ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{addr_id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{user_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_people,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_link_phone,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_addr,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_provice,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_city,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_zone,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_street,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{is_default,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.goods.pojo.GoodsRevAddr">
+    update goods_rev_addr
+    set
+   		<if test="addr_id != null  and addr_id != '' " >
+      		addr_id = #{addr_id,jdbcType=INTEGER},
+   		</if>
+   		<if test="user_id != null  and user_id != '' " >
+      		user_id = #{user_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_people != null  and rev_people != '' " >
+      		rev_people = #{rev_people,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_link_phone != null  and rev_link_phone != '' " >
+      		rev_link_phone = #{rev_link_phone,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_addr != null  and rev_addr != '' " >
+      		rev_addr = #{rev_addr,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_provice != null  and rev_provice != '' " >
+      		rev_provice = #{rev_provice,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_city != null  and rev_city != '' " >
+      		rev_city = #{rev_city,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_zone != null  and rev_zone != '' " >
+      		rev_zone = #{rev_zone,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_street != null  and rev_street != '' " >
+      		rev_street = #{rev_street,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="is_default != null  and is_default != '' " >
+      		is_default = #{is_default,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>
