@@ -31,19 +31,20 @@
    	<result column="register_id" property="register_id" jdbcType="INTEGER" />
    	<result column="act_time" property="act_time" jdbcType="TIMESTAMP" />
    	<result column="allchild_num" property="allchild_num" jdbcType="INTEGER" />
+   	<result column="head_img" property="head_img" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbUser" useGeneratedKeys="true" keyProperty="user_id">
     insert into tb_user ( user_code, name, 
       password, sex, mail, 
       phone, org_id, register_date, 
       register_ip, last_login_time, last_login_ip, 
-      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num)
+      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num,head_img)
     values (#{user_code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{org_id,jdbcType=INTEGER}, #{register_date,jdbcType=TIMESTAMP}, 
       #{register_ip,jdbcType=VARCHAR}, #{last_login_time,jdbcType=TIMESTAMP}, #{last_login_ip,jdbcType=VARCHAR}, 
       #{login_count,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{bank_account,jdbcType=VARCHAR}, #{id_card,jdbcType=VARCHAR}, #{position_level,jdbcType=VARCHAR},#{cas_account,jdbcType=VARCHAR},
-      #{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER})
+      #{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER},#{head_img,jdbcType=VARCHAR})
   </insert>
   <insert id="batchInsert" parameterType="java.util.List" >	 
     insert into tb_user ( user_code, name, 
@@ -133,6 +134,9 @@
    		<if test="allchild_num != null  and allchild_num != '' " >
       		allchild_num = #{allchild_num,jdbcType=INTEGER},
    		</if>
+   		<if test="head_img != null  and head_img != '' " >
+      		head_img = #{head_img,jdbcType=VARCHAR},
+   		</if>
    		user_id = #{user_id,jdbcType=VARCHAR}
       where user_id = #{user_id,jdbcType=VARCHAR}
   </update>
@@ -142,7 +146,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img
       	from tb_user a left join tb_organation b on a.org_id = b.org_id 
      where  1=1
      <if test="user_id !=null and user_id != ''">
@@ -323,7 +327,8 @@
   		</if>
   	<if test="allchild_num != null  and allchild_num != '' " >
      		and allchild_num = #{allchild_num,jdbcType=INTEGER}
-  	</if> ) a LEFT JOIN info_dict b ON a.user_star = b.dict_code AND b.dict_type ='starRate'
+  	</if> ) a LEFT JOIN info_dict b ON a.user_star = b.dict_code AND b.dict_type ='starRate' 
+  	order by a.register_date asc
   </select>
  <parameterMap type="map" id="produreParam">  
    <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>  

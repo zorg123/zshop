@@ -57,7 +57,7 @@
 		    </plugin>  
     	</plugins>  
          
-        <!-- 加载映射文件 -->  
+        <!-- 加载映射文件 
         <mappers>             
             <mapper resource="config/mybatis/sqlMap/mysql/TbUserMapper.xml"/> 
             <mapper resource="config/mybatis/sqlMap/mysql/TbRoleMapper.xml"/> 
@@ -81,8 +81,5 @@
             <mapper resource="config/mybatis/sqlMap/mysql/AccoutInfoMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/CoinTrackMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/InfodictMapper.xml"/>
-            <!-- <mapper resource="com/flyrui/infoshare/staff/dao/mapper/mysql/CoreUserMapper.xml"/>
-            <mapper resource="/com/flyrui/infoshare/staff/dao/mapper/mysql/InfoUserExtMapper.xml"/>
-            <mapper resource="/com/flyrui/infoshare/common/dao/mapper/mysql/InfoSqlConfigMapper.xml" /> -->
-        </mappers>  
+        </mappers>   --> 
     </configuration>   

@@ -1,8 +1,10 @@
 package com.flyrui.common;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 import com.flyrui.exception.ErrorConstants;
@@ -199,4 +202,32 @@ public class CommonUtils {
         }
         return tmp.toString();
     }
+	
+	public static void saveFile(String base64Source,File newFile) throws FRException{
+		FileOutputStream fos = null;
+		InputStream fis = null;
+		try{		
+			byte[] decodeBase64Byte = Base64.decodeBase64(base64Source);
+			fos = new FileOutputStream(newFile);
+			fis = new ByteArrayInputStream(decodeBase64Byte);
+			byte[] b = new byte[1024];
+			while(fis.read(b)!=-1){
+				fos.write(b);
+			}
+		}catch(Exception ex){
+			logger.error("上传文件报错",ex);
+			throw new FRException(new FRError(ErrorConstants.FILE_NOT_FOUND));
+		}finally{
+			try{
+				if(fos!=null){
+					fos.close();
+				}
+				if(fis!=null){
+					fis.close();
+				}
+			}catch(Exception ex){
+				logger.error("关闭文件出错",ex);
+			}
+		}
+	}
 }

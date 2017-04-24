@@ -252,8 +252,11 @@ public class SysAction extends BaseAction {
     	CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();
     	coinTrackDto.setUser_id(Integer.valueOf(getUserId()));
-    	HashMap bonusActMap = coinTrackService.getBonusActSum(coinTrackDto);    	
-    	Double actSum = (Double)bonusActMap.get("actSum");
+    	HashMap bonusActMap = coinTrackService.getBonusActSum(coinTrackDto);    
+    	Double actSum  = 0d;
+    	if(bonusActMap!=null){
+    		actSum = (Double)bonusActMap.get("actSum");
+    	}
     	retAccoutInfoDto.setComments(actSum+"");
     	setResult(retAccoutInfoDto);
     	return "index";

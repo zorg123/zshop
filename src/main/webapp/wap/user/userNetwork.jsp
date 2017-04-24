@@ -125,8 +125,8 @@
 				  	var childNumDidv = '<div class="content">所有人数：'+d.allchild_num+'</div>';
 				    $node.append(childNumDidv);
 				    $node.on('click',function() { 
-				    	  var chilren =data.children;
-	          		      if((chilren == null || chilren.length<3) && data.userState =='1'){
+				    	  var childrenLength =data.childrenLength;
+	          		      if((childrenLength<3) && data.userState =='1'){
 	          		    	  $("#register").show();	          		    	
 	          		      }else{
 	          		    	  $("#register").hide();

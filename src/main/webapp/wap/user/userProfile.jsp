@@ -4,7 +4,10 @@
 	String baseUri = request.getContextPath();	
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
-
+<link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/amazeui.cropper.css">
+<link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/custom_up_img.css">
+<script src="<%=baseUri %>/wap/assets/js/cropper.min.js"></script>
+<script src="<%=baseUri %>/wap/assets/js/custom_up_img.js"></script>
 <div data-url="/Sys/User/userProfile.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
@@ -54,20 +57,33 @@
                                 <div class="am-form-group">
                                     <label for="user-phone" class="am-u-sm-4 am-form-label">证件类型</label>
                                     <div class="am-u-sm-8">
-                                        <select data-am-selected="{searchBox: 1}" db_field="user.cert_type" value="<s:property value="user.cert_type" />" name="user.cert_type"  data-descriptions="user.cert_type" data-describedby="user.cert_type-description">
-										  <option value="1">身份证</option>
-										  <option value="2">军官证</option>
+                                        <select data-am-selected="" db_field="user.cert_type" value="<s:property value="user.cert_type" />" name="user.cert_type"  data-descriptions="user.cert_type" data-describedby="user.cert_type-description">
+										  <option value="1" <s:if test="user.cert_type == 1">selected </s:if>>身份证</option>
+										  <option value="2" <s:if test="user.cert_type == 2">selected </s:if>>军官证</option>
 										</select>	
 										<small id="cert_type-description"></small>									
                                     </div>
                                 </div>
                                 
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">证件号码：</label>
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">证件号码</label>
                                     <div class="am-u-sm-8">
                                         <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.cert_id" value="<s:property value="user.cert_id" />" name="user.cert_id" placeholder="请输入证件号码" />                                        
                                      </div>
                                 </div>
+                               <div class="am-form-group  am-cf">
+                                    <label for="user-weibo" class="am-u-sm-4 am-form-label">头像 </label>
+                                    <div class="am-u-sm-8">
+                                        <div class="am-form-group am-form-file  am-cf">
+                                            <div class="tpl-form-file-img  am-cf">
+                                                <img src="<%=baseUri %><s:property value="user.head_img" />" id="up-img-touch" class="am-circle" alt="点击图片上传" >
+                                            </div>  
+                                           <small> <div>请点击图片修改头像</div> </small>  
+                                           <input type="hidden" db_field="user.head_img" value="<s:property value="user.head_img" />" name="user.head_img" />                                       
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="am-form-group">
                                     <div class="am-u-sm-8 am-u-sm-push-3">
                                         <input type="submit" id="userProfileSubmit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交"></input>                                    	
@@ -81,6 +97,43 @@
             </div>
 
         </div>
+        <div class="am-modal am-modal-no-btn up-modal-frame" tabindex="-1" id="up-modal-frame">
+		  <div class="am-modal-dialog up-frame-parent up-frame-radius">
+		    <div class="am-modal-hd up-frame-header">
+		       <label>修改头像</label>
+		      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		    </div>
+		    <div class="am-modal-bd  up-frame-body">
+		      <div class="am-g am-fl">
+		      	
+		      	<div class="am-form-group am-form-file">
+			      <div class="am-fl">
+			        <button type="button" class="am-btn am-btn-default am-btn-sm">
+			          <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+			      </div>
+			      <input type="file" class="up-img-file">
+			   	</div>
+		      </div>
+		      <div class="am-g am-fl">
+		      	<div class="up-pre-before up-frame-radius">
+		      		<img alt="" src="" class="up-img-show" id="up-img-show" >
+		      	</div>
+		      	<div class="up-pre-after up-frame-radius">
+		      	</div>
+		      </div>
+		      <div class="am-g am-fl">
+   				<div class="up-control-btns">
+    				<span class="am-icon-rotate-left"   id="up-btn-left"></span>
+    				<span class="am-icon-rotate-right"  id="up-btn-right"></span>
+    				<span class="am-icon-check up-btn-ok" url="/Attachement/uploadHead.do"
+    					parameter="{width:'300',height:'400'}">
+    				</span>
+   				</div>
+	    	  </div>
+		      
+		    </div>
+		  </div>
+		</div>
         
       <script language="javascript" type="text/javascript" >
 			$(function() {	
@@ -91,10 +144,9 @@
 			            firstInvalidFocus:true,
 			            valid:function(event,options){
 			                //点击提交按钮时,表单通过验证触发函数
-			                 var params = CommonUtils.getParam("userProfileForm",false);
-			                 CommonUtils.showLoading();
+			                 var params = CommonUtils.getParam("userProfileForm",false);			                 
 							 CommonUtils.invokeAsyncAction(base+'/Sys/User/ModifyUser.do', params, function (reply) {           
-				  	            CommonUtils.closeLoading();
+				  	           
 								if ((reply || '') != '') {
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
@@ -106,8 +158,7 @@
 				  	           } else  {
 				  	        	      CommonUtils.showAlert('操作失败!');
 				  	           }
-				  	         });
-					 
+				  	         },true);					 
 			                event.preventDefault();
 			                return false;
 			            },

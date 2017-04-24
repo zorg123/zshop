@@ -12,6 +12,7 @@ public class UserNetTree {
 	private String allchild_num;
 	private String userCode;
 	private String userState;
+	private int childrenLength;
 	
 	public String getId() {
 		return id;
@@ -67,6 +68,12 @@ public class UserNetTree {
 	}
 	public void setUserState(String userState) {
 		this.userState = userState;
+	}
+	public int getChildrenLength() {
+		return childrenLength;
+	}
+	public void setChildrenLength(int childrenLength) {
+		this.childrenLength = childrenLength;
 	}
 	
 }

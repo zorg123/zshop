@@ -10,10 +10,33 @@
         <a href="javascript:;" class="tpl-logo">
             <img src="<%=baseUri %>/wap/assets/img/myLogo.png" alt="">
         </a>
-    </div>    
+    </div> 
+    <button class="am-btn am-btn-sm am-btn-success" id="menuToggle">
+    	<span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span>
+   </button>
+       
     <div class="am-fr am-margin-right">
-    	<button class="am-btn am-btn-sm am-btn-success " id="menuToggle"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
-	</div>
+          <ul class="am-nav am-nav-pills am-topbar-nav  admin-header-list tpl-header-list">
+  			<li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                  <a class="am-dropdown-toggle tpl-header-list-link am-inline" href="javascript:;">
+                      <span class="tpl-header-list-user-nick">
+                      	<s:property value="#session.user.name" />(<s:property value="#session.user.user_code" />)
+                      </span>
+                      <span class="tpl-header-list-user-ico am-show-lg-only ">
+                       	<img src="<%=baseUri %>/wap/assets/img/user01.png">
+                      </span>
+                  </a>
+                  <ul class="am-dropdown-content">
+                      <li><a href="javascript:void(0);" onclick="pageData.loginOut(this);"><span class="am-icon-power-off"></span> 退出</a></li>
+                  </ul>
+              </li>                
+          </ul>
+          <!--   <button class="am-btn am-btn-sm am-btn-success " id="menuToggle"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button> -->
+    </div>
+    <!-- <div class="am-fr am-margin-right">
+    	
+	</div> -->
+  
     
 </header>
 
@@ -56,7 +79,7 @@
 	       		</s:iterator>
 	       		<li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
 	               	<a href="javascript:void(0);" onclick="pageData.loginOut(this);" url="/wap/index/index.jsp" class="nav-link">
-                        <i class="am-icon-key"></i>
+                        <i class="am-icon-power-off"></i>
                         <span>退出</span>
                     </a>                   
                      

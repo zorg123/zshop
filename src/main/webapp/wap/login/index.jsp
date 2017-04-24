@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page import="java.util.Date" %>
 <%
 	String baseUri = request.getContextPath();	
+	Long d = (new Date()).getTime();
 %>
 <jsp:include page="/wap/common/head.jsp"></jsp:include>
 <script language="javascript" type="text/javascript" >
@@ -38,5 +40,5 @@
 		</div>
 	</div>
 </div>
-<script src="<%=baseUri %>/wap/login/login.js"></script>
+<script src="<%=baseUri %>/wap/login/login.js?d=<%=d %>"></script>
 <jsp:include page="/wap/common/footer.jsp"></jsp:include>

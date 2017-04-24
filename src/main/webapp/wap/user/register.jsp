@@ -26,7 +26,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" data-pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,8}$" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description"/> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" data-pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,8}$" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description" /> 
                                         <small id="user.user_code-description"></small>                                       
                                     </div>
                                 </div> 
@@ -75,7 +75,7 @@
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">接点人账号</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid" value="<%=pUserCode %>" name="user.pid" placeholder="请输入接点人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description"/>                                        
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid" value="<%=pUserCode %>" name="user.pid" placeholder="请输入接点人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description" />                                        
                                     	<small id="user.pid-description"></small>  
                                     </div>
                                 </div>
@@ -92,15 +92,6 @@
 
 
             </div>
-
-
-
-
-
-
-
-
-
 
         </div>
         
@@ -121,6 +112,12 @@
 				  	            	   CommonUtils.showAlert('操作成功!');
 				  	            	   pageData["refresh"]()  	                   
 				  	               } else  {
+				  	            	  if(code == "SYS_ERR006"){
+				  	            		  $("input[name='user.user_code']").parent().find("small").html('<div class="zvalid-resultformat"><div class="field-invalidmsg">'+reply._msg+'</div></div>')
+				  	            	  }
+				  	            	  if(code == "USER_002" || code == "USER_008" || code == "USER_009"){
+				  	            		  $("input[name='user.pid']").parent().find("small").html('<div class="zvalid-resultformat"><div class="field-invalidmsg">'+reply._msg+'</div></div>')
+				  	            	  }
 				  	            	  CommonUtils.showAlert(reply._msg);
 				  	             }              
 				  	           } else  {
@@ -137,48 +134,50 @@
 			                },
 			                confirmTransPwd:function(val){			                    
 			                    return (val==$("#registerForm input[name='user.trans_pwd']").val()) ? true :false; 
-			                },
+			                }
 			            },
 			            descriptions:{
 			                "user.user_code":{
 			                    required : '<div class="field-invalidmsg">请输入用户账号</div>',
 			                    pattern : '<div class="field-invalidmsg">用户账号不对，必须为6-8位数字或字母</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    conditional : '<div class="field-validmsg">用户已经存在</div>',
+			                    valid : ''
 			                },
 			                "user.password" : {
 			                    required : '<div class="field-invalidmsg">请输入登录密码</div>',
 			                    pattern : '<div class="field-invalidmsg">密码格式不对，必须为6位数字</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    valid : ''
 			                },
 			                "user.confirm_password":{
 			                     required : '<div class="field-invalidmsg">请输入确认登录密码</div>',
 			                     conditional : '<div class="field-validmsg">两次登录密码不一样</div>',
 			                     pattern : '<div class="field-invalidmsg">密码格式不对，必须为6位数字</div>',
-			                     valid : '<div class="field-validmsg">验证通过</div>'
+			                     valid : ''
 			                },
 			                "user.trans_pwd" : {
 			                    required : '<div class="field-invalidmsg">请输入交易密码</div>', 
 			                    pattern : '<div class="field-invalidmsg">密码格式不对，必须为6位数字</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    valid : ''
 			                },
 			                "user.confirm_trans_pwd":{
 			                    required : '<div class="field-invalidmsg">请输入确认交易密码</div>',
 			                    conditional : '<div class="field-invalidmsg">两次交易密码不一样</div>',
 			                    pattern : '<div class="field-invalidmsg">密码格式不对，必须为6位数字</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    valid : ''
 			                },
 			                "user.user_phone":{
 			                    required : '<div class="field-invalidmsg">请输入手机号码</div>',
 			                    pattern : '<div class="field-invalidmsg">您输入的手机号码格式不正确</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    valid : ''
 			                },
 			                "user.name":{
 			                    required : '<div class="field-invalidmsg">请输入用户姓名</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    valid : ''
 			                },
 			                "user.pid":{
 			                    required : '<div class="field-invalidmsg">请输入接点人账号</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
+			                    conditional : '<div class="field-validmsg">该接点人账号不正确：1:账号不存在;2:未激活;3:下面已注册满3个</div>',
+			                    valid : ''
 			                }
 			            }
 			     });

@@ -140,7 +140,7 @@
         <property name="dataSource" ref="dynamicDataSource" />    
         <property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />  
         <property name="typeAliasesPackage" value="com.flyrui.dao.pojo" />   
-        <property name="mapperLocations" value="classpath:com/flyrui/infoshare/*/dao/mapper/mysql/*Mapper.xml"/>    
+        <property name="mapperLocations" value="classpath:**/*Mapper.xml"/>    
     </bean>
     
     <!-- 定义基本操作类,集成自org.mybatis.spring.SqlSessionTemplate   -->

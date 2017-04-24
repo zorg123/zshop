@@ -419,6 +419,24 @@ var CommonUtils={
     		}
     		param[fieldName]=value;
     	});
+    	$("#"+scope+" select[db_field]").each(function(i){
+    		$field=$(this);
+    		var fieldName=$field.attr("db_field");
+    		var value = $field.val();
+    		var isLike = $field.attr("is_like");
+    		var needEncode = $field.attr("need_encode");
+    		var comboname = $field.attr("comboname");
+    		if(comboname){
+    			value = $("input[name='"+comboname+"']").val();
+    		}
+    		if( isLike == '1'){
+    			value="%"+value+"%"; 
+    		}
+    		if(flag == 1 && needEncode == 1){    			
+    			value = encodeURI(encodeURI(value))    			
+    		}
+    		param[fieldName]=value;
+    	});
     	if(deleteNullFlag){
     		//把空值去掉
     		for( var key in param){
@@ -582,9 +600,12 @@ var CommonUtils={
     	  });
     },
     showLoading:function(msg,successFunc){
+    	if(!msg){
+    		msg = '加载中';
+    	}
     	layer.open({
     	    type: 2,shadeClose: false
-    	    ,content: '加载中'
+    	    ,content: msg
     	  });
     },
     closeLoading:function(){

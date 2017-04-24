@@ -72,6 +72,8 @@ public class TbUser implements Serializable {
 
 	/**  */
 	private Integer allchild_num;
+	
+	private String head_img;
     
     private static final long serialVersionUID = 1L;
 
@@ -306,5 +308,12 @@ public class TbUser implements Serializable {
 	public void setAllchild_num(Integer allchild_num) {
 		this.allchild_num = allchild_num;
 	}
-    
+
+	public String getHead_img() {
+		return head_img;
+	}
+
+	public void setHead_img(String head_img) {
+		this.head_img = head_img;
+	}    
 }

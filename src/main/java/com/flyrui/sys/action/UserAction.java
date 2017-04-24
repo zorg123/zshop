@@ -450,27 +450,18 @@ public class UserAction extends BaseAction {
     	user.setRegister_ip(ip);
     	user.setRegister_date(new Date());
     	User u = new User();
-    	u.setUser_code(user.getUser_code());
+    	u.setUser_code(user.getUser_code());    	
     	List<User> retList = userService.getListByCon(u);
     	if(retList!=null &&retList.size() >0){
     		FRException frException = new FRException(new FRError(ErrorConstants.SYS_USER_EXISTS));
     		throw frException;
     	}
-    	
-    	//根据注册人的账号查询注册人的id
-    	/*u = new User();
-    	u.setUser_code(user.getRegister_id()+"");
-    	retList = userService.getListByCon(u);
-    	if(retList == null || retList.size()==0){
-    		FRException frException = new FRException(new FRError("USER_001"));
-    		throw frException;
-    	}
-    	User tempUser = retList.get(0);
-    	user.setRegister_id(Integer.getInteger(tempUser.getUser_id())); */
+    	    	
     	user.setRegister_id(getUserId());
     	//根据注册人的账号查询注册人的id
     	u = new User();
     	u.setUser_code(user.getPid()+"");
+    	u.setBus_state(1);
     	retList = userService.getListByCon(u);
     	if(retList == null || retList.size()==0){
     		FRException frException = new FRException(new FRError("USER_002"));
@@ -481,6 +472,16 @@ public class UserAction extends BaseAction {
     		FRException frException = new FRException(new FRError("USER_008"));
     		throw frException;
     	}
+    	//查询节点人下的节点数，如果超过3个就不让注册
+    	u = new User();
+    	u.setPid(tempUser.getUser_id());
+    	u.setBus_state(1);
+    	retList = userService.getListByCon(u);
+    	if(retList!=null && retList.size()>=3){
+    		FRException frException = new FRException(new FRError("USER_009"));
+    		throw frException;
+    	}
+    	
     	user.setPid(tempUser.getUser_id());
     	user.setState("0");
     	user.setUser_level(-1);
@@ -521,7 +522,7 @@ public class UserAction extends BaseAction {
     	}    	
     	User curUser = retList.get(0);
     	userNetTree.setId(curUser.getUser_id());
-    	userNetTree.setTitle(curUser.getName());
+    	userNetTree.setTitle(curUser.getName()+"("+curUser.getUser_code()+")");
     	userNetTree.setClassName(getUserNetClass(curUser.getState()+""));
     	userNetTree.setStar(curUser.getUser_star());
     	userNetTree.setStarName(curUser.getUser_star_name());
@@ -536,7 +537,7 @@ public class UserAction extends BaseAction {
     	for(User us : retList){
     		UserNetTree userNetTreeTemp = new UserNetTree();
     		userNetTreeTemp.setId(us.getUser_id());
-    		userNetTreeTemp.setTitle(us.getName());
+    		userNetTreeTemp.setTitle(us.getName()+"("+us.getUser_code()+")");
     		userNetTreeTemp.setClassName(getUserNetClass(us.getState()+""));
     		userNetTreeTemp.setStar(us.getUser_star());
     		userNetTreeTemp.setStarName(us.getUser_star_name());
@@ -545,24 +546,31 @@ public class UserAction extends BaseAction {
     		userNetTreeTemp.setUserState(us.getState());
     		u = new User();
         	u.setPid(us.getUser_id());
-        	retList = userService.selectUserNetTree(u);
+        	List<User> retList2 = userService.selectUserNetTree(u);
         	List<UserNetTree> subUserNetTreeList2 = new ArrayList<UserNetTree>();
-    		for(User us2 : retList){
+    		for(User us2 : retList2){
         		UserNetTree userNetTreeTemp2 = new UserNetTree();
         		userNetTreeTemp2.setId(us2.getUser_id());
-        		userNetTreeTemp2.setTitle(us2.getName());
+        		userNetTreeTemp2.setTitle(us2.getName()+"("+us2.getUser_code()+")");
         		userNetTreeTemp2.setClassName(getUserNetClass(us2.getState()+""));
         		userNetTreeTemp2.setStar(us2.getUser_star());
         		userNetTreeTemp2.setStarName(us2.getUser_star_name());
         		userNetTreeTemp2.setUserCode(us2.getUser_code());
-        		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");
-        		subUserNetTreeList2.add(userNetTreeTemp2);
+        		userNetTreeTemp2.setAllchild_num((us2.getAllchild_num()==null?0:us2.getAllchild_num())+"");        		
         		userNetTreeTemp2.setUserState(us2.getState());
+        		//再查一下下级的,用于做判断
+        		u = new User();
+            	u.setPid(us2.getUser_id());
+            	List<User> retList3 = userService.selectUserNetTree(u);
+            	userNetTreeTemp2.setChildrenLength(retList3.size());            	
+            	subUserNetTreeList2.add(userNetTreeTemp2);
         	}
     		userNetTreeTemp.setChildren(subUserNetTreeList2);
+    		userNetTreeTemp.setChildrenLength(subUserNetTreeList2.size());
     		subUserNetTreeList.add(userNetTreeTemp);
     	}
     	userNetTree.setChildren(subUserNetTreeList);
+    	userNetTree.setChildrenLength(subUserNetTreeList.size());
     	setResult(userNetTree);
     	return SUCCESS;
     }
@@ -685,7 +693,7 @@ public class UserAction extends BaseAction {
     	boolean isModify = true;
     	if(user.getPassword()!=null&&user.getPassword().length()>0 && user.getOld_password()!=null &&user.getOld_password().length() >0 ){
     		String oldPwd = CASMd5Utils.getPwd(user.getOld_password(),curUser.getUser_code());
-    		if(!oldPwd.equals(curUser.getPassword()) && !curUser.getPassword().equals(user.getOld_password())){
+    		if(!oldPwd.equals(curUser.getPassword())){
     			throw new FRException(new FRError("USER_006"));
     		}
     		user.setPassword( CASMd5Utils.getPwd(user.getPassword(),curUser.getUser_code()));
@@ -693,11 +701,12 @@ public class UserAction extends BaseAction {
     		isModify = false;
     	}
     	if(user.getTrans_pwd()!=null&&user.getTrans_pwd().length()>0 && user.getOld_trans_pwd()!=null &&user.getOld_trans_pwd().length() >0 ){
-    		String oldTrasPwd = CASMd5Utils.getPwd(user.getOld_password(),curUser.getUser_code());
-    		if(!oldTrasPwd.equals(curUser.getTrans_pwd()) && !curUser.getTrans_pwd().equals(user.getOld_trans_pwd()) ){
+    		String oldTrasPwd = CASMd5Utils.getPwd(user.getOld_trans_pwd(),curUser.getUser_code());
+    		if(!oldTrasPwd.equals(curUser.getTrans_pwd()) ){
     			throw new FRException(new FRError("USER_007"));
     		}
     		user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),curUser.getUser_code()));
+    		isModify = true;
     	}else{
     		if(!isModify){
     			isModify = false;
@@ -734,6 +743,40 @@ public class UserAction extends BaseAction {
     	}else{
     		setCommonSuccessReturn();
     	}
+    	return SUCCESS;
+    }
+    
+    /**      
+     * 通过用户code查询用户是否存在       
+     * @param user
+     * @return [返回类型说明]      
+     * Administrator
+     * Jul 6, 2012
+     */
+    @Action("queryUserByCode")
+    public String queryUserByCode() throws FRException{
+    	UserService userService = getUserService(); 
+    	if(user.getUser_code() == null){
+    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    	}
+    	List<User> retList = userService.getListByCon(user);    	
+    	User retUser = new User();
+    	if(retList!=null && retList.size()>0){
+    		User tempUser = retList.get(0);
+    		retUser.setBus_state(tempUser.getBus_state());
+    		retUser.setState(tempUser.getState());
+    		if("1".equals(tempUser.getBus_state()+"")){
+	    		//查询节点人下的节点数，如果超过3个就不让注册
+	        	User u = new User();
+	        	u.setPid(tempUser.getUser_id());
+	        	u.setBus_state(1);
+	        	retList = userService.getListByCon(u);
+	        	if(retList !=null){
+	        		retUser.setAllchild_num(retList.size());
+	        	}
+    		}
+    	}
+    	setResult(retUser);
     	return SUCCESS;
     }
 }

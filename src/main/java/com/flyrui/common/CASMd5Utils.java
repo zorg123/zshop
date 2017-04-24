@@ -48,6 +48,7 @@ public class CASMd5Utils
   }
   public static void main(String[] args)
   {
+	  System.out.println( CASMd5Utils.getPwd("123456", "test"));
     System.out.println(getMdResults("123456", "402880bd52b43c210152b43c913e002a", "gushuangmei"));
   }
 }

@@ -32,7 +32,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">原登录密码 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.old_password"  name="user.old_password" placeholder="修改登录时请先输入原登录密码" />
+                                        <input type="password" class="am-form-field tpl-form-no-bg" db_field="user.old_password"  name="user.old_password" placeholder="修改登录密码时请先输入原登录密码" />
                                     </div>
                                 </div>
                                 <div class="am-form-group">
