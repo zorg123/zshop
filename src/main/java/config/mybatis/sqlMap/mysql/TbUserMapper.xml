@@ -227,7 +227,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,a.pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num
+  	 		a.cas_account,a.user_phone,a.trans_pwd,a.pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img
       	from tb_user a left join tb_organation b on a.org_id = b.org_id where a.user_code = #{user_code,jdbcType=VARCHAR} and a.bus_state = #{bus_state,jdbcType=VARCHAR} 
   </select>
   <insert id="saveUserRole" parameterType="hashMap" >

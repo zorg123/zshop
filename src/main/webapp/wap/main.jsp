@@ -4,7 +4,7 @@
 	String baseUri = request.getContextPath();	
 %>
 <jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
-
+<s:property value="#session.user.head_img" />
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
         <a href="javascript:;" class="tpl-logo">
@@ -23,7 +23,12 @@
                       	<s:property value="#session.user.name" />(<s:property value="#session.user.user_code" />)
                       </span>
                       <span class="tpl-header-list-user-ico am-show-lg-only ">
-                       	<img src="<%=baseUri %>/wap/assets/img/user01.png">
+                        <s:if test="#session.user.head_img == null">
+                       		<img src="<%=baseUri %>/wap/assets/img/user01.png">
+                       	</s:if>
+                       	<s:else>
+                       	    <img src="<%=baseUri %><s:property value='#session.user.head_img' />">
+                       	</s:else>
                       </span>
                   </a>
                   <ul class="am-dropdown-content">
