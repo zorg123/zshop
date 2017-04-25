@@ -12,6 +12,7 @@
     	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
     	<result column="account_name" property="account_name" jdbcType="VARCHAR" />
     	<result column="comments" property="comments" jdbcType="VARCHAR" />
+    	<result column="cash_coin" property="cash_coin" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	id,
@@ -44,7 +45,7 @@
     </where>
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
-    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments
+    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments,cash_coin
     from accout_info
     where user_id = #{user_id,jdbcType=INTEGER}
   </select>
@@ -59,6 +60,7 @@
     IFNULL(a.reconsmp_coin,0) reconsmp_coin,
     IFNULL(a.bonusact_sum,0) bonusact_sum,
     IFNULL(a.reconsmpact_sum,0) reconsmpact_sum,
+    IFNULL(a.cash_coin,0) cash_coin,
     a.account_bank,
     a.account_bank_brc,
     a.account_id,
@@ -92,7 +94,8 @@
 		 `account_id`, 
 		 `account_name`, 
 		 `comments`,
-		 `account_bank_brc`) 
+		 `account_bank_brc`,
+		 `cash_coin`) 
 	 values(
 	 	#{user_id,jdbcType=INTEGER},
 	 	#{bonus_coin,jdbcType=DOUBLE},
@@ -102,7 +105,8 @@
 	 	#{account_id,jdbcType=VARCHAR},
 	 	#{account_name,jdbcType=VARCHAR},
 	 	#{comments,jdbcType=VARCHAR},
-	 	#{account_bank_brc,jdbcType=VARCHAR}
+	 	#{account_bank_brc,jdbcType=VARCHAR},
+	 	#{cash_coin,jdbcType=DOUBLE}
 	 )
   </insert>
   
@@ -129,6 +133,9 @@
    		</if>
    		<if test="account_name != null  and account_name != '' " >
       		account_name = #{account_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="cash_coin != null  and cash_coin != '' " >
+      		cash_coin = IFNULL(cash_coin,0)+#{cash_coin,jdbcType=DOUBLE},
    		</if>
    		comments = ''
     where user_id = #{user_id,jdbcType=INTEGER}

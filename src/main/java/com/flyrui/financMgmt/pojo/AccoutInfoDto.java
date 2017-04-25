@@ -35,6 +35,8 @@ public class AccoutInfoDto implements Serializable {
 	private Double bonusact_sum;
 	
 	private Double reconsmpact_sum;
+	
+	private Double cash_coin;
 
 	public Integer getId() {
 		return id;
@@ -150,6 +152,14 @@ public class AccoutInfoDto implements Serializable {
 
 	public void setAccount_bank_brc(String account_bank_brc) {
 		this.account_bank_brc = account_bank_brc;
+	}
+
+	public Double getCash_coin() {
+		return cash_coin;
+	}
+
+	public void setCash_coin(Double cash_coin) {
+		this.cash_coin = cash_coin;
 	}
 	
 }

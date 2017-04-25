@@ -69,6 +69,10 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		return getPagerList(coinTrackDto,nameSpace+".selectAccountFlow",pageNo,pageSize);
 	}
 	
+	public PageModel getPagerListByConAccountFlowForWap(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectAccountFlowForWap",pageNo,pageSize);
+	}
+	
 	//报表统计--账户明细分页查询
 	public PageModel getPagerListByConAccountInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
 		return getPagerList(coinTrackDto,"com.flyrui.financMgmt.dao.mapper.AccoutInfoMapper"+".queryAccountInfo",pageNo,pageSize);
@@ -141,6 +145,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
 		if(coinTrackDto.getCoin_type()==1){
 			accoutInfoDto.setBonus_coin(coinTrackDto.getCoin_num());
+			accoutInfoDto.setCash_coin(coinTrackDto.getCoin_num());
 		}else if (coinTrackDto.getCoin_type()==2){
 			accoutInfoDto.setElect_coin(coinTrackDto.getCoin_num());
 		}else if (coinTrackDto.getCoin_type()==3){
@@ -210,10 +215,17 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     		paramCoinTrackDto.setUser_code(user_code);
 			//1:奖金币 2:电子币 3:重消币
     		paramCoinTrackDto.setCoin_type(2);
-			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
+			//1:广告费 2:辅导奖 3:提现 4:电子币充值 5:电子币互转 6:现金转电子币 7:电子币购物 8:重消 9:报单 10:重消购物
     		paramCoinTrackDto.setCreate_type(4);
     		paramCoinTrackDto.setCoin_num(elect_coin);
     		paramCoinTrackDto.setFile_info(file_info);
+    		paramCoinTrackDto.setComments("管理员充值");
+    		//查询要充值账号的电子币余额
+    		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+	    	accoutInfo.setUser_code(user_code);
+	    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+	    	String balance_comments = "电子账户余额:"+(retAccoutInfoDto.getElect_coin()+elect_coin);
+	    	paramCoinTrackDto.setBalance_comments(balance_comments);
 			coinTrackService.insertCoinTrack(loginUser, paramCoinTrackDto);
 			retMap.put("retCode", "3");
 			retMap.put("retString", "成功");
@@ -275,16 +287,24 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	    			recCoinTrackDto.setComments(loginUser.getUser_code()+"转入");
 	    			//发送方用户id写入接收方oper_user_id中
 	    			recCoinTrackDto.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
-	    			int order_id = coinTrackService.insertCoinTrack(loginUser, recCoinTrackDto);
+	    			//查询接收方电子币账户
+	    			AccoutInfoDto recaccoutInfo = new AccoutInfoDto();
+	    			recaccoutInfo.setUser_code(recCoinTrackDto.getUser_code());
+	    	    	AccoutInfoDto recAccoutInfoDto = accoutInfoService.queryAccountInfo(recaccoutInfo);
+	    	    	Double recelectCoin = recAccoutInfoDto.getElect_coin();
+	    	    	String balance_comments = "电子账户余额:"+(recelectCoin+trans_elect_coin);
+	    			recCoinTrackDto.setBalance_comments(balance_comments);
+	    			coinTrackService.insertCoinTrack(loginUser, recCoinTrackDto);
 	    			//发送方
 	    			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
 	    			sendCoinTrackDto.setCoin_type(2);
 	    			sendCoinTrackDto.setCreate_type(5);
 	    			sendCoinTrackDto.setCoin_num(trans_elect_coin*-1);
-	    			sendCoinTrackDto.setOrder_id(order_id);
 	    			sendCoinTrackDto.setComments("转入"+recCoinTrackDto.getUser_code());
 	    			//接收方用户id写入发送方oper_user_id中
 	    			recCoinTrackDto.setOper_user_id(Integer.valueOf((String)recMap.get("retUserId")));
+	    			String sbalance_comments = "电子账户余额:"+(electCoin+trans_elect_coin*-1);
+	    			sendCoinTrackDto.setBalance_comments(sbalance_comments);
 	    			coinTrackService.insertCoinTrack(loginUser, sendCoinTrackDto);
 	    			//int test=0;
 	    			//if(test==0){
@@ -310,12 +330,11 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
-    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
-    	Double able_coin_num = bonusCoin-reconsmpCoin;
-    	if(able_coin_num<trans_bonus_coin){
+    	Double electCoin = retAccoutInfoDto.getElect_coin();
+    	Double cashCoin = retAccoutInfoDto.getCash_coin();
+    	if(cashCoin<trans_bonus_coin){
     		retMap.put("retCode", "1");
-			retMap.put("retString", "转入的奖金币大于当前账户的奖金币 ");
+			retMap.put("retString", "转入的现金大于当前账户的现金 ");
     	}else{
     		//判断当前用户的交易密码
     		User queryUser = new User();
@@ -335,13 +354,16 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
     			recCoinTrackDto.setCreate_type(6);
     			recCoinTrackDto.setCoin_num(trans_bonus_coin);
-    			int order_id = coinTrackService.insertCoinTrack(loginUser, recCoinTrackDto);
+    			String balance_comments = "电子账户余额:"+(electCoin+trans_bonus_coin);
+    			recCoinTrackDto.setBalance_comments(balance_comments);
+    			coinTrackService.insertCoinTrack(loginUser, recCoinTrackDto);
     			//发送方
     			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
     			sendCoinTrackDto.setCoin_type(1);
     			sendCoinTrackDto.setCreate_type(6);
     			sendCoinTrackDto.setCoin_num(trans_bonus_coin*-1);
-    			sendCoinTrackDto.setOrder_id(order_id);
+    			String sbalance_comments = "现金账户余额:"+(cashCoin+trans_bonus_coin*-1);
+    			sendCoinTrackDto.setBalance_comments(sbalance_comments);
     			coinTrackService.insertCoinTrack(loginUser, sendCoinTrackDto);
     			retMap.put("retCode", "3");
     			retMap.put("retString", "成功");
@@ -369,10 +391,11 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
-    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
-    	Double able_coin_num = bonusCoin-reconsmpCoin;
-    	if(able_coin_num<extract_bonus_coin){
+    	//Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
+    	//Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+    	//Double able_coin_num = bonusCoin-reconsmpCoin;
+    	Double cashCoin = retAccoutInfoDto.getCash_coin();
+    	if(cashCoin<extract_bonus_coin){
     		retMap.put("retCode", "0");
 			retMap.put("retString", "提现金额大于可提现额度 ");
     	}else{
@@ -403,6 +426,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
         			sendCoinTrackDto.setAct_num(act_num);
         			//状态
         			sendCoinTrackDto.setApply_state("0");
+        			String balance_comments = "现金账户余额:"+(cashCoin+extract_bonus_coin*-1);
+        			sendCoinTrackDto.setBalance_comments(balance_comments);
         			coinTrackService.insertCoinTrack(loginUser, sendCoinTrackDto);
         			retMap.put("retCode", "3");
         			retMap.put("retString", "成功");

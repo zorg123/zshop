@@ -25,6 +25,7 @@
     	<result column="account_bank_brc" property="account_bank_brc" jdbcType="VARCHAR" />
     	<result column="account_name" property="account_name" jdbcType="VARCHAR" />
     	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
+    	<result column="balance_comments" property="balance_comments" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BonusActResultMap" type="com.flyrui.financMgmt.pojo.BonusActDto" >
   		<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
@@ -88,6 +89,21 @@
     </if>
     <if test="coin_type != null  and coin_type != '' " >
     	and a.coin_type = #{coin_type,jdbcType=INTEGER}
+ 	</if>
+    order by a.order_id desc
+  </select>
+  <select id="selectAccountFlowForWap" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
+    SELECT
+    a.create_time,
+    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+    a.coin_num,
+    a.comments,
+    a.balance_comments
+	FROM coin_track a
+	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	WHERE 1=1
+	<if test="user_id != null  and user_id != '' " >
+    	and b.user_id = #{user_id,jdbcType=INTEGER}
  	</if>
     order by a.order_id desc
   </select>
@@ -216,7 +232,8 @@
 		`counter_num`,
 		`act_num`,
 		`serial_num`,
-		`apply_state`
+		`apply_state`,
+		`balance_comments`
 		) 
 	VALUES(
 		#{user_id,jdbcType=INTEGER},
@@ -230,7 +247,8 @@
 		#{counter_num,jdbcType=VARCHAR},
 		#{act_num,jdbcType=VARCHAR},
 		#{serial_num,jdbcType=VARCHAR},
-		#{apply_state,jdbcType=VARCHAR}
+		#{apply_state,jdbcType=VARCHAR},
+		#{balance_comments,jdbcType=VARCHAR}
 	)
   </insert>
   
