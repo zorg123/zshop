@@ -7,13 +7,10 @@ var GoodsOrderMng = {
         $('#win_edit').hide();
     },
     editInit: function(obj){
-    	$('input[name="edit_id"]').val(obj.id);
-    	$('input[name="edit_user_id"]').val(obj.user_id);
-    	$('input[name="edit_user_code"]').val(obj.user_code);
-    	$('input[name="edit_coin_num"]').val(obj.coin_num);
-    	$('input[name="edit_serial_num"]').val(obj.serial_num);
-    	$('input[name="edit_user_code"]').attr("disabled",true);
-    	$('input[name="edit_coin_num"]').attr("disabled",true);
+    	$('input[name="edit_order_id"]').val(obj.order_id);
+    	$('input[name="edit_order_code"]').val(obj.order_code);
+    	$('input[name="edit_deal_exp_ord"]').val(obj.deal_exp_ord);
+    	$('input[name="edit_order_code"]').attr("disabled",true);
     },
     getSelect: function () {
         var row = $('#goodsOrderList').datagrid('getSelected');
@@ -21,14 +18,11 @@ var GoodsOrderMng = {
     },
     save: function(){
     	var param ={};
-    	param["coinTrackDto.id"] = $('input[name="edit_id"]').val();
-    	param["coinTrackDto.user_id"] = $('input[name="edit_user_id"]').val();
-        param["coinTrackDto.apply_state"] = "1";
-        param["coinTrackDto.serial_num"] = $('input[name="edit_serial_num"]').val();
-        //提款为负值，所以要乘以-1
-        param["coinTrackDto.coin_num"] = $('input[name="edit_coin_num"]').val()*-1;
+    	param["goodsOrder.order_id"] = $('input[name="edit_order_id"]').val();
+    	param["goodsOrder.state"] = $('input[name="edit_state"]').val();
+        param["goodsOrder.deal_exp_ord"] = $('input[name="edit_deal_exp_ord"]').val();
         var me = this;
-        CommonUtils.invokeAsyncAction(base+'/FinancMgmt/updateCoinTrack.do', param, function (reply) {
+        CommonUtils.invokeAsyncAction(base+'/GoodsMgmt/updateGoodsOrder.do', param, function (reply) {
 			if((reply || '') !=''){
 				var code = reply._code;
                 if(code=='0'){
@@ -68,7 +62,7 @@ $(function () {
                 text: '修改',
                 iconCls: 'icon-undo',
                 handler: function () {
-                	var row = ExtractConfirmMng.getSelect();
+                	var row = GoodsOrderMng.getSelect();
                     if (null === row) {
                         $.messager.alert('系统提示', '未选中记录!', 'info');
                         return;
@@ -81,23 +75,23 @@ $(function () {
                         height: 300,
                         modal: true
                     });
-                    ExtractConfirmMng.editInit(row);
+                    GoodsOrderMng.editInit(row);
                 }
             },'-',
             {
             	text: '导出',
                 iconCls: 'icon-redo',
                 handler: function () {                 
-                	var user_code = $('input[name="query_user_code"]').val();
-	                var start_time = $('input[name="start_time"]').val();
-	                var end_time = $('input[name="end_time"]').val();
-	                var apply_state = $('input[name="apply_state"]').val();
+                	var state = $('input[name="query_state"]').val();
+	                var state_date_start = $('input[name="state_date_start"]').val();
+	                var state_date_end = $('input[name="state_date_end"]').val();
+	                var order_code = $('input[name="query_order_code"]').val();
 	                
-            	    var strParam = "coinTrackDto.user_code="+user_code;
-            	    strParam += "&coinTrackDto.start_time="+start_time;
-            	    strParam += "&coinTrackDto.end_time="+end_time;
-            	    strParam += "&coinTrackDto.apply_state="+apply_state;
-            	    var url = base+"/FinancMgmt/eportCoinTrackExtConf.do?"+strParam;
+            	    var strParam = "goodsOrder.state="+state;
+            	    strParam += "&goodsOrder.state_date_start="+state_date_start;
+            	    strParam += "&goodsOrder.state_date_end="+state_date_end;
+            	    strParam += "&goodsOrder.order_code="+order_code;
+            	    var url = base+"/GoodsMgmt/exportGoodsOrder.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){
 						parent.document.location.href=url;
@@ -111,20 +105,20 @@ $(function () {
         ]
     });
     $('#save').click(function () {
-        ExtractConfirmMng.save();
+    	GoodsOrderMng.save();
     });
     $('#search_btn').bind('click', function () {
         var param = {};
-        param["coinTrackDto.apply_state"] = $('input[name="apply_state"]').val();
-        param["coinTrackDto.user_code"] = $('input[name="query_user_code"]').val();
-        param["coinTrackDto.start_time"] = $('input[name="start_time"]').val();
-        param["coinTrackDto.end_time"] = $('input[name="end_time"]').val();
-        $('#extractConfirmList').datagrid({
+        param["goodsOrder.state"] = $('input[name="query_state"]').val();
+        param["goodsOrder.state_date_start"] = $('input[name="state_date_start"]').val();
+        param["goodsOrder.state_date_end"] = $('input[name="state_date_end"]').val();
+        param["goodsOrder.order_code"] = $('input[name="query_order_code"]').val();
+        $('#goodsOrderList').datagrid({
             queryParams: param
         });
     });
     $('#cancel').click(function () {
-        ExtractConfirmMng.close();
+    	GoodsOrderMng.close();
     });
 });
 

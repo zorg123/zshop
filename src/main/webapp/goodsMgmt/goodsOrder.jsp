@@ -19,14 +19,14 @@
     <div region="north" style="height:50px;" id="search" >
         <div region="center"style="margin-top: 5px;margin-left: 5px;" >
         	<label>是否发货：</label>
-            <select class="easyui-combobox" name="state" style="width:80px;">
+            <select class="easyui-combobox" name="query_state" style="width:80px;">
                 <option value="">--请选择--</option>
                 <option value="0">未发货</option>
                 <option value="1">已发货</option>
             </select>
-            <label>开始时间：</label><input type="text" name="start_time" class="easyui-datebox" />
-            <label>结束时间：</label><input type="text" name="end_time" class="easyui-datebox" />
-            <label>会员工号：</label><input type="text" name="query_user_code">
+            <label>发货开始时间：</label><input type="text" name="state_date_start" class="easyui-datebox" />
+            <label>发货结束时间：</label><input type="text" name="state_date_end" class="easyui-datebox" />
+            <label>订单编号：</label><input type="text" name="query_order_code">
                       
             <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
         </div>
@@ -60,31 +60,24 @@
 <div id="win_edit" iconCls="icon-save" title="会员充值" style="background:#fafafa;padding:10px;display: none;">
     <table>
     	<tr style="display: none;">
-    		<td>id:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_id" style="width:200px"/></td>
-    	</tr>
-    	<tr style="display: none;">
-    		<td>用户编号:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_user_id" style="width:200px"/></td>
+    		<td>order_id:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_order_id" style="width:200px"/></td>
     	</tr>
     	<tr>
-    		<td>会员编号:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_user_code" style="width:200px"/></td>
+    		<td>订单编号:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_order_code" style="width:200px"/></td>
     	</tr>
     	<tr>
-    		<td>打款金额:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_coin_num" style="width:200px"/></td>
-    	</tr>
-    	<tr>
-    		<td>是否打款:</td>
+    		<td>是否发货:</td>
     		<td colspan="3">
-    		<select class="easyui-combobox" name="edit_apply_state" style="width:200px;">
-                <option value="1">已打款</option>
+    		<select class="easyui-combobox" name="edit_state" style="width:200px;">
+                <option value="0">未发货</option>
+                <option value="1" selected>已发货</option>
             </select></td>
     	</tr>
     	<tr>
-    		<td>流水号:</td>
-    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_serial_num" style="width:200px"/></td>
+    		<td>物流单号:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="edit_deal_exp_ord" style="width:200px"/></td>
     	</tr>	
     	<tr>
     		<td colspan="4" style="text-align:center"> 

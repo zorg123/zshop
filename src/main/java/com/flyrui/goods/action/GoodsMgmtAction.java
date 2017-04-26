@@ -54,12 +54,30 @@ public class GoodsMgmtAction extends BaseAction {
 	@Autowired
 	public GoodsOrderService goodsOrderService;
 	
-	//会员充值分页查询
 	@Action(value="getPagerListByCon")
 	public String getPagerListByCon(){
     	PageModel<CoreUser> pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
     	setResult(pageModel);
     	return SUCCESS;
+    }
+	
+	@Action(value="updateGoodsOrder")
+	public String updateGoodsOrder(){
+		int ret = goodsOrderService.update(goodsOrder);
+    	setResult(ret);
+    	return SUCCESS;
+    }
+	
+	@Action(value="exportGoodsOrder")
+	public  String exportGoodsOrder() throws Exception{  
+    	ExcelExport<GoodsOrder> excelExport = new ExcelExport<GoodsOrder>();    	
+    	List<GoodsOrder> retList = goodsOrderService.getListByConGoodsOrder(goodsOrder);
+    	ByteArrayOutputStream os=new ByteArrayOutputStream();
+    	excelExport.exportExcel("商品订单", retList, os);
+        byte[] content=os.toByteArray();
+        setExcelName("提现确认");
+        inputStream =new ByteArrayInputStream(content);
+        return "excel";    	   	
     }
 
 	public GoodsOrder getGoodsOrder() {

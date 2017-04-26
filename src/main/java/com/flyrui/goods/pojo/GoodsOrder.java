@@ -2,6 +2,8 @@ package com.flyrui.goods.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.flyrui.common.excel.ExcelAnnotation;
 /**
  *
  * 
@@ -15,18 +17,22 @@ public class GoodsOrder implements Serializable {
 	private String order_id;
 
 	/** 订单编码 */
+	@ExcelAnnotation(exportName = "订单编码")
 	private String order_code;
 
 	/** 商品id */
 	private String goods_id;
 
 	/** 商品名称 */
+	@ExcelAnnotation(exportName = "商品名称")
 	private String goods_name;
 
 	/** 购买数量 */
+	@ExcelAnnotation(exportName = "购买数量")
 	private Integer goods_amount;
 
 	/** 订单总费用 */
+	@ExcelAnnotation(exportName = "金额")
 	private Double total_fee;
 
 	/** 订单优惠费用 */
@@ -39,18 +45,23 @@ public class GoodsOrder implements Serializable {
 	private String user_id;
 
 	/** 购买人名称 */
+	@ExcelAnnotation(exportName = "会员名称")
 	private String user_name;
 
 	/** 收货人 */
+	@ExcelAnnotation(exportName = "收货人")
 	private String rev_people;
 
 	/** 联系电话 */
+	@ExcelAnnotation(exportName = "联系电话")
 	private String rev_link_phone;
 
 	/** 收货区域 */
+	@ExcelAnnotation(exportName = "收货区域")
 	private String rev_area;
 
 	/** 收货地址 */
+	@ExcelAnnotation(exportName = "详细地址")
 	private String rev_addr;
 
 	/** 收货备注 */
@@ -63,9 +74,15 @@ public class GoodsOrder implements Serializable {
 	private String rev_invoice_name;
 
 	/** 创建日期 */
+	@ExcelAnnotation(exportName = "购买时间")
 	private Date create_date;
+	
+	/** 订单状态 */
+	@ExcelAnnotation(exportName = "订单状态")
+	private String state;
 
 	/** 状态变更时间 */
+	@ExcelAnnotation(exportName = "发货时间")
 	private Date state_date;
 
 	/** 订购ip */
@@ -75,10 +92,12 @@ public class GoodsOrder implements Serializable {
 	private String deal_exp_comp;
 
 	/** 配送物流订单号 */
+	@ExcelAnnotation(exportName = "物流单号")
 	private String deal_exp_ord;
 
-	/** 订单状态 */
-	private String state;
+	private String state_date_start;
+	
+	private String state_date_end;
 
 
 	public String getOrder_id() {
@@ -265,4 +284,20 @@ public class GoodsOrder implements Serializable {
 		this.state = state;
 	}
 
+	public String getState_date_start() {
+		return state_date_start;
+	}
+
+	public void setState_date_start(String state_date_start) {
+		this.state_date_start = state_date_start;
+	}
+
+	public String getState_date_end() {
+		return state_date_end;
+	}
+
+	public void setState_date_end(String state_date_end) {
+		this.state_date_end = state_date_end;
+	}
+	
 }
