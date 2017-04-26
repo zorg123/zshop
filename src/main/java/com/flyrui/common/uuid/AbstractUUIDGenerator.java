@@ -1,5 +1,10 @@
 package com.flyrui.common.uuid;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import sun.management.VMManagement;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 
 public class AbstractUUIDGenerator {
@@ -23,7 +28,20 @@ public class AbstractUUIDGenerator {
     }
  
     private static short counter = (short) 0;
-    private static final int JVM = (int) (System.currentTimeMillis() >>> 8);
+    private static int JVM = (int) (System.currentTimeMillis() >>> 8);
+    static {
+    	try {  
+            RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();  
+            Field jvm = runtime.getClass().getDeclaredField("jvm");  
+            jvm.setAccessible(true);
+            VMManagement mgmt = (VMManagement) jvm.get(runtime);  
+            Method pidMethod = mgmt.getClass().getDeclaredMethod("getProcessId");  
+            pidMethod.setAccessible(true);  
+            JVM = (Integer) pidMethod.invoke(mgmt); 
+        } catch (Exception e) {  
+            
+        }
+    }
  
     public AbstractUUIDGenerator() {
     }
@@ -66,4 +84,18 @@ public class AbstractUUIDGenerator {
         return (int) System.currentTimeMillis();
     }
 
+    public static final int jvmPid() {  
+        try {  
+            RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();  
+            Field jvm = runtime.getClass().getDeclaredField("jvm");  
+            jvm.setAccessible(true);
+            VMManagement mgmt = (VMManagement) jvm.get(runtime);  
+            Method pidMethod = mgmt.getClass().getDeclaredMethod("getProcessId");  
+            pidMethod.setAccessible(true);  
+            int pid = (Integer) pidMethod.invoke(mgmt);  
+            return pid;  
+        } catch (Exception e) {  
+            return -1;  
+        }  
+    } 
 }

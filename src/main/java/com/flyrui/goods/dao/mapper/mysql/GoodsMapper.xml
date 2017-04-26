@@ -67,10 +67,10 @@
         		and state = #{state,jdbcType=VARCHAR}
      		</if>
 	    	<if test="eff_date != null " >
-        		and eff_date = #{eff_date,jdbcType=TIMESTAMP}
+        		and eff_date &lt;= #{eff_date,jdbcType=TIMESTAMP}
      		</if>
 	    	<if test="exp_date != null " >
-        		and exp_date = #{exp_date,jdbcType=TIMESTAMP}
+        		and exp_date &gt;= #{exp_date,jdbcType=TIMESTAMP}
      		</if>
 	    	<if test="goods_type != null  and goods_type != '' " >
         		and goods_type = #{goods_type,jdbcType=VARCHAR}
@@ -180,7 +180,7 @@
 	    	    	
         	  #{goods_keywords,jdbcType=VARCHAR},     		
 	    	    	
-        	  #{goods_descriptions,jdbcType=VARCHAR}     		
+        	  #{goods_descriptions,jdbcType=VARCHAR}
 	    )
   </insert>
   

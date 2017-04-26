@@ -79,6 +79,9 @@ public class GoodsOrder implements Serializable {
 	/** 配送物流订单号 */
 	private String deal_exp_ord;
 
+	/** 订单状态 */
+	private String state;
+
 
 	public Integer getOrder_id() {
 		return this.order_id;
@@ -254,6 +257,14 @@ public class GoodsOrder implements Serializable {
 
 	public void setDeal_exp_ord(String deal_exp_ord) {
 		this.deal_exp_ord = deal_exp_ord;
+	}
+
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

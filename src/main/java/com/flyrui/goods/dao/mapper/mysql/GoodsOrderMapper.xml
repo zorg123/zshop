@@ -24,6 +24,7 @@
     	<result column="ord_ip" property="ord_ip" jdbcType="TIMESTAMP" />
     	<result column="deal_exp_comp" property="deal_exp_comp" jdbcType="VARCHAR" />
     	<result column="deal_exp_ord" property="deal_exp_ord" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	order_id,
@@ -47,7 +48,8 @@
     	state_date,
     	ord_ip,
     	deal_exp_comp,
-    	deal_exp_ord
+    	deal_exp_ord,
+    	state
   </sql>
   <sql id="Base_Where_Clause" >
     <where >
@@ -117,6 +119,9 @@
 	    	<if test="deal_exp_ord != null  and deal_exp_ord != '' " >
         		and deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR}
      		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
     </where>
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
@@ -180,7 +185,9 @@
 	    	    	
         	  #{deal_exp_comp,jdbcType=VARCHAR},     		
 	    	    	
-        	  #{deal_exp_ord,jdbcType=VARCHAR}     		
+        	  #{deal_exp_ord,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR}     		
 	    )
   </insert>
   
@@ -251,7 +258,10 @@
       		deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR},
    		</if>
    		<if test="deal_exp_ord != null  and deal_exp_ord != '' " >
-      		deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR}
+      		deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR}
    		</if>
     <if test="_parameter != null" >
       <include refid="Base_Where_Clause" />
