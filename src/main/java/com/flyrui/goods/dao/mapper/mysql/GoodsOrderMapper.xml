@@ -21,7 +21,8 @@
     	<result column="rev_invoice_name" property="rev_invoice_name" jdbcType="VARCHAR" />
     	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
     	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
-    	<result column="ord_ip" property="ord_ip" jdbcType="TIMESTAMP" />
+    	<result column="ord_ip" property="ord_ip" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
     	<result column="deal_exp_comp" property="deal_exp_comp" jdbcType="VARCHAR" />
     	<result column="deal_exp_ord" property="deal_exp_ord" jdbcType="VARCHAR" />
   </resultMap>
@@ -46,6 +47,7 @@
     	create_date,
     	state_date,
     	ord_ip,
+    	state,
     	deal_exp_comp,
     	deal_exp_ord
   </sql>
@@ -109,7 +111,10 @@
         		and state_date = #{state_date,jdbcType=TIMESTAMP}
      		</if>
 	    	<if test="ord_ip != null " >
-        		and ord_ip = #{ord_ip,jdbcType=TIMESTAMP}
+        		and ord_ip = #{ord_ip,jdbcType=VARCHAR}
+     		</if>
+     		<if test="state != null " >
+        		and state = #{state,jdbcType=VARCHAR}
      		</if>
 	    	<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
         		and deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR}
@@ -176,7 +181,7 @@
 	    	    	
         	  #{state_date,jdbcType=TIMESTAMP},     		
 	    	    	
-        	  #{ord_ip,jdbcType=TIMESTAMP},     		
+        	  #{ord_ip,jdbcType=VARCHAR},     		
 	    	    	
         	  #{deal_exp_comp,jdbcType=VARCHAR},     		
 	    	    	
@@ -245,7 +250,7 @@
       		state_date = #{state_date,jdbcType=TIMESTAMP},
    		</if>
    		<if test="ord_ip != null " >
-      		ord_ip = #{ord_ip,jdbcType=TIMESTAMP},
+      		ord_ip = #{ord_ip,jdbcType=VARCHAR},
    		</if>
    		<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
       		deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR},

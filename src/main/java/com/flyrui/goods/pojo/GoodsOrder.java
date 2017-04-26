@@ -71,7 +71,10 @@ public class GoodsOrder implements Serializable {
 	private Date state_date;
 
 	/** 订购ip */
-	private Date ord_ip;
+	private String ord_ip;
+	
+	/** 订单状态 */
+	private String state;
 
 	/** 配送物流公司 */
 	private String deal_exp_comp;
@@ -232,11 +235,11 @@ public class GoodsOrder implements Serializable {
 		this.state_date = state_date;
 	}
 
-	public Date getOrd_ip() {
+	public String getOrd_ip() {
 		return this.ord_ip;
 	}
 
-	public void setOrd_ip(Date ord_ip) {
+	public void setOrd_ip(String ord_ip) {
 		this.ord_ip = ord_ip;
 	}
 
@@ -256,4 +259,12 @@ public class GoodsOrder implements Serializable {
 		this.deal_exp_ord = deal_exp_ord;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
 }
