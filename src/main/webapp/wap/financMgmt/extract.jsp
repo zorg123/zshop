@@ -93,6 +93,10 @@
 	   		CommonUtils.showAlert('提现请输入整数值!');
 	   		return false;
 	   	}
+	   	if(coin_num % 100!=0){
+	   		CommonUtils.showAlert('提现金额为100的整数倍!');
+	   		return false;
+	   	}
 	   	var trans_pwd = $('#trans_pwd').val();
 	   	if(!/^\+?[1-9][0-9]*$/.test(trans_pwd)){
 	   		CommonUtils.showAlert('交易密码请输入数字');

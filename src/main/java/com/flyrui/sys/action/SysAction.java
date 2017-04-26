@@ -249,7 +249,7 @@ public class SysAction extends BaseAction {
     	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
     	
-    	CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
+    	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();
     	coinTrackDto.setUser_id(Integer.valueOf(getUserId()));
     	HashMap bonusActMap = coinTrackService.getBonusActSum(coinTrackDto);    
@@ -257,7 +257,7 @@ public class SysAction extends BaseAction {
     	if(bonusActMap!=null){
     		actSum = (Double)bonusActMap.get("actSum");
     	}
-    	retAccoutInfoDto.setComments(actSum+"");
+    	retAccoutInfoDto.setComments(actSum+"");*/
     	setResult(retAccoutInfoDto);
     	return "index";
     }

@@ -81,5 +81,6 @@
             <mapper resource="config/mybatis/sqlMap/mysql/AccoutInfoMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/CoinTrackMapper.xml"/>
             <mapper resource="config/mybatis/sqlMap/mysql/InfodictMapper.xml"/>
-        </mappers>   --> 
+        </mappers>
+        -->   
     </configuration>   

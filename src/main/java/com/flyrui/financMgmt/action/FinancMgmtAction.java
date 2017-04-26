@@ -39,6 +39,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="initBonusToElect", location = "/wap/financMgmt/bonusToElect.jsp"),
 		@Result(name="initExtract", location = "/wap/financMgmt/extract.jsp"),
 		@Result(name="queryUserExtractInfo", location = "/wap/financMgmt/userExtractInfo.jsp"),
+		@Result(name="queryAccoutFlowForWap", location = "/wap/financMgmt/accoutFlow.jsp"),
 		@Result(name="accoutInfo", location = "/wap/user/accountInfo.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
@@ -128,6 +129,25 @@ public class FinancMgmtAction extends BaseAction {
 		result.put("reconsmpActSum", reconsmpActSum);
 		result.put("actSum", actSum);
     	return "queryBonusAct";
+    }
+	//wap端账户流水
+	@Action("queryAccoutFlowForWap")    
+    public String queryAccoutFlowForWap(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==coinTrackDto){
+			coinTrackDto = new CoinTrackDto();
+		}
+		coinTrackDto.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=10;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConAccountFlowForWap(coinTrackDto, page, rows);
+    	setResult(pageModel);
+    	return "queryAccoutFlowForWap";
     }
 	
 	//奖金币明细
@@ -250,9 +270,7 @@ public class FinancMgmtAction extends BaseAction {
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
-    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
-    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	Double able_coin_num = retAccoutInfoDto.getCash_coin();
     	result.put("_code", "0");
     	result.put("_msg", "成功");
 		result.put("able_coin_num", able_coin_num);
@@ -265,9 +283,7 @@ public class FinancMgmtAction extends BaseAction {
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
-    	Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
-    	Double able_coin_num = bonusCoin-reconsmpCoin;
+    	Double able_coin_num = retAccoutInfoDto.getCash_coin();
     	result.put("_code", "0");
     	result.put("_msg", "成功");
 		result.put("able_coin_num", able_coin_num);

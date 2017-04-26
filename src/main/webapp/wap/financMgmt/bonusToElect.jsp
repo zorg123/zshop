@@ -24,16 +24,16 @@
                         <div class="am-u-sm-12 am-u-md-9">
                             <form class="am-form am-form-horizontal">
                             	<div class="am-form-group">
-                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">可提现额度</label>
+                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">可转账额度</label>
                                     <div class="am-u-sm-9">
                                         <input type="text" placeholder='<s:property value="able_coin_num"/>' readOnly="true">
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">奖金币</label>
+                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">现金</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="奖金币">
-                                        <small>请输入转入的奖金币总额</small>
+                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="现金">
+                                        <small>请输入转入的现金总额</small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
@@ -73,6 +73,7 @@
 	                	if(retobj.retCode=='3'){
 	                		CommonUtils.showAlert('操作成功!');
 	                		clear();
+	                		pageData.openContent(base+"/FinancMgmt/initBonusToElect.do");
 	                		return;
 	                	}else{
 	                		CommonUtils.showAlert(retobj.retString);
