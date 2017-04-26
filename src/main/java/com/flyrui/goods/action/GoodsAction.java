@@ -1,6 +1,7 @@
 package com.flyrui.goods.action;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +27,21 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
+import com.flyrui.goods.pojo.GoodsRevAddr;
+import com.flyrui.goods.pojo.TbChinaArea;
+import com.flyrui.goods.service.GoodsOrderService;
+import com.flyrui.goods.service.GoodsRevAddrService;
 import com.flyrui.goods.service.GoodsService;
+import com.flyrui.goods.service.TbChinaAreaService;
 
 @ParentPackage("frcms_default")
 @Namespace("/Goods") //访问路径的包名
 @Results({
 		@Result(name="goodsList", location = "/wap/goods/goodsList.jsp"),
 		@Result(name="goodsDetail", location = "/wap/goods/goodsDetail.jsp"),
+		@Result(name="queryUserOrder", location = "wap/goods/queryUserOrder.jsp"),	
+		@Result(name="goodsRevAddrEdit", location = "wap/goods/goodsRevAddrEdit.jsp"),
+		@Result(name="goodsRevAddrList", location = "wap/goods/goodsRevAddr.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -47,6 +56,7 @@ public class GoodsAction extends BaseAction {
     
     public Goods goods = new Goods(); 
     public GoodsOrder goodsOrder = new GoodsOrder();
+    public GoodsRevAddr goodsRevAddr = new GoodsRevAddr();
     
     public int rows; //每页大小
 	
@@ -62,6 +72,15 @@ public class GoodsAction extends BaseAction {
 	
 	@Autowired
 	CommonService commonService;
+	
+	@Autowired
+	GoodsRevAddrService goodsRevAddrService;
+	
+	@Autowired
+	TbChinaAreaService tbChinaAreaService;
+	
+	@Autowired
+	GoodsOrderService goodsOrderService;
 	
 	public Goods getGoods() {
 		return goods;
@@ -149,11 +168,19 @@ public class GoodsAction extends BaseAction {
 		return SUCCESS;
 	}
 	
+	@Action("accept")
 	public String accept() throws FRException{
 		if(goodsOrder.getGoods_id()==null && goodsOrder.getGoods_amount()==null && goodsOrder.getPay_type()==null
 				){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		if(!"2".equals(goodsOrder.getPay_type()) && !"3".equals(goodsOrder.getPay_type())){
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		}
+		if(goodsOrder.getGoods_amount()<1){
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		}
+		
 		goods.setGoods_id(goodsOrder.getGoods_id());
 		goods.setState("1");
 		goods.setEff_date(new Date());
@@ -163,73 +190,104 @@ public class GoodsAction extends BaseAction {
 		goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);
 		goodsOrder.setOrder_code(goodsOrderCode);
 		goodsOrder.setOrder_id(UUIDHexGenerator.generator());
-    	goodsService.accept(goods, goodsOrder);//用于事务
-    	
+		goodsOrder.setUser_id(getUserId());
+		goodsOrder.setUser_name(getLoginUserInfo().getName());
+		goodsOrder.setCreate_date(new Date());
+		goodsOrder.setOrd_ip(getIp());
+		goodsOrder.setState("0");
+    	goodsService.accept(goods, goodsOrder,getLoginUserInfo());//用于事务
+    	setCommonSuccessReturn();
 		return SUCCESS;
 	}
 	
-	/**
-    @Action(value="trainEdit")
-    public String trainEdit() throws FRException{   
-    	if("2".equals(operType)){
-    		List<InfoTrain> infoTrainTemp =  infoTrainService.getListByCon(infoTrain);    	
-    		if(infoTrainTemp!=null && infoTrainTemp.size()>0){
-    			infoTrain = infoTrainTemp.get(0);
-    		}
-    	}else{
-    		infoTrain = new InfoTrain();
+	@Action("goodsRevAddrList")
+	public String goodsRevAddrList(){
+		goodsRevAddr.setUser_id(getUserId());
+		if(rows==0){
+    		rows=5;
     	}
-    	return "trainEdit";
-    }
-    
-    @Action(value="insert")
-    public String insert() throws FRException{
-    	int cnt = infoTrainService.insert(infoTrain);
-    	setResult(cnt);
+    	if(page==0){
+    		page = 1;
+    	}
+		PageModel pageModel = goodsRevAddrService.getPagerListByCon(goodsRevAddr, page, rows);
+		setResult(pageModel);
+		return "goodsRevAddrList";
+	}
+	
+	@Action("goodsRevAddrEdit")
+	public String goodsRevAddrEdit(){
+		
+		if(goodsRevAddr.getAddr_id()!=null){
+			List<GoodsRevAddr> goodsRevAddrList = goodsRevAddrService.getListByCon(goodsRevAddr);
+			if(goodsRevAddrList.size()>0){
+				goodsRevAddr = goodsRevAddrList.get(0);
+			}
+		}
+		Map<String,List<TbChinaArea>> areaMap = new HashMap<String,List<TbChinaArea>>();
+		
+		//查询全国的省区县配置信息
+		TbChinaArea tbChinaArea = new TbChinaArea();
+		tbChinaArea.setLevel(2);
+		List<TbChinaArea> provList = tbChinaAreaService.getListByCon(tbChinaArea);
+		areaMap.put("prov",provList);
+		if(provList.size()>0){
+			TbChinaArea provAare = provList.get(0);
+			tbChinaArea.setPid(provAare.getId());
+			tbChinaArea.setLevel(3);
+			List<TbChinaArea> provList2 = tbChinaAreaService.getListByCon(tbChinaArea);
+			areaMap.put("zone",provList2);
+			if(provList.size()>0){
+				TbChinaArea zoneAare = provList.get(0);
+				tbChinaArea.setPid(zoneAare.getId());
+				tbChinaArea.setLevel(4);
+				List<TbChinaArea> provList3 = tbChinaAreaService.getListByCon(tbChinaArea);
+				areaMap.put("xian",provList3);
+			}
+		}
+		
+		return "goodsRevAddrEdit";
+	}
+	
+	@Action("goodsRevAddrUpdate")
+    public String goodsRevAddrUpdate(){
+		if(goodsRevAddr.getAddr_id() !=null){
+			goodsRevAddr.setUser_id(getUserId());
+			goodsRevAddrService.update(goodsRevAddr);
+		}else{
+			String addrId = commonService.getSequence("seq_goods_revaddr_id");
+			goodsRevAddr.setUser_id(getUserId());
+			goodsRevAddr.setAddr_id(Integer.parseInt(addrId));
+			goodsRevAddr.setCreate_date(new Date());
+			goodsRevAddr.setState("1");
+			goodsRevAddrService.insert(goodsRevAddr);
+		}
+		setCommonSuccessReturn();
     	return SUCCESS;
     }
-    
-    @Action(value="update")
-    public String update() throws FRException{
-    	if(infoTrain!=null){
-    		int cnt= infoTrainService.update(infoTrain);
-    		setResult(cnt);
-    	}
+	
+	@Action("getNextLevelAddr")
+    public String getNextLevelAddr(){
+		List<TbChinaArea> retList = new ArrayList<TbChinaArea>();
+		if(ids !=null){
+			TbChinaArea tbChinaArea = new TbChinaArea();
+			retList = tbChinaAreaService.getListByCon(tbChinaArea);
+		}
+		setResult(retList);
     	return SUCCESS;
-    }    
-    
-    @Action(value="deleteByIds")
-    public String deleteByIds()  throws FRException{
-    	int delCount = infoTrainService.deleteByIds(ids);
-    	if(delCount == 0){
-    		throw new FRException(new FRError(ErrorConstants.SYS_NO_DELETE_DATA));
-    	}
-    	setResult(delCount);
-    	return SUCCESS;
-    }  
-    
-    private String checkDictValue(String sqlId,String value,String dictType){
-    	String retValue = null;
-    	try{
-    		Map sqlParams = new HashMap();
-    		sqlParams.put("sqlId", sqlId);
-    		sqlParams.put("dictType", dictType);
-    		List retList = infoCommonService.queryListBySqlId(sqlParams);
-    		if(retList!=null && retList.size()>0){
-    			for(int i=0;i<retList.size();i++){
-    				Map m = (Map)retList.get(i);
-    				if(value.equals(m.get("name"))){
-    					retValue=(String)m.get("id");
-    				}		
-    			}
-    		}
-    	}catch(Exception ex){
-    		
-    	}
-    	return retValue;
     }
-    
-    **/
-    
+	
+	@Action("queryUserOrder")
+    public String queryUserOrder(){
+		GoodsOrder  goodsOrder = new GoodsOrder();
+		if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
+		setResult(pageModel);
+    	return "queryUserOrder";
+    }
     
 }

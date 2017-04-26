@@ -50,7 +50,7 @@
 	                                	<a href="javascript:void(0);" class="tpl-table-images-content-i">  
 	                                		<div class="tpl-table-images-content-i-info">
                                             <span class="ico">
-			                                   	 价格：<s:property value="%{formatDouble(#goodsIter.goods_price)}"/> <s:if test="goodsIter.pay_type == 2">电子币</s:if><s:if test="goodsIter.pay_type == 3">重销币</s:if><s:if test="goodsIter.pay_type == '2,3'">电子币或重销币</s:if>
+			                                   	 价格：<s:property value="#goodsIter.goods_price"/> <s:if test="goodsIter.pay_type == 2">电子币</s:if><s:if test="goodsIter.pay_type == 3">重销币</s:if><s:if test="goodsIter.pay_type == '2,3'">电子币或重销币</s:if>
 			                                </span>
                                         	</div>
                                         	<span class="tpl-table-images-content-i-shadow"></span>	                                		                                      	

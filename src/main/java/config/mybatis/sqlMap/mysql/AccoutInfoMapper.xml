@@ -145,4 +145,10 @@
     delete from accout_info
    	where user_id = #{user_id,jdbcType=INTEGER}
   </delete>
+  
+  <select id="selectByUserIdForUpdate" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments,cash_coin
+    from accout_info
+    where user_id = #{user_id,jdbcType=INTEGER} for update
+  </select>
 </mapper>

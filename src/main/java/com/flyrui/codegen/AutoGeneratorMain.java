@@ -28,7 +28,7 @@ public class AutoGeneratorMain{
         cg.setXmlPackage("test");
         cg.setServiceImplPackage("test.impl"); */
         
-        cg.setTableNames(new String[]{"goods_order"});
+        cg.setTableNames(new String[]{"tb_china_area"});
         cg.setDbColumnUnderline(true);//设置数据库是否为下划线
         cg.setIdType(IdType.INPUT);//设置ID主键策略
 

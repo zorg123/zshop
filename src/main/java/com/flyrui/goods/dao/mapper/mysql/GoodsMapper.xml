@@ -258,4 +258,19 @@
     </if>
     
   </update>
+  <select id="selectGoodsByIdForUpdate" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.Goods" >
+    select    
+    <include refid="Base_Column_List" />
+    from goods
+     where goods_id = #{goods_id,jdbcType=VARCHAR}
+     <if test="state != null  and state != '' " >
+        	and state = #{state,jdbcType=VARCHAR}
+   	 </if>
+   	 <if test="eff_date != null " >
+      		and eff_date &lt;= #{eff_date,jdbcType=TIMESTAMP}
+   	 </if>
+   	 <if test="exp_date != null " >
+      		and exp_date &gt;= #{exp_date,jdbcType=TIMESTAMP}
+   	 </if> for update
+  </select>
 </mapper>

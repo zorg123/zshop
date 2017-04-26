@@ -20,4 +20,6 @@ public interface AccoutInfoService {
 	public AccoutInfoDto queryAccountInfo(AccoutInfoDto accoutInfo);
 	
 	public int deleteByUserId(AccoutInfoDto accoutInfo);
+	
+	public List<AccoutInfoDto> selectByUserIdForUpdate(AccoutInfoDto accoutInfo);
 }

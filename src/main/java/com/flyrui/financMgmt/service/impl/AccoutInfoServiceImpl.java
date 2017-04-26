@@ -24,4 +24,7 @@ public class AccoutInfoServiceImpl extends BaseService<AccoutInfoDto> implements
 		return baseDao.delete(this.nameSpace+".deleteByUserId", accoutInfo);
 	}
 	
+	public List<AccoutInfoDto> selectByUserIdForUpdate(AccoutInfoDto accoutInfo){
+		return baseDao.selectList(this.nameSpace+".selectByUserIdForUpdate", accoutInfo);
+	}
 }

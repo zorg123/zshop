@@ -74,6 +74,8 @@ public class CoinTrackDto implements Serializable {
 	
 	private String balance_comments;
 	
+	private String goods_order_id;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -293,5 +295,12 @@ public class CoinTrackDto implements Serializable {
 	public void setBalance_comments(String balance_comments) {
 		this.balance_comments = balance_comments;
 	}
-	
+
+	public String getGoods_order_id() {
+		return goods_order_id;
+	}
+
+	public void setGoods_order_id(String goods_order_id) {
+		this.goods_order_id = goods_order_id;
+	}	
 }

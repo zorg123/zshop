@@ -11,8 +11,8 @@
 <div data-url="/Sys/User/userProfile.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">资料管理</a></li>
-                <li class="am-active">资料查看</li>
+                <li><a href="#">网上商城</a></li>
+                <li class="am-active">商品受理</li>
             </ol>
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
