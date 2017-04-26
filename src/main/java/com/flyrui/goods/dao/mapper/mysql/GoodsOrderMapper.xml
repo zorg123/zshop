@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.goods.dao.mapper.GoodsOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.goods.pojo.GoodsOrder" >
+    	<result column="order_id" property="order_id" jdbcType="VARCHAR" />
+    	<result column="order_code" property="order_code" jdbcType="VARCHAR" />
+    	<result column="goods_id" property="goods_id" jdbcType="VARCHAR" />
+    	<result column="goods_name" property="goods_name" jdbcType="VARCHAR" />
+    	<result column="goods_amount" property="goods_amount" jdbcType="INTEGER" />
+    	<result column="total_fee" property="total_fee" jdbcType="DOUBLE" />
+    	<result column="refund_fee" property="refund_fee" jdbcType="DOUBLE" />
+    	<result column="pay_type" property="pay_type" jdbcType="VARCHAR" />
+    	<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    	<result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    	<result column="rev_people" property="rev_people" jdbcType="VARCHAR" />
+    	<result column="rev_link_phone" property="rev_link_phone" jdbcType="VARCHAR" />
+    	<result column="rev_area" property="rev_area" jdbcType="VARCHAR" />
+    	<result column="rev_addr" property="rev_addr" jdbcType="VARCHAR" />
+    	<result column="rev_desc" property="rev_desc" jdbcType="VARCHAR" />
+    	<result column="rev_invoice" property="rev_invoice" jdbcType="VARCHAR" />
+    	<result column="rev_invoice_name" property="rev_invoice_name" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
+    	<result column="ord_ip" property="ord_ip" jdbcType="VARCHAR" />
+    	<result column="deal_exp_comp" property="deal_exp_comp" jdbcType="VARCHAR" />
+    	<result column="deal_exp_ord" property="deal_exp_ord" jdbcType="VARCHAR" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	order_id,
+    	order_code,
+    	goods_id,
+    	goods_name,
+    	goods_amount,
+    	total_fee,
+    	refund_fee,
+    	pay_type,
+    	user_id,
+    	user_name,
+    	rev_people,
+    	rev_link_phone,
+    	rev_area,
+    	rev_addr,
+    	rev_desc,
+    	rev_invoice,
+    	rev_invoice_name,
+    	create_date,
+    	state_date,
+    	ord_ip,
+    	deal_exp_comp,
+    	deal_exp_ord,
+    	state
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="order_id != null  and order_id != '' " >
+        		and order_id = #{order_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="order_code != null  and order_code != '' " >
+        		and order_code = #{order_code,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_id != null  and goods_id != '' " >
+        		and goods_id = #{goods_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_name != null  and goods_name != '' " >
+        		and goods_name = #{goods_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_amount != null  and goods_amount != '' " >
+        		and goods_amount = #{goods_amount,jdbcType=INTEGER}
+     		</if>
+	    	<if test="total_fee != null  and total_fee != '' " >
+        		and total_fee = #{total_fee,jdbcType=DOUBLE}
+     		</if>
+	    	<if test="refund_fee != null  and refund_fee != '' " >
+        		and refund_fee = #{refund_fee,jdbcType=DOUBLE}
+     		</if>
+	    	<if test="pay_type != null  and pay_type != '' " >
+        		and pay_type = #{pay_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_id != null  and user_id != '' " >
+        		and user_id = #{user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="user_name != null  and user_name != '' " >
+        		and user_name = #{user_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_people != null  and rev_people != '' " >
+        		and rev_people = #{rev_people,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_link_phone != null  and rev_link_phone != '' " >
+        		and rev_link_phone = #{rev_link_phone,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_area != null  and rev_area != '' " >
+        		and rev_area = #{rev_area,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_addr != null  and rev_addr != '' " >
+        		and rev_addr = #{rev_addr,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_desc != null  and rev_desc != '' " >
+        		and rev_desc = #{rev_desc,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_invoice != null  and rev_invoice != '' " >
+        		and rev_invoice = #{rev_invoice,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rev_invoice_name != null  and rev_invoice_name != '' " >
+        		and rev_invoice_name = #{rev_invoice_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="state_date != null " >
+        		and state_date = #{state_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="ord_ip != null  and ord_ip != '' " >
+        		and ord_ip = #{ord_ip,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
+        		and deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="deal_exp_ord != null  and deal_exp_ord != '' " >
+        		and deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+    select    
+    <include refid="Base_Column_List" />
+    from goods_order
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+    delete from goods_order
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+    insert into goods_order ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{order_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{order_code,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{goods_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{goods_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{goods_amount,jdbcType=INTEGER},     		
+	    	    	
+        	  #{total_fee,jdbcType=DOUBLE},     		
+	    	    	
+        	  #{refund_fee,jdbcType=DOUBLE},     		
+	    	    	
+        	  #{pay_type,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{user_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{user_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_people,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_link_phone,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_area,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_addr,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_desc,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_invoice,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{rev_invoice_name,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{state_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{ord_ip,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{deal_exp_comp,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{deal_exp_ord,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.goods.pojo.GoodsOrder">
+    update goods_order
+    set
+   		<if test="order_id != null  and order_id != '' " >
+      		order_id = #{order_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="order_code != null  and order_code != '' " >
+      		order_code = #{order_code,jdbcType=VARCHAR},
+   		</if>
+   		<if test="goods_id != null  and goods_id != '' " >
+      		goods_id = #{goods_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="goods_name != null  and goods_name != '' " >
+      		goods_name = #{goods_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="goods_amount != null  and goods_amount != '' " >
+      		goods_amount = #{goods_amount,jdbcType=INTEGER},
+   		</if>
+   		<if test="total_fee != null  and total_fee != '' " >
+      		total_fee = #{total_fee,jdbcType=DOUBLE},
+   		</if>
+   		<if test="refund_fee != null  and refund_fee != '' " >
+      		refund_fee = #{refund_fee,jdbcType=DOUBLE},
+   		</if>
+   		<if test="pay_type != null  and pay_type != '' " >
+      		pay_type = #{pay_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="user_id != null  and user_id != '' " >
+      		user_id = #{user_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="user_name != null  and user_name != '' " >
+      		user_name = #{user_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_people != null  and rev_people != '' " >
+      		rev_people = #{rev_people,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_link_phone != null  and rev_link_phone != '' " >
+      		rev_link_phone = #{rev_link_phone,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_area != null  and rev_area != '' " >
+      		rev_area = #{rev_area,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_addr != null  and rev_addr != '' " >
+      		rev_addr = #{rev_addr,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_desc != null  and rev_desc != '' " >
+      		rev_desc = #{rev_desc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_invoice != null  and rev_invoice != '' " >
+      		rev_invoice = #{rev_invoice,jdbcType=VARCHAR},
+   		</if>
+   		<if test="rev_invoice_name != null  and rev_invoice_name != '' " >
+      		rev_invoice_name = #{rev_invoice_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="state_date != null " >
+      		state_date = #{state_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="ord_ip != null  and ord_ip != '' " >
+      		ord_ip = #{ord_ip,jdbcType=VARCHAR},
+   		</if>
+   		<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
+      		deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR},
+   		</if>
+   		<if test="deal_exp_ord != null  and deal_exp_ord != '' " >
+      		deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>
