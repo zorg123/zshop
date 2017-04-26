@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.flyrui.goods.dao.mapper.GoodsOrderMapper" >
   <resultMap id="BaseResultMap" type="com.flyrui.goods.pojo.GoodsOrder" >
-    	<result column="order_id" property="order_id" jdbcType="INTEGER" />
+    	<result column="order_id" property="order_id" jdbcType="VARCHAR" />
     	<result column="order_code" property="order_code" jdbcType="VARCHAR" />
     	<result column="goods_id" property="goods_id" jdbcType="VARCHAR" />
     	<result column="goods_name" property="goods_name" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
     	<result column="rev_invoice_name" property="rev_invoice_name" jdbcType="VARCHAR" />
     	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
     	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
-    	<result column="ord_ip" property="ord_ip" jdbcType="TIMESTAMP" />
+    	<result column="ord_ip" property="ord_ip" jdbcType="VARCHAR" />
     	<result column="deal_exp_comp" property="deal_exp_comp" jdbcType="VARCHAR" />
     	<result column="deal_exp_ord" property="deal_exp_ord" jdbcType="VARCHAR" />
     	<result column="state" property="state" jdbcType="VARCHAR" />
@@ -54,7 +54,7 @@
   <sql id="Base_Where_Clause" >
     <where >
 	    	<if test="order_id != null  and order_id != '' " >
-        		and order_id = #{order_id,jdbcType=INTEGER}
+        		and order_id = #{order_id,jdbcType=VARCHAR}
      		</if>
 	    	<if test="order_code != null  and order_code != '' " >
         		and order_code = #{order_code,jdbcType=VARCHAR}
@@ -110,8 +110,8 @@
 	    	<if test="state_date != null " >
         		and state_date = #{state_date,jdbcType=TIMESTAMP}
      		</if>
-	    	<if test="ord_ip != null " >
-        		and ord_ip = #{ord_ip,jdbcType=TIMESTAMP}
+	    	<if test="ord_ip != null  and ord_ip != '' " >
+        		and ord_ip = #{ord_ip,jdbcType=VARCHAR}
      		</if>
 	    	<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
         		and deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR}
@@ -143,7 +143,7 @@
   <insert id="insert" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
     insert into goods_order ( <include refid="Base_Column_List" />)
     values (	    	
-        	  #{order_id,jdbcType=INTEGER},     		
+        	  #{order_id,jdbcType=VARCHAR},     		
 	    	    	
         	  #{order_code,jdbcType=VARCHAR},     		
 	    	    	
@@ -181,7 +181,7 @@
 	    	    	
         	  #{state_date,jdbcType=TIMESTAMP},     		
 	    	    	
-        	  #{ord_ip,jdbcType=TIMESTAMP},     		
+        	  #{ord_ip,jdbcType=VARCHAR},     		
 	    	    	
         	  #{deal_exp_comp,jdbcType=VARCHAR},     		
 	    	    	
@@ -195,7 +195,7 @@
     update goods_order
     set
    		<if test="order_id != null  and order_id != '' " >
-      		order_id = #{order_id,jdbcType=INTEGER},
+      		order_id = #{order_id,jdbcType=VARCHAR},
    		</if>
    		<if test="order_code != null  and order_code != '' " >
       		order_code = #{order_code,jdbcType=VARCHAR},
@@ -251,8 +251,8 @@
    		<if test="state_date != null " >
       		state_date = #{state_date,jdbcType=TIMESTAMP},
    		</if>
-   		<if test="ord_ip != null " >
-      		ord_ip = #{ord_ip,jdbcType=TIMESTAMP},
+   		<if test="ord_ip != null  and ord_ip != '' " >
+      		ord_ip = #{ord_ip,jdbcType=VARCHAR},
    		</if>
    		<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
       		deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR},

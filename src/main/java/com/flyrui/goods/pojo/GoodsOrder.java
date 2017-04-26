@@ -14,7 +14,7 @@ public class GoodsOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 订单id */
-	private Integer order_id;
+	private String order_id;
 
 	/** 订单编码 */
 	private String order_code;
@@ -71,7 +71,7 @@ public class GoodsOrder implements Serializable {
 	private Date state_date;
 
 	/** 订购ip */
-	private Date ord_ip;
+	private String ord_ip;
 
 	/** 配送物流公司 */
 	private String deal_exp_comp;
@@ -83,11 +83,11 @@ public class GoodsOrder implements Serializable {
 	private String state;
 
 
-	public Integer getOrder_id() {
+	public String getOrder_id() {
 		return this.order_id;
 	}
 
-	public void setOrder_id(Integer order_id) {
+	public void setOrder_id(String order_id) {
 		this.order_id = order_id;
 	}
 
@@ -235,11 +235,11 @@ public class GoodsOrder implements Serializable {
 		this.state_date = state_date;
 	}
 
-	public Date getOrd_ip() {
+	public String getOrd_ip() {
 		return this.ord_ip;
 	}
 
-	public void setOrd_ip(Date ord_ip) {
+	public void setOrd_ip(String ord_ip) {
 		this.ord_ip = ord_ip;
 	}
 

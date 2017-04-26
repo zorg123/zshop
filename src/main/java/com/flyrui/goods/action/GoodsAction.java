@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.flyrui.common.DateUtil;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.service.CommonService;
+import com.flyrui.common.uuid.UUIDHexGenerator;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -161,7 +162,7 @@ public class GoodsAction extends BaseAction {
 		String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
 		goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);
 		goodsOrder.setOrder_code(goodsOrderCode);
-		goodsOrder.setOrder_id(order_id);
+		goodsOrder.setOrder_id(UUIDHexGenerator.generator());
     	goodsService.accept(goods, goodsOrder);//用于事务
     	
 		return SUCCESS;
