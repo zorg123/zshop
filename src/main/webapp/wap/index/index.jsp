@@ -29,6 +29,20 @@
                 </div>
             </div>
         	 --%>
+        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
+                <div class="dashboard-stat purple">
+                    <div class="visual">
+                        <i class="am-icon-android"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number"> <s:property value="#accountInfo.cash_coin"/> </div>
+                        <div class="desc"> 现金积分</div>
+                    </div>
+                    <!-- <a class="more" href="#"> 查看更多
+                <i class="m-icon-swapright m-icon-white"></i>  -->
+            </a>
+                </div>
+            </div>
             <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
                 <div class="dashboard-stat red">
                     <div class="visual">
@@ -57,21 +71,6 @@
             </a>
                 </div>
             </div>
-            <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
-                <div class="dashboard-stat purple">
-                    <div class="visual">
-                        <i class="am-icon-android"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number"> <s:property value="#accountInfo.cash_coin"/> </div>
-                        <div class="desc"> 现金积分</div>
-                    </div>
-                    <!-- <a class="more" href="#"> 查看更多
-                <i class="m-icon-swapright m-icon-white"></i>  -->
-            </a>
-                </div>
-            </div>
-
 
 
         </div>
