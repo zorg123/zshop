@@ -41,12 +41,12 @@
             	<th field="goods_id" width="40" hidden>商品ID</th>
             	<th field="icon_url" width="40" hidden>图片位置</th>
                 <th field="goods_name" width="40">商品名称</th>  
-                <th field="catalog_id" width="40">所属模块</th>
+                <th field="catalog_id" width="40" formatter="commMng.formatCatalogId">所属模块</th>
                 <th field="goods_price" width="40">价格</th>              
-                <th field="pay_type" width="40">购买积分类型</th>
+                <th field="pay_type" width="40" formatter="commMng.payType">购买积分类型</th>
                 <th field="goods_desc" width="40">简要描述</th>
                 <th field="pic_url" width="40">图片</th>
-                <th field="state" width="40">状态</th>
+                <th field="state" width="20" formatter="commMng.formatState">状态</th>
                 <th field="eff_date" width="40">生效时间</th>
                 <th field="exp_date" width="40">失效时间</th>
             </tr>
@@ -55,7 +55,7 @@
     </div>
 </div>
 
-<div id="win_save" iconCls="icon-save" title="会员充值" style="background:#fafafa;padding:10px;display: none;">
+<div id="win_save" iconCls="icon-save" title="商品配置" style="background:#fafafa;padding:10px;display: none;">
     <table>
     	<tr>
     		<td>商品名称:</td>
@@ -81,7 +81,7 @@
     	<tr>
     		<td>简单描述:</td>
     		<td colspan="3"> 
-    		<input class="easyui-textbox" data-options="multiline:true" name="goods_desc" style="width:200px;height:50px">
+    		<input class="easyui-textbox" data-options="multiline:true" name="goods_desc" id="goods_desc" style="width:200px;height:50px">
     	</tr>
     	<tr>
     		<td>状态:</td>
@@ -92,11 +92,11 @@
     	</tr>
     	<tr>
     		<td>生效时间:</td>
-    		<td colspan="3"> <input type="text" name="eff_date" class="easyui-datebox" /></td>
+    		<td colspan="3"> <input type="text" name="eff_date" class="easyui-datetimebox" style="width:200px;"/></td>
     	</tr>
     	<tr>
     		<td>失效时间:</td>
-    		<td colspan="3"> <input type="text" name="exp_date" class="easyui-datebox" /></td>
+    		<td colspan="3"> <input type="text" name="exp_date" class="easyui-datetimebox" style="width:200px;"/></td>
     	</tr>
 		<tr style="width:100%;height:35px"> 
 			<td>       	

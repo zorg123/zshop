@@ -130,7 +130,7 @@ var commMng = {
     clear: function () {
     	$('input[name="goods_name"]').val('');
     	$('input[name="goods_price"]').val('');
-    	$('input[name="goods_desc"]').val(''); 
+    	$('#goods_desc').textbox('setText', "");
     	$('input[name="eff_date"]').val('');
     	$('input[name="exp_date"]').val('');
     	$("#fileDownload ul").html("");
@@ -179,7 +179,39 @@ var commMng = {
 	   $this.parent().remove();
 	   $("#fileDownload ul").html("");
 	   $("#_easyui_textbox_input2").val('');
-   }
+   },
+   formatState:function(value,row){
+		//alert(CommonUtils.dumpObject(row));
+		var retVal = value;
+		if(value == "0"){
+			retVal="未发布";
+		}else if (value == "1"){
+			retVal = "已发布";
+		}
+		return retVal;
+   },
+   formatCatalogId:function(value,row){
+		//alert(CommonUtils.dumpObject(row));
+		var retVal = value;
+		if(value == "1"){
+			retVal="精品拼团";
+		}else if (value == "2"){
+			retVal = "即时拼团";
+		}
+		return retVal;
+  },
+  payType:function(value,row){
+		//alert(CommonUtils.dumpObject(row));
+		var retVal = value;
+		if(value == "2"){
+			retVal="电子积分";
+		}else if (value == "2,3"){
+			retVal = "电子积分,重消积分";
+		}else if (value == "3"){
+			retVal = "重消积分";
+		}
+		return retVal;
+  }
 }
 
 
@@ -235,7 +267,7 @@ $(function () {
         ]
     });
     $('#save').click(function () {
-    	commMng.save();
+    	commMng.clear();
     });
     $('#check').click(function () {
     	commMng.check();
