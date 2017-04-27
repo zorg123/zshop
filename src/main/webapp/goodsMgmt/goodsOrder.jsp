@@ -48,7 +48,7 @@
             	<th field="rev_area" width="100">收货人区域</th>
             	<th field="rev_addr" width="100">详细地址</th>
             	<th field="create_date" width="50">购买时间</th>
-            	<th field="state" formatter="GoodsOrderMng.formatState" width="40">订单状态</th>
+            	<th field="state_name"  width="40">订单状态</th>
             	<th field="state_date" width="50">发货时间</th>
             	<th field="deal_exp_ord" width="80">物流订单号</th>
             </tr>

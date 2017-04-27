@@ -75,7 +75,7 @@ public class GoodsMgmtAction extends BaseAction {
     	ByteArrayOutputStream os=new ByteArrayOutputStream();
     	excelExport.exportExcel("商品订单", retList, os);
         byte[] content=os.toByteArray();
-        setExcelName("提现确认");
+        setExcelName("商品订单");
         inputStream =new ByteArrayInputStream(content);
         return "excel";    	   	
     }

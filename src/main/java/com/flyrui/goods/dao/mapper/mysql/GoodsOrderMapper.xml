@@ -27,6 +27,7 @@
     	<result column="deal_exp_comp" property="deal_exp_comp" jdbcType="VARCHAR" />
     	<result column="deal_exp_ord" property="deal_exp_ord" jdbcType="VARCHAR" />
     	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="state_name" property="state_name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	order_id,
@@ -51,7 +52,8 @@
     	ord_ip,
     	deal_exp_comp,
     	deal_exp_ord,
-    	state
+    	state,
+    	CASE state WHEN 0 THEN '未发货' WHEN 1 THEN '已发货' end AS state_name
   </sql>
   <sql id="Base_Where_Clause" >
     <where >
@@ -262,13 +264,18 @@
    		<if test="deal_exp_comp != null  and deal_exp_comp != '' " >
       		deal_exp_comp = #{deal_exp_comp,jdbcType=VARCHAR},
    		</if>
-   		<if test="deal_exp_ord != null  and deal_exp_ord != '' " >
+   		<if test="deal_exp_ord != null" >
       		deal_exp_ord = #{deal_exp_ord,jdbcType=VARCHAR},
    		</if>
    		<if test="state != null  and state != '' " >
       		state = #{state,jdbcType=VARCHAR},
    		</if>
-   		state_date = now()
+   		<if test="state != null  and state == 1 " >
+   			state_date = now()
+   		</if>
+   		<if test="state != null  and state == 0 " >
+   			state_date = null
+   		</if>
     where order_id = #{order_id,jdbcType=VARCHAR}
     
   </update>

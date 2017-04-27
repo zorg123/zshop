@@ -78,8 +78,10 @@ public class GoodsOrder implements Serializable {
 	private Date create_date;
 	
 	/** 订单状态 */
-	@ExcelAnnotation(exportName = "订单状态")
 	private String state;
+	
+	@ExcelAnnotation(exportName = "订单状态")
+	private String state_name;
 
 	/** 状态变更时间 */
 	@ExcelAnnotation(exportName = "发货时间")
@@ -298,6 +300,14 @@ public class GoodsOrder implements Serializable {
 
 	public void setState_date_end(String state_date_end) {
 		this.state_date_end = state_date_end;
+	}
+
+	public String getState_name() {
+		return state_name;
+	}
+
+	public void setState_name(String state_name) {
+		this.state_name = state_name;
 	}
 	
 }
