@@ -14,6 +14,7 @@ import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
@@ -168,7 +169,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	}
 	
 	//会员充值查询
-	public List<CoinTrackDto> getListByConRec(CoinTrackDto coinTrackDto) {
+	public List<BonusRecDto> getListByConRec(CoinTrackDto coinTrackDto) {
 		return baseDao.selectList(nameSpace+".selectRec", coinTrackDto);		
 	}
 	

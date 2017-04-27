@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 
 public interface CoinTrackService {
@@ -16,7 +17,7 @@ public interface CoinTrackService {
 	
 	public int delete(CoinTrackDto coinTrackDto);
 	
-	public List<CoinTrackDto> getListByConRec(CoinTrackDto coinTrackDto);
+	public List<BonusRecDto> getListByConRec(CoinTrackDto coinTrackDto);
 	
 	public List<CoinTrackDto> getListByConExtConf(CoinTrackDto coinTrackDto);
 	

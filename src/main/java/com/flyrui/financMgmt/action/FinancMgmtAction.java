@@ -22,6 +22,7 @@ import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.salary.BusSalary;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
@@ -306,8 +307,8 @@ public class FinancMgmtAction extends BaseAction {
 	//会员充值导出
 	@Action(value="eportCoinTrackRec")
 	public  String eportCoinTrackRec() throws Exception{  
-    	ExcelExport<CoinTrackDto> excelExport = new ExcelExport<CoinTrackDto>();    	
-    	List<CoinTrackDto> retList = coinTrackService.getListByConRec(coinTrackDto);
+    	ExcelExport<BonusRecDto> excelExport = new ExcelExport<BonusRecDto>();    	
+    	List<BonusRecDto> retList = coinTrackService.getListByConRec(coinTrackDto);
     	ByteArrayOutputStream os=new ByteArrayOutputStream();
     	excelExport.exportExcel("会员充值", retList, os);
         byte[] content=os.toByteArray();
