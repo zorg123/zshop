@@ -116,10 +116,7 @@
   
   <update id="update" parameterType="com.flyrui.goods.pojo.GoodsRevAddr">
     update goods_rev_addr
-    set
-   		<if test="addr_id != null  and addr_id != '' " >
-      		addr_id = #{addr_id,jdbcType=INTEGER},
-   		</if>
+    set   		   		
    		<if test="user_id != null  and user_id != '' " >
       		user_id = #{user_id,jdbcType=VARCHAR},
    		</if>
@@ -151,11 +148,13 @@
       		is_default = #{is_default,jdbcType=VARCHAR},
    		</if>
    		<if test="create_date != null " >
-      		create_date = #{create_date,jdbcType=TIMESTAMP}
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
    		</if>
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
+   		addr_id = #{addr_id,jdbcType=INTEGER}
+     where addr_id = #{addr_id,jdbcType=INTEGER}
+        <if test="user_id != null  and user_id != '' " >
+      		and user_id = #{user_id,jdbcType=VARCHAR}
+   		</if> 
     
   </update>
 </mapper>

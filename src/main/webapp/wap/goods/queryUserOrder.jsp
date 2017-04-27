@@ -3,73 +3,65 @@
 <%
 	String baseUri = request.getContextPath();    
 %>
-
-<s:if test="selAddr == 1">    
-    <s:set name="funcName" value="'选择收货地址'" />      
-</s:if> 
-<s:else>
-   <s:set name="funcName" value="'收货地址管理'" />  
-</s:else>
-<s:set name="addrListPage" value="result.ret"/>
-<s:set name="addrList" value="#addrListPage.rows"/>
-<s:set name="total" value="#addrListPage.total"/> 
-<s:set var="pageCount" value="#addrListPage.pageCount"/>
-<s:set var="pageIndex" value="#addrListPage.pageIndex"/>
-<div   data-url="/Goods/goodsRevAddr.do?selAddr=<s:property value="selAddr" />">           
+<s:set name="goodsOrderListPage" value="result.ret"/>
+<s:set name="goodsOrderList" value="#goodsOrderListPage.rows"/>
+<s:set name="total" value="#goodsOrderListPage.total"/> 
+<s:set var="pageCount" value="#goodsOrderListPage.pageCount"/>
+<s:set var="pageIndex" value="#goodsOrderListPage.pageIndex"/>
+<div   data-url="/Goods/queryUserOrder.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
-                <li class="am-active"><s:property value="funcName" /></li>
+                <li class="am-active">订单查询</li>
             </ol>
             <div class="tpl-portlet-components" id="addrListDiv">
             	<div class="portlet-title">
                     <div class="caption font-green ">
-                        	收货地址列表
+                        	订单列表
                     </div>
                 </div>    
                     
-				<div class="tpl-block">
+				<div class="tpl-block">                    
                     <div class="am-g">
-                        
-                    	<div class="am-u-sm-12 am-u-md-6">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" id="activeBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>新增</button>
-                                </div>
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" id="activeBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>修改</button>
-                                </div>
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                    <div class="am-g">
-                        <div class="am-u-sm-12">
-                            <form class="am-form" id="listForm">
-                                <table class="am-table am-table-striped am-table-hover table-main">
+                        <div class="am-u-sm-12 ">
+                            <form class="am-form" id="listForm"> 
+                              <div class ="am-scrollable-horizontal">
+                                <table class="am-table am-table-striped am-table-hover am-text-nowrap">
                                     <thead>
                                         <tr>
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
-                                            <th class="table-title">收货人</th>
-                                            <th class="table-title">收货人电话</th>
+                                            <th class="table-title">订单编号</th>
+                                            <th class="table-title">购买商品</th>
+                                            <th class="table-type">购买数量</th>
+                                            <th class="table-type">消费金额</th>
+                                            <th class="table-type">支付类型</th>
+                                            <th class="table-type">收货人</th>
+                                            <th class="table-type">收货人电话</th>
                                             <th class="table-type">收货人地址</th>
+                                            <th class="table-type">订单状态</th>
+                                            <th class="table-type">购买日期</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <s:iterator  value="#addrList"  id="addrIter" status="st">   
+                                        <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" userId="<s:property value="#addrIter.user_id"/>"></td>
-	                                            <td><s:property value="#addrIter.rev_people"/></td>
-	                                            <td><a href="#"><s:property value="#addrIter.rev_link_phone"/></a></td>
-	                                            <td><s:property value="#addrIter.rev_addr"/></td>                                         
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>"></td>
+	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
+	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
+	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
+	                                            <td><s:property value="#goodsOrderIter.total_fee"/></td>
+	                                            <td><s:if test="#goodsOrderIter.pay_type == 2" >电子币</s:if><s:if test="#goodsOrderIter.pay_type == 3" >重消币</s:if></td>
+	                                            <td><a href="#"><s:property value="#goodsOrderIter.rev_people"/></a></td>
+	                                            <td><a href="#"><s:property value="#goodsOrderIter.rev_link_phone"/></a></td>
+	                                            <td><s:property value="#goodsOrderIter.rev_addr"/></td> 
+	                                            <td><s:if test="#goodsOrderIter.state == 0" >未发货</s:if><s:if test="#goodsOrderIter.state == 1" >已发货</s:if></td>  
+	                                            <td><s:property value="#goodsOrderIter.create_date"/></td>                                         
 	                                        </tr>
                                         </s:iterator>                                        
                                     </tbody>
                                 </table>
                                 <div id="page">  </div>
-
+							</div>
                             </form>
                         </div>
 
@@ -81,113 +73,21 @@
             	    				
         </div>
 <script language="javascript" type="text/javascript" >
-	var jump = function(context,first) {
-		//CommonUtils.showAlert('当前第：' + context.option.curr + "页");
+	var jump = function(context,first) {		
 		if(!first){
 			var searchContentV= $("#searchContent").val();
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context!=null?context.option.curr:1;
-			params["user.state"]='<s:property value="user.state" />';
 			if(searchContentV.length!=0){
-				params["user.name"] = searchContentV;
+				params["goodsOrder.order_code"] = searchContentV;
 			}
-		    pageData.openContent(base+"/Sys/User/queryRegisterUser.do",params);
+		    pageData.openContent(base+"/Goods/queryUserOrder.do",params);
 		}
-	}
-	<s:if test="user.state != 1">
-		function activeUser(){
-			var actUserList=[];
-			$.each($("#listForm input:checked"),function(i,v){
-				var userId = $(this).attr("userId");
-				actUserList.push(userId);
-			});
-			if(actUserList.length==0){
-				CommonUtils.showAlert("请先选择要激活的用户!");
-				return;
-			}
-			if(actUserList.length>1){
-				CommonUtils.showAlert("只能选择一个用户激活!");
-				return;
-			}
-			var param={};
-			param["ids"] = actUserList.join(",");
-			CommonUtils.showConfirm("确定要激活吗?",function(){
-				CommonUtils.invokeAsyncAction(base+'/Sys/User/activeUser.do', param, function (reply) {           
-		  	           if ((reply || '') != '') {
-		  	               var code = reply._code;               
-		  	               if (code == '0') {  
-		  	            	   CommonUtils.showAlert('操作成功!');
-		  	            	 pageData["refresh"]() 	                   
-		  	               } else  {
-		  	            	  CommonUtils.showAlert(reply._msg);
-		  	               }              
-		  	           } else  {
-		  	        	      CommonUtils.showAlert('操作失败!');
-		  	           }
-		  	    },true);
-			});
-		}
-		
-		function delUser(){
-			var actUserList=[];
-			$.each($("#listForm input:checked"),function(i,v){
-				var userId = $(this).attr("userId");
-				actUserList.push(userId);
-			});
-			if(actUserList.length==0){
-				CommonUtils.showAlert("请先选择要删除的用户!");
-				return;
-			}
-			if(actUserList.length>1){
-				CommonUtils.showAlert("只能选择一个用户删除!");
-				return;
-			}
-			var param={};
-			param["ids"] = actUserList.join(",");
-			CommonUtils.showConfirm("确定要删除吗?",function(){				
-				CommonUtils.invokeAsyncAction(base+'/Sys/User/delUnActiveUser.do', param, function (reply) {
-		  	           if ((reply || '') != '') {
-		  	               var code = reply._code;               
-		  	               if (code == '0') {  
-		  	            	 CommonUtils.showAlert('操作成功!');
-		  	            	 pageData["refresh"]() 	                   
-		  	               } else  {
-		  	            	  CommonUtils.showAlert(reply._msg);
-		  	               }              
-		  	           } else  {
-		  	        	      CommonUtils.showAlert('操作失败!');
-		  	           }
-		  	    },true);
-			});
-		}
-		
-	</s:if>
-	function searchUser(){
-		var searchContentV= $("#searchContent").val();
-		
-		if(searchContentV.length==0){
-			CommonUtils.showAlert("请输入要查询的用户名称!");
-			return;
-		}
-		var params={};
-		params["user.name"] = searchContentV;
-		params["rows"] = 5;
-		params["page"]=1;
-		params["user.state"]='<s:property value="user.state" />';		
-		pageData.openContent(base+"/Sys/User/queryRegisterUser.do",params);
-		
-	}
+	}	
+	
 	$("#searchBtn").on("click",function(){
 		jump(null,false);
-	})
-	<s:if test="user.state != 1">
-		$("#activeBtn").on("click",function(){
-			activeUser();
-		})
-		$("#delBtn").on("click",function(){
-			delUser();
-		})
-	</s:if>
-	$("#page").page({pages:<s:property value="#userListPage.pageCount"/>,curr:<s:property value="#userListPage.pageIndex"/>,jump:jump});
+	})	
+	$("#page").page({pages:<s:property value="pageCount"/>,curr:<s:property value="pageIndex"/>,jump:jump});
 </script>	

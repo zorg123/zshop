@@ -4,11 +4,7 @@
 	String baseUri = request.getContextPath();	
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
-<link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/amazeui.cropper.css">
-<link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/custom_up_img.css">
-<script src="<%=baseUri %>/wap/assets/js/cropper.min.js"></script>
-<script src="<%=baseUri %>/wap/assets/js/custom_up_img.js"></script>
-<div data-url="/Sys/User/userProfile.do">           
+<div id="goodDetailDiv">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
@@ -17,7 +13,7 @@
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
                     <div class="caption font-green bold">
-                        <span class="am-icon-code"></span>资料信息
+                        <span class="am-icon-code"></span>订单信息
                     </div>
                 </div>
 
@@ -25,64 +21,74 @@
 
                     <div class="am-g">
                         <div class="tpl-form-body tpl-form-line">
-                            <form class="am-form tpl-form-line-form" id="userProfileForm">
+                            <form class="am-form tpl-form-line-form" id="acceptForm">
+                            	<input type="hidden" name="goodsOrder.goods_id" db_field="goodsOrder.goods_id" value="<s:property value="goods.goods_id" />" />
+                            	<input type="hidden" name="goodsOrder.goods_name" db_field="goodsOrder.goods_name" value="<s:property value="goods.goods_name" />" />
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品名称 </label>
                                     <div class="am-u-sm-8">
-                                        <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="user.user_code" /></span> 
+                                        <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="goods.goods_name" /></span> 
                                      </div>
                                 </div> 
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">姓名 </label>
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品类型 </label>
                                     <div class="am-u-sm-8">
-                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="user.name" /></span>
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.catalog_id == 1" >精品拼团</s:if><s:else>即时拼团</s:else></span>
                                     </div>
                                 </div>                                  
                                 <div class="am-form-group">
-                                    <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
+                                    <label for="user-name" class="am-u-sm-4 am-form-label">商品描述</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description" value="<s:property value="user.user_phone" />"/>                                        
-                                    	<small id="user.user_phone-description"></small>  
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_desc" /></span> 
                                     </div>
                                 </div>
 								                              
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">邮箱</label>
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品价格</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.mail" value="<s:property value="user.mail" />" name="user.mail" placeholder="请输入邮箱" data-pattern="[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$" data-descriptions="user.mail" data-describedby="user.mail-description"/>                                        
-                                    	<small id="user.mail-description"></small>  
+                                    	<input type="hidden" name="goods.goods_price" db_field="goods.goods_price" value="<s:property value="goods.goods_price" />" />
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_price" /></span>
+                                    </div>
+                                </div>
+                                                                
+                                <s:if test="goods.pay_type == 2 || goods.pay_type == 3">
+	                                <div class="am-form-group">
+	                                    <label for="user-email" class="am-u-sm-4 am-form-label">支付方式</label>
+	                                    <div class="am-u-sm-8">   
+	                                        <input type="hidden" name="goodsOrder.pay_type" db_field="goodsOrder.pay_type" value="<s:property value="goods.pay_type" />" />                                     
+	                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.pay_type == 2" >电子币</s:if><s:if test="goods.pay_type == 3" >重消币</s:if></span>
+	                                    </div>
+                                	</div>
+                                </s:if>
+                                <s:elseif test="goods.pay_type=='2,3'">
+                                	<div class="am-form-group">
+	                                    <label for="user-phone" class="am-u-sm-4 am-form-label">支付类型</label>
+	                                    <div class="am-u-sm-8">
+	                                        <select data-am-selected db_field="goodsOrder.pay_type" name="goodsOrder.pay_type" >
+											  <option value="2" selected>电子币</option>
+											  <option value="3">重消币</option>
+											</select>									
+	                                    </div>
+	                                </div>
+                                </s:elseif>
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">购买数量</label>
+                                    <div class="am-u-sm-8">
+                                        <input type="number" db_field="goodsOrder.goods_amount" pattern="[0-9]*" name="goodsOrder.goods_amount" placeholder="输入你要购买的数量" value="<s:property value="goods.goods_amount" />">
+                                        <small id="coinAmountTip"></small> 
                                     </div>
                                 </div>
                                 
                                 <div class="am-form-group">
-                                    <label for="user-phone" class="am-u-sm-4 am-form-label">证件类型</label>
+                                    <label for="user-email" class="am-u-sm-4 am-form-label">收货地址</label>
                                     <div class="am-u-sm-8">
-                                        <select data-am-selected="" db_field="user.cert_type" value="<s:property value="user.cert_type" />" name="user.cert_type"  data-descriptions="user.cert_type" data-describedby="user.cert_type-description">
-										  <option value="1" <s:if test="user.cert_type == 1">selected </s:if>>身份证</option>
-										  <option value="2" <s:if test="user.cert_type == 2">selected </s:if>>军官证</option>
-										</select>	
-										<small id="cert_type-description"></small>									
-                                    </div>
-                                </div>
-                                
-                                <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">证件号码</label>
-                                    <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.cert_id" value="<s:property value="user.cert_id" />" name="user.cert_id" placeholder="请输入证件号码" />                                        
+                                    	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_people" name="goodsOrder.rev_people" value="<s:property value="goodsRevAddr.rev_people"/>" readonly/>
+                                    	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_link_phone" name="goodsOrder.rev_link_phone" value="<s:property value="goodsRevAddr.rev_link_phone"/>" readonly/>
+                                        <input type="hidden" db_field="goodsOrder.rev_area" name="goodsOrder.rev_area" value="<s:property value="goodsRevAddr.rev_provice"/>" readonly/>
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_addr" value="<s:property value="goodsRevAddr.rev_provice"/><s:property value="goodsRevAddr.rev_city"/><s:property value="goodsRevAddr.rev_zone"/><s:property value="goodsRevAddr.rev_addr"/>" name="goodsOrder.rev_addr" placeholder="没有收货地址请点击管理按钮管理您的收货地址" readonly/>                                       
+                                        <input type="button" id="manRevAddBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="管理地址"></input>
                                      </div>
-                                </div>
-                               <div class="am-form-group  am-cf">
-                                    <label for="user-weibo" class="am-u-sm-4 am-form-label">头像 </label>
-                                    <div class="am-u-sm-8">
-                                        <div class="am-form-group am-form-file  am-cf">
-                                            <div class="tpl-form-file-img  am-cf">
-                                                <img src="<%=baseUri %><s:property value="user.head_img" />" id="up-img-touch" class="am-circle" alt="点击图片上传" >
-                                            </div>  
-                                           <small> <div>请点击图片修改头像</div> </small>  
-                                           <input type="hidden" db_field="user.head_img" value="<s:property value="user.head_img" />" name="user.head_img" />                                       
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                               
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-8 am-u-sm-push-3">
@@ -95,90 +101,208 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="am-modal am-modal-no-btn up-modal-frame" tabindex="-1" id="up-modal-frame">
-		  <div class="am-modal-dialog up-frame-parent up-frame-radius">
-		    <div class="am-modal-hd up-frame-header">
-		       <label>修改头像</label>
-		      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-		    </div>
-		    <div class="am-modal-bd  up-frame-body">
-		      <div class="am-g am-fl">
-		      	
-		      	<div class="am-form-group am-form-file">
-			      <div class="am-fl">
-			        <button type="button" class="am-btn am-btn-default am-btn-sm">
-			          <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
-			      </div>
-			      <input type="file" class="up-img-file">
-			   	</div>
-		      </div>
-		      <div class="am-g am-fl">
-		      	<div class="up-pre-before up-frame-radius">
-		      		<img alt="" src="" class="up-img-show" id="up-img-show" >
-		      	</div>
-		      	<div class="up-pre-after up-frame-radius">
-		      	</div>
-		      </div>
-		      <div class="am-g am-fl">
-   				<div class="up-control-btns">
-    				<span class="am-icon-rotate-left"   id="up-btn-left"></span>
-    				<span class="am-icon-rotate-right"  id="up-btn-right"></span>
-    				<span class="am-icon-check up-btn-ok" url="/Attachement/uploadHead.do"
-    					parameter="{width:'300',height:'400'}">
-    				</span>
-   				</div>
-	    	  </div>
-		      
-		    </div>
-		  </div>
-		</div>
+</div>
+<div id="addrMngDiv"> 
+	  
+</div>
+<div id="successTipDiv"> 
+	  		<ol class="am-breadcrumb">
+                <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">网上商城</a></li>
+                <li class="am-active">商品受理</li>
+            </ol>
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-code"></span>订单信息
+                    </div>
+                </div>
+                 <div class="tpl-block">
+                 	<ul class="am-list am-list-static">
+					  <li>受理成功</li>
+					  <li>订单单号为：<span id="orderCodeSpan"></span></li>
+					  <li>
+					  	<input type="button" id="continueBuyBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="继续购买"></input>
+					    <input type="button" id="queryOrderBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="查询订单"></input>
+					  </li>
+					</ul>
+                 </div>
+            </div>
+     
+</div>
         
-      <script language="javascript" type="text/javascript" >
-			$(function() {	
-				$("#userProfileForm").mvalidate({
-			            type:2,
-			            onKeyup:true,
-			            sendForm:false,
-			            firstInvalidFocus:true,
-			            valid:function(event,options){
-			                //点击提交按钮时,表单通过验证触发函数
-			                 var params = CommonUtils.getParam("userProfileForm",false);			                 
-							 CommonUtils.invokeAsyncAction(base+'/Sys/User/ModifyUser.do', params, function (reply) {           
-				  	           
-								if ((reply || '') != '') {
-				  	               var code = reply._code;               
-				  	               if (code == '0') {  
-				  	            	   CommonUtils.showAlert('操作成功!');
-				  	            	   pageData["refresh"]();   	                   
-				  	               } else  {
-				  	            	  CommonUtils.showAlert(reply._msg);
-				  	             }              
-				  	           } else  {
-				  	        	      CommonUtils.showAlert('操作失败!');
-				  	           }
-				  	         },true);					 
-			                event.preventDefault();
-			                return false;
-			            },
-			            descriptions:{
-			            	"user.user_phone":{
-			                    required : '<div class="field-invalidmsg">请输入手机号码</div>',
-			                    pattern : '<div class="field-invalidmsg">您输入的手机号码格式不正确</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
-			                },
-			                "user.mail" : {
-			                    pattern : '<div class="field-invalidmsg">邮箱格式不对</div>',
-			                    valid : ''
-			                }
-			            }
-			     });
-			   
-				
-				$('select[data-am-selected]').selected({
-				    selectBox:1
-				  });
-				 
+<script language="javascript" type="text/javascript" >
+	$(function() {	
+		$("#acceptForm input[name='goodsOrder.goods_amount']").on("input",function(e){
+			
+			var amount = $(this).val();
+			if(amount <1){
+				CommonUtils.showAlert("购买数量不能小于1!");
+				$("#userProfileSubmit").attr("disabled",true);
+				return ;
+			}
+			checkCoin(amount);
+		});
+		
+		if($("#acceptForm select[name='goodsOrder.pay_type']")){
+			$("#acceptForm select[name='goodsOrder.pay_type']").on("change",function(e){
+				var amount = $("#acceptForm input[name='goodsOrder.goods_amount']").val();
+				if(amount <1){
+					CommonUtils.showAlert("购买数量不能小于1!");
+					$("#userProfileSubmit").attr("disabled",true);
+					return ;
+				}
+				checkCoin(amount);
 			});
-		</script>	
+		}
+		
+		$("#acceptForm input[name='goodsOrder.goods_amount']").trigger("input");
+		
+		function checkCoin(amount){
+			$("#userProfileSubmit").removeAttr("disabled");
+			var payTypeObj = $("#acceptForm input[name='goodsOrder.pay_type']");					
+			if(!payTypeObj){
+				payTypeObj = $("#acceptForm select[name='goodsOrder.pay_type']");						
+			}
+			var payType = payTypeObj.val();
+			if(!payType || payType == null){
+				CommonUtils.showAlert("没有支付方式，暂时不能购买!");
+				$("#userProfileSubmit").attr("disabled",true);
+				return ;
+			}
+			
+			var params = {};
+			params["goods.pay_type"] = payType;
+			params["goods.goods_amount"] = amount;
+			params["goods.goods_price"] = $("#acceptForm input[name='goods.goods_price']").val();
+			CommonUtils.invokeAsyncAction(base+'/Goods/checkCoin.do', params, function (reply) {           
+	  	        $("#coinAmountTip").empty("");   
+				if ((reply || '') != '') {
+  	               var code = reply._code;               
+  	               if (code == '0') {  
+  	            	   var ret = reply.ret;
+  	            	   if(ret.check == 0){
+  	            		 $("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额不足，余额为:"+ret.coin+"</div>"); 
+  	            		 $("#userProfileSubmit").attr("disabled",true);
+  	            	   }else{
+  	            		 $("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额为:"+ret.coin+"</div>"); 
+  	            	   }
+  	               }else{
+  	            	 $("#userProfileSubmit").attr("disabled",true);
+  	             }              
+  	           }else {
+  	        	 	$("#userProfileSubmit").attr("disabled",true);;
+  	           }
+  	         },true);
+		}
+		
+		$("#manRevAddBtn").on("click",function(){
+			var params={};
+			pageData.openContent(base+"/Goods/goodsRevAddrListForSel.do",params,"addrMngDiv");
+			if ($.AMUI.support.animation) {
+				$("#goodDetailDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
+					$("#goodDetailDiv").removeClass("am-animation-fade am-animation-reverse");
+					$("#goodDetailDiv").hide();
+					$("#addrMngDiv").show();
+					$("#addrMngDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
+						$("#addrMngDiv").removeClass("am-animation-fade");								
+			        });
+		        });						
+			}else{
+				$("#goodDetailDiv").hide();
+				$("#addrMngDiv").show();
+			}
+		});
+		
+		$("#continueBuyBtn").on("click",function(){
+			pageData.openContent(base+"/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />",null,"addrMngDiv");
+		});
+		
+		$("#queryOrderBtn").on("click",function(){
+			var orderCode = $("#orderCodeSpan").val();
+			pageData.openContent(base+"/Goods/queryUserOrder.do?goodsOrder.order_code="+orderCode,null);
+		});
+		$("#acceptForm").mvalidate({
+	            type:2,
+	            onKeyup:true,
+	            sendForm:false,
+	            firstInvalidFocus:true,
+	            valid:function(event,options){
+	                //点击提交按钮时,表单通过验证触发函数
+	                 var params = CommonUtils.getParam("acceptForm",false);			                 
+					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
+		  	           
+						if ((reply || '') != '') {
+		  	               var code = reply._code;               
+		  	               if (code == '0') {  
+		  	            	   var ret = reply.ret;
+		  	            	   CommonUtils.showAlert('操作成功!');
+		  	            	   $("#orderCodeSpan").val(ret.order_code);  
+		  	            	 if ($.AMUI.support.animation) {
+		  	   				 $("#goodDetailDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
+		  	   					$("#goodDetailDiv").removeClass("am-animation-fade am-animation-reverse");
+		  	   					$("#goodDetailDiv").hide();
+		  	   					$("#successTipDiv").show();
+		  	   					$("#successTipDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
+		  	   						$("#successTipDiv").removeClass("am-animation-fade");								
+		  	   			        });
+		  	   		         });						
+		  	   			}else{
+		  	   				$("#goodDetailDiv").hide();
+		  	   				$("#successTipDiv").show();
+		  	   			}
+		  	               } else  {
+		  	            	  CommonUtils.showAlert(reply._msg);
+		  	             }              
+		  	           } else  {
+		  	        	      CommonUtils.showAlert('操作失败!');
+		  	           }
+		  	         },true);					 
+	                event.preventDefault();
+	                return false;
+	            },
+	            descriptions:{
+	            	"user.user_phone":{
+	                    required : '<div class="field-invalidmsg">请输入手机号码</div>',
+	                    pattern : '<div class="field-invalidmsg">您输入的手机号码格式不正确</div>',
+	                    valid : '<div class="field-validmsg">验证通过</div>'
+	                },
+	                "user.mail" : {
+	                    pattern : '<div class="field-invalidmsg">邮箱格式不对</div>',
+	                    valid : ''
+	                }
+	            }
+	     });
+	   
+		
+		$('select[data-am-selected]').selected({
+		    selectBox:1
+		  });
+		 
+	});
+	
+	function confirmAddr(addr){
+		if(addr){
+			$("#acceptForm input[name='goodsOrder.rev_people']").val(addr.revPeople);
+			$("#acceptForm input[name='goodsOrder.rev_addr']").val(addr.revAddr);
+			$("#acceptForm input[name='goodsOrder.rev_link_phone']").val(addr.revLinkPhone);
+			$("#acceptForm input[name='goodsOrder.rev_area']").val(addr.addrArea);
+		}
+	}
+	
+	function goAccept(){					
+		if ($.AMUI.support.animation) {
+			$("#addrMngDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
+				$("#addrMngDiv").removeClass("am-animation-fade am-animation-reverse");
+				$("#addrMngDiv").hide();
+				$("#goodDetailDiv").show();
+				$("#goodDetailDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
+					$("#goodDetailDiv").removeClass("am-animation-fade");								
+		        });
+	        });						
+		}else{
+			$("#addrMngDiv").hide();
+			$("#goodDetailDiv").show();
+		}
+	};
+</script>	

@@ -37,7 +37,7 @@
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value>root123</value>
+			<value>zzulixikun</value>
 		</property>
 		<property name="initialSize"><value>5</value></property>  
 	    <property name="maxActive"><value>32</value></property>

@@ -422,13 +422,23 @@ var CommonUtils={
     	$("#"+scope+" select[db_field]").each(function(i){
     		$field=$(this);
     		var fieldName=$field.attr("db_field");
+    		var useText = $field.attr("use_text");
     		var value = $field.val();
+    		if(useText){
+				value = $field.find('option').eq(this.selectedIndex).text();
+				value = $.trim(value);
+			}
     		var isLike = $field.attr("is_like");
     		var needEncode = $field.attr("need_encode");
     		var comboname = $field.attr("comboname");
+    		
     		if(comboname){
     			value = $("input[name='"+comboname+"']").val();
+    			if(useText){
+    				value = $("input[name='"+comboname+"']").text();
+    			}
     		}
+    		
     		if( isLike == '1'){
     			value="%"+value+"%"; 
     		}

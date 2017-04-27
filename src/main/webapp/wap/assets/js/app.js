@@ -135,8 +135,11 @@ var pageData={
 				}			
 			});    	  
 	  },	 
-	 openContent:function($url,data){
-		 $main = $("#mainContent");
+	 openContent:function($url,data,targetElement){
+		 if(!targetElement){
+			 targetElement = "mainContent";
+		 }
+		 $main = $("#"+targetElement);
 		 if($url==null || $url==""){
 			 return;
 		 }

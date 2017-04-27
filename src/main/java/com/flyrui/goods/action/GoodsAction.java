@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.flyrui.common.DateUtil;
@@ -39,9 +40,9 @@ import com.flyrui.goods.service.TbChinaAreaService;
 @Results({
 		@Result(name="goodsList", location = "/wap/goods/goodsList.jsp"),
 		@Result(name="goodsDetail", location = "/wap/goods/goodsDetail.jsp"),
-		@Result(name="queryUserOrder", location = "wap/goods/queryUserOrder.jsp"),	
-		@Result(name="goodsRevAddrEdit", location = "wap/goods/goodsRevAddrEdit.jsp"),
-		@Result(name="goodsRevAddrList", location = "wap/goods/goodsRevAddr.jsp"),
+		@Result(name="queryUserOrder", location = "/wap/goods/queryUserOrder.jsp"),	
+		@Result(name="goodsRevAddrEdit", location = "/wap/goods/goodsRevAddrEdit.jsp"),
+		@Result(name="goodsRevAddrList", location = "/wap/goods/goodsRevAddr.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -63,6 +64,8 @@ public class GoodsAction extends BaseAction {
 	public int page;//当前页号
 	
 	public String ids;
+	
+	public String url;
 	
 	@Autowired
 	public GoodsService goodsService;	
@@ -123,15 +126,24 @@ public class GoodsAction extends BaseAction {
 		goods.setState("1");
 		goods.setEff_date(new Date());
 		goods.setExp_date(new Date());
-		 
-    	List<Goods> goodsList = goodsService.getListByCon(goods);
+		Goods g = new Goods();
+		BeanUtils.copyProperties(goods, g);
+		g.setGoods_amount(null);
+    	List<Goods> goodsList = goodsService.getListByCon(g);
     	if(goodsList.size()==0){
     		throw new FRException(new FRError("GOODS_001"));
     	}
     	Integer goodsAmount = goods.getGoods_amount();
     	goods = goodsList.get(0);    	
-    	goods.setGoods_amount(goodsAmount);   	
+    	goods.setGoods_amount(goodsAmount);  
     	
+    	//获取默认收货地址
+    	goodsRevAddr.setUser_id(getUserId());
+    	goodsRevAddr.setIs_default("1");
+    	List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddr);
+    	if(retList.size()>0){
+    		goodsRevAddr = retList.get(0);
+    	}
     	return "goodsDetail";
     }
 	
@@ -140,15 +152,16 @@ public class GoodsAction extends BaseAction {
 		
 		if(goods.getPay_type()==null && goods.getGoods_amount() == null && goods.getGoods_price()==null){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
-		}
+		}	
 		
 		AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
     	String payType = goods.getPay_type();
     	String checkCoin = "0";
-    	Double totalFee = goods.getGoods_amount()*goods.getGoods_price()/100;
+    	Double totalFee = goods.getGoods_amount()*goods.getGoods_price();
     	//查询用户的账户信息，提示用户的
+    	int coin = 0;
     	if(retAccoutInfoDto!=null){
     		Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
     		Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
@@ -156,14 +169,17 @@ public class GoodsAction extends BaseAction {
     			if(electCoin>=totalFee){
     				checkCoin = "1";
     			}
+    			coin = electCoin.intValue();
     		}else if("3".equals(payType)){//重销币
     			if(reconsmpCoin>=totalFee){
     				checkCoin = "1";
     			}
+    			coin = reconsmpCoin.intValue();
     		}
     	}
     	Map<String, String> retMap = new HashMap<String, String>();
     	retMap.put("check", checkCoin);
+    	retMap.put("coin", coin+"");
     	setResult(retMap);
 		return SUCCESS;
 	}
@@ -180,7 +196,7 @@ public class GoodsAction extends BaseAction {
 		if(goodsOrder.getGoods_amount()<1){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
-		
+		goods = new Goods();
 		goods.setGoods_id(goodsOrder.getGoods_id());
 		goods.setState("1");
 		goods.setEff_date(new Date());
@@ -196,12 +212,17 @@ public class GoodsAction extends BaseAction {
 		goodsOrder.setOrd_ip(getIp());
 		goodsOrder.setState("0");
     	goodsService.accept(goods, goodsOrder,getLoginUserInfo());//用于事务
-    	setCommonSuccessReturn();
+    	GoodsOrder goodsOrderLocal = new GoodsOrder();
+    	goodsOrderLocal.setOrder_code(goodsOrder.getOrder_code());
+    	setResult(goodsOrderLocal);
 		return SUCCESS;
 	}
 	
 	@Action("goodsRevAddrList")
 	public String goodsRevAddrList(){
+		if(url==null){
+			url="/Goods/goodsRevAddrList.do";
+		}
 		goodsRevAddr.setUser_id(getUserId());
 		if(rows==0){
     		rows=5;
@@ -212,6 +233,12 @@ public class GoodsAction extends BaseAction {
 		PageModel pageModel = goodsRevAddrService.getPagerListByCon(goodsRevAddr, page, rows);
 		setResult(pageModel);
 		return "goodsRevAddrList";
+	}
+	
+	@Action("goodsRevAddrListForSel")
+	public String goodsRevAddrListForSel(){
+		url="/Goods/goodsRevAddrListForSel.do";
+		return goodsRevAddrList();
 	}
 	
 	@Action("goodsRevAddrEdit")
@@ -230,28 +257,50 @@ public class GoodsAction extends BaseAction {
 		tbChinaArea.setLevel(2);
 		List<TbChinaArea> provList = tbChinaAreaService.getListByCon(tbChinaArea);
 		areaMap.put("prov",provList);
+		if(goodsRevAddr.getRev_provice()==null){
+			goodsRevAddr.setRev_provice("河南省");
+		}
+		
 		if(provList.size()>0){
-			TbChinaArea provAare = provList.get(0);
+			TbChinaArea provAare = null;
+			for(TbChinaArea tProv : provList){
+				if(tProv.getName().equals(goodsRevAddr.getRev_provice())){
+					provAare = tProv;
+					break;
+				}
+			}
+			if(provAare==null){
+				provAare = provList.get(0);
+			}
 			tbChinaArea.setPid(provAare.getId());
 			tbChinaArea.setLevel(3);
 			List<TbChinaArea> provList2 = tbChinaAreaService.getListByCon(tbChinaArea);
 			areaMap.put("zone",provList2);
-			if(provList.size()>0){
-				TbChinaArea zoneAare = provList.get(0);
+			if(provList2.size()>0){
+				TbChinaArea zoneAare = null;
+				for(TbChinaArea tProv : provList2){
+					if(tProv.getName().equals(goodsRevAddr.getRev_city())){
+						zoneAare = tProv;
+						break;
+					}
+				}
+				if(zoneAare==null){
+					zoneAare = provList2.get(0);
+				}
 				tbChinaArea.setPid(zoneAare.getId());
 				tbChinaArea.setLevel(4);
 				List<TbChinaArea> provList3 = tbChinaAreaService.getListByCon(tbChinaArea);
 				areaMap.put("xian",provList3);
 			}
 		}
-		
+		setResult(areaMap);
 		return "goodsRevAddrEdit";
 	}
 	
 	@Action("goodsRevAddrUpdate")
     public String goodsRevAddrUpdate(){
 		if(goodsRevAddr.getAddr_id() !=null){
-			goodsRevAddr.setUser_id(getUserId());
+			goodsRevAddr.setUser_id(getUserId());			
 			goodsRevAddrService.update(goodsRevAddr);
 		}else{
 			String addrId = commonService.getSequence("seq_goods_revaddr_id");
@@ -259,6 +308,13 @@ public class GoodsAction extends BaseAction {
 			goodsRevAddr.setAddr_id(Integer.parseInt(addrId));
 			goodsRevAddr.setCreate_date(new Date());
 			goodsRevAddr.setState("1");
+			GoodsRevAddr goodsRevAddrTemp = new GoodsRevAddr();
+			goodsRevAddrTemp.setUser_id(getUserId());
+			//查询是否已有收货地址，如果没有，则设置第一个为默认地址
+			List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddrTemp);
+			if(retList.size() == 0){
+				goodsRevAddr.setIs_default("1");
+			}
 			goodsRevAddrService.insert(goodsRevAddr);
 		}
 		setCommonSuccessReturn();
@@ -266,11 +322,20 @@ public class GoodsAction extends BaseAction {
     }
 	
 	@Action("getNextLevelAddr")
-    public String getNextLevelAddr(){
+    public String getNextLevelAddr() throws FRException{
 		List<TbChinaArea> retList = new ArrayList<TbChinaArea>();
 		if(ids !=null){
+			Integer id = null;
+			try{
+				id = Integer.parseInt(ids);
+			}catch(Exception ex){
+				throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+			}
 			TbChinaArea tbChinaArea = new TbChinaArea();
+			tbChinaArea.setPid(id);
 			retList = tbChinaAreaService.getListByCon(tbChinaArea);
+		}else{
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
 		setResult(retList);
     	return SUCCESS;
@@ -290,4 +355,22 @@ public class GoodsAction extends BaseAction {
     	return "queryUserOrder";
     }
     
+	 @Action("delGoodsRevAddr")
+    public String delGoodsRevAddr() throws FRException{
+    	
+    	if(ids==null){
+    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+    	}    	
+    	String userId = getUserId();
+    	String[] idStr = ids.split(";");
+    	goodsRevAddr.setUser_id(userId);
+    	goodsRevAddr.setAddr_id(Integer.parseInt(idStr[0]));    	
+    	int cnt = goodsRevAddrService.delete(goodsRevAddr);
+    	if(cnt==0){
+    		throw new FRException(new FRError("SYS_ERR010"));
+    	}else{
+    		setCommonSuccessReturn();
+    	}
+    	return SUCCESS;
+    }
 }
