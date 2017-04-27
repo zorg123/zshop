@@ -1,12 +1,15 @@
 package com.flyrui.goods.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
+import com.flyrui.common.service.CommonService;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
@@ -92,5 +95,13 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 	@Override
 	public List<Goods> selectGoodsByIdForUpdate(Goods goods){
 		return baseDao.selectList(getNameSpace()+".selectGoodsByIdForUpdate", goods);
+	}
+	
+	@Override
+	public int insert(Goods goods){
+		String goodsId = "00000000"+getSequence("seq_goods_id");
+		goodsId = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsId.substring(goodsId.length()-8);
+		goods.setGoods_id(goodsId);
+		return baseDao.insert(getNameSpace()+".insert", goods);
 	}
 }

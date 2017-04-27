@@ -160,6 +160,7 @@ public class AttachementAction extends BaseAction {
 		infoFileService.insert(infoFile);
 		retMap.put("id", id);
 		retMap.put("fileName", fileName);
+		retMap.put("fileUrl", File.separator+Const.DEFAULT_UPLOAD_FILE_HOME_DIR+fkey);
 		retMap.put("code", "0");
 		setResult(retMap);
     	return SUCCESS;

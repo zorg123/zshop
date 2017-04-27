@@ -25,8 +25,10 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
+import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
 import com.flyrui.goods.service.GoodsOrderService;
+import com.flyrui.goods.service.GoodsService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
 import com.flyrui.salary.service.SalaryService;
 import com.flyrui.sys.service.FrconfigService;
@@ -47,6 +49,8 @@ public class GoodsMgmtAction extends BaseAction {
 	
 	private GoodsOrder goodsOrder;
 	
+	private Goods goods;
+	
 	public int rows; //每页大小
 	
 	public int page;//当前页号
@@ -54,9 +58,19 @@ public class GoodsMgmtAction extends BaseAction {
 	@Autowired
 	public GoodsOrderService goodsOrderService;
 	
+	@Autowired
+	public GoodsService goodsService;
+	
 	@Action(value="getPagerListByCon")
 	public String getPagerListByCon(){
     	PageModel<CoreUser> pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
+    	setResult(pageModel);
+    	return SUCCESS;
+    }
+	
+	@Action(value="getPagerListByConGoodsConfig")
+	public String getPagerListByConGoodsConfig(){
+    	PageModel<CoreUser> pageModel = goodsService.getPagerListByCon(goods, page, rows);
     	setResult(pageModel);
     	return SUCCESS;
     }
@@ -79,6 +93,13 @@ public class GoodsMgmtAction extends BaseAction {
         inputStream =new ByteArrayInputStream(content);
         return "excel";    	   	
     }
+	
+	@Action(value="insertGoodsConfig")
+	public String insertGoodsConfig(){
+		int ret = goodsService.insert(goods);
+		setResult(ret);
+    	return SUCCESS;
+    }
 
 	public GoodsOrder getGoodsOrder() {
 		return goodsOrder;
@@ -86,6 +107,14 @@ public class GoodsMgmtAction extends BaseAction {
 
 	public void setGoodsOrder(GoodsOrder goodsOrder) {
 		this.goodsOrder = goodsOrder;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
 	}
 	
 }
