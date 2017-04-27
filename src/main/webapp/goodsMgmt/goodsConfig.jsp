@@ -57,6 +57,10 @@
 
 <div id="win_save" iconCls="icon-save" title="商品配置" style="background:#fafafa;padding:10px;display: none;">
     <table>
+    	<tr style="display: none;">
+    		<td>商品id:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="goods_id" style="width:200px"/></td>
+    	</tr>
     	<tr>
     		<td>商品名称:</td>
     		<td colspan="3"> <input class="easyui-validatebox" type="text" name="goods_name" style="width:200px"/></td>
@@ -64,7 +68,7 @@
     	<tr>
     		<td>所属模块:</td>
     		<td colspan="3">
-    			<select class="easyui-combobox" name="catalog_id" style="width:200px;">
+    			<select class="easyui-combobox" name="catalog_id" id = "catalog_id" style="width:200px;">
 	                <option value="1">精品拼团</option>
 	                <option value="2">即时拼团</option>
             	</select>
@@ -76,7 +80,7 @@
     	</tr>
     	<tr>
     		<td>购买积分类型:</td>
-    		<td colspan="3"> <input type="checkbox" name="pay_type" checked="checked" value="2"/>电子积分<input type="checkbox" name="pay_type" value="3"  />重消积分</td>
+    		<td colspan="3"> <input type="checkbox" name="pay_type" checked="checked" value="2"/>电子积分<input type="checkbox" name="pay_type" value="3"/>重消积分</td>
     	</tr>
     	<tr>
     		<td>简单描述:</td>
@@ -85,22 +89,22 @@
     	</tr>
     	<tr>
     		<td>状态:</td>
-    		<td colspan="3"> <select class="easyui-combobox" name="state" style="width:200px;">
-	                <option value="0">无效</option>
-	                <option value="1" selected="true">有效</option>
+    		<td colspan="3"> <select class="easyui-combobox" name="state" id="state" style="width:200px;">
+	                <option value="0">未发布</option>
+	                <option value="1" selected="true">已发布</option>
             	</select></td>
     	</tr>
     	<tr>
     		<td>生效时间:</td>
-    		<td colspan="3"> <input type="text" name="eff_date" class="easyui-datetimebox" style="width:200px;"/></td>
+    		<td colspan="3"> <input type="text" name="eff_date" id="eff_date" class="easyui-datetimebox" style="width:200px;"/></td>
     	</tr>
     	<tr>
     		<td>失效时间:</td>
-    		<td colspan="3"> <input type="text" name="exp_date" class="easyui-datetimebox" style="width:200px;"/></td>
+    		<td colspan="3"> <input type="text" name="exp_date" id="exp_date" class="easyui-datetimebox" style="width:200px;"/></td>
     	</tr>
 		<tr style="width:100%;height:35px"> 
 			<td>       	
-			<label>附件：</label>
+			<label>商品图片：</label>
 			</td>
 			<td colspan="3">
 				<div id="fileDownload">

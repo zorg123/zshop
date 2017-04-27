@@ -199,9 +199,6 @@
    		<if test="goods_alias != null  and goods_alias != '' " >
       		goods_alias = #{goods_alias,jdbcType=VARCHAR},
    		</if>
-   		<if test="state != null  and state != '' " >
-      		state = #{state,jdbcType=VARCHAR},
-   		</if>
    		<if test="eff_date != null " >
       		eff_date = #{eff_date,jdbcType=TIMESTAMP},
    		</if>
@@ -251,11 +248,12 @@
       		goods_keywords = #{goods_keywords,jdbcType=VARCHAR},
    		</if>
    		<if test="goods_descriptions != null  and goods_descriptions != '' " >
-      		goods_descriptions = #{goods_descriptions,jdbcType=VARCHAR}
+      		goods_descriptions = #{goods_descriptions,jdbcType=VARCHAR},
    		</if>
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR}
+   		</if>
+    where goods_id = #{goods_id,jdbcType=VARCHAR}
     
   </update>
   <select id="selectGoodsByIdForUpdate" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.Goods" >

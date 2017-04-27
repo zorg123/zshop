@@ -1,3 +1,4 @@
+var operType = "save";
 var commMng = {
     save: function () {
         var goods_name = $('input[name="goods_name"]').val();
@@ -57,9 +58,11 @@ var commMng = {
         }
         //alert("图片URL=="+icon_url);
         //alert("图片下载地址=="+pic_url);
-        if(icon_url=="" || icon_url==undefined || pic_url=="" || pic_url==undefined){
-        	$.messager.alert('系统提示', '请上传商品图片!', 'info');
-        	return;
+        if(operType=='save'){
+        	if(icon_url=="" || icon_url==undefined || pic_url=="" || pic_url==undefined){
+            	$.messager.alert('系统提示', '请上传商品图片!', 'info');
+            	return;
+            }
         }
         var param ={};
         param["goods.goods_name"] = $('input[name="goods_name"]').val();
@@ -73,23 +76,50 @@ var commMng = {
         param["goods.state"] = $('input[name="state"]').val();
         param["goods.eff_date"] = $('input[name="eff_date"]').val();
         param["goods.exp_date"] = $('input[name="exp_date"]').val();
-        param["goods.icon_url"] = icon_url;
-        param["goods.pic_url"] = pic_url;
+        if(operType=='save'){
+        	 param["goods.icon_url"] = icon_url;
+             param["goods.pic_url"] = pic_url;
+        }
+        if(operType=='edit'){
+        	if(icon_url!="" && pic_url!=""){
+        		 param["goods.icon_url"] = icon_url;
+                 param["goods.pic_url"] = pic_url;
+        	}
+       }
         var me = this;
-        CommonUtils.invokeAsyncAction(base+'/GoodsMgmt/insertGoodsConfig.do', param, function (reply) {
-			if((reply || '') !=''){
-				var code = reply._code;
-		         if(code=='0'){
-		        	$.messager.alert('系统提示', '添加成功!', 'info');
-		        	me.clear();
-	                me.refresh();
-		        	me.close();
-		         }else{
-		        	$.messager.alert('系统提示', '添加失败!', 'info');
-		 	   		return false;
-		         }
-			}			
-        });
+        if(operType=='save'){
+        	 CommonUtils.invokeAsyncAction(base+'/GoodsMgmt/insertGoodsConfig.do', param, function (reply) {
+     			if((reply || '') !=''){
+     				var code = reply._code;
+     		         if(code=='0'){
+     		        	$.messager.alert('系统提示', '添加成功!', 'info');
+     		        	me.clear();
+     	                me.refresh();
+     		        	me.close();
+     		         }else{
+     		        	$.messager.alert('系统提示', '添加失败!', 'info');
+     		 	   		return false;
+     		         }
+     			}			
+             });
+        }
+        if(operType=='edit'){
+        	param["goods.goods_id"] = $('input[name="goods_id"]').val();
+        	CommonUtils.invokeAsyncAction(base+'/GoodsMgmt/editGoodsConfig.do', param, function (reply) {
+     			if((reply || '') !=''){
+     				var code = reply._code;
+     		         if(code=='0'){
+     		        	$.messager.alert('系统提示', '修改成功!', 'info');
+     		        	me.clear();
+     	                me.refresh();
+     		        	me.close();
+     		         }else{
+     		        	$.messager.alert('系统提示', '修改失败!', 'info');
+     		 	   		return false;
+     		         }
+     			}			
+             });
+        }
     },
     refresh: function () {
         $('#commList').datagrid('reload');
@@ -211,6 +241,37 @@ var commMng = {
 			retVal = "重消积分";
 		}
 		return retVal;
+  },
+  deleteGoods:function(obj){
+	  var me = this;
+	  var param = {};
+	  param["goods.goods_id"] = obj;
+	  CommonUtils.invokeAsyncAction(base+'/GoodsMgmt/deleteGoodsConfig.do', param, function (reply) {
+		if((reply || '') !=''){
+			var code = reply._code;
+	         if(code=='0'){
+	        	$.messager.alert('系统提示', '删除成功!', 'info');
+                me.refresh();
+	         }else{
+	        	$.messager.alert('系统提示', '删除失败!', 'info');
+	 	   		return false;
+	         }
+		}			
+      });  
+  },
+  initEdit:function(obj){
+	  operType = "edit";
+	  $('input[name="goods_id"]').val(obj.goods_id);
+	  $('input[name="goods_name"]').val(obj.goods_name);
+	  $('#catalog_id').combobox('setValue',obj.catalog_id);
+	  $('input[name="goods_price"]').val(obj.goods_price);
+	  $('input[name="goods_desc"]').val(obj.goods_desc);
+	  //购买积分类型
+	  $('#goods_desc').textbox('setText', obj.goods_desc);
+	  $('#state').combobox('setValue',obj.state);
+	  $("#eff_date").datetimebox('setValue',obj.eff_date);
+	  $("#exp_date").datetimebox('setValue',obj.exp_date);
+	  $("#_easyui_textbox_input2").val(obj.icon_url);
   }
 }
 
@@ -231,43 +292,57 @@ $(function () {
                 text: '新增',
                 iconCls: 'icon-add',
                 handler: function () {
-                    sign = 'save';
-                    $('#win_save').attr('title', '会员充值');
-                    //commMng.clear();
+                    operType = "save";
+                    $('#win_save').attr('title', '商品配置');
+                    commMng.clear();
                     $('#win_save').show();
                     $('#win_save').window({
                         width: 450,
-                        height: 400,
+                        height: 450,
                         modal: true
                     });
                 }
             },'-',
             {
-            	text: '导出',
-                iconCls: 'icon-redo',
-                handler: function () {                 
-                	var user_code = $('input[name="query_user_code"]').val();
-	                var start_time = $('input[name="start_time"]').val();
-	                var end_time = $('input[name="end_time"]').val();
-	                
-            	    var strParam = "coinTrackDto.user_code="+user_code;
-            	    strParam += "&coinTrackDto.start_time="+start_time;
-            	    strParam += "&coinTrackDto.end_time="+end_time;  
-            	    var url = base+"/FinancMgmt/eportCoinTrackRec.do?"+strParam;
-            	    //alert(url);
-            	    if(parent.parent.document){
-						parent.document.location.href=url;
-					}else if(parent.document){
-						parent.document.location.href=url;
-					}else{
-						document.location.href=url;
-					}                    
+                text: '删除',
+                iconCls: 'icon-remove',
+                handler: function () {
+                    var row = $('#commList').datagrid('getSelected');
+                    if (null == row) {
+                        $.messager.alert('系统提示', '请选择要删除的记录!', 'info');
+                        return;
+                    }
+                    $.messager.confirm('系统提示', '是否删除？', function (r) {
+                        if (r) {
+                        	commMng.deleteGoods(row.goods_id);
+                        }
+                    })
+                }
+            },'-',
+            {
+            	text: '修改',
+                iconCls: 'icon-undo',
+                handler: function () {
+	                var row = $('#commList').datagrid('getSelected');
+	                if (null == row) {
+	                    $.messager.alert('系统提示', '请选择要修改的记录!', 'info');
+	                    return;
+	                }
+	                commMng.clear();
+	                commMng.initEdit(row);
+	                $('#win_save').attr('title', '修改配置');
+	                $('#win_save').show();
+	                $('#win_save').window({
+	                	 width: 450,
+	                     height: 400,
+	                     modal: true
+	                });
                 }
             }
         ]
     });
     $('#save').click(function () {
-    	commMng.clear();
+    	commMng.save();
     });
     $('#check').click(function () {
     	commMng.check();

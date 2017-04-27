@@ -100,6 +100,20 @@ public class GoodsMgmtAction extends BaseAction {
 		setResult(ret);
     	return SUCCESS;
     }
+	
+	@Action(value="deleteGoodsConfig")
+	public String deleteGoodsConfig(){
+		int ret = goodsService.delete(goods);
+		setResult(ret);
+    	return SUCCESS;
+    }
+	
+	@Action(value="editGoodsConfig")
+	public String editGoodsConfig(){
+		int ret = goodsService.update(goods);
+		setResult(ret);
+    	return SUCCESS;
+    }
 
 	public GoodsOrder getGoodsOrder() {
 		return goodsOrder;
