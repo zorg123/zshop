@@ -157,4 +157,10 @@
    		</if> 
     
   </update>
+  
+  <update id="updateDefaultAddrByUserId" parameterType="com.flyrui.goods.pojo.GoodsRevAddr">
+    update goods_rev_addr
+    	set  is_default = #{is_default,jdbcType=VARCHAR}
+     where user_id = #{user_id,jdbcType=VARCHAR}    
+  </update>
 </mapper>

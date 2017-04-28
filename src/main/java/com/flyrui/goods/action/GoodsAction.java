@@ -378,4 +378,25 @@ public class GoodsAction extends BaseAction {
     	}
     	return SUCCESS;
     }
+	 
+	 @Action("setDefaultRevAddr")
+	 public String setDefaultRevAddr() throws FRException{	    	
+	    	if(goodsRevAddr.getAddr_id() ==null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}   
+	    	
+	    	String userId = getUserId();	    	
+	    	goodsRevAddr.setUser_id(userId);
+	    	List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddr);
+	    	if(retList.size()==0){
+	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
+	    	}
+	    	int cnt = goodsRevAddrService.updateDefaultAddrByUserId(goodsRevAddr);
+	    	if(cnt==0){
+	    		throw new FRException(new FRError("SYS_ERR010"));
+	    	}else{
+	    		setCommonSuccessReturn();
+	    	}
+	    	return SUCCESS;
+	 }
 }

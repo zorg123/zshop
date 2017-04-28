@@ -43,6 +43,9 @@
 	                                <div class="am-btn-group am-btn-group-xs">
 	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
 	                                </div>
+	                                <div class="am-btn-group am-btn-group-xs">
+	                                    <button type="button" id="defaultBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>设为默认</button>
+	                                </div>
                                 </s:if>
                                 <%--如果是来选择地址的，显示选择和返回按钮 --%>
                                 <s:if test="url == '/Goods/goodsRevAddrListForSel.do'"> 
@@ -194,6 +197,46 @@
 		$("#delBtn").on("click",function(){
 			delUser();
 		});
+	}
+	if($("#defaultBtn")){
+		$("#defaultBtn").on("click",function(){
+			var addrList = [];
+			$.each($("#listForm input:checked"),function(i,v){
+				var addr={};
+				addr["addrId"] =  $(this).attr("addrId");
+				addr["revAddr"] =  $(this).attr("revAddr");
+				addr["revPeople"] =  $(this).attr("revPeople");
+				addr["revLinkPhone"] =  $(this).attr("revLinkPhone");	
+				addr["addrArea"] =  $(this).attr("addrArea");
+				addrList.push(addr);
+			});
+			if(addrList.length==0){
+				CommonUtils.showAlert("请先选择要操作的记录!");
+				return;
+			}
+			if(addrList.length>1){
+				CommonUtils.showAlert("只能选择一条记录!");
+				return;
+			}
+			var param ={};
+			param["goodsRevAddr.addr_id"] = addrList[0].addrId;
+			
+			CommonUtils.showConfirm("确定要设置此地址 '"+addrList[0].revAddr+"' 为默认地址吗?",function(){				
+				CommonUtils.invokeAsyncAction(base+'/Goods/setDefaultRevAddr.do', param, function (reply) {
+		  	           if ((reply || '') != '') {
+		  	               var code = reply._code;               
+		  	               if (code == '0') {  
+		  	            	 CommonUtils.showAlert('操作成功!');
+		  	            	 if(jump){jump()}; 	                   
+		  	               } else  {
+		  	            	  CommonUtils.showAlert(reply._msg);
+		  	               }              
+		  	           } else  {
+		  	        	      CommonUtils.showAlert('操作失败!');
+		  	           }
+		  	    },true);
+			});
+	   });
 	}
 	if($("#selBtn")){
 		$("#selBtn").on("click",function(){		

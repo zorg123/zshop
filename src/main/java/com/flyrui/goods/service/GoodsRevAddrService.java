@@ -15,5 +15,7 @@ public interface GoodsRevAddrService {
 	
 	public List<GoodsRevAddr> getListByCon(GoodsRevAddr goodsRevAddr);
 	
-	public PageModel getPagerListByCon(GoodsRevAddr goodsRevAddr,int pageNo,int pageSize);	
+	public PageModel getPagerListByCon(GoodsRevAddr goodsRevAddr,int pageNo,int pageSize);
+	
+	public int updateDefaultAddrByUserId(GoodsRevAddr goodsRevAddr);
 }
