@@ -314,6 +314,8 @@ public class GoodsAction extends BaseAction {
 			List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddrTemp);
 			if(retList.size() == 0){
 				goodsRevAddr.setIs_default("1");
+			}else{
+				goodsRevAddr.setIs_default("0");
 			}
 			goodsRevAddrService.insert(goodsRevAddr);
 		}

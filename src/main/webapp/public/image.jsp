@@ -52,8 +52,8 @@ graphics.setColor(new Color(0, 0, 0));
 String valid_code = "";
 String code = "";
 graphics.setFont(new Font("Atlantic Inline",Font.PLAIN,18));
-//String s="0123456789"; // 设置备选验证码:数字"0-9" 
-String s="abcdefghijklmnopqrstuvwxyz0123456789"; // 设置备选验证码:包括"a-z"和数字"0-9" 
+String s="0123456789"; // 设置备选验证码:数字"0-9" 
+//String s="abcdefghijklmnopqrstuvwxyz0123456789"; // 设置备选验证码:包括"a-z"和数字"0-9" 
 //String s="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // 设置备选验证码:包括"a-z"和数字"0-9" 
 String sRand=""; 
   for(int i=0;i<4;i++){ 
