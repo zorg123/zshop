@@ -677,7 +677,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .dashboard-stat .visual {
     width: 80px;
-    height: 80px;
+    height: 60px;
     display: block;
     float: left;
     padding-top: 10px;
@@ -710,9 +710,9 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .dashboard-stat .details .number {
-    padding-top: 25px;
+    padding-top: 10px;
     text-align: right;
-    font-size: 34px;
+    font-size: 16px;
     line-height: 36px;
     letter-spacing: -1px;
     margin-bottom: 0;
@@ -727,7 +727,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .dashboard-stat .details .desc {
     text-align: right;
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 0;
     font-weight: 300;
 }
@@ -1721,6 +1721,8 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     color: #888;
     font-weight: inherit;
     text-align: right;
+    padding-left:0px;
+    padding-right:0px;
 }
 
 .tpl-form-line-form .am-form-group {

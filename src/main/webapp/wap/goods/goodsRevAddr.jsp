@@ -39,16 +39,18 @@
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" id="modBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plug"></span>修改</button>
                                 </div>
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
-                                </div>
+                                <s:if test="url != '/Goods/goodsRevAddrListForSel.do'"> 
+	                                <div class="am-btn-group am-btn-group-xs">
+	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
+	                                </div>
+                                </s:if>
                                 <%--如果是来选择地址的，显示选择和返回按钮 --%>
                                 <s:if test="url == '/Goods/goodsRevAddrListForSel.do'"> 
                                 	<div class="am-btn-group am-btn-group-xs">
-                                    	<button type="button" id="selBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plug"></span>选择</button>
+                                    	<button type="button" id="selBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-check"></span>选择</button>
 	                                </div>
 	                                <div class="am-btn-group am-btn-group-xs">
-	                                    <button type="button" id="cancelBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>返回</button>
+	                                    <button type="button" id="cancelBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-arrow-left"></span>返回</button>
 	                                </div>
                                 </s:if>
                             </div>
@@ -90,7 +92,7 @@
                 </div> 
         </div>
         
-        <div class="tpl-portlet-components" id="addrModDiv" style="display:none">
+        <div class="tpl-portlet-components" id="addrModDiv" style="display:none;padding-bottom: 60px">
             	    				
         </div>
 <script language="javascript" type="text/javascript" >
@@ -188,40 +190,46 @@
 		}
 		edit(addrList);
 	})
-	$("#delBtn").on("click",function(){
-		delUser();
-	});
-	$("#selBtn").on("click",function(){		
-		var addrList = [];
-		$.each($("#listForm input:checked"),function(i,v){
-			var addr={};
-			addr["addrId"] =  $(this).attr("addrId");
-			addr["revAddr"] =  $(this).attr("revAddr");
-			addr["revPeople"] =  $(this).attr("revPeople");
-			addr["revLinkPhone"] =  $(this).attr("revLinkPhone");	
-			addr["addrArea"] =  $(this).attr("addrArea");
-			addrList.push(addr);
+	if($("#delBtn")){
+		$("#delBtn").on("click",function(){
+			delUser();
 		});
-		if(addrList.length==0){
-			CommonUtils.showAlert("请先选择记录!");
-			return;
-		}
-		if(addrList.length>1){
-			CommonUtils.showAlert("只能选择一条记录!");
-			return;
-		}
-		if(confirmAddr){
-			confirmAddr(addrList[0]);
-		}
-		if(goAccept){
-			goAccept();
-		}
-	})
-	$("#cancelBtn").on("click",function(){
-		if(goAccept){
-			goAccept();
-		}
-	})
+	}
+	if($("#selBtn")){
+		$("#selBtn").on("click",function(){		
+			var addrList = [];
+			$.each($("#listForm input:checked"),function(i,v){
+				var addr={};
+				addr["addrId"] =  $(this).attr("addrId");
+				addr["revAddr"] =  $(this).attr("revAddr");
+				addr["revPeople"] =  $(this).attr("revPeople");
+				addr["revLinkPhone"] =  $(this).attr("revLinkPhone");	
+				addr["addrArea"] =  $(this).attr("addrArea");
+				addrList.push(addr);
+			});
+			if(addrList.length==0){
+				CommonUtils.showAlert("请先选择记录!");
+				return;
+			}
+			if(addrList.length>1){
+				CommonUtils.showAlert("只能选择一条记录!");
+				return;
+			}
+			if(confirmAddr){
+				confirmAddr(addrList[0]);
+			}
+			if(goAccept){
+				goAccept();
+			}
+		})
+	}
+	if($("#cancelBtn")){
+		$("#cancelBtn").on("click",function(){
+			if(goAccept){
+				goAccept();
+			}
+		})
+	}
 	function goBack(){
 		if ($.AMUI.support.animation) {
 			$("#addrModDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {

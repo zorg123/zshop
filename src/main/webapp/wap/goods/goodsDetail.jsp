@@ -25,27 +25,27 @@
                             	<input type="hidden" name="goodsOrder.goods_id" db_field="goodsOrder.goods_id" value="<s:property value="goods.goods_id" />" />
                             	<input type="hidden" name="goodsOrder.goods_name" db_field="goodsOrder.goods_name" value="<s:property value="goods.goods_name" />" />
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品名称 </label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">商品名称 </label>
+                                    <div class="am-u-sm-9">
                                         <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="goods.goods_name" /></span> 
                                      </div>
                                 </div> 
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品类型 </label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">商品类型 </label>
+                                    <div class="am-u-sm-9">
                                         <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.catalog_id == 1" >精品拼团</s:if><s:else>即时拼团</s:else></span>
                                     </div>
                                 </div>                                  
                                 <div class="am-form-group">
-                                    <label for="user-name" class="am-u-sm-4 am-form-label">商品描述</label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label">商品描述</label>
+                                    <div class="am-u-sm-9">
                                         <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_desc" /></span> 
                                     </div>
                                 </div>
 								                              
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">商品价格</label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">商品价格</label>
+                                    <div class="am-u-sm-9">
                                     	<input type="hidden" name="goods.goods_price" db_field="goods.goods_price" value="<s:property value="goods.goods_price" />" />
                                         <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_price" /></span>
                                     </div>
@@ -53,8 +53,8 @@
                                                                 
                                 <s:if test="goods.pay_type == 2 || goods.pay_type == 3">
 	                                <div class="am-form-group">
-	                                    <label for="user-email" class="am-u-sm-4 am-form-label">支付方式</label>
-	                                    <div class="am-u-sm-8">   
+	                                    <label for="user-email" class="am-u-sm-3 am-form-label">支付方式</label>
+	                                    <div class="am-u-sm-9">   
 	                                        <input type="hidden" name="goodsOrder.pay_type" db_field="goodsOrder.pay_type" value="<s:property value="goods.pay_type" />" />                                     
 	                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.pay_type == 2" >电子币</s:if><s:if test="goods.pay_type == 3" >重消币</s:if></span>
 	                                    </div>
@@ -62,8 +62,8 @@
                                 </s:if>
                                 <s:elseif test="goods.pay_type=='2,3'">
                                 	<div class="am-form-group">
-	                                    <label for="user-phone" class="am-u-sm-4 am-form-label">支付类型</label>
-	                                    <div class="am-u-sm-8">
+	                                    <label for="user-phone" class="am-u-sm-3 am-form-label">支付类型</label>
+	                                    <div class="am-u-sm-9">
 	                                        <select data-am-selected db_field="goodsOrder.pay_type" name="goodsOrder.pay_type" >
 											  <option value="2" selected>电子币</option>
 											  <option value="3">重消币</option>
@@ -72,16 +72,16 @@
 	                                </div>
                                 </s:elseif>
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">购买数量</label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">购买数量</label>
+                                    <div class="am-u-sm-9">
                                         <input type="number" db_field="goodsOrder.goods_amount" pattern="[0-9]*" name="goodsOrder.goods_amount" placeholder="输入你要购买的数量" value="<s:property value="goods.goods_amount" />">
                                         <small id="coinAmountTip"></small> 
                                     </div>
                                 </div>
                                 
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-4 am-form-label">收货地址</label>
-                                    <div class="am-u-sm-8">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">收货信息：</label>
+                                    <div class="am-u-sm-9">
                                     	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_people" name="goodsOrder.rev_people" value="<s:property value="goodsRevAddr.rev_people"/>" readonly/>
                                     	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_link_phone" name="goodsOrder.rev_link_phone" value="<s:property value="goodsRevAddr.rev_link_phone"/>" readonly/>
                                         <input type="hidden" db_field="goodsOrder.rev_area" name="goodsOrder.rev_area" value="<s:property value="goodsRevAddr.rev_provice"/>" readonly/>
@@ -91,7 +91,7 @@
                                 </div>                               
 
                                 <div class="am-form-group">
-                                    <div class="am-u-sm-8 am-u-sm-push-3">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
                                         <input type="submit" id="userProfileSubmit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交"></input>                                    	
                                     </div>
                                 </div>

@@ -32,31 +32,31 @@
                            </div>
                       </div> 
                       <div class="am-form-group">
-                          <label for="user-email" class="am-u-sm-3 am-form-label">收货人联系电话 </label>
+                          <label for="user-email" class="am-u-sm-3 am-form-label">联系电话 </label>
                           <div class="am-u-sm-9">                             
                               	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsRevAddr.rev_link_phone"  data-required="true"  value="<s:property value="goodsRevAddr.rev_link_phone" />" name="goodsRevAddr.rev_link_phone" placeholder="请输入收货人联系电话" data-descriptions="goodsRevAddr.rev_link_phone" data-describedby="goodsRevAddr.rev_link_phone-description"/>
                              <small id="goodsRevAddr.rev_link_phone-description"></small>
                           </div>
                       </div>                                  
                       <div class="am-form-group">
-                          <label for="user-name" class="am-u-sm-3 am-form-label">收货人地址</label>
+                          <label for="user-name" class="am-u-sm-3 am-form-label">联系地址</label>
                           <div class="am-u-sm-9">
 								<div class="am-form-group">
-									<div class="am-u-sm-4">
+									<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
 	                                <select id="provSel" data-am-selected  db_field="goodsRevAddr.rev_provice" value="<s:property value="goodsRevAddr.rev_provice" />" name="goodsRevAddr.rev_provice"  data-descriptions="goodsRevAddr.rev_provice" data-describedby="goodsRevAddr.rev_provice-description" data-am-dropdown="{boundary: '#provSel'}" use_text="true">
 		  								<s:iterator  value="#areaMap.prov"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_provice == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
 		  								</s:iterator>  								
 								 	</select>
 								 	</div>
-								 	<div class="am-u-sm-4">
+								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
 								 	<select id="zoneSel" data-am-selected db_field="goodsRevAddr.rev_city" value="<s:property value="goodsRevAddr.rev_city" />" name="goodsRevAddr.rev_city"  data-descriptions="goodsRevAddr.rev_city" data-describedby="goodsRevAddr.rev_city-description" use_text="true">
 		  								<s:iterator  value="#areaMap.zone"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_city == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
 		  								</s:iterator>  								
 								 	</select>
 								 	</div>
-								 	<div class="am-u-sm-4">
+								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
 								 	<select id="xianSel" data-am-selected db_field="goodsRevAddr.rev_zone" value="<s:property value="goodsRevAddr.rev_zone" />" name="goodsRevAddr.rev_zone"  data-descriptions="goodsRevAddr.rev_zone" data-describedby="goodsRevAddr.rev_zone-description" use_text="true">
 		  								<s:iterator  value="#areaMap.xian"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_zone == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
@@ -186,7 +186,7 @@
 				
 				$('select[data-am-selected]').selected({
 				    selectBox:1,
-					maxHeight: 200
+					maxHeight: 150
 				});
 				$("#goBackBtn").on("click",function(){
 					if(goBack){
