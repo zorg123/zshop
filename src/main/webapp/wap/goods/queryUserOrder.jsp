@@ -60,8 +60,9 @@
                                         </s:iterator>                                        
                                     </tbody>
                                 </table>
-                                <div id="page">  </div>
+                                
 							</div>
+							<div id="page">  </div>
                             </form>
                         </div>
 
@@ -76,10 +77,7 @@
 			var searchContentV= $("#searchContent").val();
 			var params ={};
 			params["rows"] = 5;
-			params["page"]=context!=null?context.option.curr:1;
-			if(searchContentV.length!=0){
-				params["goodsOrder.order_code"] = searchContentV;
-			}
+			params["page"]=context!=null?context.option.curr:1;			
 		    pageData.openContent(base+"/Goods/queryUserOrder.do",params);
 		}
 	}	

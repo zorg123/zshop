@@ -196,6 +196,9 @@ public class GoodsAction extends BaseAction {
 		if(goodsOrder.getGoods_amount()<1){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		if(goodsOrder.getRev_people() == null || "".equals(goodsOrder.getRev_people().trim())){
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		}
 		goods = new Goods();
 		goods.setGoods_id(goodsOrder.getGoods_id());
 		goods.setState("1");

@@ -221,7 +221,12 @@
 	            sendForm:false,
 	            firstInvalidFocus:true,
 	            valid:function(event,options){
-	            	
+	            	event.preventDefault();
+	            	var revPeople =$("#acceptForm input[name='goodsOrder.rev_people']").val();
+	            	 if($.trim(revPeople) == ''){
+	            		 CommonUtils.showAlert("请选择收货地址!");
+	            		 return false;
+	            	 }
 	                //点击提交按钮时,表单通过验证触发函数
 	                 var params = CommonUtils.getParam("acceptForm",false);			                 
 					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
@@ -252,7 +257,7 @@
 		  	        	      CommonUtils.showAlert('操作失败!');
 		  	           }
 		  	         },true);					 
-	                event.preventDefault();
+	                
 	                return false;
 	            },
 	            descriptions:{

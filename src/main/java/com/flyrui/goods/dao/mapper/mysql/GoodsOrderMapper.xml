@@ -166,6 +166,7 @@
     <if test="_parameter != null" >
       <include refid="Base_Where_Clause" />
     </if>
+    order by create_date
   </select>
   
   <delete id="delete" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
