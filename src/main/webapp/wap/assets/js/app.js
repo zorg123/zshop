@@ -161,7 +161,16 @@ var pageData={
 		        },
 				//调用成功的回调函数
 				success:function(html) {
-					$main.html(html);
+					if(html instanceof Object){						
+						if(html._code=="SYS_ERR002"){
+							document.location.href="/wap/login"
+						}else{
+							$main.html(html._msg);
+						}
+					}else{
+						$main.html(html);
+					}
+					
 				}
 		 });
 	 },

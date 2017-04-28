@@ -26,7 +26,7 @@
                         <div class="am-u-sm-12 ">
                             <form class="am-form" id="listForm"> 
                               <div class ="am-scrollable-horizontal">
-                                <table class="am-table am-table-striped am-table-hover am-text-nowrap">
+                                <table class="am-table am-table-striped am-table-hover am-text-nowrap table-main">
                                     <thead>
                                         <tr>
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
@@ -51,11 +51,11 @@
 	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
 	                                            <td><s:property value="#goodsOrderIter.total_fee"/></td>
 	                                            <td><s:if test="#goodsOrderIter.pay_type == 2" >电子币</s:if><s:if test="#goodsOrderIter.pay_type == 3" >重消币</s:if></td>
-	                                            <td><a href="#"><s:property value="#goodsOrderIter.rev_people"/></a></td>
-	                                            <td><a href="#"><s:property value="#goodsOrderIter.rev_link_phone"/></a></td>
+	                                            <td><s:property value="#goodsOrderIter.rev_people"/></td>
+	                                            <td><s:property value="#goodsOrderIter.rev_link_phone"/></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_addr"/></td> 
 	                                            <td><s:if test="#goodsOrderIter.state == 0" >未发货</s:if><s:if test="#goodsOrderIter.state == 1" >已发货</s:if></td>  
-	                                            <td><s:property value="#goodsOrderIter.create_date"/></td>                                         
+	                                            <td> <s:date name="#goodsOrderIter.create_date" format="yyyy-MM-dd HH:mm:ss"/></td>                                         
 	                                        </tr>
                                         </s:iterator>                                        
                                     </tbody>
@@ -69,9 +69,7 @@
                 </div> 
         </div>
         
-        <div class="tpl-portlet-components" id="addrModDiv">
-            	    				
-        </div>
+
 <script language="javascript" type="text/javascript" >
 	var jump = function(context,first) {		
 		if(!first){

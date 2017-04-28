@@ -57,30 +57,32 @@
                     <div class="am-g">
                         <div class="am-u-sm-12">
                             <form class="am-form" id="listForm">
-                                <table class="am-table am-table-striped am-table-hover table-main">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
-                                            <th class="table-title">收货人</th>
-                                            <th class="table-title">收货人电话</th>
-                                            <th class="table-type">收货人地址</th>
-                                            <th class="table-type">是否默认地址</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <s:iterator  value="#addrList"  id="addrIter" status="st">   
+                                 <div class ="am-scrollable-horizontal">
+	                                <table class="am-table am-table-striped am-table-hover am-text-nowrap table-main">
+	                                    <thead>
 	                                        <tr>
-	                                            <td><input type="checkbox" addrId="<s:property value="#addrIter.addr_id"/>" revAddr='<s:property value="#addrIter.rev_provice"/><s:property value="#addrIter.rev_city"/><s:property value="#addrIter.rev_zone"/><s:property value="#addrIter.rev_addr"/>' addrArea="<s:property value="#addrIter.rev_provice"/>" revPeople="<s:property value="#addrIter.rev_people"/>" revLinkPhone="<s:property value="#addrIter.rev_link_phone"/>" ></td>
-	                                            <td><s:property value="#addrIter.rev_people"/></td>
-	                                            <td><a href="#"><s:property value="#addrIter.rev_link_phone"/></a></td>
-	                                            <td><s:property value="#addrIter.rev_provice"/><s:property value="#addrIter.rev_city"/><s:property value="#addrIter.rev_zone"/><s:property value="#addrIter.rev_addr"/></td>  
-	                                            <td><s:if test="#addrIter.is_default==1">是</s:if><s:else>否</s:else></td>                                       
+	                                            <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
+	                                            <th class="table-title">收货人</th>
+	                                            <th class="table-title">收货人电话</th>
+	                                            <th class="table-type">收货人地址</th>
+	                                            <th class="table-type">是否默认地址</th>
 	                                        </tr>
-                                        </s:iterator>                                        
-                                    </tbody>
-                                </table>
+	                                    </thead>
+	                                    <tbody>
+	                                        <s:iterator  value="#addrList"  id="addrIter" status="st">   
+		                                        <tr>
+		                                            <td><input type="checkbox" addrId="<s:property value="#addrIter.addr_id"/>" revAddr='<s:property value="#addrIter.rev_provice"/><s:property value="#addrIter.rev_city"/><s:property value="#addrIter.rev_zone"/><s:property value="#addrIter.rev_addr"/>' addrArea="<s:property value="#addrIter.rev_provice"/>" revPeople="<s:property value="#addrIter.rev_people"/>" revLinkPhone="<s:property value="#addrIter.rev_link_phone"/>" ></td>
+		                                            <td><s:property value="#addrIter.rev_people"/></td>
+		                                            <td><a href="#"><s:property value="#addrIter.rev_link_phone"/></a></td>
+		                                            <td><s:property value="#addrIter.rev_provice"/><s:property value="#addrIter.rev_city"/><s:property value="#addrIter.rev_zone"/><s:property value="#addrIter.rev_addr"/></td>  
+		                                            <td><s:if test="#addrIter.is_default==1">是</s:if><s:else>否</s:else></td>                                       
+		                                        </tr>
+	                                        </s:iterator>                                        
+	                                    </tbody>
+	                                </table>
+                                </div>
                                 <div id="page">  </div>
-
+							
                             </form>
                         </div>
 
@@ -189,8 +191,7 @@
 	$("#delBtn").on("click",function(){
 		delUser();
 	});
-	$("#selBtn").on("click",function(){
-		alert(122);
+	$("#selBtn").on("click",function(){		
 		var addrList = [];
 		$.each($("#listForm input:checked"),function(i,v){
 			var addr={};

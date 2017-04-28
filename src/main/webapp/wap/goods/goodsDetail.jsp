@@ -105,7 +105,7 @@
 <div id="addrMngDiv"> 
 	  
 </div>
-<div id="successTipDiv"> 
+<div id="successTipDiv" style="display:none"> 
 	  		<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
@@ -118,14 +118,13 @@
                     </div>
                 </div>
                  <div class="tpl-block">
-                 	<ul class="am-list am-list-static">
-					  <li>受理成功</li>
-					  <li>订单单号为：<span id="orderCodeSpan"></span></li>
-					  <li>
+                 	
+					  <div>受理成功</div>
+					  <div>订单单号为：<span id="orderCodeSpan"></span></div>
+					  <div>
 					  	<input type="button" id="continueBuyBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="继续购买"></input>
 					    <input type="button" id="queryOrderBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="查询订单"></input>
-					  </li>
-					</ul>
+					  </div>					
                  </div>
             </div>
      
@@ -134,41 +133,35 @@
 <script language="javascript" type="text/javascript" >
 	$(function() {	
 		$("#acceptForm input[name='goodsOrder.goods_amount']").on("input",function(e){
-			
-			var amount = $(this).val();
-			if(amount <1){
-				CommonUtils.showAlert("购买数量不能小于1!");
-				$("#userProfileSubmit").attr("disabled",true);
-				return ;
-			}
-			checkCoin(amount);
+			checkCoin();
 		});
 		
 		if($("#acceptForm select[name='goodsOrder.pay_type']")){
 			$("#acceptForm select[name='goodsOrder.pay_type']").on("change",function(e){
-				var amount = $("#acceptForm input[name='goodsOrder.goods_amount']").val();
-				if(amount <1){
-					CommonUtils.showAlert("购买数量不能小于1!");
-					$("#userProfileSubmit").attr("disabled",true);
-					return ;
-				}
-				checkCoin(amount);
+				checkCoin();
 			});
 		}
 		
 		$("#acceptForm input[name='goodsOrder.goods_amount']").trigger("input");
 		
-		function checkCoin(amount){
+		function checkCoin(){
 			$("#userProfileSubmit").removeAttr("disabled");
+			var amount = $("#acceptForm input[name='goodsOrder.goods_amount']").val();
+			if(amount <1){
+				CommonUtils.showAlert("购买数量不能小于1!");
+				$("#userProfileSubmit").attr("disabled",true);
+				return false;
+			}
+			
 			var payTypeObj = $("#acceptForm input[name='goodsOrder.pay_type']");					
-			if(!payTypeObj){
+			if(!payTypeObj || payTypeObj.length==0){
 				payTypeObj = $("#acceptForm select[name='goodsOrder.pay_type']");						
 			}
 			var payType = payTypeObj.val();
 			if(!payType || payType == null){
 				CommonUtils.showAlert("没有支付方式，暂时不能购买!");
 				$("#userProfileSubmit").attr("disabled",true);
-				return ;
+				return false;
 			}
 			
 			var params = {};
@@ -219,7 +212,7 @@
 		});
 		
 		$("#queryOrderBtn").on("click",function(){
-			var orderCode = $("#orderCodeSpan").val();
+			var orderCode = $("#orderCodeSpan").html();
 			pageData.openContent(base+"/Goods/queryUserOrder.do?goodsOrder.order_code="+orderCode,null);
 		});
 		$("#acceptForm").mvalidate({
@@ -228,6 +221,7 @@
 	            sendForm:false,
 	            firstInvalidFocus:true,
 	            valid:function(event,options){
+	            	
 	                //点击提交按钮时,表单通过验证触发函数
 	                 var params = CommonUtils.getParam("acceptForm",false);			                 
 					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
@@ -237,7 +231,7 @@
 		  	               if (code == '0') {  
 		  	            	   var ret = reply.ret;
 		  	            	   CommonUtils.showAlert('操作成功!');
-		  	            	   $("#orderCodeSpan").val(ret.order_code);  
+		  	            	   $("#orderCodeSpan").html(ret.order_code);  
 		  	            	 if ($.AMUI.support.animation) {
 		  	   				 $("#goodDetailDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
 		  	   					$("#goodDetailDiv").removeClass("am-animation-fade am-animation-reverse");

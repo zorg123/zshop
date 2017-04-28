@@ -88,6 +88,10 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		}
 		goodsOrder.setTotal_fee(totalFee);
 		goodsOrder.setGoods_name(goods.getGoods_name());
+		Goods newGoods = new Goods();
+		newGoods.setGoods_amount(goods.getGoods_amount() - goodsOrder.getGoods_amount());
+		newGoods.setGoods_id(goods.getGoods_id());
+		super.update(newGoods);
 		coinTrackService.insertCoinTrack(user,coinTrackDto);
 		goodsOrderService.insert(goodsOrder);
 	}

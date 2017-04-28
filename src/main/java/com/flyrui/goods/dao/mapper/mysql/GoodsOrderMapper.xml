@@ -55,6 +55,31 @@
     	state,
     	CASE state WHEN 0 THEN '未发货' WHEN 1 THEN '已发货' end AS state_name
   </sql>
+  <sql id="Base_Column_List_Insert" >
+    	order_id,
+    	order_code,
+    	goods_id,
+    	goods_name,
+    	goods_amount,
+    	total_fee,
+    	refund_fee,
+    	pay_type,
+    	user_id,
+    	user_name,
+    	rev_people,
+    	rev_link_phone,
+    	rev_area,
+    	rev_addr,
+    	rev_desc,
+    	rev_invoice,
+    	rev_invoice_name,
+    	create_date,
+    	state_date,
+    	ord_ip,
+    	deal_exp_comp,
+    	deal_exp_ord,
+    	state
+  </sql>
   <sql id="Base_Where_Clause" >
     <where >
 	    	<if test="order_id != null  and order_id != '' " >
@@ -151,7 +176,7 @@
   </delete>
   
   <insert id="insert" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
-    insert into goods_order ( <include refid="Base_Column_List" />)
+    insert into goods_order ( <include refid="Base_Column_List_Insert" />)
     values (	    	
         	  #{order_id,jdbcType=VARCHAR},     		
 	    	    	
