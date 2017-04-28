@@ -73,7 +73,8 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 			coinTrackDto.setCreate_type(7);
 			coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
 			coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
-			
+			coinTrackDto.setComments(goods.getGoods_name());			
+			coinTrackDto.setBalance_comments("电子账户余额:"+(accoutInfoDto.getElect_coin()-totalFee));
 			
 		}else if("3".equals(goodsOrder.getPay_type())){//重消币
 			if(totalFee>accoutInfoDto.getReconsmp_coin()){
@@ -85,6 +86,8 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 			coinTrackDto.setCreate_type(10);
 			coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
 			coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
+			coinTrackDto.setComments(goods.getGoods_name());			
+			coinTrackDto.setBalance_comments("重消账户余额:"+(accoutInfoDto.getReconsmp_coin()-totalFee));
 		}
 		goodsOrder.setTotal_fee(totalFee);
 		goodsOrder.setGoods_name(goods.getGoods_name());
