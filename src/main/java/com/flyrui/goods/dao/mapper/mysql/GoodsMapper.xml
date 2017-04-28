@@ -187,9 +187,7 @@
   <update id="update" parameterType="com.flyrui.goods.pojo.Goods">
     update goods
     set
-   		<if test="goods_id != null  and goods_id != '' " >
-      		goods_id = #{goods_id,jdbcType=VARCHAR},
-   		</if>
+   		
    		<if test="catalog_id != null  and catalog_id != '' " >
       		catalog_id = #{catalog_id,jdbcType=VARCHAR},
    		</if>
@@ -251,7 +249,10 @@
       		goods_descriptions = #{goods_descriptions,jdbcType=VARCHAR},
    		</if>
    		<if test="state != null  and state != '' " >
-      		state = #{state,jdbcType=VARCHAR}
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="goods_id != null  and goods_id != '' " >
+      		goods_id = #{goods_id,jdbcType=VARCHAR}
    		</if>
     where goods_id = #{goods_id,jdbcType=VARCHAR}
     
