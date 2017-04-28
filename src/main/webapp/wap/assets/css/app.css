@@ -38,7 +38,7 @@ a:hover {
 
 .am-topbar-brand {
     color: #337ab7;
-    margin-right: 20px;
+    /*margin-right: 20px; */
 }
 
 .am-topbar-brand {
@@ -292,7 +292,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     vertical-align: middle;
     margin-top: -5px;
     padding-left: 18px;
-    width: 160px;
+    width: 150px;
 }
 
 .tpl-logo img {
