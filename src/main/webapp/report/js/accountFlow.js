@@ -46,7 +46,12 @@ var Employee = {
 $(function () {
     $('#staffList').datagrid({
         url: base+'/FinancMgmt/getPagerListByConAccountFlow.do',
-        loadFilter:function(data){			
+        loadFilter:function(data){
+        	var jsonStr = JSON.stringify(data);
+        	if (jsonStr.indexOf("T")>0) {
+        		jsonStr = jsonStr.replace(/T/g," ");
+        		data =  JSON.parse(jsonStr);
+		    }
 			return Employee.loadFilter(data);
 		}
     })

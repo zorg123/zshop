@@ -29,12 +29,11 @@
 	                <th field="user_id" hidden>员工ID</th>
 	                <th field="user_code" width="140">会员编号</th>
 	                <th field="user_name" width="140">会员名称</th>
-	                <th field="order_id" width="100">流水号</th>
-	                <th field="coin_type_name" width="100">币种类型</th>
-	                <th field="create_type_name" width="100">产生类型</th>
-	                <th field="coin_num" width="100">金额</th>
-	                <th field="oper_user_name" width="100">相关人员</th>
-	                <th field="create_time" width="140">操作时间</th>
+	                <th field="create_time" width="140">时间</th>
+	                <th field="create_type_name" width="140">类型</th>
+	                <th field="coin_num" width="140">金额</th>
+	                <th field="comments" width="140">说明</th>
+	                <th field="balance_comments" width="140">余额说明</th>
 	            </tr>
 	            </thead>
 	        </table>
