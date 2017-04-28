@@ -76,18 +76,13 @@
   </sql>
   <select id="selectAccountFlow" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
-    a.id,
-    a.user_id,
-	b.user_code,
-	b.name AS user_name,
-	a.order_id,
-	(SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinType' AND idt.`dict_value` = a.coin_type) AS coin_type_name,
-	a.coin_type,
-	(SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
-	a.create_type,
-	a.coin_num,
-	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name,
-	a.create_time
+    b.user_code,
+    b.name as user_name,
+    a.create_time,
+    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+    a.coin_num,
+    a.comments,
+    a.balance_comments
 	FROM coin_track a
 	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	WHERE 1=1
