@@ -29,7 +29,7 @@
                 </div>
             </div>
         	 --%>
-        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
+        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left;padding:0px 20px">
                 <div class="dashboard-stat purple">
                     <div class="visual">
                         <i class="am-icon-android"></i>
@@ -43,7 +43,7 @@
             </a>
                 </div>
             </div>
-            <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
+            <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left;padding:0px 20px">
                 <div class="dashboard-stat red">
                     <div class="visual">
                         <i class="am-icon-bar-chart-o"></i>
@@ -57,7 +57,7 @@
             </a>
                 </div>
             </div>
-            <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left">
+            <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" style="float:left;padding:0px 20px">
                 <div class="dashboard-stat green">
                     <div class="visual">
                         <i class="am-icon-apple"></i>

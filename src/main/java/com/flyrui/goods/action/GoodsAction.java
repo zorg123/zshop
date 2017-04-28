@@ -102,7 +102,7 @@ public class GoodsAction extends BaseAction {
 		goods.setEff_date(new Date());
 		goods.setExp_date(new Date());
 		if(rows==0){
-    		rows=5;
+    		rows=6;
     	}
     	if(page==0){
     		page = 1;

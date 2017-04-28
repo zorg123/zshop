@@ -4,7 +4,6 @@
 	String baseUri = request.getContextPath();	
 %>
 <jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
-<s:property value="#session.user.head_img" />
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
         <a href="javascript:;" class="tpl-logo">

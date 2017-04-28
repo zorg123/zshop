@@ -61,7 +61,7 @@
 	                                        <div class="am-btn-toolbar">
 	                                            <form class="am-form am-form-horizontal" style="margin-top:10px">	                                            
 		                                        	<div class="am-form-group" style="margin-bottom:0px">					                                   
-					                                    <label class="am-u-sm-8" style="padding:0px">
+					                                    <label class="am-u-sm-8" style="padding:0px;font-weight:400;font-size:14px;">
 					                                        <input type="number" pattern="[0-9]*" name="amount" placeholder="输入你要购买的数量" style="font-size:14px">
 					                                    </label>
 					                                    <div class="am-btn-group am-btn-group-xs am-u-sm-4">
@@ -77,6 +77,7 @@
 	                    	</s:iterator>
                     	</div> 
                     </div>
+                    <div id="page">  </div>
                 </div> 
         </div>
         
@@ -86,7 +87,7 @@
 		if(!first){
 			var searchContentV= $("#searchContent").val();
 			var params ={};
-			params["rows"] = 5;
+			params["rows"] = 6;
 			params["page"]=context!=null?context.option.curr:1;
 			params["goods.catalog_id"]='<s:property value="goods.catalog_id" />';
 			if(searchContentV.length!=0){

@@ -186,7 +186,7 @@
   	           }else {
   	        	 	$("#userProfileSubmit").attr("disabled",true);;
   	           }
-  	         },true);
+  	         });
 		}
 		
 		$("#manRevAddBtn").on("click",function(){
