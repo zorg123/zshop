@@ -69,7 +69,7 @@
     		<td>所属模块:</td>
     		<td colspan="3">
     			<select class="easyui-combobox" name="catalog_id" id = "catalog_id" style="width:200px;">
-	                <option value="1">精品拼团</option>
+	                <option value="1" selected="true">精品拼团</option>
 	                <option value="2">即时拼团</option>
             	</select>
     		</td>

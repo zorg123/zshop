@@ -159,10 +159,13 @@ var commMng = {
     },
     clear: function () {
     	$('input[name="goods_name"]').val('');
+    	$('#catalog_id').combobox('setValue',1);
     	$('input[name="goods_price"]').val('');
+    	$("[name = pay_type]:checkbox").attr("checked", false);
+    	$('#state').combobox('setValue',1);
     	$('#goods_desc').textbox('setText', "");
-    	$('input[name="eff_date"]').val('');
-    	$('input[name="exp_date"]').val('');
+    	$("#eff_date").datetimebox('setValue','');
+  	  	$("#exp_date").datetimebox('setValue','');
     	$("#fileDownload ul").html("");
     	$("#_easyui_textbox_input2").val('');
     },
@@ -267,6 +270,17 @@ var commMng = {
 	  $('input[name="goods_price"]').val(obj.goods_price);
 	  $('input[name="goods_desc"]').val(obj.goods_desc);
 	  //购买积分类型
+		var val = obj.pay_type.split(",");
+		var boxes = document.getElementsByName("pay_type");
+		for(i=0;i<boxes.length;i++){
+			boxes[i].checked = false;
+		    for(j=0;j<val.length;j++){
+		        if(boxes[i].value == val[j]){
+		            boxes[i].checked = true;
+		            break
+		        }
+		    }
+		}
 	  $('#goods_desc').textbox('setText', obj.goods_desc);
 	  $('#state').combobox('setValue',obj.state);
 	  $("#eff_date").datetimebox('setValue',obj.eff_date);
