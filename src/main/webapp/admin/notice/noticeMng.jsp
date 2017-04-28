@@ -49,9 +49,9 @@
     	</tr>
     	<tr>
     		<td>生效时间:</td>
-    		<td> <input class="easyui-datebox" type="text" id="eff_date" name="eff_date" required="true"  editable="false" formatter="timeFormatter" parser="timeParser"/></td>    	
+    		<td> <input class="easyui-datebox" type="text" id="eff_date" name="eff_date" required="true" style="width:170px" editable="false" formatter="timeFormatter" parser="timeParser"/></td>    	
     		<td>失效时间:</td>
-    		<td><input class="easyui-datebox"  type="text" id="exp_date" name="exp_date" required="true"  editable="false" formatter="timeFormatter" parser="timeParser" /></td>
+    		<td><input class="easyui-datebox"  type="text" id="exp_date" name="exp_date" required="true" style="width:170px" editable="false" formatter="timeFormatter" parser="timeParser" /></td>
     	</tr>
     	<tr>
     		<td>状态:</td>
