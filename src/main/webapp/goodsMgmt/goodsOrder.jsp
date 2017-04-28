@@ -38,15 +38,14 @@
             <tr>
             	<th field="order_id" width="40" hidden>订单ID</th>
             	<th field="user_id" width="40" hidden>会员id</th>
-            	<th field="order_code" width="50">订单编号</th>
+            	<th field="order_code" width="80">订单编号</th>
             	<th field="goods_name" width="80">商品名称</th>
             	<th field="goods_amount" width="40">购买数量</th>
             	<th field="total_fee" width="30">金额</th>
             	<th field="user_name" width="40">会员名称</th>
             	<th field="rev_people" width="30">收货人</th>
-            	<th field="rev_link_phone" width="40">联系电话</th>
-            	<th field="rev_area" width="100">收货人区域</th>
-            	<th field="rev_addr" width="100">详细地址</th>
+            	<th field="rev_link_phone" width="50">联系电话</th>
+            	<th field="rev_addr" width="120">详细地址</th>
             	<th field="create_date" width="50">购买时间</th>
             	<th field="state_name"  width="40">订单状态</th>
             	<th field="state_date" width="50">发货时间</th>

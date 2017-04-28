@@ -40,6 +40,7 @@
             <tr>
             	<th field="goods_id" width="40" hidden>商品ID</th>
             	<th field="icon_url" width="40" hidden>图片位置</th>
+            	<th field="goods_amount" width="40" hidden>库存</th>
                 <th field="goods_name" width="40">商品名称</th>  
                 <th field="catalog_id" width="40" formatter="commMng.formatCatalogId">所属模块</th>
                 <th field="goods_price" width="40">价格</th>              
@@ -86,6 +87,10 @@
     		<td>简单描述:</td>
     		<td colspan="3"> 
     		<input class="easyui-textbox" data-options="multiline:true" name="goods_desc" id="goods_desc" style="width:200px;height:50px">
+    	</tr>
+    	<tr>
+    		<td>库存:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="goods_amount" style="width:200px"/></td>
     	</tr>
     	<tr>
     		<td>状态:</td>

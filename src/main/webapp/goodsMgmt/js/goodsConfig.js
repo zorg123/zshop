@@ -23,6 +23,11 @@ var commMng = {
         	$.messager.alert('系统提示', '请输入商品描述!', 'info');
         	return;
         }
+        var goods_amount = $('input[name="goods_amount"]').val();
+        if(!/^\+?[1-9][0-9]*$/.test(goods_amount)){
+   		 $.messager.alert('系统提示', '商品库存请输入整数值!', 'info');
+   		 return;
+        }
         var eff_date = $('input[name="eff_date"]').val();
         if(eff_date.length<=0){
         	$.messager.alert('系统提示', '请选择生效时间!', 'info');
@@ -73,6 +78,7 @@ var commMng = {
         }).get().join(',');
         param["goods.pay_type"] = pay_type;
         param["goods.goods_desc"] = $('input[name="goods_desc"]').val();
+        param["goods.goods_amount"] = $('input[name="goods_amount"]').val();
         param["goods.state"] = $('input[name="state"]').val();
         param["goods.eff_date"] = $('input[name="eff_date"]').val();
         param["goods.exp_date"] = $('input[name="exp_date"]').val();
@@ -164,6 +170,7 @@ var commMng = {
     	$("[name = pay_type]:checkbox").attr("checked", false);
     	$('#state').combobox('setValue',1);
     	$('#goods_desc').textbox('setText', "");
+    	$('input[name="goods_amount"]').val('');
     	$("#eff_date").datetimebox('setValue','');
   	  	$("#exp_date").datetimebox('setValue','');
     	$("#fileDownload ul").html("");
@@ -282,6 +289,7 @@ var commMng = {
 		    }
 		}
 	  $('#goods_desc').textbox('setText', obj.goods_desc);
+	  $('input[name="goods_amount"]').val(obj.goods_amount);
 	  $('#state').combobox('setValue',obj.state);
 	  $("#eff_date").datetimebox('setValue',obj.eff_date);
 	  $("#exp_date").datetimebox('setValue',obj.exp_date);
