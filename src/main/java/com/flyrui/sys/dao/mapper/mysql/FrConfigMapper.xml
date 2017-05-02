@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.sys.dao.mapper.FrConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.sys.dto.FrConfig" >
+    	<result column="cf_id" property="cf_id" jdbcType="VARCHAR" />
+    	<result column="cf_desc" property="cf_desc" jdbcType="VARCHAR" />
+    	<result column="cf_value" property="cf_value" jdbcType="VARCHAR" />
+    	<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    	<result column="cf_module" property="cf_module" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	cf_id,
+    	cf_desc,
+    	cf_value,
+    	create_time,
+    	cf_module
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="cf_id != null  and cf_id != '' " >
+        		and cf_id = #{cf_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="cf_desc != null  and cf_desc != '' " >
+        		and cf_desc = #{cf_desc,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="cf_value != null  and cf_value != '' " >
+        		and cf_value = #{cf_value,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_time != null " >
+        		and create_time = #{create_time,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="cf_module != null  and cf_module != '' " >
+        		and cf_module = #{cf_module,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.sys.dto.FrConfig" >
+    select    
+    <include refid="Base_Column_List" />
+    from fr_config
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.sys.dto.FrConfig" >
+    delete from fr_config
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.sys.dto.FrConfig" >
+    insert into fr_config ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{cf_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{cf_desc,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{cf_value,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_time,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{cf_module,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.sys.dto.FrConfig">
+    update fr_config
+    set
+   		<if test="cf_id != null  and cf_id != '' " >
+      		cf_id = #{cf_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="cf_desc != null  and cf_desc != '' " >
+      		cf_desc = #{cf_desc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="cf_value != null  and cf_value != '' " >
+      		cf_value = #{cf_value,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_time != null " >
+      		create_time = #{create_time,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="cf_module != null  and cf_module != '' " >
+      		cf_module = #{cf_module,jdbcType=VARCHAR}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+  <select id="queryFrCfgList" resultType="hashmap" parameterType="hashmap">
+  		select cf_id,cf_value,cf_desc from  fr_config
+  		where 1=1
+  		<if test="cf_module != null  and cf_module != '' " >
+      		and cf_module = #{cf_module,jdbcType=VARCHAR}
+   		</if>
+  		<if test="cf_id != null  and cf_id != '' " >
+      		and cf_id = #{cf_id,jdbcType=VARCHAR}
+   		</if>
+  </select>
+  <update id="updateFrConfig" parameterType="hashmap">
+  		UPDATE fr_config SET cf_value = #{cf_value,jdbcType=VARCHAR}
+  		where 1=1
+  		<if test="cf_module != null  and cf_module != '' " >
+      		and cf_module = #{cf_module,jdbcType=VARCHAR}
+   		</if>
+  		<if test="cf_id != null  and cf_id != '' " >
+      		and cf_id = #{cf_id,jdbcType=VARCHAR}
+   		</if>
+  </update>
+</mapper>

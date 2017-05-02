@@ -78,7 +78,7 @@ public class CommonService extends BaseService<Map>{
 	 * Nov 3, 2014
 	 */
 	public List queryFrCfgList(){		
-		return baseDao.selectList(getNameSpace()+".queryFrCfgList",new HashMap());
+		return baseDao.selectList("com.flyrui.sys.dao.mapper.FrConfigMapper.queryFrCfgList",new HashMap());
 	
 	}
 }

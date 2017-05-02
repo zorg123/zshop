@@ -113,12 +113,18 @@
 		params["goodsOrder.order_id"]=goodsList[0];			
 	    pageData.openContent(base+"/Goods/modGoodsRevAddr.do",params);
 	});
+	
 	$("#listForm td input[type='checkbox']").on("click",function(){
-		$this = $(this);
+		var $this = $(this);
+		var goodType = $this.attr("goodType");
 		if($this.attr("isSelected")){
 			$this.removeAttr("isSelected");
+			$("#modRevBtn").hide();
 		}else{
 			$this.attr("isSelected","1");
+			if(goodType == '1'){
+				$("#modRevBtn").show();
+			}
 		}
 	});
 	
