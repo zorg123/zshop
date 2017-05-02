@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.financMgmt.dao.mapper.UserRechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.financMgmt.pojo.UserRechargeDto" >
+  		<result column="rec_code" property="rec_code" jdbcType="VARCHAR" />
+  		<result column="rec_bankname" property="rec_bankname" jdbcType="VARCHAR" />
+  		<result column="rec_bankid" property="rec_bankid" jdbcType="VARCHAR" />
+  		<result column="rec_num" property="rec_num" jdbcType="VARCHAR" />
+  		<result column="rec_message" property="rec_message" jdbcType="VARCHAR" />
+  		<result column="user_id" property="user_id" jdbcType="INTEGER" />
+  		<result column="user_code" property="user_code" jdbcType="VARCHAR" />
+  		<result column="user_name" property="user_name" jdbcType="VARCHAR" />
+  		<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+  		<result column="state_name" property="state_name" jdbcType="VARCHAR" />
+  		<result column="coin_num" property="coin_num" jdbcType="VARCHAR" />
+  		<result column="rec_time" property="rec_time" jdbcType="TIMESTAMP" />
+  		<result column="oper_user_name" property="oper_user_name" jdbcType="VARCHAR" />
+  		<result column="start_time" property="coin_num" jdbcType="VARCHAR" />
+  		<result column="end_time" property="coin_num" jdbcType="VARCHAR" />
+  	
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	rela_id,
+    	rela_type,
+    	file_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_id != null  and rela_id != '' " >
+        		and rela_id = #{rela_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="rela_type != null  and rela_type != '' " >
+        		and rela_type = #{rela_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="file_id != null  and file_id != '' " >
+        		and file_id = #{file_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto" >
+    SELECT 
+    a.create_time, a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
+    CASE IFNULL(b.goods_order_id,0) WHEN 0 THEN '未充值' ELSE '已充值' END AS state_name
+    FROM user_recharge a
+    LEFT JOIN coin_track b
+    ON a.user_id = b.user_id
+    AND a.rec_code = b.goods_order_id
+    AND b.coin_type = 2
+    AND b.create_type = 4
+    WHERE a.user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+  
+ <select id="selectRec" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto" >
+    SELECT
+    a.rec_code,
+    a.create_time,
+    a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
+    a.user_code,a.user_name,
+    CASE IFNULL(b.goods_order_id,0) WHEN 0 THEN '未充值' ELSE '已充值' END AS state_name,
+    b.coin_num,
+	b.create_time as rec_time,
+	(SELECT c.name FROM tb_user c WHERE c.user_id = b.oper_user_id) AS oper_user_name
+    FROM user_recharge a
+    LEFT JOIN coin_track b
+    ON a.user_id = b.user_id
+    AND a.rec_code = b.goods_order_id
+    AND b.coin_type = 2
+    AND b.create_type = 4
+    WHERE 1=1
+	<if test="user_code != null  and user_code != '' " >
+    	and a.user_code = #{user_code,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="start_time !=null and start_time != '' ">
+    	and b.create_time &gt;= str_to_date(#{start_time,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="end_time !=null and end_time != '' ">
+    	and b.create_time &lt;= str_to_date(#{end_time,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="state_name != null  and state_name != '' " >
+    	AND IF(b.goods_order_id IS NULL,0,1) = #{state_name,jdbcType=VARCHAR}
+ 	</if>
+    order by a.create_time desc
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    delete from info_serv_file
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto" >
+	 insert into `user_recharge` 
+	 (`rec_code`, 
+	 `rec_bankname`, 
+	 `rec_bankid`, 
+	 `rec_num`, 
+	 `rec_message`,
+	 `user_id`, 
+	 `user_code`, 
+	 `user_name`) 
+	 values(
+	 #{rec_code,jdbcType=VARCHAR},
+	 #{rec_bankname,jdbcType=VARCHAR},
+	 #{rec_bankid,jdbcType=VARCHAR},
+	 #{rec_num,jdbcType=VARCHAR},
+	 #{rec_message,jdbcType=VARCHAR},
+	 #{user_id,jdbcType=INTEGER},
+	 #{user_code,jdbcType=VARCHAR},
+	 #{user_name,jdbcType=VARCHAR})
+	 
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">
+    update accout_info
+    set
+   		<if test="bonus_coin != null  and bonus_coin != '' " >
+      		bonus_coin = IFNULL(bonus_coin,0)+#{bonus_coin,jdbcType=DOUBLE},
+   		</if>
+   		<if test="elect_coin != null  and elect_coin != '' " >
+      		elect_coin = IFNULL(elect_coin,0)+#{elect_coin,jdbcType=DOUBLE},
+   		</if>
+   		<if test="reconsmp_coin != null  and reconsmp_coin != '' " >
+      		reconsmp_coin = IFNULL(reconsmp_coin,0)+#{reconsmp_coin,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_bank != null  and account_bank != '' " >
+      		account_bank = #{account_bank,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_bank_brc != null  and account_bank_brc != '' " >
+      		account_bank_brc = #{account_bank_brc,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_id != null  and account_id != '' " >
+      		account_id = #{account_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="account_name != null  and account_name != '' " >
+      		account_name = #{account_name,jdbcType=VARCHAR},
+   		</if>
+   		<if test="cash_coin != null  and cash_coin != '' " >
+      		cash_coin = IFNULL(cash_coin,0)+#{cash_coin,jdbcType=DOUBLE},
+   		</if>
+   		comments = ''
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </update>
+  
+   <delete id="deleteByUserId" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    delete from accout_info
+   	where user_id = #{user_id,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="selectByUserIdForUpdate" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    select id,user_id,bonus_coin,elect_coin,reconsmp_coin,account_bank,account_id,account_name,comments,cash_coin
+    from accout_info
+    where user_id = #{user_id,jdbcType=INTEGER} for update
+  </select>
+</mapper>

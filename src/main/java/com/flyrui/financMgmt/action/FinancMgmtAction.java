@@ -24,8 +24,10 @@ import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
+import com.flyrui.financMgmt.pojo.UserRechargeDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
+import com.flyrui.financMgmt.service.UserRechargeService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
 import com.flyrui.salary.service.SalaryService;
 import com.flyrui.sys.service.FrconfigService;
@@ -42,6 +44,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="queryUserExtractInfo", location = "/wap/financMgmt/userExtractInfo.jsp"),
 		@Result(name="queryAccoutFlowForWap", location = "/wap/financMgmt/accoutFlow.jsp"),
 		@Result(name="accoutInfo", location = "/wap/user/accountInfo.jsp"),
+		@Result(name="queryRecApply", location = "/wap/financMgmt/userRechargeApply.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class FinancMgmtAction extends BaseAction {	
 		
@@ -55,6 +58,8 @@ public class FinancMgmtAction extends BaseAction {
 	private CoinTrackDto coinTrackDto;
 	
 	private AccoutInfoDto accoutInfo;
+	
+	private UserRechargeDto userRecharge;
 	
 	public int rows; //每页大小
 	
@@ -72,10 +77,43 @@ public class FinancMgmtAction extends BaseAction {
 	@Autowired
 	public UserService userService;
 	
+	@Autowired
+	public UserRechargeService userRechargeService;
+	
+	@Action("queryRecApply")    
+    public String queryRecApply(){
+		//从session中得到user_id
+		User loginUser = getLoginUserInfo();
+		if(null==userRecharge){
+			userRecharge = new UserRechargeDto();
+		}
+		userRecharge.setUser_id(Integer.valueOf(loginUser.getUser_id()));
+    	if(rows==0){
+    		rows=5;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel<CoreUser> pageModel = userRechargeService.getPagerListByCon(userRecharge, page, rows);
+    	//返回值设置
+    	result.put("ret",pageModel);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+    	return "queryRecApply";
+    }
+	@Action(value="insertUserRec")
+	public String insertUserRec(){
+		User loginUser = getLoginUserInfo();
+		int ret = userRechargeService.insert(loginUser,userRecharge);
+		setResult(ret);
+    	return SUCCESS;
+    }
+	
 	//会员充值分页查询
 	@Action(value="getPagerListByConRec")
 	public String getPagerListByCon(){
-    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConRec(coinTrackDto, page, rows);
+    	//PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConRec(coinTrackDto, page, rows);
+    	PageModel<CoreUser> pageModel = userRechargeService.getPagerListByConRec(userRecharge, page, rows);
     	setResult(pageModel);
     	return SUCCESS;
     }
@@ -307,8 +345,9 @@ public class FinancMgmtAction extends BaseAction {
 	//会员充值导出
 	@Action(value="eportCoinTrackRec")
 	public  String eportCoinTrackRec() throws Exception{  
-    	ExcelExport<BonusRecDto> excelExport = new ExcelExport<BonusRecDto>();    	
-    	List<BonusRecDto> retList = coinTrackService.getListByConRec(coinTrackDto);
+    	ExcelExport<UserRechargeDto> excelExport = new ExcelExport<UserRechargeDto>();    	
+    	//List<BonusRecDto> retList = coinTrackService.getListByConRec(coinTrackDto);
+    	List<UserRechargeDto> retList = userRechargeService.getListByConRec(userRecharge);
     	ByteArrayOutputStream os=new ByteArrayOutputStream();
     	excelExport.exportExcel("会员充值", retList, os);
         byte[] content=os.toByteArray();
@@ -365,6 +404,14 @@ public class FinancMgmtAction extends BaseAction {
 	}
 	public void setAccoutInfo(AccoutInfoDto accoutInfo) {
 		this.accoutInfo = accoutInfo;
+	}
+
+	public UserRechargeDto getUserRecharge() {
+		return userRecharge;
+	}
+
+	public void setUserRecharge(UserRechargeDto userRecharge) {
+		this.userRecharge = userRecharge;
 	}
 	
 }

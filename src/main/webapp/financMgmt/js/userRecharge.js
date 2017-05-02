@@ -20,28 +20,28 @@ var RechargeMng = {
     		 return;
     	 }else{
     		 var param ={};
-         	 param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
-         	 param["coinTrackDto.user_name"] = $('input[name="user_name"]').val();
+         	 param["coinTrackDto.goods_order_id"] = $('input[name="rec_code"]').val();
+             param["coinTrackDto.user_code"] = $('input[name="user_code"]').val();
              param["coinTrackDto.coin_num"] = $('input[name="coin_num"]').val();
              //附件id
-             var file_info;
-             if ($("#fileDownload ul li").length>0){
-                var fileid;
-                var fileName;
-             	$("#fileDownload ul li").each(function(i,v){
-                 	var $this = $(v);
-                 	if($this.attr("fileid")){
-                 		fileid = $this.attr("fileid");
-                 	}
-                 	if($this.attr("fileName")){
-                 		fileName = $this.attr("fileName");
-                 	}
-                 });
-                 file_info = "<a name='upFile'  target='_blank' href='/Attachement/download.do?fid="+fileid+"'>"+fileName+"</a>";
-             }else{
-             	file_info = "";
-             }
-             param["coinTrackDto.file_info"] = file_info;
+             //var file_info;
+             //if ($("#fileDownload ul li").length>0){
+                //var fileid;
+                //var fileName;
+             	//$("#fileDownload ul li").each(function(i,v){
+                 	//var $this = $(v);
+                 	//if($this.attr("fileid")){
+                 	//	fileid = $this.attr("fileid");
+                 	//}
+                 	//if($this.attr("fileName")){
+                 	//	fileName = $this.attr("fileName");
+                 	//}
+                 //});
+                 //file_info = "<a name='upFile'  target='_blank' href='/Attachement/download.do?fid="+fileid+"'>"+fileName+"</a>";
+             //}else{
+             //	file_info = "";
+             //}
+             //param["coinTrackDto.file_info"] = file_info;
              var me = this;
              CommonUtils.invokeAsyncAction(base+'/FinancMgmt/recharge.do', param, function (reply) {
  				if((reply || '') !=''){
@@ -63,6 +63,18 @@ var RechargeMng = {
  				}			
  			});       
     	 }
+    },
+    editInit: function(obj){
+    	$('input[name="rec_code"]').val(obj.rec_code);
+    	$('input[name="user_code"]').val(obj.user_code);
+    	$('input[name="user_name"]').val(obj.user_name);
+    	$('input[name="coin_num"]').val(obj.rec_num);
+    	$('input[name="user_code"]').attr("disabled",true);
+    	$('input[name="user_name"]').attr("disabled",true);
+    },
+    getSelect: function () {
+        var row = $('#coinTrackList').datagrid('getSelected');
+        return row;
     },
     refresh: function () {
         $('#coinTrackList').datagrid('reload');
@@ -104,8 +116,11 @@ var RechargeMng = {
     	$('input[name="user_code"]').val('');
     	$('input[name="user_name"]').val('');
     	$('input[name="coin_num"]').val('');
-    	$("#fileDownload ul").html("");
-    	$("#_easyui_textbox_input1").val('');
+    	//$("#fileDownload ul").html("");
+    	//$("#_easyui_textbox_input1").val('');
+    },
+    initEdit:function(){
+    	
     },
     upload:function(){
     	var options = {
@@ -167,12 +182,22 @@ $(function () {
 		},
         toolbar: [
             {
-                text: '新增',
+                text: '充值',
                 iconCls: 'icon-add',
                 handler: function () {
+                	var row = RechargeMng.getSelect();
+                    if (null === row) {
+                        $.messager.alert('系统提示', '未选中记录!', 'info');
+                        return;
+                    }
+                    if(row.state_name=='已充值'){
+                		$.messager.alert('系统提示', '不允许重复充值!', 'info');
+            	 	   	return;
+                	}
+                    RechargeMng.editInit(row);
                     sign = 'save';
                     $('#win_save').attr('title', '会员充值');
-                    RechargeMng.clear();
+                    //RechargeMng.clear();
                     $('#win_save').show();
                     $('#win_save').window({
                         width: 450,
@@ -185,13 +210,13 @@ $(function () {
             	text: '导出',
                 iconCls: 'icon-redo',
                 handler: function () {                 
-                	var user_code = $('input[name="query_user_code"]').val();
+                	var user_code = $('input[name="user_code"]').val();
 	                var start_time = $('input[name="start_time"]').val();
 	                var end_time = $('input[name="end_time"]').val();
 	                
-            	    var strParam = "coinTrackDto.user_code="+user_code;
-            	    strParam += "&coinTrackDto.start_time="+start_time;
-            	    strParam += "&coinTrackDto.end_time="+end_time;  
+            	    var strParam = "userRecharge.user_code="+user_code;
+            	    strParam += "&userRecharge.start_time="+start_time;
+            	    strParam += "&userRecharge.end_time="+end_time;  
             	    var url = base+"/FinancMgmt/eportCoinTrackRec.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){
@@ -213,9 +238,10 @@ $(function () {
     });
     $('#search_btn').bind('click', function () {
         var param = {};
-        param["coinTrackDto.user_code"] = $('input[name="query_user_code"]').val();
-        param["coinTrackDto.start_time"] = $('input[name="start_time"]').val();
-        param["coinTrackDto.end_time"] = $('input[name="end_time"]').val();
+        param["userRecharge.state_name"] = $('input[name="state_name"]').val();
+        param["userRecharge.user_code"] = $('input[name="query_user_code"]').val();
+        param["userRecharge.start_time"] = $('input[name="start_time"]').val();
+        param["userRecharge.end_time"] = $('input[name="end_time"]').val();
         $('#coinTrackList').datagrid({
             queryParams: param
         });

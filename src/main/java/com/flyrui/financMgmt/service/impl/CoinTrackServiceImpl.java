@@ -189,6 +189,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	public HashMap recharge(User loginUser,CoinTrackDto coinTrackDto){
 		HashMap retMap = new HashMap();
 		//获取收入的会员编号
+		String goods_order_id = coinTrackDto.getGoods_order_id();
+		//获取收入的会员编号
 		String user_code = coinTrackDto.getUser_code();
 		//获取收入的会员名称
 		String user_name = coinTrackDto.getUser_name();
@@ -213,6 +215,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		}else{
 			//接收方
     		CoinTrackDto paramCoinTrackDto = new CoinTrackDto();
+    		paramCoinTrackDto.setGoods_order_id(goods_order_id);
     		paramCoinTrackDto.setUser_code(user_code);
 			//1:奖金币 2:电子币 3:重消币
     		paramCoinTrackDto.setCoin_type(2);
