@@ -617,16 +617,18 @@ public class UserAction extends BaseAction {
     	User uu= new User();
     	uu.setRegister_id(userId);
     	String[] idStr = ids.split(";");
+    	List<User> userList = new ArrayList<User>();
     	for(String idTemp : idStr){
     		uu.setUser_id(idTemp);
-    		List<User> userList = userService.getListByCon(uu);
-    		if(userList==null || userList.size() == 0){
+    		List<User> userListRet = userService.getListByCon(uu);
+    		if(userListRet==null || userListRet.size() == 0){
     			throw new FRException(new FRError("USER_003"));
     		}
-    		User uuTemp = userList.get(0);
+    		User uuTemp = userListRet.get(0);
     		if("1".equals(uuTemp.getState())){
     			throw new FRException(new FRError("USER_004"));
     		}
+    		userList.add(uuTemp);
     	}
     	
     	//激活之前要判断一下，登录用户的账户上电子币是否小于600，小于600不能激活，提示充值。   
@@ -648,7 +650,7 @@ public class UserAction extends BaseAction {
     	}else{
     		throw new FRException(new FRError("SYS_ERR006"));
     	}
-    	userService.activeUser(idStr,getLoginUserInfo());
+    	userService.activeUser(userList,getLoginUserInfo());
     	setCommonSuccessReturn();
     	return SUCCESS;
     }

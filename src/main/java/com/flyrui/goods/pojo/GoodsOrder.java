@@ -101,6 +101,7 @@ public class GoodsOrder implements Serializable {
 	
 	private String state_date_end;
 
+	private String order_type;
 
 	public String getOrder_id() {
 		return this.order_id;
@@ -309,5 +310,13 @@ public class GoodsOrder implements Serializable {
 	public void setState_name(String state_name) {
 		this.state_name = state_name;
 	}
+
+	public String getOrder_type() {
+		return order_type;
+	}
+
+	public void setOrder_type(String order_type) {
+		this.order_type = order_type;
+	}	
 	
 }

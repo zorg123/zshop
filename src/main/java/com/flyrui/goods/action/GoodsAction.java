@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.flyrui.common.CommonUtils;
 import com.flyrui.common.DateUtil;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.service.CommonService;
@@ -43,6 +44,7 @@ import com.flyrui.goods.service.TbChinaAreaService;
 		@Result(name="queryUserOrder", location = "/wap/goods/queryUserOrder.jsp"),	
 		@Result(name="goodsRevAddrEdit", location = "/wap/goods/goodsRevAddrEdit.jsp"),
 		@Result(name="goodsRevAddrList", location = "/wap/goods/goodsRevAddr.jsp"),
+		@Result(name="modGoodsRevAddr", location = "/wap/goods/goodsRevMod.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -398,5 +400,56 @@ public class GoodsAction extends BaseAction {
 	    		setCommonSuccessReturn();
 	    	}
 	    	return SUCCESS;
+	 }
+	 
+	 @Action("modGoodsRevAddr")
+	 public String modGoodsRevAddr() throws FRException{	    	
+	    	if(goodsOrder.getOrder_id()==null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}	    	
+	    	List<GoodsOrder> retList = goodsOrderService.getListByCon(goodsOrder);
+	    	if(retList.size()==0){
+	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
+	    	}	    	
+	    	goodsOrder = retList.get(0); 
+	    	//查询订单的收货人信息，如果没有，则查询默认的收货信息
+	    	if(CommonUtils.isBlankStr(goodsOrder.getRev_people())){
+	    		//查询默认地址
+	    		//获取默认收货地址
+	        	goodsRevAddr.setUser_id(getUserId());
+	        	goodsRevAddr.setIs_default("1");
+	        	List<GoodsRevAddr> addrRetList = goodsRevAddrService.getListByCon(goodsRevAddr);
+	        	if(retList.size()>0){
+	        		goodsRevAddr = addrRetList.get(0);
+	        	}
+	    	}else{
+	    		goodsRevAddr.setRev_addr(goodsOrder.getRev_addr());
+	    		goodsRevAddr.setRev_link_phone(goodsOrder.getRev_link_phone());
+	    		goodsRevAddr.setRev_people(goodsOrder.getRev_people());
+	    		goodsRevAddr.setRev_provice(goodsOrder.getRev_area());
+	    	}
+	    	return "modGoodsRevAddr";
+	 }
+	 
+	 @Action("modGoodsRev")
+	 public String modGoodsRev() throws FRException{	    	
+	    	if(goodsOrder.getOrder_id()==null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	if(goodsOrder.getRev_addr()==null || goodsOrder.getRev_people() == null || goodsOrder.getRev_link_phone()== null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	GoodsOrder newGoodsOrder =new GoodsOrder();
+	    	newGoodsOrder.setOrder_id(goodsOrder.getOrder_id());
+	    	newGoodsOrder.setRev_addr(goodsOrder.getRev_addr());
+	    	newGoodsOrder.setRev_area(goodsOrder.getRev_area());
+	    	newGoodsOrder.setRev_link_phone(goodsOrder.getRev_link_phone());
+	    	newGoodsOrder.setRev_people(goodsOrder.getRev_people());
+	    	newGoodsOrder.setUser_id(getUserId());
+	    	int cnt = goodsOrderService.update(newGoodsOrder);
+	    	if(cnt==0){
+	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
+	    	}	    	
+	    	return "modGoodsRevAddr";
 	 }
 }

@@ -26,7 +26,8 @@
 	                    <div class="am-g">
 	                        <div class="am-u-sm-12">
 	                            <form class="am-form">
-	                                <table class="am-table am-table-striped am-table-hover table-main">
+	                               <div class ="am-scrollable-horizontal">
+	                                <table class="am-table am-table-striped am-table-hover am-text-nowrap table-main">
 	                                    <thead>
 	                                        <tr>
 	                                            <th class="table-type">时间</th>
@@ -47,9 +48,10 @@
 		                                        </tr>
 	                                        </s:iterator>                                        
 	                                    </tbody>
-	                                </table>
-	                                <div id="page">  </div>
+	                                </table>	                                
+	                                </div>
 	                            </form>
+	                            <div id="page">  </div>
 	                        </div>
 	                    </div>
 	                </div>

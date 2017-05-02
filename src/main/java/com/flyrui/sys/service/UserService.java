@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.exception.FRException;
 
 public interface UserService {
 	
@@ -30,7 +31,7 @@ public interface UserService {
 	
 	public List<User> selectUserNetTree(User user);
 	
-	public void activeUser(String[] ids,User loginUser);
+	public void activeUser(List<User> ids,User loginUser)  throws FRException;
 	public int insertRegister(User user);
 	public int delUnActiveUser(User user);
 }

@@ -21,7 +21,17 @@
                     </div>
                 </div>    
                     
-				<div class="tpl-block">                    
+				<div class="tpl-block">    
+				    <div class="am-g">
+                        
+                    	<div class="am-u-sm-12 am-u-md-6">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button type="button" id="modRevBtn" class="am-btn am-btn-default am-btn-success" style="display:none"><span class="am-icon-plug"></span>修改收货地址</button>
+                                </div>                             
+                            </div>
+                        </div>
+                     </div>                
                     <div class="am-g">
                         <div class="am-u-sm-12 ">
                             <form class="am-form" id="listForm"> 
@@ -45,7 +55,7 @@
                                     <tbody>
                                         <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>"></td>
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
@@ -84,6 +94,33 @@
 	
 	$("#searchBtn").on("click",function(){
 		jump(null,false);
-	})	
+	});
+	$("#modRevBtn").on("click",function(){
+		var goodsList=[];
+		$.each($("#listForm input:checked"),function(i,v){
+			var orderId = $(this).attr("orderId");
+			goodsList.push(orderId);
+		});
+		if(goodsList.length==0){
+			CommonUtils.showAlert("请先选择要修改的记录!");
+			return;
+		}
+		if(goodsList.length>1){
+			CommonUtils.showAlert("只能选择一个记录修改!");
+			return;
+		}
+		var params ={};
+		params["goodsOrder.order_id"]=goodsList[0];			
+	    pageData.openContent(base+"/Goods/modGoodsRevAddr.do",params);
+	});
+	$("#listForm td input[type='checkbox']").on("click",function(){
+		$this = $(this);
+		if($this.attr("isSelected")){
+			$this.removeAttr("isSelected");
+		}else{
+			$this.attr("isSelected","1");
+		}
+	});
+	
 	$("#page").page({pages:<s:property value="pageCount"/>,curr:<s:property value="pageIndex"/>,jump:jump});
 </script>	

@@ -230,4 +230,12 @@ public class CommonUtils {
 			}
 		}
 	}
+	
+	public static boolean isBlankStr(String str){
+		boolean isTrue = false;
+		if(str == null || "".equals(str.trim())){
+			isTrue = true;
+		}
+		return isTrue;
+	}
 }

@@ -18,25 +18,5 @@
   </update>
   <select id="queryWebVisitCount" resultType="hashmap" parameterType="hashmap">
   		select cf_value from  fr_config WHERE cf_id = 'web_visit_count'
-  </select>
-   <select id="queryFrCfgList" resultType="hashmap" parameterType="hashmap">
-  		select cf_id,cf_value,cf_desc from  fr_config
-  		where 1=1
-  		<if test="cf_module != null  and cf_module != '' " >
-      		and cf_module = #{cf_module,jdbcType=VARCHAR}
-   		</if>
-  		<if test="cf_id != null  and cf_id != '' " >
-      		and cf_id = #{cf_id,jdbcType=VARCHAR}
-   		</if>
-  </select>
-  <update id="updateFrConfig" parameterType="hashmap">
-  		UPDATE fr_config SET cf_value = #{cf_value,jdbcType=VARCHAR}
-  		where 1=1
-  		<if test="cf_module != null  and cf_module != '' " >
-      		and cf_module = #{cf_module,jdbcType=VARCHAR}
-   		</if>
-  		<if test="cf_id != null  and cf_id != '' " >
-      		and cf_id = #{cf_id,jdbcType=VARCHAR}
-   		</if>
-  </update>
+  </select>   
 </mapper>
