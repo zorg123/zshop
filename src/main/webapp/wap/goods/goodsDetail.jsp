@@ -102,7 +102,7 @@
                 </div>
             </div>
 </div>
-<div id="addrMngDiv"> 
+<div id="addrMngDiv" style="display:none"> 
 	  
 </div>
 <div id="successTipDiv" style="display:none"> 

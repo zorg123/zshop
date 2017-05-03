@@ -106,7 +106,13 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context!=null?context.option.curr:1;
-		    pageData.openContent(base+'<s:property value="url" />',params);
+			alert($("#addrMngDiv").length);
+			if($("#addrMngDiv").length>0){
+				alert(2);
+				pageData.openContent(base+'<s:property value="url" />',params,"addrMngDiv");
+			}else{
+		    	pageData.openContent(base+'<s:property value="url" />',params);
+			}
 		}
 	}
 	

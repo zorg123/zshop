@@ -121,7 +121,8 @@
 		
 		$("#cancelSubmit").on("click",function(){
 			var params={};
-			pageData.openContent(base+"/Goods/goodsRevAddrListForSel.do",params);			
+			pageData.openContent(base+"/Goods/queryUserOrder.do",params);	
+			return false;
 		});
 	   		 
 	});

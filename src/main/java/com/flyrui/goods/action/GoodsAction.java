@@ -451,6 +451,7 @@ public class GoodsAction extends BaseAction {
 	    	if(cnt==0){
 	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
 	    	}	    	
-	    	return "modGoodsRevAddr";
+	    	setCommonSuccessReturn();
+	    	return SUCCESS;
 	 }
 }
