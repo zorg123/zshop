@@ -71,6 +71,7 @@ var RechargeMng = {
     	$('input[name="coin_num"]').val(obj.rec_num);
     	$('input[name="user_code"]').attr("disabled",true);
     	$('input[name="user_name"]').attr("disabled",true);
+    	$('input[name="coin_num"]').attr("disabled",true);
     },
     getSelect: function () {
         var row = $('#coinTrackList').datagrid('getSelected');
