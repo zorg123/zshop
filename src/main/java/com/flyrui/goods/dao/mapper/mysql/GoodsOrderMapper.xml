@@ -234,10 +234,7 @@
   
   <update id="update" parameterType="com.flyrui.goods.pojo.GoodsOrder">
     update goods_order
-    set
-   		<if test="order_id != null  and order_id != '' " >
-      		order_id = #{order_id,jdbcType=VARCHAR},
-   		</if>
+    set   		
    		<if test="order_code != null  and order_code != '' " >
       		order_code = #{order_code,jdbcType=VARCHAR},
    		</if>
@@ -302,14 +299,15 @@
       		state = #{state,jdbcType=VARCHAR},
    		</if>
    		<if test="state != null  and state == 1 " >
-   			state_date = now()
+   			state_date = now(),
    		</if>
    		<if test="state != null  and state == 0 " >
-   			state_date = null
-   		</if>
+   			state_date = null,
+   		</if>   		
+      	order_id = order_id   		
     where order_id = #{order_id,jdbcType=VARCHAR}
           <if test="user_id != null  and user_id != '' " >
-      		and user_id = #{user_id,jdbcType=VARCHAR},
+      		and user_id = #{user_id,jdbcType=VARCHAR}
    		</if>
     
   </update>

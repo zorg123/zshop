@@ -357,6 +357,7 @@ public class GoodsAction extends BaseAction {
     	if(page==0){
     		page = 1;
     	}
+    	goodsOrder.setUser_id(getUserId());
 		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
 		setResult(pageModel);
     	return "queryUserOrder";
@@ -419,7 +420,7 @@ public class GoodsAction extends BaseAction {
 	        	goodsRevAddr.setUser_id(getUserId());
 	        	goodsRevAddr.setIs_default("1");
 	        	List<GoodsRevAddr> addrRetList = goodsRevAddrService.getListByCon(goodsRevAddr);
-	        	if(retList.size()>0){
+	        	if(addrRetList.size()>0){
 	        		goodsRevAddr = addrRetList.get(0);
 	        	}
 	    	}else{

@@ -120,6 +120,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 				goodsOrder.setCreate_date(new Date());
 				goodsOrder.setOrd_ip("");
 				goodsOrder.setState("0");
+				goodsOrder.setGoods_amount(1);
 		    	goodsService.accept(goods, goodsOrder,user);//用于事务
 			}
 		}	

@@ -22,7 +22,7 @@
                     <div class="am-g">
                         <div class="tpl-form-body tpl-form-line">
                             <form class="am-form tpl-form-line-form" id="acceptForm">
-                            	<input type="hidden" name="goodsOrder.order_id" db_field="goodsOrder.goods_id" value="<s:property value="goodsOrder.order_id" />" />
+                            	<input type="hidden" name="goodsOrder.order_id" db_field="goodsOrder.order_id" value="<s:property value="goodsOrder.order_id" />" />
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">商品名称 </label>
                                     <div class="am-u-sm-9">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 </div>
-<div id="addrMngDiv"> 
+<div id="addrMngDiv" style="display:none"> 
 	  
 </div>
         

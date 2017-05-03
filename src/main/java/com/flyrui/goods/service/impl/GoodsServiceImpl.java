@@ -53,7 +53,7 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 			throw new FRException(new FRError("GOODS_002"));
 		}
 		Double totalFee = goodsOrder.getGoods_amount() * goods.getGoods_price();
-		if(!"2".equals(goods.getGoods_type())){ //这个是赠品订单，不会扣费，不做账户校验
+		if(!"1".equals(goods.getGoods_type())){ //这个是赠品订单，不会扣费，不做账户校验
 			//校验账户余额
 			AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
 			accoutInfoDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));

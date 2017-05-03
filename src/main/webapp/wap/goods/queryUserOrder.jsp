@@ -24,7 +24,7 @@
 				<div class="tpl-block">    
 				    <div class="am-g">
                         
-                    	<div class="am-u-sm-12 am-u-md-6">
+                    	<div class="am-u-sm-12 am-u-md-6" style="height:30px">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" id="modRevBtn" class="am-btn am-btn-default am-btn-success" style="display:none"><span class="am-icon-plug"></span>修改收货地址</button>
@@ -114,17 +114,16 @@
 	    pageData.openContent(base+"/Goods/modGoodsRevAddr.do",params);
 	});
 	
-	$("#listForm td input[type='checkbox']").on("click",function(){
+	$("#listForm td input[type='checkbox']").on("click",function(event,param){
+		
 		var $this = $(this);
-		var goodType = $this.attr("goodType");
-		if($this.attr("isSelected")){
-			$this.removeAttr("isSelected");
+		var goodType = $this.attr("orderType");
+		$("#listForm td input[type='checkbox']").prop("checked",false);
+		$this.prop("checked",true);
+		if($this.is(":checked") && goodType == '1'){
+			$("#modRevBtn").show();
+		}else{			
 			$("#modRevBtn").hide();
-		}else{
-			$this.attr("isSelected","1");
-			if(goodType == '1'){
-				$("#modRevBtn").show();
-			}
 		}
 	});
 	
