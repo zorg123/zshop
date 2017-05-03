@@ -52,13 +52,8 @@
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto" >
     SELECT 
     a.create_time, a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
-    CASE IFNULL(b.goods_order_id,0) WHEN 0 THEN '未充值' ELSE '已充值' END AS state_name
+    case a.state when 0 THEN '未充值' ELSE '已充值' END AS state_name 
     FROM user_recharge a
-    LEFT JOIN coin_track b
-    ON a.user_id = b.user_id
-    AND a.rec_code = b.goods_order_id
-    AND b.coin_type = 2
-    AND b.create_type = 4
     WHERE a.user_id = #{user_id,jdbcType=INTEGER}
   </select>
   
@@ -68,28 +63,23 @@
     a.create_time,
     a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
     a.user_code,a.user_name,
-    CASE IFNULL(b.goods_order_id,0) WHEN 0 THEN '未充值' ELSE '已充值' END AS state_name,
-    b.coin_num,
-	b.create_time as rec_time,
-	(SELECT c.name FROM tb_user c WHERE c.user_id = b.oper_user_id) AS oper_user_name
+    case a.state when 0 THEN '未充值' ELSE '已充值' END AS state_name,
+    a.coin_num,
+	a.rec_time,
+	(SELECT c.name FROM tb_user c WHERE c.user_id = a.oper_user_id) AS oper_user_name
     FROM user_recharge a
-    LEFT JOIN coin_track b
-    ON a.user_id = b.user_id
-    AND a.rec_code = b.goods_order_id
-    AND b.coin_type = 2
-    AND b.create_type = 4
     WHERE 1=1
 	<if test="user_code != null  and user_code != '' " >
     	and a.user_code = #{user_code,jdbcType=VARCHAR}
  	</if>
  	<if test="start_time !=null and start_time != '' ">
-    	and b.create_time &gt;= str_to_date(#{start_time,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
+    	and a.rec_time &gt;= str_to_date(#{start_time,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
     </if>
     <if test="end_time !=null and end_time != '' ">
-    	and b.create_time &lt;= str_to_date(#{end_time,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
+    	and a.rec_time &lt;= str_to_date(#{end_time,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
     </if>
     <if test="state_name != null  and state_name != '' " >
-    	AND IF(b.goods_order_id IS NULL,0,1) = #{state_name,jdbcType=VARCHAR}
+    	AND a.state = #{state_name,jdbcType=VARCHAR}
  	</if>
     order by a.create_time desc
   </select>
@@ -110,7 +100,9 @@
 	 `rec_message`,
 	 `user_id`, 
 	 `user_code`, 
-	 `user_name`) 
+	 `user_name`,
+	 `create_time`,
+	 `state`) 
 	 values(
 	 #{rec_code,jdbcType=VARCHAR},
 	 #{rec_bankname,jdbcType=VARCHAR},
@@ -119,39 +111,19 @@
 	 #{rec_message,jdbcType=VARCHAR},
 	 #{user_id,jdbcType=INTEGER},
 	 #{user_code,jdbcType=VARCHAR},
-	 #{user_name,jdbcType=VARCHAR})
+	 #{user_name,jdbcType=VARCHAR},
+	 now(),
+	 #{state,jdbcType=INTEGER})
 	 
   </insert>
   
-  <update id="update" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto">
-    update accout_info
-    set
-   		<if test="bonus_coin != null  and bonus_coin != '' " >
-      		bonus_coin = IFNULL(bonus_coin,0)+#{bonus_coin,jdbcType=DOUBLE},
-   		</if>
-   		<if test="elect_coin != null  and elect_coin != '' " >
-      		elect_coin = IFNULL(elect_coin,0)+#{elect_coin,jdbcType=DOUBLE},
-   		</if>
-   		<if test="reconsmp_coin != null  and reconsmp_coin != '' " >
-      		reconsmp_coin = IFNULL(reconsmp_coin,0)+#{reconsmp_coin,jdbcType=VARCHAR},
-   		</if>
-   		<if test="account_bank != null  and account_bank != '' " >
-      		account_bank = #{account_bank,jdbcType=VARCHAR},
-   		</if>
-   		<if test="account_bank_brc != null  and account_bank_brc != '' " >
-      		account_bank_brc = #{account_bank_brc,jdbcType=VARCHAR},
-   		</if>
-   		<if test="account_id != null  and account_id != '' " >
-      		account_id = #{account_id,jdbcType=VARCHAR},
-   		</if>
-   		<if test="account_name != null  and account_name != '' " >
-      		account_name = #{account_name,jdbcType=VARCHAR},
-   		</if>
-   		<if test="cash_coin != null  and cash_coin != '' " >
-      		cash_coin = IFNULL(cash_coin,0)+#{cash_coin,jdbcType=DOUBLE},
-   		</if>
-   		comments = ''
-    where user_id = #{user_id,jdbcType=INTEGER}
+  <update id="update" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto">
+    update user_recharge
+    set state = #{state,jdbcType=INTEGER},
+    coin_num = #{coin_num,jdbcType=VARCHAR},
+    rec_time = now(),
+    oper_user_id = #{oper_user_id,jdbcType=INTEGER}
+    where rec_code = #{rec_code,jdbcType=VARCHAR}
   </update>
   
    <delete id="deleteByUserId" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >

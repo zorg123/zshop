@@ -12,7 +12,7 @@ public interface UserRechargeService {
 	
 	public int insert(User loginUser,UserRechargeDto userRecharge);
 	
-	//public int update(UserRechargeDto userRecharge);
+	public int update(UserRechargeDto userRecharge);
 	
 	public int delete(UserRechargeDto userRecharge);
 	

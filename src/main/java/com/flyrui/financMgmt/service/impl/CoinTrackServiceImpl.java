@@ -16,8 +16,10 @@ import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
+import com.flyrui.financMgmt.pojo.UserRechargeDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
+import com.flyrui.financMgmt.service.UserRechargeService;
 import com.flyrui.sys.service.ContentService;
 import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.UserService;
@@ -35,6 +37,9 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	
 	@Autowired
 	public FrconfigService frconfigService;
+	
+	@Autowired
+	public UserRechargeService userRechargeService;
 	
 	public CoinTrackServiceImpl(){
 		super.setNameSpace("com.flyrui.financMgmt.dao.mapper.CoinTrackMapper");
@@ -188,7 +193,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	@Transactional
 	public HashMap recharge(User loginUser,CoinTrackDto coinTrackDto){
 		HashMap retMap = new HashMap();
-		//获取收入的会员编号
+		//获取充值编号
 		String goods_order_id = coinTrackDto.getGoods_order_id();
 		//获取收入的会员编号
 		String user_code = coinTrackDto.getUser_code();
@@ -213,6 +218,13 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 				retMap.put("retString", "输入的会员编号未激活");
 			}
 		}else{
+			//更新用户充值的状态
+			UserRechargeDto userRecharge = new UserRechargeDto();
+			userRecharge.setRec_code(goods_order_id);
+			userRecharge.setState(1);
+			userRecharge.setCoin_num(elect_coin.toString());
+			userRecharge.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
+			userRechargeService.update(userRecharge);
 			//接收方
     		CoinTrackDto paramCoinTrackDto = new CoinTrackDto();
     		paramCoinTrackDto.setGoods_order_id(goods_order_id);

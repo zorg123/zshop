@@ -74,6 +74,7 @@
 			param["userRecharge.rec_bankid"] = $('#rec_bankid').val();
 			param["userRecharge.rec_num"] = $('#rec_num').val();
 			param["userRecharge.rec_message"] = $('#rec_message').val();
+			param["userRecharge.state"] = 0;
 	        CommonUtils.invokeSyncAction(base+'/FinancMgmt/insertUserRec.do', param, function (reply) {
 				if((reply || '') !=''){
 					var code = reply._code;

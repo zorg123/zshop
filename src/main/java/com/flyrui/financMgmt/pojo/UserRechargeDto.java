@@ -8,7 +8,6 @@ import com.flyrui.common.excel.ExcelAnnotation;
 public class UserRechargeDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@ExcelAnnotation(exportName = "申请时间")
 	private Date create_time;
 	private String rec_code;
 	@ExcelAnnotation(exportName = "充值银行")
@@ -34,6 +33,8 @@ public class UserRechargeDto implements Serializable {
 	private String oper_user_name;
 	private String start_time;
 	private String end_time;
+	private Integer state;
+	private Integer oper_user_id;
 	public String getRec_code() {
 		return rec_code;
 	}
@@ -123,5 +124,17 @@ public class UserRechargeDto implements Serializable {
 	}
 	public void setEnd_time(String end_time) {
 		this.end_time = end_time;
+	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	public Integer getOper_user_id() {
+		return oper_user_id;
+	}
+	public void setOper_user_id(Integer oper_user_id) {
+		this.oper_user_id = oper_user_id;
 	}
 }

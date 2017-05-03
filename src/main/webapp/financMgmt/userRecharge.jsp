@@ -36,7 +36,6 @@
             <thead>
             <tr>
             	<th field="rec_code" width="40" hidden>充值申请id</th>
-            	<th field="create_time" width="80">申请时间</th>
                 <th field="rec_bankname" width="40">充值银行</th>  
                 <th field="rec_bankid" width="80">充值卡号</th>
                 <th field="rec_num" width="30">申请金额</th>              
