@@ -55,7 +55,7 @@
                                     <tbody>
                                         <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>"></td>
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
@@ -118,9 +118,10 @@
 		
 		var $this = $(this);
 		var goodType = $this.attr("orderType");
+		var state = $this.attr("state");
 		$("#listForm td input[type='checkbox']").prop("checked",false);
 		$this.prop("checked",true);
-		if($this.is(":checked") && goodType == '1'){
+		if($this.is(":checked") && goodType == '1' && state == '0'){
 			$("#modRevBtn").show();
 		}else{			
 			$("#modRevBtn").hide();
