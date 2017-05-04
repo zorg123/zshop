@@ -41,8 +41,7 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="请输入手机号码，为必填" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description" value="<s:property value="user.user_phone" />"/>                                        
-                                    	<small id="user.user_phone-description"></small>  
+                                        <span type="text" class="am-form-field tpl-form-no-bg"> <s:property value="user.user_phone" /> </span> 
                                     </div>
                                 </div>
 								                              
@@ -162,12 +161,7 @@
 			                event.preventDefault();
 			                return false;
 			            },
-			            descriptions:{
-			            	"user.user_phone":{
-			                    required : '<div class="field-invalidmsg">请输入手机号码</div>',
-			                    pattern : '<div class="field-invalidmsg">您输入的手机号码格式不正确</div>',
-			                    valid : '<div class="field-validmsg">验证通过</div>'
-			                },
+			            descriptions:{			            	
 			                "user.mail" : {
 			                    pattern : '<div class="field-invalidmsg">邮箱格式不对</div>',
 			                    valid : ''

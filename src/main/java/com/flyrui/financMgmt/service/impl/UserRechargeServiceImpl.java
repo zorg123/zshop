@@ -41,4 +41,8 @@ public class UserRechargeServiceImpl extends BaseService<UserRechargeDto> implem
 	public List<UserRechargeDto> getListByConRec(UserRechargeDto userRecharge) {
 		return baseDao.selectList(nameSpace+".selectRec", userRecharge);		
 	}
+	
+	public int deleteUserChargeByRecCode(UserRechargeDto userRecharge) {
+		return baseDao.update(nameSpace+".deleteUserChargeByRecCode", userRecharge);		
+	}
 }

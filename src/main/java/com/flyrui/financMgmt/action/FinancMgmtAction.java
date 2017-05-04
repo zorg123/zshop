@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
@@ -15,21 +14,20 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.flyrui.bus.service.BusService;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.excel.ExcelExport;
 import com.flyrui.dao.common.page.PageModel;
-import com.flyrui.dao.pojo.salary.BusSalary;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.exception.ErrorConstants;
+import com.flyrui.exception.FRError;
+import com.flyrui.exception.FRException;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
-import com.flyrui.financMgmt.pojo.BonusRecDto;
 import com.flyrui.financMgmt.pojo.CoinTrackDto;
 import com.flyrui.financMgmt.pojo.UserRechargeDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.CoinTrackService;
 import com.flyrui.financMgmt.service.UserRechargeService;
 import com.flyrui.infoshare.staff.pojo.CoreUser;
-import com.flyrui.salary.service.SalaryService;
 import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.UserService;
 
@@ -389,6 +387,20 @@ public class FinancMgmtAction extends BaseAction {
 		accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
 		int ret = accoutInfoService.update(accoutInfo);
 		setResult(ret);
+    	return SUCCESS;
+    }
+	
+	@Action(value="deleteUserCharge")
+	public String deleteUserCharge() throws FRException{
+		if(userRecharge==null ||userRecharge.getRec_code() ==null){
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));			
+		}
+		userRecharge.setUser_id(Integer.parseInt(getUserId()));
+		int cnt = userRechargeService.deleteUserChargeByRecCode(userRecharge);
+		if(cnt == 0){
+			throw new FRException(new FRError(ErrorConstants.SYS_NO_DELETE_DATA));	
+		}
+		setCommonSuccessReturn();
     	return SUCCESS;
     }
 	

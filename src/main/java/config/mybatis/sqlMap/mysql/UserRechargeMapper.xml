@@ -52,7 +52,7 @@
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.UserRechargeDto" >
     SELECT 
     a.create_time, a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
-    case a.state when 0 THEN '未充值' ELSE '已充值' END AS state_name 
+    case a.state when 0 THEN '未充值' ELSE '已充值' END AS state_name ,a.rec_code,a.state
     FROM user_recharge a
     WHERE a.user_id = #{user_id,jdbcType=INTEGER}
   </select>
@@ -62,7 +62,7 @@
     a.rec_code,
     a.create_time,
     a.rec_bankname,a.rec_bankid,a.rec_num,a.rec_message,
-    a.user_code,a.user_name,
+    a.user_code,a.user_name,a.state,
     case a.state when 0 THEN '未充值' ELSE '已充值' END AS state_name,
     a.coin_num,
 	a.rec_time,
@@ -136,4 +136,9 @@
     from accout_info
     where user_id = #{user_id,jdbcType=INTEGER} for update
   </select>
+  
+  <delete id="deleteUserChargeByRecCode" parameterType="com.flyrui.financMgmt.pojo.AccoutInfoDto" >
+    delete from user_recharge
+    where rec_code = #{rec_code,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=INTEGER}
+  </delete>
 </mapper>

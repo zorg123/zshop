@@ -23,4 +23,6 @@ public interface UserRechargeService {
 	public PageModel getPagerListByConRec(UserRechargeDto userRecharge,int pageNo,int pageSize);
 	
 	public List<UserRechargeDto> getListByConRec(UserRechargeDto userRecharge);
+	
+	public int deleteUserChargeByRecCode(UserRechargeDto userRecharge) ;
 }

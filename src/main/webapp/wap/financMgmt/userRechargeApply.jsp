@@ -28,16 +28,21 @@
 	                            <div class="am-btn-toolbar">
 	                                <div class="am-btn-group am-btn-group-xs">
 	                                    <button type="button" id="addBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>新增</button>
+	                                    
 	                                </div>
+	                                 <div class="am-btn-group am-btn-group-xs">
+	                                 <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-trash-o"></span>删除</button>
+	                                 </div>
 	                            </div>
 	                        </div>
 	                     </div>
 	                    <div class="am-g">
 	                        <div class="am-u-sm-12">
-	                            <form class="am-form">
+	                            <form class="am-form" id="listForm">
 	                                <table class="am-table am-table-striped am-table-hover table-main">
 	                                    <thead>
 	                                        <tr>
+	                                        	<th class="table-check"></th>
 	                                        	<th class="table-type">申请时间</th>
 	                                            <th class="table-type">充值银行</th>
 	                                            <th class="table-type">充值卡号</th>
@@ -49,6 +54,7 @@
 	                                    <tbody>
 	                                        <s:iterator  value="#rcInfoList"  id="rcInfoIter" status="st">   
 		                                        <tr>
+		                                            <td><input type="checkbox" recCode="<s:property value="#rcInfoIter.rec_code"/>" state="<s:property value="#rcInfoIter.state"/>"></td>
 		                                        	<td><s:date name="#rcInfoIter.create_time" format="yyyy-MM-dd HH:mm:ss"/></td>
 		                                            <td><s:property value="#rcInfoIter.rec_bankname"/></td>
 		                                            <td><s:property value="#rcInfoIter.rec_bankid"/></td>
@@ -77,9 +83,54 @@
 		if(!first){
 			var params ={};
 			params["rows"] = 5;
-			params["page"]=context.option.curr;
+			params["page"]=context:context.option.curr?1;
 		    pageData.openContent(base+"/FinancMgmt/queryRcInfo.do",params);
 		}
+	}
+	
+	$("#delBtn").on("click",function(){
+		delRec();
+	})
+	function delRec(){
+		var recList=[];
+		$.each($("#listForm input:checked"),function(i,v){
+			var recCode = $(this).attr("recCode");
+			var state = $(this).attr("state");
+			var o ={};
+			o["recCode"] = recCode;
+			o["state"] = state;
+			recList.push(o);
+		});
+		if(recList.length==0){
+			CommonUtils.showAlert("请先选择要删除的记录!");
+			return;
+		}
+		if(recList.length>1){
+			CommonUtils.showAlert("只能选择一个记录删除!");
+			return;
+		}
+		var o =recList[0];
+		if(o.state=='1'){
+			CommonUtils.showAlert("已经充值的记录不能删除!");
+			return;
+		}
+		var param={};
+		param["userRecharge.rec_code"] = o.recCode;
+		CommonUtils.showConfirm("确定要删除吗?",function(){				
+			CommonUtils.invokeAsyncAction(base+'/FinancMgmt/deleteUserCharge.do', param, function (reply) {
+	  	           if ((reply || '') != '') {
+	  	               var code = reply._code;               
+	  	               if (code == '0') {  
+	  	            	 CommonUtils.showAlert('操作成功!');
+	  	            	 if(jump){jump()}; 	                   
+	  	               } else  {
+	  	            	  CommonUtils.showAlert(reply._msg);
+	  	               }              
+	  	           } else  {
+	  	        	      CommonUtils.showAlert('操作失败!');
+	  	           }
+	  	    },true);
+		});
 	}
 	$("#page").page({pages:<s:property value="#rcInfoListPage.pageCount"/>,curr:<s:property value="#rcInfoListPage.pageIndex"/>,jump:jump});
 </script>	

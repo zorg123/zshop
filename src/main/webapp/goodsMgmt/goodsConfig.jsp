@@ -76,8 +76,12 @@
     		</td>
     	</tr>
     	<tr>
-    		<td>价格:</td>
+    		<td>拼团价格:</td>
     		<td colspan="3"> <input class="easyui-validatebox" type="text" name="goods_price" style="width:200px"/></td>
+    	</tr>
+    	<tr>
+    		<td>市场价格:</td>
+    		<td colspan="3"> <input class="easyui-validatebox" type="text" name="goods_market_price" style="width:200px"/></td>
     	</tr>
     	<tr>
     		<td>购买积分类型:</td>

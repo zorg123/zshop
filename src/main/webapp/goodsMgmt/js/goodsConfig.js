@@ -8,9 +8,16 @@ var commMng = {
         }
         var goods_price = $('input[name="goods_price"]').val();
         if(!/^\+?[1-9][0-9]*$/.test(goods_price)){
-   		 $.messager.alert('系统提示', '商品价格请输入整数值!', 'info');
+   		 $.messager.alert('系统提示', '商品拼团价格请输入整数值!', 'info');
    		 return;
         }
+        
+        var goods_market_price = $('input[name="goods_market_price"]').val();
+        if(!/^\+?[1-9][0-9]*$/.test(goods_market_price)){
+   		 $.messager.alert('系统提示', '商品市场价格请输入整数值!', 'info');
+   		 return;
+        }
+        
         var pay_type = $("input[name='pay_type']:checked").map(function () {
             return $(this).val();
         }).get().join(',');
@@ -82,6 +89,7 @@ var commMng = {
         param["goods.state"] = $('input[name="state"]').val();
         param["goods.eff_date"] = $('input[name="eff_date"]').val();
         param["goods.exp_date"] = $('input[name="exp_date"]').val();
+        param["goods.goods_market_price"] = goods_market_price;
         if(operType=='save'){
         	 param["goods.icon_url"] = icon_url;
              param["goods.pic_url"] = pic_url;
