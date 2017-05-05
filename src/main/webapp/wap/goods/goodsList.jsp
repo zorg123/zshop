@@ -47,9 +47,9 @@
 	                                	<div class="tpl-table-images-content-i-time"><s:property value="#goodsIter.goods_name"/></div>
 	                                	<a href="javascript:void(0);" class="tpl-table-images-content-i">  
 	                                		<div class="tpl-table-images-content-i-info">
-                                            <span class="ico">
+                                            <span class="ico" style="margin-bottom:0px">
 			                                   	 <%-- <span class="price-promo">￥ <s:property value="#goodsIter.goods_price"/> </span> <span class="price-original"><s:property value="#goodsIter.goods_market_price"/></span>  <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if> --%>  
-			                                	<p class="sk_item_price"><span class="mod_price sk_item_price_new"><i>¥</i><span><s:property value="#goodsIter.goods_price"/></span></span><span class="mod_price sk_item_price_origin"><del><s:property value="#goodsIter.goods_market_price"/></del></span> <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if></p>
+			                                	<span class="sk_item_price"><span class="mod_price sk_item_price_new"><i>¥</i><span><s:property value="#goodsIter.goods_price"/></span></span><span class="mod_price sk_item_price_origin"><del><s:property value="#goodsIter.goods_market_price"/></del></span> <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if></span>
 			                                </span>
                                         	</div>
                                         	<span class="tpl-table-images-content-i-shadow"></span>	                                		                                      	

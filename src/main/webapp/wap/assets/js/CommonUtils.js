@@ -609,7 +609,7 @@ var CommonUtils={
     	    }
     	  });
     },
-    showLoading:function(msg,successFunc){
+    showLoading:function(msg){
     	if(!msg){
     		msg = '加载中';
     	}

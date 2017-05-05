@@ -43,7 +43,8 @@
             	<th field="goods_amount" width="40" hidden>库存</th>
                 <th field="goods_name" width="40">商品名称</th>  
                 <th field="catalog_id" width="40" formatter="commMng.formatCatalogId">所属模块</th>
-                <th field="goods_price" width="40">价格</th>              
+                <th field="goods_price" width="40">拼团价格</th>   
+                <th field="goods_market_price" width="40">市场价格</th>            
                 <th field="pay_type" width="40" formatter="commMng.payType">购买积分类型</th>
                 <th field="goods_desc" width="40">简要描述</th>
                 <th field="pic_url" width="40">图片</th>

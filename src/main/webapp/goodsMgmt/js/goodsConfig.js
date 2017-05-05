@@ -175,6 +175,7 @@ var commMng = {
     	$('input[name="goods_name"]').val('');
     	$('#catalog_id').combobox('setValue',1);
     	$('input[name="goods_price"]').val('');
+    	$('input[name="goods_market_price"]').val('');
     	$("[name = pay_type]:checkbox").attr("checked", false);
     	$('#state').combobox('setValue',1);
     	$('#goods_desc').textbox('setText', "");
@@ -283,6 +284,7 @@ var commMng = {
 	  $('input[name="goods_name"]').val(obj.goods_name);
 	  $('#catalog_id').combobox('setValue',obj.catalog_id);
 	  $('input[name="goods_price"]').val(obj.goods_price);
+	  $('input[name="goods_market_price"]').val(obj.goods_market_price);
 	  $('input[name="goods_desc"]').val(obj.goods_desc);
 	  //购买积分类型
 		var val = obj.pay_type.split(",");

@@ -148,6 +148,7 @@ var pageData={
 			 params = data;
 		 }
 		 $main.empty();
+		 CommonUtils.showLoading("加载中...");
 	     $.ajax({
 				type:"post",//设置提交方式
 				url:$url,//提交URL
@@ -155,12 +156,13 @@ var pageData={
 				async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",			
 				//调用失败回调函数
-				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					//alert("服务调用失败" + "\n" + errorThrown);
+				error:function(XMLHttpRequest, textStatus, errorThrown) {					
+					CommonUtils.closeLoading();
 					$main.html("服务调用失败" + "\n" + errorThrown);
 		        },
 				//调用成功的回调函数
 				success:function(html) {
+					CommonUtils.closeLoading();
 					if(html instanceof Object){						
 						if(html._code=="SYS_ERR002"){
 							document.location.href="/wap/login"

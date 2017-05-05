@@ -27,12 +27,11 @@
 	                    	<div class="am-u-sm-12 am-u-md-6">
 	                            <div class="am-btn-toolbar">
 	                                <div class="am-btn-group am-btn-group-xs">
-	                                    <button type="button" id="addBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>新增</button>
-	                                    
+	                                    <button type="button" id="addBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>新增</button>	                                    
 	                                </div>
-	                                 <div class="am-btn-group am-btn-group-xs">
-	                                 <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-trash-o"></span>删除</button>
-	                                 </div>
+	                                <div class="am-btn-group am-btn-group-xs">
+	                                 	<button type="button" id="delBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-trash-o"></span>删除</button>
+	                                </div>
 	                            </div>
 	                        </div>
 	                     </div>
@@ -74,16 +73,15 @@
         </div>
 </div>    
 <script language="javascript" type="text/javascript" >
-	$("#addBtn").on("click",function(){
-		//CommonUtils.showAlert('操作成功!');
+	$("#addBtn").on("click",function(){	
 		pageData.openContent(base+"/wap/financMgmt/userRechargeAdd.jsp");
-	})
+	});
 	var jump = function(context,first) {
 		//CommonUtils.showAlert('当前第：' + context.option.curr + "页");
 		if(!first){
 			var params ={};
 			params["rows"] = 5;
-			params["page"]=context:context.option.curr?1;
+			params["page"]=context!=null?context.option.curr:1;
 		    pageData.openContent(base+"/FinancMgmt/queryRcInfo.do",params);
 		}
 	}
