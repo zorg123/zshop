@@ -82,7 +82,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context!=null?context.option.curr:1;
-		    pageData.openContent(base+"/FinancMgmt/queryRcInfo.do",params);
+		    pageData.openContent(base+"/FinancMgmt/queryRecApply.do",params);
 		}
 	}
 	

@@ -29,7 +29,13 @@ var Login={
                     sign=false;                    
                     if(!result||reply==result) CommonUtils.showAlert("系统超时未返回，请重试!");	  
           		 
-          		  	if(result.code=='0'){          		  		
+          		  	if(result.code=='0'){  
+          		  		if($(".el-checkbox span:first").hasClass("is-checked")){
+          		  			$.cookie('user_name', user_name, {expires: 180});
+          		  		}else{
+          		  			$.cookie('user_name', null);
+          		  		}
+          		  		
           		  		window.location.href=base+"/Sys/mainwap.do?r="+(new Date()).getTime();
           		  	}else{  	    
           		  		Login.refreshValidCode();
@@ -60,13 +66,23 @@ var Login={
         return true;
     },
     refreshValidCode:function(){    	
-    	$("#valid_code_img").attr("src",base+'/public/image.jsp?d='+(new Date()));
+    	$("#valid_code_img").attr("src",base+'/public/vc.jsp?d='+(new Date()));
     }
 }
 
 
-$(function(){        
-    
+$(function(){
+	var uName =$.cookie("user_name");
+	if(uName !=null ){
+		$('input[name="user_name"]').val(uName);
+	}
+	
+	if($(".el-checkbox")){
+		$(".el-checkbox").on("click",function(){		
+			$(this).find("span:first").toggleClass("is-checked");
+			return false;
+		});
+	}
     $('#login_btn').click(function(){    	
         Login.login();
         return false; 

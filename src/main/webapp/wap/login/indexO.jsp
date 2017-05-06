@@ -23,7 +23,7 @@
 			<i> 登录 </i> 
 		</div>
 		<div class="am-u-sm-10 login-am-center">
-			<form class="am-form">
+			<form class="am-form"> 
 				<fieldset>
 					<div class="am-form-group">
 						<input type="text" class="" name="user_name" id="user_name" placeholder="请输入登录名">

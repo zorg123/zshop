@@ -86,9 +86,18 @@
                                     	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_link_phone" name="goodsOrder.rev_link_phone" value="<s:property value="goodsRevAddr.rev_link_phone"/>" readonly/>
                                         <input type="hidden" db_field="goodsOrder.rev_area" name="goodsOrder.rev_area" value="<s:property value="goodsRevAddr.rev_provice"/>" readonly/>
                                         <input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_addr" value="<s:property value="goodsRevAddr.rev_provice"/><s:property value="goodsRevAddr.rev_city"/><s:property value="goodsRevAddr.rev_zone"/><s:property value="goodsRevAddr.rev_addr"/>" name="goodsOrder.rev_addr" placeholder="没有收货地址请点击管理按钮管理您的收货地址" readonly/>                                       
-                                        <input type="button" id="manRevAddBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="管理地址"></input>
+                                        <div style="margin-top: 5px;">
+                                        	<input type="button" id="manRevAddBtn" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="管理地址"></input>
+                                     	</div>
                                      </div>
-                                </div>                               
+                                </div>
+                                <%--  
+                                <div class="am-input-group am-login-input-group">
+                                	<label for="user-email" class="am-u-sm-3 am-form-label">验证码：</label>
+                                    <div class="am-u-sm-9">
+										<input type="text" class="" name="valid_code" placeholder="请输入验证码"><span  class="am-input-group-label am-login-input-group-label"><img id="valid_code_img" src="<%=baseUri%>/public/vc.jsp" style="cursor:pointer;padding-top:3px" onclick="javascript:this.src='<%=baseUri%>/public/vc.jsp?d='+(new Date());"></span>
+									</div>
+								</div>     --%>                         
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
