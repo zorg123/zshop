@@ -18,7 +18,7 @@ session.removeAttribute("valid_code");
 session.setAttribute("valid_code", verifyCode.toLowerCase()); 
 
 //生成图片 
-int w = 200, h = 34; 
+int w = 100, h = 34; 
 VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
 
 %>

@@ -49,7 +49,7 @@ html{box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:borde
                    	  	<th>验证码：</th>
                   	</tr>
                   	<tr>
-                    	<td><input type="text" style="width:80px" name="valid_code" class="Input2"><img id="valid_code_img" src="<%=baseUri%>/public/image.jsp" style="cursor:pointer;padding-top:3px" onclick="javascript:this.src='<%=baseUri%>/public/image.jsp?d='+(new Date());"></td>
+                    	<td><input type="text" style="width:80px" name="valid_code" class="Input2"><img id="valid_code_img" src="<%=baseUri%>/public/vc.jsp" style="cursor:pointer;padding-top:3px;height:28px;" onclick="javascript:this.src='<%=baseUri%>/public/vc.jsp?d='+(new Date());"></td>
                   	</tr>
                	</table>
 		  </div>

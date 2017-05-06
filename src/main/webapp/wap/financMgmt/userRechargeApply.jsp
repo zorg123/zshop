@@ -38,7 +38,8 @@
 	                    <div class="am-g">
 	                        <div class="am-u-sm-12">
 	                            <form class="am-form" id="listForm">
-	                                <table class="am-table am-table-striped am-table-hover table-main">
+	                               <div class ="am-scrollable-horizontal">
+	                                <table class="am-table am-table-striped am-table-hover am-text-nowrap table-main">
 	                                    <thead>
 	                                        <tr>
 	                                        	<th class="table-check"></th>
@@ -64,6 +65,7 @@
 	                                        </s:iterator>                                        
 	                                    </tbody>
 	                                </table>
+	                                </div>
 	                                <div id="page">  </div>
 	                            </form>
 	                        </div>

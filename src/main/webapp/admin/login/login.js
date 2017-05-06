@@ -57,7 +57,7 @@ var Login={
         return true;
     },
     refreshValidCode:function(){    	
-    	$("#valid_code_img").attr("src",base+'/public/image.jsp?d='+(new Date()));
+    	$("#valid_code_img").attr("src",base+'/public/vc.jsp?d='+(new Date()));
     }
 }
 

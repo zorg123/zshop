@@ -24,10 +24,10 @@
             <div class="tpl-portlet-components">
             	<div class="portlet-title">
             		<div class="am-g">
-	                    <div class="am-u-sm-8 caption font-green ">
+	                    <div class="am-u-sm-5 caption font-green ">
 	                        <s:property value="funcName"/>列表
 	                    </div>
-	                    <div class="am-u-sm-4 am-u-md-3">
+	                    <div class="am-u-sm-7 am-u-md-6">
 		                            <div class="am-input-group am-input-group-sm">
 		                                <input type="text" class="am-form-field" id="searchContent" value="<s:property value="goods.goods_name"/>"/>
 		                                <span class="am-input-group-btn">
@@ -55,9 +55,11 @@
 			                                		拼团:<span class="mod_price sk_item_price_new">
 				                                		<i>¥</i><span><s:property value="#goodsIter.goods_price"/></span>
 			                                		</span>
-			                                		<span class="mod_price sk_item_price_origin">
+			                                		<s:if test="#goodsIter.goods_market_price != null">
+			                                		  <span class="mod_price sk_item_price_origin">
 			                                		    <i style="font-size:12px;">¥</i><del><s:property value="#goodsIter.goods_market_price"/></del>
-			                                		 </span> 
+			                                		 </span>
+			                                		</s:if>			                                		 
 			                                		 (可用 <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if>)
 			                                	</span>
 			                               	</span>

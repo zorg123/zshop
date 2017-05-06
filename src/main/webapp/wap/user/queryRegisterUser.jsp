@@ -70,7 +70,7 @@
 	                                            <td><input type="checkbox" userId="<s:property value="#userIter.user_id"/>"></td>
 	                                            <td><s:property value="#userIter.user_code"/></td>
 	                                            <td><a href="#"><s:property value="#userIter.name"/></a></td>
-	                                            <td><s:property value="#userIter.state"/></td>
+	                                            <td><s:if test="#userIter.state == 1" >已激活</s:if><s:if test="#userIter.state == 0" >未激活</s:if></td>
 	                                            <td class="am-hide-sm-only"><s:date name="#userIter.register_date" format="yyyy-MM-dd HH:mm:ss"/></td>                                            
 	                                        </tr>
                                         </s:iterator>                                        
