@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.trans-contain[data-v-4145efda] {
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+	margin: 10% auto 0;
+	box-sizing: border-box;
+	perspective: 800px;
+	overflow-x: hidden
+}
+
+.trans-contain .el-form[data-v-4145efda] {
+	background-color: #fff;
+	width: 100%;
+	padding: 40px;
+	border-radius: 6px;
+	box-sizing: border-box;
+	transform-style: preserve-3d;
+	transition: all .8s ease-in-out 0s;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden
+}
+
+.trans-contain .el-form .title[data-v-4145efda] {
+	font-weight: 400;
+	font-size: 24px;
+	margin-top: 0;
+	text-align: center;
+	color: #20a0ff;
+	margin-bottom: 25px
+}
+
+.trans-contain .el-form .veri[data-v-4145efda] {
+	height: 34px;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	z-index: 1;
+	width: 100px;
+	border: 0;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px
+}
+
+.trans-contain .el-form .el-form-item__label[data-v-4145efda] {
+	text-align: left
+}
+
+.trans-contain .el-form .btn-block[data-v-4145efda] {
+	width: 100%;
+	margin-top: 20px
+}
+
+.trans-contain .el-form[data-v-4145efda]:first-child {
+	position: relative;
+	z-index: 1
+}
+
+.trans-contain .el-form[data-v-4145efda]:last-child {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	transform: rotateY(180deg);
+	margin-left: auto;
+	margin-right: auto;
+	visibility: hidden;
+	opacity: 0
+}
+
+.trans-contain.trans .el-form[data-v-4145efda]:first-child {
+	transform: rotateY(-180deg);
+	visibility: hidden;
+	opacity: 0
+}
+
+.trans-contain.trans .el-form[data-v-4145efda]:last-child {
+	transform: rotateY(0);
+	visibility: visible;
+	opacity: 1
+}
+
+@media ( max-width :445px) {
+	.wrap-outer .trans-contain[data-v-4145efda] {
+		padding-left: 5%;
+		padding-right: 5%
+	}
+	.el-form[data-v-4145efda]:last-child {
+		width: 90%
+	}
+}
+
+.foot[data-v-4145efda] {
+	color: #fff;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 0;
+	font-size: 1.2em
+}
+
+.text-right[data-v-4145efda] {
+	text-align: right
+}
+
+a[data-v-4145efda] {
+	text-decoration: none;
+	color: #20a0ff
+}
+
+a[data-v-4145efda]:hover {
+	color: #4db3ff
+}
