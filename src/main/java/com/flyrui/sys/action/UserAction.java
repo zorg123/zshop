@@ -507,7 +507,7 @@ public class UserAction extends BaseAction {
     public String getUserNetWork() throws FRException{
     	UserNetTree userNetTree = new UserNetTree();
     	UserService userService = getUserService();    
-    	if(user.getUser_id()==null && user.getUser_code()==null){
+    	if((user.getUser_id()==null || "".equals(user.getUser_id()))&& (user.getUser_code()==null || "".equals(user.getUser_code()))){
     		user.setUser_id(getUserId());
     	}
     	User u = new User();
@@ -521,6 +521,7 @@ public class UserAction extends BaseAction {
     		throw frException;
     	}    	
     	User curUser = retList.get(0);
+    	userService.checkCurrentChild(super.getLoginUserInfo(),curUser);
     	userNetTree.setId(curUser.getUser_id());
     	userNetTree.setTitle(curUser.getName()+"("+curUser.getUser_code()+")");
     	userNetTree.setClassName(getUserNetClass(curUser.getState()+""));

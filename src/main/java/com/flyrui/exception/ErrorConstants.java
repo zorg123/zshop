@@ -51,5 +51,8 @@ public class ErrorConstants {
  	public static final String UPLOAD_FILE_TYPE_NOT_SUPPORT = "UPLOAD_FILE_TYPE_NOT_SUPPORT";
  	
  	/** 用户不存在 **/
- 	public static final String SYS_USER_NOT_EXISTS = "SYS_ERR006";
+ 	public static final String SYS_USER_NOT_EXISTS = "SYS_ERR010";
+ 	
+ 	/** 市场无此账号 */
+ 	public static final String MARKET_NO_USER = "USER_010";
 }

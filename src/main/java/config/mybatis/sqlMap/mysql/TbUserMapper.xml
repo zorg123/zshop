@@ -334,7 +334,21 @@
    <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>  
    <parameter property="login_userid" jdbcType="INTEGER" mode="IN"/> 
  </parameterMap>
-  <update id="activeUser" parameterMap="produreParam" statementType="CALLABLE">  
+ <update id="activeUser" parameterMap="produreParam" statementType="CALLABLE">  
    {call pro_user_settle(?, ?)}  
+ </update>
+ 
+ <parameterMap type="map" id="produreParam2">  
+   <parameter property="inid" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="cid" jdbcType="INTEGER" mode="OUT"/> 
+ </parameterMap>
+ <select id="getChildList" parameterMap="produreParam2" statementType="CALLABLE">  
+   {call pro_get_childList(?, ?)}  
+ </select>
+  <select id="queryChildByIdAndCid"  parameterType="com.flyrui.sys.dto.UserChildDto" resultType="com.flyrui.sys.dto.UserChildDto">  
+    select cid,id,nlevel from tb_user_childlist a  where cid = #{cid,jdbcType=INTEGER} and id = #{id,jdbcType=INTEGER}
+ </select>
+ <update id="delUserChild" parameterType="com.flyrui.sys.dto.UserChildDto">  
+   delete from tb_user_childlist where cid = #{cid,jdbcType=INTEGER}
  </update>
 </mapper>

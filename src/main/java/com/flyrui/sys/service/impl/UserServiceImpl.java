@@ -14,6 +14,8 @@ import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
 import com.flyrui.dao.pojo.sys.User;
+import com.flyrui.exception.ErrorConstants;
+import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
@@ -21,6 +23,7 @@ import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
 import com.flyrui.goods.service.GoodsService;
 import com.flyrui.sys.dto.FrConfig;
+import com.flyrui.sys.dto.UserChildDto;
 import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
@@ -135,5 +138,26 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		deleteRolesByUser(user.getUser_id());
 		return super.delete(user);
 	}
+	
+	@Override
+	@Transactional
+	public void checkCurrentChild(User loginUser,User user) throws FRException{
+		Map param = new HashMap();
+		param.put("inid", loginUser.getUser_id());
+		baseDao.selectOne(getNameSpace()+".getChildList",param);
+		if(param.get("cid") ==null){
+			throw new FRException(new FRError(ErrorConstants.MARKET_NO_USER)); 
+		}
+		Integer cid = (Integer)param.get("cid");
+		UserChildDto userChildDto = new UserChildDto();
+		userChildDto.setCid(cid);
+		userChildDto.setId(Integer.parseInt(user.getUser_id()));
+		List<UserChildDto> userChildList = baseDao.selectList(getNameSpace()+".queryChildByIdAndCid",userChildDto);
+		if(userChildList ==null || userChildList.size()==0){
+			throw new FRException(new FRError(ErrorConstants.MARKET_NO_USER)); 
+		}
+		userChildDto.setId(null);
+		baseDao.update(getNameSpace()+".delUserChild",userChildDto);
+   }
    
 }

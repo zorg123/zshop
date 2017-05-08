@@ -51,6 +51,7 @@
 			//pageData.openContent("/wap/user/register.jsp?");
 		});
 		$("#subNetWork").on("click",function(){
+			$('#chart-container').empty();
 			var d = $("#register").data['node'];
 			if(d instanceof Object){
 				var param={};
@@ -75,12 +76,13 @@
 		
 		$("#searchBtn").on("click",function(){
 			var searchContentV = $("#searchContent").val();
-			if(searchContentV == null || searchContentV == ''){
-				CommonUtils.showAlert("请输入查询的用户名!");
-				return;
-			}
+			//if(searchContentV == null || searchContentV == ''){
+			//	CommonUtils.showAlert("请输入查询的用户名!");
+			//	return;
+			//}
 			var param={};
 			param["user.user_code"]=searchContentV;
+			$('#chart-container').empty();
 			CommonUtils.invokeAsyncAction(base+'/Sys/User!getUserNetWork.do', param, function (reply) {
 				if((reply || '') !=''){
 					var code = reply._code;					
@@ -88,7 +90,7 @@
 	                	 var result = reply.ret;               	 
 	                	 init_network(result);
 	                }else{
-	                	CommmonUtils.showAlert(reply._msg);
+	                	CommonUtils.showAlert(reply._msg);
 	                }
 				}
 			});

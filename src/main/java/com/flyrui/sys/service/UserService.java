@@ -34,4 +34,5 @@ public interface UserService {
 	public void activeUser(List<User> ids,User loginUser)  throws FRException;
 	public int insertRegister(User user);
 	public int delUnActiveUser(User user);
+	public void checkCurrentChild(User loginUser,User user) throws FRException;
 }

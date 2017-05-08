@@ -41,7 +41,7 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8">
-                                        <span type="text" class="am-form-field tpl-form-no-bg"> <s:property value="user.user_phone" /> </span> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" value="<s:property value="user_phone" />" disabled/> 
                                     </div>
                                 </div>
 								                              
