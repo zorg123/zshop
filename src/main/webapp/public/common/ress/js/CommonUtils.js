@@ -543,9 +543,9 @@ var CommonUtils={
             title: '消息',
             msg:'<div style="padding-top: 10px;">' + msg||"消息内容！" + '</div>',
             icon: 'info',
-            callback
+            fn:callback
         });
-    },
+    }
 }
 
 //经常用的是通过遍历,重构数组.  

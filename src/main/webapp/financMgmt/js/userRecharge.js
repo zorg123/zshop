@@ -161,7 +161,7 @@ var RechargeMng = {
     	
     	$("form[name='fileForm']").ajaxSubmit(options); 
    },
-   deleteFile(o){
+   deleteFile:function(o){
 	   var $this = $(o);
 	   $this.parent().remove();
 	   $("#fileDownload ul").html("");
