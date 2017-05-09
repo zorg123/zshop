@@ -11,7 +11,7 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
-  <title>爱健康VIP会员系统</title>
+  <title>美食加拼团</title>
   <!-[if lt IE9]>   
     <script src="<%=baseUri %>/public/bootstrap/html5shiv.min.js" type="text/javascript"></script>  
   <![endif]-> 
@@ -43,7 +43,7 @@
    <div data-v-4145efda="" class="wrap-outer">
     <div data-v-4145efda="" class="trans-contain">
      <form class="el-form" data-v-4145efda="">
-      <h5 data-v-4145efda="" class="title">爱健康VIP会员系统</h5> 
+      <h5 data-v-4145efda="" class="title">美食加拼团</h5> 
       <div class="el-form-item is-required" data-v-4145efda="">
        <div class="el-form-item__content">
         <div class="login-sub-Key el-input" data-v-4145efda="">       
