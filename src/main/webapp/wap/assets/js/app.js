@@ -148,6 +148,7 @@ var pageData={
 			 params = data;
 		 }
 		 $main.empty();
+		 _hmt.push(['_trackPageview', $url]);
 		 CommonUtils.showLoading("加载中...");
 	     $.ajax({
 				type:"post",//设置提交方式
