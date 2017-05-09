@@ -34,6 +34,16 @@
     <script src="<%=baseUri %>/wap/assets/js/layer.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/iscroll.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/jquery-mvalidate.js"></script>
+    <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?ed1d34bf893a87e9b0c76e30d9b75470";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+    
 </head>
 <script language="javascript" type="text/javascript" >
 	var base="<%=baseUri%>";
