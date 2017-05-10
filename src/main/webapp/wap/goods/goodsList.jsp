@@ -40,9 +40,9 @@
                     
 				<div class="tpl-block">                   
                     <div class="am-g">
-                    	<div class="tpl-table-images">
+                    	<div class="tpl-table-images" id="masonryGrid">
                     		<s:iterator  value="#goodsList"  id="goodsIter" status="st"> 
-	                    	 	<div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+	                    	 	<div class="am-u-sm-12 am-u-md-6 am-u-lg-4 grid-item">
 	                                <div class="tpl-table-images-content">
 	                                	<div class="tpl-table-images-content-i-time"><s:property value="#goodsIter.goods_name"/></div>
 	                                	<a href="javascript:void(0);" class="tpl-table-images-content-i">  	                                		                               		                                      	
@@ -126,5 +126,14 @@
 		pageData.openContent(base+"/Goods/goodsDetail.do",params);
 	}
 	
+	var $container = $('#masonryGrid');    
+    $container.imagesLoaded(function(){
+        $container.masonry({
+            itemSelector: '.grid-item',
+            columnWidth: '.grid-item',
+            percentPosition: true
+        });
+    });
+    
 	$("#page").page({pages:<s:property value="#goodsListPage.pageCount"/>,curr:<s:property value="#goodsListPage.pageIndex"/>,jump:jump});
 </script>	

@@ -34,6 +34,8 @@
     <script src="<%=baseUri %>/wap/assets/js/layer.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/iscroll.js"></script>
     <script src="<%=baseUri %>/wap/assets/js/jquery-mvalidate.js"></script>
+    <script src="<%=baseUri %>/wap/assets/js/masonry.pkgd.min.js"></script>
+    <script src="<%=baseUri %>/wap/assets/js/imagesloaded.pkgd.min.js"></script>
     <script>
 		var _hmt = _hmt || [];
 		(function() {
