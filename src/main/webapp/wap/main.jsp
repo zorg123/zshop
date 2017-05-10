@@ -63,14 +63,14 @@
 	           <s:iterator  value="menuList"  id="menu" status="st">	
 	               <li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
 	               	 <a class="nav-link tpl-left-nav-link-list">
-                        <i class="am-icon-home"></i>
+                        <i class="<s:property value="#menu.icon_class" escape="false" default="am-icon-square"/>"></i>
                         <span><s:property value="#menu.menu_name" escape="false"/></span>
                         <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
                     </a>
                    
                     <ul class="tpl-left-nav-sub-menu">
                         <s:iterator  value="#menu.sub_menu_list"  id="subMenu">
-	                    	<li id="tree<s:property value="#menu.menu_id" />" >
+	                    	<li id="tree<s:property value="#subMenu.menu_id" />" >
 	                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" >
 	                                <i class="am-icon-angle-right"></i>
 	                                <span><s:property value="#subMenu.menu_name" escape="false"/></span>

@@ -25,6 +25,8 @@ public class TbMenu implements Serializable {
 
     private Integer order_id;
     
+    private String icon_class;
+    
     private List sub_menu_list;
 
     private static final long serialVersionUID = 1L;
@@ -115,6 +117,14 @@ public class TbMenu implements Serializable {
 
 	public void setSub_menu_list(List subMenuList) {
 		sub_menu_list = subMenuList;
-	}   
-    
+	}
+
+	public String getIcon_class() {
+		return icon_class;
+	}
+
+	public void setIcon_class(String icon_class) {
+		this.icon_class = icon_class;
+	}
+	
 }

@@ -13,16 +13,17 @@
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="menu_desc" property="menu_desc" jdbcType="VARCHAR" />
     <result column="order_id" property="order_id" jdbcType="INTEGER" />
+    <result column="icon_class" property="icon_class" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbMenu" useGeneratedKeys="true" keyProperty="menu_id">
     insert into tb_menu (menu_name, menu_url, 
       url_open_type, up_menu_id, create_date, 
       modify_date, state, menu_desc, 
-      order_id)
+      order_id,icon_class)
     values (#{menu_name,jdbcType=VARCHAR}, #{menu_url,jdbcType=VARCHAR}, 
       #{url_open_type,jdbcType=INTEGER}, #{up_menu_id,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, 
       #{modify_date,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{menu_desc,jdbcType=VARCHAR}, 
-      #{order_id,jdbcType=INTEGER})
+      #{order_id,jdbcType=INTEGER}, #{icon_class,jdbcType=VARCHAR})
   </insert>
   <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbMenu" >
      update tb_menu set menu_name = #{menu_name,jdbcType=VARCHAR}, 
@@ -32,7 +33,7 @@
       	state = #{state,jdbcType=VARCHAR}, 
       	modify_date = #{modify_date,jdbcType=TIMESTAMP},  
       	menu_desc = #{menu_desc,jdbcType=VARCHAR},
-      	order_id = #{order_id,jdbcType=INTEGER}
+      	order_id = #{order_id,jdbcType=INTEGER}, #{icon_class,jdbcType=VARCHAR}
       where menu_id = #{menu_id,jdbcType=INTEGER}
   </update>
   <delete id="delete" parameterType="com.flyrui.dao.pojo.sys.TbMenu" >
@@ -44,7 +45,7 @@
   <select id="getRootMenuListByRole" parameterType="string" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   		select a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a ,tb_role_menu b 
        where a.menu_id = b.menu_id  and a.up_menu_id = '-1' 
        		 and state='1' and b.role_id = #{role_id,jdbcType=INTEGER}
@@ -54,7 +55,7 @@
   <select id="getRootMenuListByRoles" parameterType="List" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   		select distinct a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a ,tb_role_menu b 
        where a.menu_id = b.menu_id  and a.up_menu_id = '-1' 
        		 and state='1' and b.role_id in <foreach collection="list" item="role" index="index"
@@ -68,7 +69,7 @@
   <select id="getSubMenuListByUpId" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   	  select distinct a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a 
        where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
        		and a.menu_id in ( select menu_id from tb_role_menu b where  b.role_id in ( select role_id from tb_user_role where user_id = #{user_id,jdbcType=VARCHAR} ) ) 
@@ -79,7 +80,7 @@
   <select id="getSubMenuListByUpIdAndRole" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   	  select a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a 
        where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
        		and a.menu_id in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER}  ) 
@@ -90,7 +91,7 @@
   <select id="getSubMenuListByUpId2" parameterType="com.flyrui.dao.pojo.sys.TbMenu" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   	  select a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a 
        where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
   </select>
@@ -99,7 +100,7 @@
   <select id="getNoSelectRootMenuByRole" parameterType="string" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   	  select a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a  
        where a.menu_id not in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER} )
        		 and a.up_menu_id = '-1' 
@@ -109,7 +110,7 @@
   <select id="getNoSelectSubMenuListByUpId" parameterType="Map" resultType="com.flyrui.dao.pojo.sys.TbMenu">
   	  select a.menu_id, a.menu_name, a.menu_url, 
       	a.url_open_type,a.up_menu_id, a.create_date, 
-      	a.modify_date, a.state, a.menu_desc,a.order_id
+      	a.modify_date, a.state, a.menu_desc,a.order_id,icon_class
        from tb_menu a 
        where a.up_menu_id = #{menu_id,jdbcType=INTEGER}
        		and a.menu_id not in ( select menu_id from tb_role_menu b where  b.role_id = #{role_id,jdbcType=INTEGER} )       		       		
