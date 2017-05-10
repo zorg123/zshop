@@ -135,5 +135,11 @@
         });
     });
     
+    $("#masonryGrid .grid-item .tpl-table-images-content").hover(function(){
+    		$(this).css("border-color","red");
+    	},function() {
+    		$(this).css("border-color","#e7ecf1");
+    });
+   
 	$("#page").page({pages:<s:property value="#goodsListPage.pageCount"/>,curr:<s:property value="#goodsListPage.pageIndex"/>,jump:jump});
 </script>	
