@@ -1,3 +1,4 @@
+var curHash;
 $(function() {
 
         var $fullText = $('.admin-fullText');
@@ -47,25 +48,73 @@ $(function() {
     });
     $(".tpl-left-nav-sub-menu a").on('click', function() {
     	var $this = $(this);
-    	$url = $this.attr("url");
-    	
+    	var $url = $this.attr("url");
+    	var menuId = $this.attr("menuId");
     	$(".tpl-left-nav-sub-menu a").removeClass("active");
     	$this.addClass("active");
     	$(".tpl-left-nav-item >a").removeClass("active");
-    	//$this.parent().parent().parent().find("a:first").addClass("active");
+    	
+    	$(".tpl-left-nav-sub-menu:not(:hidden)").hide().find("i.tpl-left-nav-more-ico").removeClass("tpl-left-nav-more-ico-rotate");
+    	$this.parent().parent().show();
+		$this.parent().parent().find("i.tpl-left-nav-more-ico").addClass("tpl-left-nav-more-ico-rotate");
+
+    	
     	if (browser.versions.mobile){
     		$('#menuToggle').trigger("click");
     	}
     	if($url != ''){
-    		pageData.openContent($url);
+    		var opt={};
+    		opt.url=$url;
+    		opt.menuId = menuId;
+    		pageData.openContent(opt);
     	}
     	
         return false;
     });
    
+    //单页面支持点击后退和前进
+    /*History.Adapter.bind(window,'onanchorchange',function(){
+		// Log the State
+    	console.log(event);
+		var state = History.getState(); 
+		console.log(state);
+		console.log(window.location.hash); 
+	});*/
+    window.onhashchange=function(){
+    	//console.log("cur="+curHash);
+    	//console.log(window.location.hash); 
+    	if(window.location.hash !=''){    		
+    		var ha = window.location.hash.substring(1);
+    		//console.log("ha=="+ha);
+    		if(ha != curHash){
+    			//alert(2);
+	        	var o = BASE64.decoderStr(ha).split(";"); 
+	        	if(o.length>=3){
+	        		//选中当前菜单
+	        		var $this = $("a[menuId='"+o[2]+"']");
+	        				$(".tpl-left-nav-sub-menu a").removeClass("active");
+	        		$this.addClass("active");
+	        		$(".tpl-left-nav-item >a").removeClass("active");
+
+	        		$(".tpl-left-nav-sub-menu:not(:hidden)").hide().find("i.tpl-left-nav-more-ico").removeClass("tpl-left-nav-more-ico-rotate");
+
+	        		$this.parent().parent().show();
+	        		$this.parent().parent().find("i.tpl-left-nav-more-ico").addClass("tpl-left-nav-more-ico-rotate");
+
+	        		var opt={};
+	        		opt.url=o[1];
+	        		opt.target = o[0];
+	        		opt.fromHash = 1;
+	        		curHash = ha;
+	        		pageData.openContent(opt);
+	        	}
+    		}
+    	}    	
+    }
 });
 
 var pageData={
+	 curHash:"",
 	'index':function indexdata(){
 		var myScrollA = new IScroll('#wrapperA', {
             scrollbars: true,
@@ -136,11 +185,21 @@ var pageData={
 			});    	  
 	  },	 
 	 openContent:function($url,data,targetElement){
+		 var url;
+		 var opt ={};
+		 if($url instanceof Object){
+			 opt = $url;
+			 url = $url.url;
+			 data = $url.data;
+			 targetElement = $url.target;
+		 }else{
+			 url = $url;
+		 }
 		 if(!targetElement){
 			 targetElement = "mainContent";
 		 }
 		 $main = $("#"+targetElement);
-		 if($url==null || $url==""){
+		 if(url==null || url==""){
 			 return;
 		 }
 		 var params={};
@@ -148,11 +207,11 @@ var pageData={
 			 params = data;
 		 }
 		 $main.empty();
-		 _hmt.push(['_trackPageview', $url]);
+		 _hmt.push(['_trackPageview', url]);
 		 CommonUtils.showLoading("加载中...");
 	     $.ajax({
 				type:"post",//设置提交方式
-				url:$url,//提交URL
+				url:url,//提交URL
 				data:params,
 				async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",			
@@ -173,7 +232,13 @@ var pageData={
 					}else{
 						$main.html(html);
 					}
-					
+					 
+					if(opt.menuId && !opt.fromHash){
+						var ha = BASE64.encoder(targetElement+";"+url+";"+opt.menuId);
+						curHash = ha;
+						//alert(3);
+						window.location.hash=ha; 
+					}
 				}
 		 });
 	 },

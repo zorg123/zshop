@@ -71,7 +71,7 @@
                     <ul class="tpl-left-nav-sub-menu">
                         <s:iterator  value="#menu.sub_menu_list"  id="subMenu">
 	                    	<li id="tree<s:property value="#subMenu.menu_id" />" >
-	                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" >
+	                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" menuId="tree<s:property value="#subMenu.menu_id" />">
 	                                <i class="am-icon-angle-right"></i>
 	                                <span><s:property value="#subMenu.menu_name" escape="false"/></span>
 	                                <i class="tpl-left-nav-content-ico am-fr am-margin-right"></i>
@@ -96,7 +96,13 @@
     </div>
     <script language="javascript" type="text/javascript" >
 		$(function() {
-			pageData.openContent("/Sys/Sys!index.do");
+			if(window.location.hash !=''){				
+	    		//var ha = window.location.hash.substring(1)
+	        	//var o = BASE64.decoderStr(ha).split(";"); 
+	    		//pageData.openContent(o[1], null, o[0]);
+	    	}else{
+				pageData.openContent("/Sys/Sys!index.do");
+	    	}
 		});
 	</script>
 </div>
