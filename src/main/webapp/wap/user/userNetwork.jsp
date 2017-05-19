@@ -124,7 +124,7 @@
     		      	var d = $node.data["data"]
 				    var starDidv = '<div class="content contentMid">'+d.starName+'</div>';
 				    $node.append(starDidv);
-				  	var childNumDidv = '<div class="content">所有人数：'+d.allchild_num+'</div>';
+				  	var childNumDidv = '<div class="content">拼团人数：'+d.allchild_num+'</div>';
 				    $node.append(childNumDidv);
 				    $node.on('click',function() { 
 				    	  var childrenLength =data.childrenLength;
