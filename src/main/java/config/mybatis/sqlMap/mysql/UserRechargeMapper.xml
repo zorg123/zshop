@@ -81,6 +81,9 @@
     <if test="state_name != null  and state_name != '' " >
     	AND a.state = #{state_name,jdbcType=VARCHAR}
  	</if>
+ 	<if test="rec_code != null  and rec_code != '' " >
+    	and a.rec_code = #{rec_code,jdbcType=VARCHAR}
+ 	</if>
     order by a.create_time desc
   </select>
   

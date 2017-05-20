@@ -211,7 +211,7 @@ var pageData={
 		 CommonUtils.showLoading("加载中...");
 	     $.ajax({
 				type:"post",//设置提交方式
-				url:url,//提交URL
+				url:base+url,//提交URL
 				data:params,
 				async:true,//设置调用方式，采用同步调用，异步会产生数据框为空的问题
 				contentType:"application/x-www-form-urlencoded;charset=UTF-8",			

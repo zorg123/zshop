@@ -28,7 +28,9 @@ var ExtractConfirmMng = {
         //提款为负值，所以要乘以-1
         param["coinTrackDto.coin_num"] = $('input[name="edit_coin_num"]').val()*-1;
         var me = this;
+        $('#save').hide();
         CommonUtils.invokeAsyncAction(base+'/FinancMgmt/updateCoinTrack.do', param, function (reply) {
+        	$('#save').show();
 			if((reply || '') !=''){
 				var code = reply._code;
                 if(code=='0'){

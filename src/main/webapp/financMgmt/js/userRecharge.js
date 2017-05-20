@@ -43,7 +43,9 @@ var RechargeMng = {
              //}
              //param["coinTrackDto.file_info"] = file_info;
              var me = this;
+             $('#save').hide();
              CommonUtils.invokeAsyncAction(base+'/FinancMgmt/recharge.do', param, function (reply) {
+            	$('#save').show();
  				if((reply || '') !=''){
  					var code = reply._code;
  			         if(code=='0'){

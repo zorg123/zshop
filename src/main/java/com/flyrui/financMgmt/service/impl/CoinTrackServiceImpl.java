@@ -218,33 +218,50 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 				retMap.put("retString", "输入的会员编号未激活");
 			}
 		}else{
-			//更新用户充值的状态
+			//检查用户的充值记录是否经充值过
 			UserRechargeDto userRecharge = new UserRechargeDto();
 			userRecharge.setRec_code(goods_order_id);
-			userRecharge.setState(1);
-			userRecharge.setCoin_num(elect_coin.toString());
-			userRecharge.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
-			userRechargeService.update(userRecharge);
-			//接收方
-    		CoinTrackDto paramCoinTrackDto = new CoinTrackDto();
-    		paramCoinTrackDto.setGoods_order_id(goods_order_id);
-    		paramCoinTrackDto.setUser_code(user_code);
-			//1:奖金币 2:电子币 3:重消币
-    		paramCoinTrackDto.setCoin_type(2);
-			//1:广告费 2:辅导奖 3:提现 4:电子币充值 5:电子币互转 6:现金转电子币 7:电子币购物 8:重消 9:报单 10:重消购物
-    		paramCoinTrackDto.setCreate_type(4);
-    		paramCoinTrackDto.setCoin_num(elect_coin);
-    		paramCoinTrackDto.setFile_info(file_info);
-    		paramCoinTrackDto.setComments("管理员充值");
-    		//查询要充值账号的电子币余额
-    		AccoutInfoDto accoutInfo = new AccoutInfoDto();
-	    	accoutInfo.setUser_code(user_code);
-	    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-	    	String balance_comments = "电子账户余额:"+(retAccoutInfoDto.getElect_coin()+elect_coin);
-	    	paramCoinTrackDto.setBalance_comments(balance_comments);
-			coinTrackService.insertCoinTrack(loginUser, paramCoinTrackDto);
-			retMap.put("retCode", "3");
-			retMap.put("retString", "成功");
+			List<UserRechargeDto> retUserRechargeDtoList = userRechargeService.getListByConRec(userRecharge);
+			if(retUserRechargeDtoList == null || retUserRechargeDtoList.size() == 0){
+				retMap.put("retCode", "-2");
+				retMap.put("retString", "该充值记录不存在");
+			}else{
+				userRecharge = retUserRechargeDtoList.get(0);
+				if(userRecharge.getState() == 1){
+					retMap.put("retCode", "-3");
+					retMap.put("retString", "该充值记录已经充值过,请重新查询之后再操作!");
+				}else{
+					//更新用户充值的状态
+					userRecharge = new UserRechargeDto();
+					userRecharge.setRec_code(goods_order_id);
+					userRecharge.setState(1);
+					userRecharge.setCoin_num(elect_coin.toString());
+					userRecharge.setOper_user_id(Integer.valueOf(loginUser.getUser_id()));
+					userRechargeService.update(userRecharge);
+					//接收方
+		    		CoinTrackDto paramCoinTrackDto = new CoinTrackDto();
+		    		paramCoinTrackDto.setGoods_order_id(goods_order_id);
+		    		paramCoinTrackDto.setUser_code(user_code);
+					//1:奖金币 2:电子币 3:重消币
+		    		paramCoinTrackDto.setCoin_type(2);
+					//1:广告费 2:辅导奖 3:提现 4:电子币充值 5:电子币互转 6:现金转电子币 7:电子币购物 8:重消 9:报单 10:重消购物
+		    		paramCoinTrackDto.setCreate_type(4);
+		    		paramCoinTrackDto.setCoin_num(elect_coin);
+		    		paramCoinTrackDto.setFile_info(file_info);
+		    		paramCoinTrackDto.setComments("管理员充值");
+		    		//查询要充值账号的电子币余额
+		    		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+			    	accoutInfo.setUser_code(user_code);
+			    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+			    	String balance_comments = "电子账户余额:"+(retAccoutInfoDto.getElect_coin()+elect_coin);
+			    	paramCoinTrackDto.setBalance_comments(balance_comments);
+					coinTrackService.insertCoinTrack(loginUser, paramCoinTrackDto);
+					retMap.put("retCode", "3");
+					retMap.put("retString", "成功");
+				}
+			}
+			
+			
 		}
 		return retMap;
 	}
