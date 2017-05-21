@@ -73,7 +73,9 @@
 			param["coinTrackDto.user_name"] = $('#user_name').val();
 			param["coinTrackDto.coin_num"] = $('#coin_num').val();
 			param["coinTrackDto.comments"] = $('#trans_pwd').val();
+			CommonUtils.showLoading();
 	        CommonUtils.invokeSyncAction(base+'/FinancMgmt/insertElectTrans.do', param, function (reply) {
+	        	CommonUtils.closeLoading();
 				if((reply || '') !=''){
 					var code = reply._code;
 	                if(code=='0'){
