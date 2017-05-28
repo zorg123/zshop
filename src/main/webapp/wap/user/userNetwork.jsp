@@ -15,7 +15,7 @@
             <div class="tpl-portlet-components">
                 <div class="am-breadcrumb">
                     <span>激活：</span><span style="display: inline-block; background-color: green;border: 1px solid #eee;width: 100px;text-align:center">绿色</span>
-                    <span>未激活：</span><span style="display: inline-block; background-color: red;border: 1px solid #eee;width: 100px;text-align:center">白色</span>
+                    <span>未激活：</span><span style="display: inline-block; background-color: red;border: 1px solid #eee;width: 100px;text-align:center">红色</span>
                 </div>
 				<div class="tpl-block">
 					<div class="am-u-sm-6">
