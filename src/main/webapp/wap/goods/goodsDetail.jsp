@@ -65,8 +65,8 @@
 	                                    <label for="user-phone" class="am-u-sm-3 am-form-label">支付类型</label>
 	                                    <div class="am-u-sm-9">
 	                                        <select data-am-selected db_field="goodsOrder.pay_type" name="goodsOrder.pay_type" >
-											  <option value="2" selected>电子币</option>
-											  <option value="3">重消币</option>
+											  <option value="2" selected>电子积分</option>
+											  <option value="3">重消积分</option>
 											</select>									
 	                                    </div>
 	                                </div>

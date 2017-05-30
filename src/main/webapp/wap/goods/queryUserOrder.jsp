@@ -60,7 +60,7 @@
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
 	                                            <td><s:property value="#goodsOrderIter.total_fee"/></td>
-	                                            <td><s:if test="#goodsOrderIter.pay_type == 2" >电子币</s:if><s:if test="#goodsOrderIter.pay_type == 3" >重消币</s:if></td>
+	                                            <td><s:if test="#goodsOrderIter.pay_type == 2" >电子积分</s:if><s:if test="#goodsOrderIter.pay_type == 3" >重消积分</s:if></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_people"/></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_link_phone"/></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_addr"/></td> 
