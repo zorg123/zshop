@@ -32,7 +32,7 @@
                                 <div class="am-form-group">
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">提现金额</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="奖金币">
+                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="现金积分">
                                         <small>输入提现金额</small>
                                     </div>
                                 </div>
