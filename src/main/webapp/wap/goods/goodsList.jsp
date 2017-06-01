@@ -60,7 +60,7 @@
 			                                		    <i style="font-size:12px;">¥</i><del><s:property value="#goodsIter.goods_market_price"/></del>
 			                                		 </span>
 			                                		</s:if>			                                		 
-			                                		 (可用 <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if>)
+			                                		 (可用 <s:if test="#goodsIter.pay_type == 2">电子积分</s:if><s:if test="#goodsIter.pay_type == 3">重消积分</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子积分或重消积分</s:if>)
 			                                	</span>
 			                               	</span>
                                         </div>
