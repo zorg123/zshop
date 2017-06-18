@@ -27,7 +27,7 @@
 	                                        <tr>
 	                                            <th class="table-type">编号</th>
 	                                            <th class="table-type">姓名</th>
-	                                            <th class="table-type">人数</th>
+	                                            <th class="table-type">统计</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody>
