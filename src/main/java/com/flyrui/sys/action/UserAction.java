@@ -41,6 +41,7 @@ import com.flyrui.sys.service.UserService;
 @Results({	
 		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
 		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
+		@Result(name="userMarket", location = "/wap/user/userMarket.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class UserAction extends BaseAction {	
 
@@ -781,5 +782,16 @@ public class UserAction extends BaseAction {
     	}
     	setResult(retUser);
     	return SUCCESS;
+    }
+    @Action("userMarket")  
+    public String userMarket() throws FRException{
+    	UserService userService = getUserService();
+    	User uu= new User();
+    	uu.setPid(getLoginUserInfo().getUser_id());
+    	uu.setState("1");
+    	uu.setBus_state(1);
+    	List<User> userList = userService.getListByCon(uu);
+    	setResult(userList);
+    	return "userMarket";
     }
 }

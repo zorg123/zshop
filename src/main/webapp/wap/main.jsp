@@ -3,6 +3,24 @@
 <%
 	String baseUri = request.getContextPath();	
 %>
+<s:if test="#session.user.user_level == -1">    
+    <s:set name="userLevelName" value="'VIP会员'" />      
+</s:if>
+<s:if test="#session.user.user_level == 0">    
+    <s:set name="userLevelName" value="'经理'" />      
+</s:if>
+<s:if test="#session.user.user_level == 1">    
+    <s:set name="userLevelName" value="'县代'" />      
+</s:if>
+<s:if test="#session.user.user_level == 2">    
+    <s:set name="userLevelName" value="'市代'" />      
+</s:if>
+<s:if test="#session.user.user_level == 3">    
+    <s:set name="userLevelName" value="'省代'" />      
+</s:if>
+<s:if test="#session.user.user_level == 4">    
+    <s:set name="userLevelName" value="'董事'" />      
+</s:if>
 <jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
@@ -19,7 +37,7 @@
   			<li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                   <a class="am-dropdown-toggle tpl-header-list-link am-inline" href="javascript:;">
                       <span class="tpl-header-list-user-nick">
-                      	<s:property value="#session.user.name" />(<s:property value="#session.user.user_code" />)
+                      	<s:property value="#session.user.user_code" />(<s:property value="userLevelName" />)
                       </span>
                       <span class="tpl-header-list-user-ico am-show-lg-only ">
                         <s:if test="#session.user.head_img == null">
