@@ -35,7 +35,14 @@
 		                                        <tr>
 		                                        	<td><s:property value="#userMarketIter.user_code"/></td>
 		                                            <td><s:property value="#userMarketIter.name"/></td>
-		                                            <td><s:property value="#userMarketIter.allchild_num"/></td>
+		                                            <td>
+		                                            <s:if test="#userMarketIter.allchild_num==null || #userMarketIter.allchild_num==''">
+		                                            0
+		                                            </s:if>
+		                                            <s:else>
+		                                            <s:property value="#userMarketIter.allchild_num"/>
+		                                            </s:else>
+		                                            </td>
 		                                        </tr>
 	                                        </s:iterator>                                        
 	                                    </tbody>
