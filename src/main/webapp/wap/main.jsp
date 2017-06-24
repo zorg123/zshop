@@ -4,7 +4,7 @@
 	String baseUri = request.getContextPath();	
 %>
 <s:if test="#session.user.user_level == -1">    
-    <s:set name="userLevelName" value="'VIP会员'" />      
+    <s:set name="userLevelName" value="'拼团会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 0">    
     <s:set name="userLevelName" value="'经理'" />      
