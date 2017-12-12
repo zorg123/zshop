@@ -16,7 +16,6 @@ import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
-import com.flyrui.salary.service.SalaryService;
 
 public class BallotAction extends BaseAction {	
 

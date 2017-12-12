@@ -8,9 +8,8 @@ import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.salary.BusSalary;
 import com.flyrui.dao.pojo.salary.BusSalaryCriteria;
-import com.flyrui.dao.pojo.salary.BusSalaryLevel;
 import com.flyrui.dao.pojo.salary.BusSalaryCriteria.Criteria;
-import com.flyrui.framework.annotation.DynaimcDataSourceName;
+import com.flyrui.dao.pojo.salary.BusSalaryLevel;
 import com.flyrui.salary.service.SalaryService;
 
 @Service(value="salaryService")

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.dao.pojo.salary.BusSalaryBase;
 import com.flyrui.dao.pojo.salary.BusSalaryExtend;
-import com.flyrui.framework.annotation.DynaimcDataSourceName;
 import com.flyrui.salary.service.BusSalaryExtendService;
 
 

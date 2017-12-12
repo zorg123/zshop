@@ -1,29 +1,22 @@
 package com.flyrui.framework.struts.interceptor;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
-//import org.jasig.cas.client.authentication.AttributePrincipal;
-//import org.jasig.cas.client.validation.Assertion;
 
-import com.flyrui.common.SpringBeans;
-import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
 import com.flyrui.framework.annotation.DynaimcDataSourceName;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
 import com.flyrui.framework.spring.CustomContextHolder;
-import com.flyrui.sys.service.LoginService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+//import org.jasig.cas.client.authentication.AttributePrincipal;
+//import org.jasig.cas.client.validation.Assertion;
 
 public class LoginAuthInterceptor extends AbstractInterceptor {
 
