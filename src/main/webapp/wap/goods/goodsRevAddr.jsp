@@ -107,9 +107,9 @@
 			params["rows"] = 5;
 			params["page"]=context!=null?context.option.curr:1;			
 			if($("#addrMngDiv").length>0){				
-				pageData.openContent(base+'<s:property value="url" />',params,"addrMngDiv");
+				pageData.openContent('<s:property value="url" />',params,"addrMngDiv");
 			}else{
-		    	pageData.openContent(base+'<s:property value="url" />',params);
+		    	pageData.openContent('<s:property value="url" />',params);
 			}
 		}
 	}
@@ -153,8 +153,8 @@
 		var params={};
 		if(record){
 			params["goodsRevAddr.addr_id"] = record[0];
-		}
-		pageData.openContent(base+"/Goods/goodsRevAddrEdit.do",params,"addrModDiv");
+		}		
+		pageData.openContent("/Goods/goodsRevAddrEdit.do",params,"addrModDiv");
 		if ($.AMUI.support.animation) {
 			$("#addrListDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
 				$("#addrListDiv").removeClass("am-animation-fade am-animation-reverse");

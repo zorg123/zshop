@@ -3,7 +3,9 @@ package com.flyrui.framework.common;
 import java.security.Security; 
 import javax.crypto.Cipher; 
 import javax.crypto.SecretKey; 
-import javax.crypto.spec.SecretKeySpec; 
+import javax.crypto.spec.SecretKeySpec;
+
+import com.flyrui.common.CASMd5Utils; 
 /** 
 * 加密解密工具类 
 * 
@@ -114,5 +116,8 @@ public class Des {
           String s4 = Decrypt(s3, hex2byte(strKey));//解密 
           System.out.println("加密后的信息     "+s3); 
           System.out.println("解密后的信息     "+s4); 
+          System.out.println(CASMd5Utils.getMdResults("112233", "12", "admin"));
+          System.out.println(CASMd5Utils.getMdResults("112233", "12", "msj111"));
+          
      } 
 }
