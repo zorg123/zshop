@@ -200,7 +200,7 @@
 		
 		$("#manRevAddBtn").on("click",function(){
 			var params={};
-			pageData.openContent(base+"/Goods/goodsRevAddrListForSel.do",params,"addrMngDiv");
+			pageData.openContent("/Goods/goodsRevAddrListForSel.do",params,"addrMngDiv");
 			if ($.AMUI.support.animation) {
 				$("#goodDetailDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
 					$("#goodDetailDiv").removeClass("am-animation-fade am-animation-reverse");
@@ -217,12 +217,12 @@
 		});
 		
 		$("#continueBuyBtn").on("click",function(){
-			pageData.openContent(base+"/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />",null,"addrMngDiv");
+			pageData.openContent("/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />",null,"addrMngDiv");
 		});
 		
 		$("#queryOrderBtn").on("click",function(){
 			var orderCode = $("#orderCodeSpan").html();
-			pageData.openContent(base+"/Goods/queryUserOrder.do?goodsOrder.order_code="+orderCode,null);
+			pageData.openContent("/Goods/queryUserOrder.do?goodsOrder.order_code="+orderCode,null);
 		});
 		$("#acceptForm").mvalidate({
 	            type:2,

@@ -103,7 +103,7 @@
 			if(searchContentV.length!=0){
 				params["goods.goods_name"] = searchContentV;
 			}
-		    pageData.openContent(base+"/Goods/goodsList.do",params);
+		    pageData.openContent("/Goods/goodsList.do",params);
 		}
 	}
 	
@@ -123,7 +123,7 @@
 		var params ={};
 		params["goods.goods_id"] = goodsId;
 		params["goods.goods_amount"] =amount;
-		pageData.openContent(base+"/Goods/goodsDetail.do",params);
+		pageData.openContent("/Goods/goodsDetail.do",params);
 	}
 	
 	var $container = $('#masonryGrid');    
