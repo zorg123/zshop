@@ -88,7 +88,7 @@ $(function() {
     		//console.log("ha=="+ha);
     		if(ha != curHash){
     			//alert(2);
-	        	var o = BASE64.decoderStr(ha).split(";"); 
+	        	var o = base64.decode(ha).split(";"); 
 	        	if(o.length>=3){
 	        		//选中当前菜单
 	        		var $this = $("a[menuId='"+o[2]+"']");
@@ -225,7 +225,7 @@ var pageData={
 					CommonUtils.closeLoading();
 					if(html instanceof Object){						
 						if(html._code=="SYS_ERR002"){
-							document.location.href="/wap/login"
+							document.location.href=base+"/wap/login"
 						}else{
 							$main.html(html._msg);
 						}
@@ -234,7 +234,7 @@ var pageData={
 					}
 					 
 					if(opt.menuId && !opt.fromHash){
-						var ha = BASE64.encoder(targetElement+";"+url+";"+opt.menuId);
+						var ha = base64.encode(targetElement+";"+url+";"+opt.menuId);
 						curHash = ha;
 						//alert(3);
 						window.location.hash=ha; 

@@ -1,7 +1,9 @@
 package com.flyrui.goods.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,49 +55,61 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 			throw new FRException(new FRError("GOODS_002"));
 		}
 		Double totalFee = goodsOrder.getGoods_amount() * goods.getGoods_price();
-		if(!"1".equals(goods.getGoods_type())){ //这个是赠品订单，不会扣费，不做账户校验
-			//校验账户余额
-			AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
-			accoutInfoDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
-			List<AccoutInfoDto> AccoutInfoDtoList = accoutInfoService.selectByUserIdForUpdate(accoutInfoDto);
-			if(AccoutInfoDtoList.size()==0){
-	    		throw new FRException(new FRError("GOODS_003"));
-	    	}
-			accoutInfoDto = AccoutInfoDtoList.get(0);
+		//if(!"1".equals(goods.getGoods_type())){ //这个是赠品订单，不会扣费，不做账户校验
+		//校验账户余额
+		AccoutInfoDto accoutInfoDto = new AccoutInfoDto();
+		accoutInfoDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
+		List<AccoutInfoDto> AccoutInfoDtoList = accoutInfoService.selectByUserIdForUpdate(accoutInfoDto);
+		if(AccoutInfoDtoList.size()==0){
+    		throw new FRException(new FRError("GOODS_003"));
+    	}
+		accoutInfoDto = AccoutInfoDtoList.get(0);
+		
+		CoinTrackDto coinTrackDto = new CoinTrackDto();
+		if("2".equals(goodsOrder.getPay_type())){ //电子币
+			if(totalFee>accoutInfoDto.getElect_coin()){
+				throw new FRException(new FRError("GOODS_003"));
+			}			
+			coinTrackDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
+			coinTrackDto.setLog_type("coin");
+			coinTrackDto.setCoin_type(2);
+			coinTrackDto.setSub_logType("elect");
+			coinTrackDto.setCoin_num(-totalFee);
+			coinTrackDto.setCreate_type("toShopC");
+			coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
+			coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
+			coinTrackDto.setComments(goods.getGoods_name());			
+			coinTrackDto.setBalance_comments("电子账户余额:"+(accoutInfoDto.getElect_coin()-totalFee));
 			
-			CoinTrackDto coinTrackDto = new CoinTrackDto();
-			if("2".equals(goodsOrder.getPay_type())){ //电子币
-				if(totalFee>accoutInfoDto.getElect_coin()){
-					throw new FRException(new FRError("GOODS_003"));
-				}			
-				coinTrackDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
-				coinTrackDto.setCoin_type(2);
-				coinTrackDto.setCoin_num(-totalFee);
-				coinTrackDto.setCreate_type(7);
-				coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
-				coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
-				coinTrackDto.setComments(goods.getGoods_name());			
-				coinTrackDto.setBalance_comments("电子账户余额:"+(accoutInfoDto.getElect_coin()-totalFee));
-				
-			}else if("3".equals(goodsOrder.getPay_type())){//重消币
-				if(totalFee>accoutInfoDto.getReconsmp_coin()){
-					throw new FRException(new FRError("GOODS_003"));
-				}
-				coinTrackDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
-				coinTrackDto.setCoin_type(3);
-				coinTrackDto.setCoin_num(-totalFee);
-				coinTrackDto.setCreate_type(10);
-				coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
-				coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
-				coinTrackDto.setComments(goods.getGoods_name());			
-				coinTrackDto.setBalance_comments("重消账户余额:"+(accoutInfoDto.getReconsmp_coin()-totalFee));
+		}else if("3".equals(goodsOrder.getPay_type())){//重消币
+			if(totalFee>accoutInfoDto.getReconsmp_coin()){
+				throw new FRException(new FRError("GOODS_003"));
 			}
-			coinTrackService.insertCoinTrack(user,coinTrackDto);
-		}	
+			coinTrackDto.setUser_id(Integer.parseInt(goodsOrder.getUser_id()));
+			coinTrackDto.setCoin_type(3);
+			coinTrackDto.setLog_type("coin");
+			coinTrackDto.setSub_logType("reconsmp");
+			coinTrackDto.setCoin_num(-totalFee);
+			coinTrackDto.setCreate_type("toShopRe");
+			coinTrackDto.setOper_user_id(Integer.parseInt(goodsOrder.getUser_id()));
+			coinTrackDto.setGoods_order_id(goodsOrder.getOrder_id());
+			coinTrackDto.setComments(goods.getGoods_name());			
+			coinTrackDto.setBalance_comments("重消账户余额:"+(accoutInfoDto.getReconsmp_coin()-totalFee));
+		}
+		coinTrackService.insertCoinTrack(user,coinTrackDto);
+		//如果是会员商品，调用存储过程
+		Map param = new HashMap();
+		param.put("in_id", user.getUser_id());
+		param.put("goods_amount", goodsOrder.getGoods_amount());
+		param.put("type", "1");
+		baseDao.update(getNameSpace()+".activeUser",param);
+		
 		
 		goodsOrder.setTotal_fee(totalFee);
 		goodsOrder.setGoods_name(goods.getGoods_name());
-		goodsOrder.setOrder_type(goods.getGoods_type());
+		goodsOrder.setGoods_type(goods.getGoods_type());
+		goodsOrder.setCatalog_id(goods.getCatalog_id());
+		goodsOrder.setGoods_price(goods.getGoods_price());
 		Goods newGoods = new Goods();
 		newGoods.setGoods_amount(goods.getGoods_amount() - goodsOrder.getGoods_amount());
 		newGoods.setGoods_id(goods.getGoods_id());

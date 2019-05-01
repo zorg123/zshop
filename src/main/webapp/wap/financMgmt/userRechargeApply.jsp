@@ -76,7 +76,7 @@
 </div>    
 <script language="javascript" type="text/javascript" >
 	$("#addBtn").on("click",function(){	
-		pageData.openContent(base+"/wap/financMgmt/userRechargeAdd.jsp");
+		pageData.openContent("/wap/financMgmt/userRechargeAdd.jsp");
 	});
 	var jump = function(context,first) {
 		//CommonUtils.showAlert('当前第：' + context.option.curr + "页");
@@ -84,7 +84,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context!=null?context.option.curr:1;
-		    pageData.openContent(base+"/FinancMgmt/queryRecApply.do",params);
+		    pageData.openContent("/FinancMgmt/queryRecApply.do",params);
 		}
 	}
 	

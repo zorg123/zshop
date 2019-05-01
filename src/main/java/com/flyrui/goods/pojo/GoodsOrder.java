@@ -102,6 +102,18 @@ public class GoodsOrder implements Serializable {
 	private String state_date_end;
 
 	private String order_type;
+	
+	private String goods_type;
+	
+	private String owner_id;
+	
+	private String origin_order_id;
+	
+	private String send_immediate;
+
+	private Double goods_price;
+	
+	private String catalog_id;
 
 	public String getOrder_id() {
 		return this.order_id;
@@ -317,6 +329,54 @@ public class GoodsOrder implements Serializable {
 
 	public void setOrder_type(String order_type) {
 		this.order_type = order_type;
+	}
+
+	public String getGoods_type() {
+		return goods_type;
+	}
+
+	public void setGoods_type(String goods_type) {
+		this.goods_type = goods_type;
+	}
+
+	public String getOwner_id() {
+		return owner_id;
+	}
+
+	public void setOwner_id(String owner_id) {
+		this.owner_id = owner_id;
+	}
+
+	public String getOrigin_order_id() {
+		return origin_order_id;
+	}
+
+	public void setOrigin_order_id(String origin_order_id) {
+		this.origin_order_id = origin_order_id;
+	}
+
+	public String getSend_immediate() {
+		return send_immediate;
+	}
+
+	public void setSend_immediate(String send_immediate) {
+		this.send_immediate = send_immediate;
+	}
+
+	public Double getGoods_price() {
+		return goods_price;
+	}
+
+	public void setGoods_price(Double goods_price) {
+		this.goods_price = goods_price;
+	}
+
+	public String getCatalog_id() {
+		return catalog_id;
+	}
+
+	public void setCatalog_id(String catalog_id) {
+		this.catalog_id = catalog_id;
 	}	
 	
 }
