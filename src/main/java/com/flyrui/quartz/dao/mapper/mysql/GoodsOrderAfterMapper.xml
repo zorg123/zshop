@@ -43,7 +43,7 @@
         		and state = #{state,jdbcType=INTEGER}
      		</if>
 	    	<if test="error_num != null  and error_num != '' " >
-        		and error_num &lt= #{error_num,jdbcType=INTEGER}
+        		and error_num &lt;= #{error_num,jdbcType=INTEGER}
      		</if>
 	    	<if test="create_date != null " >
         		and create_date = #{create_date,jdbcType=TIMESTAMP}
