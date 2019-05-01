@@ -23,7 +23,7 @@
 	
 	    <div region="center" title="分红池流水" >
 	        <table id="poolFlowList"  rownumbers="true" pagination="true"
-	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true" style="height:500px">
+	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true">
 	            <thead>
 	            <tr>
 	                <th field="create_time" width="140">时间</th>

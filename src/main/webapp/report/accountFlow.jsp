@@ -23,7 +23,7 @@
 	
 	    <div region="center" title="员工列表" >
 	        <table id="staffList"  rownumbers="true" pagination="true"
-	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true" style="height:400px">
+	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true">
 	            <thead>
 	            <tr>
 	                <th field="user_id" hidden>员工ID</th>
