@@ -5,10 +5,10 @@
 %>
 
 <s:if test="goods.catalog_id == 1">    
-    <s:set name="funcName" value="'精品拼团 '" />      
+    <s:set name="funcName" value="'会员商品 '" />      
 </s:if> 
 <s:else>
-   <s:set name="funcName" value="'即时拼团'" />  
+   <s:set name="funcName" value="'拼团商品'" />  
 </s:else>
 <s:set name="goodsListPage" value="result.ret"/>
 <s:set name="goodsList" value="#goodsListPage.rows"/>

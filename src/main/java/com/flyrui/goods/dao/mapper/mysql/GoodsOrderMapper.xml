@@ -29,6 +29,12 @@
     	<result column="state" property="state" jdbcType="VARCHAR" />
     	<result column="state_name" property="state_name" jdbcType="VARCHAR" />
     	<result column="order_type" property="order_type" jdbcType="VARCHAR" />
+    	<result column="goods_type" property="goods_type" jdbcType="VARCHAR" />
+    	<result column="owner_id" property="owner_id" jdbcType="VARCHAR" />
+    	<result column="origin_order_id" property="origin_order_id" jdbcType="VARCHAR" />
+    	<result column="send_immediate" property="send_immediate" jdbcType="VARCHAR" />
+    	<result column="goods_price" property="goods_price" jdbcType="DOUBLE" />
+    	<result column="catalog_id" property="catalog_id" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	order_id,
@@ -55,7 +61,13 @@
     	deal_exp_ord,
     	state,
     	CASE state WHEN 0 THEN '未发货' WHEN 1 THEN '已发货' end AS state_name,
-    	order_type
+    	order_type,
+    	goods_type,
+    	owner_id,
+    	origin_order_id,
+    	send_immediate,
+    	goods_price,
+    	catalog_id
   </sql>
   <sql id="Base_Column_List_Insert" >
     	order_id,
@@ -81,7 +93,13 @@
     	deal_exp_comp,
     	deal_exp_ord,
     	state,
-    	order_type
+    	order_type,
+    	goods_type,
+    	owner_id,
+    	origin_order_id,
+    	send_immediate,
+    	goods_price,
+    	catalog_id
   </sql>
   <sql id="Base_Where_Clause" >
     <where >
@@ -160,6 +178,24 @@
 	    	<if test="state != null  and state != '' " >
         		and state = #{state,jdbcType=VARCHAR}
      		</if>
+     		<if test="goods_type != null  and goods_type != '' " >
+        		and goods_type = #{goods_type,jdbcType=VARCHAR}
+     		</if>
+     		<if test="owner_id != null  and owner_id != '' " >
+        		and owner_id = #{owner_id,jdbcType=VARCHAR}
+     		</if>
+     		<if test="origin_order_id != null  and origin_order_id != '' " >
+        		and origin_order_id = #{origin_order_id,jdbcType=VARCHAR}
+     		</if>
+     		<if test="send_immediate != null  and send_immediate != '' " >
+        		and send_immediate = #{send_immediate,jdbcType=VARCHAR}
+     		</if>
+     		<if test="goods_price != null  and goods_price != '' " >
+        		and goods_price = #{goods_price,jdbcType=DOUBLE}
+     		</if>
+     		<if test="catalog_id != null  and catalog_id != '' " >
+        		and catalog_id = #{catalog_id,jdbcType=DOUBLE}
+     		</if>
     </where>
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
@@ -228,7 +264,19 @@
 	    	    	
         	  #{state,jdbcType=VARCHAR}, 
         	    
-        	  #{order_type,jdbcType=VARCHAR}   		
+        	  #{order_type,jdbcType=VARCHAR} , 
+        	    
+        	  #{goods_type,jdbcType=VARCHAR} , 
+        	    
+        	  #{owner_id,jdbcType=VARCHAR} , 
+        	    
+        	  #{origin_order_id,jdbcType=VARCHAR},     
+        	     	  
+        	  #{send_immediate,jdbcType=VARCHAR},
+        	  
+        	  #{goods_price,jdbcType=DOUBLE},
+        	  #{catalog_id,jdbcType=DOUBLE}
+     				
 	    )
   </insert>
   
@@ -303,7 +351,25 @@
    		</if>
    		<if test="state != null  and state == 0 " >
    			state_date = null,
-   		</if>   		
+   		</if>
+   		<if test="goods_type != null  and goods_type == 0 " >
+   			goods_type =  #{goods_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="owner_id != null  and owner_id == 0 " >
+   			owner_id = #{owner_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="origin_order_id != null  and origin_order_id == 0 " >
+   			origin_order_id = #{origin_order_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="send_immediate != null  and send_immediate != '' " >
+        	 send_immediate = #{send_immediate,jdbcType=VARCHAR},
+     	</if> 	
+     	<if test="goods_price != null  and goods_price != '' " >
+        	 goods_price = #{goods_price,jdbcType=DOUBLE},
+     	</if>	
+     	<if test="catalog_id != null  and catalog_id != '' " >
+        		catalog_id = #{catalog_id,jdbcType=DOUBLE},
+     		</if>
       	order_id = order_id   		
     where order_id = #{order_id,jdbcType=VARCHAR}
           <if test="user_id != null  and user_id != '' " >
@@ -311,4 +377,9 @@
    		</if>
     
   </update>
+  <select id="selectOrderByIdForUpdate" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+   select    
+    <include refid="Base_Column_List" />
+    from goods_order where  order_id = #{order_id,jdbcType=VARCHAR} for update
+  </select>
 </mapper>

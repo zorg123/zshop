@@ -78,8 +78,18 @@
                                         <small id="coinAmountTip"></small> 
                                     </div>
                                 </div>
-                                
                                 <div class="am-form-group">
+                                   <label for="user-email" class="am-u-sm-3 am-form-label">是否立即发货</label>	
+                                    <div class="am-u-sm-9">							 
+									  <label class="am-radio am-radio-inline">
+									    <input type="radio" name="goodsOrder.send_immediate" value="1" checked> 是
+									  </label>
+									  <label class="am-radio am-radio-inline">
+									    <input type="radio" name="goodsOrder.send_immediate" value="0" > 否
+									  </label>
+								 	 </div>
+								</div>
+                                <div class="am-form-group" id="addrDiv">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">收货信息：</label>
                                     <div class="am-u-sm-9">
                                     	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_people" name="goodsOrder.rev_people" value="<s:property value="goodsRevAddr.rev_people"/>" readonly/>
@@ -151,6 +161,15 @@
 			});
 		}
 		
+		$("#acceptForm input[name='goodsOrder.send_immediate']").on("click",function(e){
+			if($(this).val() == 1){
+				$("#addrDiv").show();
+			}else{
+				$("#addrDiv").hide();
+			}
+			return true;
+		});
+		
 		$("#acceptForm input[name='goodsOrder.goods_amount']").trigger("input");
 		
 		function checkCoin(){
@@ -183,9 +202,14 @@
   	               var code = reply._code;               
   	               if (code == '0') {  
   	            	   var ret = reply.ret;
-  	            	   if(ret.check == 0){
-  	            		 $("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额不足，余额为:"+ret.coin+"</div>"); 
-  	            		 $("#userProfileSubmit").attr("disabled",true);
+  	            	   if(ret.check == 0 || ret.check == -1){
+  	            		   if(ret.check==0){
+  	            		 		$("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额不足，余额为:"+ret.coin+"</div>"); 
+  	            		 		$("#userProfileSubmit").attr("disabled",true);
+  	            		   }else{
+  	            			 $("#coinAmountTip").html("<div class='field-invalidmsg'>您未激活，只能购买一件会员商品</div>"); 
+	            		 		$("#userProfileSubmit").attr("disabled",true);
+  	            		   }
   	            	   }else{
   	            		 $("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额为:"+ret.coin+"</div>"); 
   	            	   }
@@ -232,12 +256,22 @@
 	            valid:function(event,options){
 	            	event.preventDefault();
 	            	var revPeople =$("#acceptForm input[name='goodsOrder.rev_people']").val();
-	            	 if($.trim(revPeople) == ''){
-	            		 CommonUtils.showAlert("请选择收货地址!");
-	            		 return false;
-	            	 }
+	            	if($("#acceptForm input[name='goodsOrder.send_immediate']").val()=='1'){
+	            		if($.trim(revPeople) == ''){
+		            		 CommonUtils.showAlert("请选择收货地址!");
+		            		 return false;
+		            	}	            		
+	            	}
+	            	
+	            	 
 	                //点击提交按钮时,表单通过验证触发函数
-	                 var params = CommonUtils.getParam("acceptForm",false);			                 
+	                 var params = CommonUtils.getParam("acceptForm",false);		
+	                 if($("#acceptForm input[name='goodsOrder.send_immediate']").val()=='0'){ //收货地址清除掉
+	                	 	params["goodsOrder.rev_people"]="";  
+	                	 	params["goodsOrder.rev_link_phone"]=""; 
+	                	 	params["goodsOrder.rev_area"]=""; 
+	                	 	params["goodsOrder.rev_addr"]=""; 
+		            	}
 					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
 		  	           
 						if ((reply || '') != '') {

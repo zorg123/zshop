@@ -44,7 +44,7 @@ public class LoginServiceImpl  extends BaseService implements LoginService
         String bus_state = MapUtils.getStrFromMap(param, "bus_state"); 
         TbUser paraUser = new TbUser();
         paraUser.setUser_code(userCode);
-        paraUser.setState(Constants.NORMAL_RECORD_STATE);
+        //paraUser.setState(Constants.NORMAL_RECORD_STATE); 去掉未激活的用户也可以登录
         paraUser.setBus_state(Integer.parseInt(bus_state));
         User user = (User)baseDao.selectOne(SQLMapConstant.QUERY_USER_BY_CODE, paraUser);
         if(user!=null){
