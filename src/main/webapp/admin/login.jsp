@@ -1,53 +1,110 @@
 <%@ page language="java" pageEncoding="utf-8"%> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>飞锐电子科技-CMS管理系统</title>
-<style type="text/css">
-<!--
-body {
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	overflow:hidden;
-}
-.STYLE1 {font-size: 12px}
--->
-</style>
-<script type="text/javascript" src="/ress/js/jquery/jquery-1.7.1.min.js" ></script>
-<script type="text/javascript" src="/ress/js/jquery/jquery-ui-1.8.18.custom.min.js" ></script>
-<script type="text/javascript" src="/dwr/interface/LoginService.js"></script>
-<script type='text/javascript' src='/dwr/engine.js'></script>
-<script language="javascript">
-<!--
-  function submitLogin(){
-	  var para ={};
-	  var user_code = $.trim($("#user_code").val());
-	  var password = $.trim($("#password").val());
-	  if(user_code==''){
-		alert('请输入用户名');
-		return false;
-	  }
-	  para.user_code = user_code;
-	  para.password= password;
-	  LoginService.validateLogin(para,function(data){
-		  if(!data||data==null) alert("系统超时未返回，请重试!");	  
-		  //alert(data.code);
-		  if(data.code=='0'){
-			  document.location.href="/admin/main.jsp";
-	      }else{
-			//alert(data.msg);
-			return false;
-		 }
-		     
-	  });
-  }
-//-->
-</script>
-</head>
+<head>    
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>仿钉钉网登录注册页面静态模板源码 - 代码库</title>
+    <link href="/admin/css/bootstrap.min.css"  rel="stylesheet">
+    <link href="/admin/css/a3common.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/css/login.css" >
+    <link rel="stylesheet" href="/admin/css/font_43459_lbtux0zjkr6yldi.css" >
+    <script type="text/javascript" src="/ress/js/jquery/jquery-1.7.1.min.js" ></script>
+	<script type="text/javascript" src="/ress/js/jquery/jquery-ui-1.8.18.custom.min.js" ></script>
+	<script type="text/javascript" src="/dwr/interface/LoginService.js"></script>
+	<script type='text/javascript' src='/dwr/engine.js'></script>
 
+	<script language="javascript">
+	<!--
+	  function submitLogin(){
+		  var para ={};
+		  var user_code = $.trim($("#user_code").val());
+		  var password = $.trim($("#password").val());
+		  if(user_code==''){
+			alert('请输入用户名');
+			return false;
+		  }
+		  para.user_code = user_code;
+		  para.password= password;
+		  LoginService.validateLogin(para,function(data){
+			  if(!data||data==null) alert("系统超时未返回，请重试!");	  
+			  //alert(data.code);
+			  if(data.code=='0'){
+				  document.location.href="/admin/main.jsp";
+		      }else{
+				//alert(data.msg);
+				return false;
+			 }
+			     
+		  });
+	  }
+	//-->
+	</script>
+</head>
+<body>
+
+
+    <div id="main" class="main-warp">
+        <div class="main-content">
+            <div class="formDiv">
+                
+                    <h2 class="text-center">登录</h2>
+                
+                
+                <form id="loginForm" method="post">
+                    <div class="dataform" >
+                        <div class="input-warp gap">
+                            <span class="input-icon iconfont icon-yonghu1"></span>
+                            <input id="user_code" name="user_code" type="text" class="inputs" placeholder="用户名" maxlength="64">
+                        </div>
+                        <div class="error-content">
+                            <span id="userNameErr" class="errMsg"></span>
+                        </div>
+
+                        <div class="input-warp gap">
+                            <span class="input-icon iconfont icon-baomi"></span>
+                            <input class="inputs" type="password" name="password" id="password" placeholder="密码" id="pwd" maxlength="20">
+                        </div>
+                        <div class="error-content">
+                            <span id="passwordErr" class="errMsg"></span>
+                        </div>
+
+                        <div class="btn-warp gap">
+                            <div class="text-center">                               
+                                <input type="hidden" value="jsform" id="_app"/>
+                                <button type="submit" id="btnLogin" class="btn btn-block lgbtn blue">登录</button>
+                            </div>
+                        </div>
+                        <div class="gap">
+                            
+                                <div class="pull-right" style="margin-top: 6px"><a href="javascript:;" class="link"></a><span class="split-space"></span><a  class="link"></a></div>
+                            
+                            <div class="pretty-box">
+                                <input type="checkbox" value="1" name="REMEMBER" id="remember" class="">
+                                <label for="remember" style="font-weight: normal" >记住我</label>
+                            </div>
+                        </div>
+
+                        
+                            <div class="biggap third-party-title">
+                               
+                            </div>
+                            <div class="third-auth">                              
+                                
+                               
+                                
+                            </div>
+                        
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
 <body>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
