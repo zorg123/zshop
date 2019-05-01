@@ -27,6 +27,8 @@
     	<result column="account_id" property="account_id" jdbcType="VARCHAR" />
     	<result column="balance_comments" property="balance_comments" jdbcType="VARCHAR" />
     	<result column="goods_order_id" property="goods_order_id" jdbcType="VARCHAR" />
+    	<result column="log_type" property="log_type" jdbcType="VARCHAR" />
+    	<result column="sub_logType" property="sub_logType" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BonusActResultMap" type="com.flyrui.financMgmt.pojo.BonusActDto" >
   		<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
@@ -79,7 +81,7 @@
     b.user_code,
     b.name as user_name,
     a.create_time,
-    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='createType' AND idt.`dict_value` = a.create_type) AS create_type_name,
     a.coin_num,
     a.comments,
     a.balance_comments
@@ -92,8 +94,14 @@
  	<if test="user_name !=null and user_name != '' ">
     	and b.name like #{user_name,jdbcType=VARCHAR}
     </if>
-    <if test="coin_type != null  and coin_type != '' " >
-    	and a.coin_type = #{coin_type,jdbcType=INTEGER}
+    <if test="log_type != null  and log_type != '' " >
+    	and a.log_type = #{log_type,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="sub_logType != null  and sub_logType != '' " >
+    	and a.sub_logType = #{sub_logType,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="create_type != null  and create_type != '' " >
+    	and a.create_type = #{create_type,jdbcType=VARCHAR}
  	</if>
     order by a.order_id desc
   </select>
@@ -109,6 +117,15 @@
 	WHERE 1=1
 	<if test="user_id != null  and user_id != '' " >
     	and b.user_id = #{user_id,jdbcType=INTEGER}
+ 	</if>
+ 	 <if test="log_type != null  and log_type != '' " >
+    	and a.log_type = #{log_type,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="sub_logType != null  and sub_logType != '' " >
+    	and a.sub_logType = #{sub_logType,jdbcType=VARCHAR}
+ 	</if>
+ 	<if test="create_type != null  and create_type != '' " >
+    	and a.create_type = #{create_type,jdbcType=VARCHAR}
  	</if>
     order by a.order_id desc
   </select>
@@ -239,7 +256,9 @@
 		`serial_num`,
 		`apply_state`,
 		`balance_comments`,
-		 goods_order_id
+		 goods_order_id,
+		 log_type,
+		 sub_logType
 		) 
 	VALUES(
 		#{user_id,jdbcType=INTEGER},
@@ -255,7 +274,9 @@
 		#{serial_num,jdbcType=VARCHAR},
 		#{apply_state,jdbcType=VARCHAR},
 		#{balance_comments,jdbcType=VARCHAR},
-		#{goods_order_id,jdbcType=VARCHAR}
+		#{goods_order_id,jdbcType=VARCHAR},
+		#{log_type,jdbcType=VARCHAR},
+		#{sub_logType,jdbcType=VARCHAR}
 	)
   </insert>
   
