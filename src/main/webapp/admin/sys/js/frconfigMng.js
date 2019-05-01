@@ -41,7 +41,7 @@ $(function () {
         	//alert(JSON.stringify(data));
 			return CommonUtils.loadFilter(data);
 		},
-		queryParams: {'cf_module': "financMgmt"},
+		queryParams: {'cf_module': "zshop"},
         toolbar: [
             {
                 text: '修改',

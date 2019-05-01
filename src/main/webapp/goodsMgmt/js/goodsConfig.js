@@ -243,9 +243,9 @@ var commMng = {
 		//alert(CommonUtils.dumpObject(row));
 		var retVal = value;
 		if(value == "1"){
-			retVal="精品拼团";
+			retVal="会员商品";
 		}else if (value == "2"){
-			retVal = "即时拼团";
+			retVal = "拼团商品";
 		}
 		return retVal;
   },
