@@ -275,9 +275,8 @@
   <parameterMap type="map" id="produreParam">  
    <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>  
    <parameter property="goods_amount" jdbcType="INTEGER" mode="IN"/> 
-   <parameter property="type" jdbcType="INTEGER" mode="IN"/> 
  </parameterMap>
-  <update id="activeUser" parameterMap="produreParam" statementType="CALLABLE">  
-   	{call pro_user_settle(?, ?,?)}  
+  <update id="pro_zshop_buy" parameterMap="produreParam" statementType="CALLABLE">  
+   	{call pro_zshop_buy(?, ?)}  
  </update>
 </mapper>

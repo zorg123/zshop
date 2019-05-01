@@ -11,16 +11,16 @@ public class AutoGeneratorMain{
         // 配置 MySQL 连接
         cg.setDbDriverName("com.mysql.jdbc.Driver");
         cg.setDbUser("root");
-        cg.setDbPassword("zzulixikun");
-        cg.setDbUrl("jdbc:mysql://127.0.0.1:3306/frcmsdb?characterEncoding=utf8");
+        cg.setDbPassword("qazQAZ!1@2#3");
+        cg.setDbUrl("jdbc:mysql://192.168.101.62:3306/frcmsdb?characterEncoding=utf8");
 
         // 配置包名
         /* */
-        cg.setEntityPackage("com.flyrui.sys.dto");
-        cg.setMapperPackage("com.flyrui.sys.dao.mapper"); 
-        cg.setServicePackage("com.flyrui.sys.service");
-        cg.setXmlPackage("com.flyrui.sys.dao.mapper.mysql");
-        cg.setServiceImplPackage("com.flyrui.sys.service.impl");
+        cg.setEntityPackage("com.flyrui.quartz.dto");
+        cg.setMapperPackage("com.flyrui.quartz.dao.mapper"); 
+        cg.setServicePackage("com.flyrui.quartz.service");
+        cg.setXmlPackage("com.flyrui.quartz.dao.mapper.mysql");
+        cg.setServiceImplPackage("com.flyrui.quartz.service.impl");
         
         /*cg.setEntityPackage("test");
         cg.setMapperPackage("test");
@@ -28,12 +28,12 @@ public class AutoGeneratorMain{
         cg.setXmlPackage("test");
         cg.setServiceImplPackage("test.impl"); */
         
-        cg.setTableNames(new String[]{"fr_config"});
+        cg.setTableNames(new String[]{"goods_order_after"});
         cg.setDbColumnUnderline(true);//设置数据库是否为下划线
         cg.setIdType(IdType.INPUT);//设置ID主键策略
 
         // 配置保存路径
-        cg.setSaveDir("E:\\work\\github\\frcmsmaven\\src\\main\\java\\");
+        cg.setSaveDir("d:\\work\\");
 
         // 其他参数请根据上面的参数说明自行配置，当所有配置完善后，运行AutoGenerator.run()方法生成Code
         // 生成代码

@@ -37,6 +37,7 @@ import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsRevAddrService;
 import com.flyrui.goods.service.GoodsService;
 import com.flyrui.goods.service.TbChinaAreaService;
+import com.flyrui.sys.service.UserService;
 
 @ParentPackage("frcms_default")
 @Namespace("/Goods") //访问路径的包名
@@ -93,6 +94,9 @@ public class GoodsAction extends BaseAction {
 	
 	@Autowired
 	GoodsOrderService goodsOrderService;
+	
+	@Autowired
+	UserService userService;
 	
 	public Goods getGoods() {
 		return goods;
@@ -211,9 +215,31 @@ public class GoodsAction extends BaseAction {
 		if(goodsOrder.getGoods_amount()<1){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		
 		if(goodsOrder.getRev_people() == null || "".equals(goodsOrder.getRev_people().trim())){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		//商品是否存在
+		Goods tGoods = new Goods();
+		tGoods.setGoods_id(goodsOrder.getGoods_id());	
+		tGoods.setState("1");
+		List<Goods> goodsList = goodsService.getListByCon(tGoods);
+		if(goodsList.size()<1) {
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		}
+		tGoods = goodsList.get(0);
+		
+		if("1".equals(tGoods.getCatalog_id())) {
+			//获取当前用户,会员商品只能购买一单
+			User u = new User();
+			u.setUser_id(getUserId());
+			u = userService.getListByCon(u).get(0);
+			if("0".equals(u.getState()) && goodsOrder.getGoods_amount()>1) {
+				throw new FRException(new FRError(ErrorConstants.SHOP_UNACTIVE_USER_1));
+			} 
+		}
+		
+		
 		goods = new Goods();
 		goods.setGoods_id(goodsOrder.getGoods_id());
 		goods.setState("1");

@@ -101,8 +101,7 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		Map param = new HashMap();
 		param.put("in_id", user.getUser_id());
 		param.put("goods_amount", goodsOrder.getGoods_amount());
-		param.put("type", "1");
-		baseDao.update(getNameSpace()+".activeUser",param);
+		baseDao.update(getNameSpace()+".pro_zshop_buy",param);
 		
 		
 		goodsOrder.setTotal_fee(totalFee);
