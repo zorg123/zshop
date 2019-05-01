@@ -6,7 +6,7 @@
     	<result column="user_id" property="user_id" jdbcType="INTEGER" />
     	<result column="coin_type" property="coin_type" jdbcType="INTEGER" />
     	<result column="coin_num" property="coin_num" jdbcType="DOUBLE" />
-    	<result column="create_type" property="create_type" jdbcType="INTEGER" />
+    	<result column="create_type" property="create_type" jdbcType="VARCHAR" />
     	<result column="create_type_name" property="create_type_name" jdbcType="VARCHAR" />
     	<result column="oper_user_id" property="oper_user_id" jdbcType="INTEGER" />
     	<result column="oper_user_name" property="oper_user_name" jdbcType="VARCHAR" />
@@ -101,7 +101,7 @@
     	and a.sub_logType = #{sub_logType,jdbcType=VARCHAR}
  	</if>
  	<if test="create_type != null  and create_type != '' " >
-    	and a.create_type = #{create_type,jdbcType=VARCHAR}
+    	and a.create_type like concat('%',#{create_type,jdbcType=VARCHAR},'%') 
  	</if>
     order by a.order_id desc
   </select>

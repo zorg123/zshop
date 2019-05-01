@@ -39,7 +39,7 @@ public class CoinTrackDto implements Serializable {
 	@ExcelAnnotation(exportName = "金额")
 	private Double coin_num;
 	
-	private Integer create_type;
+	private String create_type;
 	
 	private Integer oper_user_id;
 	
@@ -112,11 +112,11 @@ public class CoinTrackDto implements Serializable {
 		this.coin_num = coin_num;
 	}
 
-	public Integer getCreate_type() {
+	public String getCreate_type() {
 		return create_type;
 	}
 
-	public void setCreate_type(Integer create_type) {
+	public void setCreate_type(String create_type) {
 		this.create_type = create_type;
 	}
 

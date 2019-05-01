@@ -245,7 +245,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 					//1:奖金币 2:电子币 3:重消币
 		    		paramCoinTrackDto.setCoin_type(2);
 					//1:广告费 2:辅导奖 3:提现 4:电子币充值 5:电子币互转 6:现金转电子币 7:电子币购物 8:重消 9:报单 10:重消购物
-		    		paramCoinTrackDto.setCreate_type(4);
+		    		paramCoinTrackDto.setCreate_type("4");
 		    		paramCoinTrackDto.setCoin_num(elect_coin);
 		    		paramCoinTrackDto.setFile_info(file_info);
 		    		paramCoinTrackDto.setComments("管理员充值");
@@ -315,7 +315,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	    			//1:奖金币 2:电子币 3:重消币
 	    			recCoinTrackDto.setCoin_type(2);
 	    			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
-	    			recCoinTrackDto.setCreate_type(5);
+	    			recCoinTrackDto.setCreate_type(5+"");
 	    			recCoinTrackDto.setCoin_num(trans_elect_coin);
 	    			recCoinTrackDto.setComments(loginUser.getUser_code()+"转入");
 	    			//发送方用户id写入接收方oper_user_id中
@@ -331,7 +331,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	    			//发送方
 	    			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
 	    			sendCoinTrackDto.setCoin_type(2);
-	    			sendCoinTrackDto.setCreate_type(5);
+	    			sendCoinTrackDto.setCreate_type(5+"");
 	    			sendCoinTrackDto.setCoin_num(trans_elect_coin*-1);
 	    			sendCoinTrackDto.setComments("转入"+recCoinTrackDto.getUser_code());
 	    			//接收方用户id写入发送方oper_user_id中
@@ -385,7 +385,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     			//1:奖金币 2:电子币 3:重消币
     			recCoinTrackDto.setCoin_type(2);
     			//1:广告费 2:辅导奖 3:提现 4:充值 5:互转 6:转电子币 7:购物 8:重消 9:报单
-    			recCoinTrackDto.setCreate_type(6);
+    			recCoinTrackDto.setCreate_type(6+"");
     			recCoinTrackDto.setCoin_num(trans_bonus_coin);
     			String balance_comments = "电子账户余额:"+(electCoin+trans_bonus_coin);
     			recCoinTrackDto.setBalance_comments(balance_comments);
@@ -393,7 +393,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     			//发送方
     			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
     			sendCoinTrackDto.setCoin_type(1);
-    			sendCoinTrackDto.setCreate_type(6);
+    			sendCoinTrackDto.setCreate_type(6+"");
     			sendCoinTrackDto.setCoin_num(trans_bonus_coin*-1);
     			String sbalance_comments = "现金账户余额:"+(cashCoin+trans_bonus_coin*-1);
     			sendCoinTrackDto.setBalance_comments(sbalance_comments);
@@ -451,7 +451,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
         			//写一条提现记录
         			CoinTrackDto sendCoinTrackDto = new CoinTrackDto();
         			sendCoinTrackDto.setCoin_type(1);
-        			sendCoinTrackDto.setCreate_type(3);
+        			sendCoinTrackDto.setCreate_type(3+"");
         			sendCoinTrackDto.setCoin_num(extract_bonus_coin*-1);
         			sendCoinTrackDto.setCounter_num(counter_num);
         			//实际打款
