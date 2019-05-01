@@ -74,6 +74,12 @@ public class TbUser implements Serializable {
 	private Integer allchild_num;
 	
 	private String head_img;
+	
+	private String user_type;
+	
+	private String shareout_qua;
+	
+	private Integer allorder_num;
     
     private static final long serialVersionUID = 1L;
 
@@ -315,5 +321,29 @@ public class TbUser implements Serializable {
 
 	public void setHead_img(String head_img) {
 		this.head_img = head_img;
+	}
+
+	public String getUser_type() {
+		return user_type;
+	}
+
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+
+	public String getShareout_qua() {
+		return shareout_qua;
+	}
+
+	public void setShareout_qua(String shareout_qua) {
+		this.shareout_qua = shareout_qua;
+	}
+
+	public Integer getAllorder_num() {
+		return allorder_num;
+	}
+
+	public void setAllorder_num(Integer allorder_num) {
+		this.allorder_num = allorder_num;
 	}    
 }
