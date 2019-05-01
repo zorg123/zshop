@@ -11,14 +11,13 @@ import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
-import com.flyrui.goods.action.GoodsAction;
 import com.flyrui.goods.pojo.GoodsOrder;
 import com.flyrui.goods.service.GoodsOrderService;     		
 
 
 @Service(value="goodsOrderService")
 public class GoodsOrderServiceImpl extends BaseService<GoodsOrder> implements GoodsOrderService {	
-	private static final Logger log = Logger.getLogger(GoodsAction.class);	
+	private static final Logger log = Logger.getLogger(GoodsOrderServiceImpl.class);	
 	
 	@Autowired
 	private CommonService commonService;

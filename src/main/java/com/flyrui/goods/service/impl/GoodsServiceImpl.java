@@ -1,17 +1,15 @@
 package com.flyrui.goods.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
-import com.flyrui.common.service.CommonService;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
@@ -23,10 +21,14 @@ import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
 import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsService;
+import com.flyrui.quartz.dto.GoodsOrderAfter;
+import com.flyrui.quartz.service.GoodsOrderAfterService;
 
 
 @Service(value="goodsService")
 public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService {	
+	
+	private static final Logger log = Logger.getLogger(GoodsOrderServiceImpl.class);
 	
 	@Autowired
 	private AccoutInfoService accoutInfoService;
@@ -36,6 +38,9 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 	
 	@Autowired
 	private GoodsOrderService goodsOrderService;
+	
+	@Autowired
+	public GoodsOrderAfterService goodsOrderAfterService;
 	
 	public GoodsServiceImpl(){
 		super.setNameSpace("com.flyrui.goods.dao.mapper.GoodsMapper");
@@ -97,12 +102,6 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 			coinTrackDto.setBalance_comments("重消账户余额:"+(accoutInfoDto.getReconsmp_coin()-totalFee));
 		}
 		coinTrackService.insertCoinTrack(user,coinTrackDto);
-		//如果是会员商品，调用存储过程
-		Map param = new HashMap();
-		param.put("in_id", user.getUser_id());
-		param.put("goods_amount", goodsOrder.getGoods_amount());
-		baseDao.update(getNameSpace()+".pro_zshop_buy",param);
-		
 		
 		goodsOrder.setTotal_fee(totalFee);
 		goodsOrder.setGoods_name(goods.getGoods_name());
@@ -115,6 +114,24 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		super.update(newGoods);
 		
 		goodsOrderService.insert(goodsOrder);
+		
+		//插入后处理
+		if("1".equals(goods.getCatalog_id())) {
+			try {
+				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
+				goodsOrderAfter.setGoods_order_id(goodsOrder.getGoods_id());
+				goodsOrderAfter.setBuy_amount(goodsOrder.getGoods_amount());
+				goodsOrderAfter.setUser_id(user.getUser_id());
+				goodsOrderAfter.setCreate_date(new Date());
+				goodsOrderAfter.setAfter_type("shop");
+				goodsOrderAfter.setError_num(0);
+				goodsOrderAfter.setState(1);
+				goodsOrderAfterService.insert(goodsOrderAfter);
+			}catch(Exception ex) {
+				log.error("插入后处理任务出错，不管",ex);
+			}
+		}
+		
 	}
 	
 	@Override

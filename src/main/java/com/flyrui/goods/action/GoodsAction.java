@@ -245,6 +245,7 @@ public class GoodsAction extends BaseAction {
 		goods.setState("1");
 		goods.setEff_date(new Date());
 		goods.setExp_date(new Date());
+		goods.setCatalog_id(tGoods.getCatalog_id());
 		//orderCode的组成规则 YYYYMMDDHH+8位序列
 		String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
 		goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);

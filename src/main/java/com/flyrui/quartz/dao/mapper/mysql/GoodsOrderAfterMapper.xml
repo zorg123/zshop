@@ -103,10 +103,7 @@
   
   <update id="update" parameterType="com.flyrui.quartz.dto.GoodsOrderAfter">
     update goods_order_after
-    set
-   		<if test="id != null  and id != '' " >
-      		id = #{id,jdbcType=INTEGER},
-   		</if>
+    set   		
    		<if test="user_id != null  and user_id != '' " >
       		user_id = #{user_id,jdbcType=VARCHAR},
    		</if>
@@ -132,11 +129,10 @@
       		comments = #{comments,jdbcType=VARCHAR},
    		</if>
    		<if test="after_type != null  and after_type != '' " >
-      		after_type = #{after_type,jdbcType=VARCHAR}
+      		after_type = #{after_type,jdbcType=VARCHAR},
    		</if>
-    <if test="_parameter != null" >
-      <include refid="Base_Where_Clause" />
-    </if>
+   		id = id
+    where  id = #{id,jdbcType=INTEGER}
     
   </update>
 </mapper>
