@@ -74,7 +74,7 @@
 	FROM
 	  user_direct_recommend a 
 	  JOIN tb_user b ON a.`user_id` = b.`user_id`
-	where user_id = #{user_id,jdbcType=INTEGER}
+	where a.pid = #{user_id,jdbcType=INTEGER}
   </select>
   
   <delete id="delete" parameterType="com.flyrui.financMgmt.pojo.UserDirectRecommend" >

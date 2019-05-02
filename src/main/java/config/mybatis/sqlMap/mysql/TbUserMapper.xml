@@ -223,7 +223,7 @@
       		head_img = #{head_img,jdbcType=VARCHAR}
 	</if>
 	<if test="user_type != null  and user_type != '' " >
-  			user_type = #{user_type,jdbcType=VARCHAR}
+  			and user_type = #{user_type,jdbcType=VARCHAR}
 	</if>
 	<if test="shareout_qua != null  and shareout_qua != '' " >
   			shareout_qua = #{shareout_qua,jdbcType=VARCHAR}
@@ -243,6 +243,19 @@
   	 delete from tb_user   	   
   	  where user_id = #{user_id,jdbcType=VARCHAR}
   </delete>
+      <select id="selectForWaitActiveUser" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
+	SELECT b.* FROM tb_user a,tb_user b WHERE a.`user_id`=#{user_id,jdbcType=VARCHAR}  AND
+	a.state='1' AND a.user_type='child' AND a.`pid` = b.`pid` AND
+	b.`state`='0' AND b.user_type='main'
+	<if test="name !=null and name !='' ">
+     	and b.name like #{name,jdbcType=VARCHAR}
+     </if> 
+      UNION
+     SELECT a.* FROM tb_user a WHERE a.pid = '2' AND a.`state`='0' AND a.user_type='main'
+     <if test="name !=null and name !='' ">
+     	and a.name like #{name,jdbcType=VARCHAR}
+     </if> 
+  </select>
   <select id="queryUserByIdState" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
   	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
@@ -378,5 +391,21 @@
  </select>
  <update id="delUserChild" parameterType="com.flyrui.sys.dto.UserChildDto">  
    delete from tb_user_childlist where cid = #{cid,jdbcType=INTEGER}
+ </update>
+  <select id="queryUserLevelShareout" resultType="hashmap" parameterType="hashmap">
+ 	SELECT c.cf_value,c.cf_desc ,IFNULL(a.total,0) total, IFNULL(b.usercount,0) usercount FROM  fr_config c 
+   		LEFT JOIN pool_shareout a ON  a.ptype = c.`cf_desc` AND a.state='1' 
+   		LEFT JOIN (SELECT user_level ,SUM(1) AS usercount FROM tb_user a WHERE state = '1' AND bus_state='1' AND  shareout_qua ='1' GROUP BY user_level) b ON a.ptype = b.user_level    
+	WHERE  c.cf_module='zshopuserlevel' ORDER BY cf_desc
+ </select>
+ <select id="queryUserMonthGoods" resultType="hashmap" parameterType="hashmap">
+ 	select user_id,months,goodsSum from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
+ </select>
+  <parameterMap type="map" id="produreParam3">  
+   <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="act_userId" jdbcType="INTEGER" mode="IN"/> 
+ </parameterMap>
+ <update id="pro_zshop_act" parameterMap="produreParam3" statementType="CALLABLE">  
+   	{call pro_zshop_act(?, ?)}  
  </update>
 </mapper>

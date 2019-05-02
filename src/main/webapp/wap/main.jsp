@@ -52,6 +52,7 @@
                       </span>
                   </a>
                   <ul class="am-dropdown-content">
+                  	  <li><a href="javascript:void(0);" onclick="pageData.genSubUser(this);"><span class="am-icon-users"></span>生成子账号</a></li>
                       <li><a href="javascript:void(0);" onclick="pageData.loginOut(this);"><span class="am-icon-power-off"></span> 退出</a></li>
                   </ul>
               </li>                

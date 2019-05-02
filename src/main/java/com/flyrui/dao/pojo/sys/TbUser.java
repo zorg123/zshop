@@ -82,8 +82,9 @@ public class TbUser implements Serializable {
 	private Integer allorder_num;
     
     private static final long serialVersionUID = 1L;
+    
 
-    public String getUser_id() {
+	public String getUser_id() {
         return user_id;
     }
 

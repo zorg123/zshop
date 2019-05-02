@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -23,6 +24,7 @@ import com.flyrui.common.excel.ImportExcel;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbOrganation;
 import com.flyrui.dao.pojo.sys.TbRole;
+import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -41,6 +43,7 @@ import com.flyrui.sys.service.UserService;
 @ParentPackage("frcms_default")
 @Namespace("/Sys/User") //访问路径的包名
 @Results({	
+		@Result(name="queryWaitActiveUser", location = "/wap/user/queryRegisterUserNew.jsp"),
 		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
 		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
 		@Result(name="userMarket", location = "/wap/user/userMarket.jsp"),
@@ -61,6 +64,7 @@ public class UserAction extends BaseAction {
     private File upload;
     private String fileName;
     private String caption;	
+    public String beActivedUserId;
 	
     private static final Logger log = Logger.getLogger(UserAction.class);	
     
@@ -465,10 +469,16 @@ public class UserAction extends BaseAction {
     	}
     	    	
     	user.setRegister_id(getUserId());
+    	if(StringUtils.isBlank(user.getPid())) {//推荐人不能为空
+    		FRException frException = new FRException(new FRError("USER_002"));
+    		throw frException;
+    	}
+    	
     	//根据注册人的账号查询注册人的id
     	u = new User();
     	u.setUser_code(user.getPid()+"");
     	u.setBus_state(1);
+    	
     	retList = userService.getListByCon(u);
     	if(retList == null || retList.size()==0){
     		FRException frException = new FRException(new FRError("USER_002"));
@@ -479,15 +489,22 @@ public class UserAction extends BaseAction {
     		FRException frException = new FRException(new FRError("USER_008"));
     		throw frException;
     	}
+    	
+    	if(!"main".equals(tempUser.getUser_type())){
+    		FRException frException = new FRException(new FRError("USER_012"));
+    		throw frException;
+    	}
+    	
+    	
     	//查询节点人下的节点数，如果超过3个就不让注册
-    	u = new User();
+    	/*u = new User();
     	u.setPid(tempUser.getUser_id());
     	u.setBus_state(1);
     	retList = userService.getListByCon(u);
     	if(retList!=null && retList.size()>=3){
     		FRException frException = new FRException(new FRError("USER_009"));
     		throw frException;
-    	}
+    	}*/
     	
     	user.setPid(tempUser.getUser_id());
     	user.setState("0");
@@ -498,6 +515,8 @@ public class UserAction extends BaseAction {
     	user.setRegister_ip(super.getIp());
     	user.setPassword(CASMd5Utils.getPwd(user.getPassword(),user.getUser_code()));
     	user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),user.getUser_code()));
+    	user.setUser_type("main");
+    	user.setUser_level(0);
     	userService.insertRegister(user);
     	setCommonSuccessReturn();
     	return SUCCESS;
@@ -590,7 +609,7 @@ public class UserAction extends BaseAction {
     	user.setRegister_id(getUserId());
     	if(user.getState()==null){
     		user.setState("1");
-    	}   
+    	}
     	if(rows==0){
     		rows=5;
     	}
@@ -598,6 +617,24 @@ public class UserAction extends BaseAction {
     		page = 1;
     	}
     	PageModel pageModel = userService.getPagerListByCon(user, page, rows);
+    	setResult(pageModel);
+    	return "queryRegisterUser";
+    }
+    
+    @Action("queryWaitActiveUser")
+    public String queryWaitActiveUser(){
+    	UserService userService = getUserService();
+    	user.setUser_id(getUserId());
+    	if(user.getState()==null){
+    		user.setState("1");
+    	}
+    	if(rows==0){
+    		rows=10;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel pageModel = userService.selectForWaitActiveUser(user, page, rows);
     	setResult(pageModel);
     	return "queryRegisterUser";
     }
@@ -613,6 +650,82 @@ public class UserAction extends BaseAction {
     	return retV;
     }
     
+    @Action("genSubUser")  
+    public String genSubUser() throws FRException{
+    	User currUser = getLoginUserInfo();
+    	if(currUser.getUser_type().equals("child")){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "当前是子帐号用户登录！不允许该操作！");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	UserService userService = getUserService();
+    	User user = new User();
+    	user.setPid(currUser.getUser_id());
+    	user.setUser_type("child");
+    	List li = userService.getListByCon(user);
+    	if(li != null && li.size() > 0){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "已存在子帐号，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+
+    	currUser.setPid(currUser.getUser_id());
+    	currUser.setUser_id(null);
+    	currUser.setUser_code("z"+currUser.getUser_code());
+    	currUser.setLogin_count(0);
+    	currUser.setLast_login_time(null);
+    	currUser.setLast_login_ip(null);
+    	currUser.setAllchild_num(0);
+    	currUser.setUser_type("child");
+    	currUser.setAllorder_num(0);
+    	currUser.setRegister_date(new Date());
+    	currUser.setRegister_date(new Date());
+    	currUser.setCreate_time(new Date());
+    	currUser.setAct_time(null);
+    	currUser.setState("1");
+    	userService.insert(currUser);
+    	
+    	Map retMap = new HashMap();
+		retMap.put("_code", "-1");
+		retMap.put("_msg", "子帐号创建成功，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录！");
+		result.putAll(retMap);
+    	return SUCCESS;
+    }
+    @Action("activeUser2")  
+    public String activeUser2() throws FRException{
+    	User currUser = getLoginUserInfo();
+    	if(!currUser.getUser_type().equals("child")){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "请使用子账户激活");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
+    	UserService userService = getUserService();
+    	User beActivedUser = new User();
+    	beActivedUser.setUser_id(beActivedUserId);
+    	List<User> li= userService.getListByCon(beActivedUser);
+    	if(li == null || li.size() == 0){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活用户不存在");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	String[] ret = userService.activeUser2(getLoginUserInfo(), li.get(0));
+    	
+    	Map retMap = new HashMap();
+		retMap.put("_code", ret[0]);
+		retMap.put("_msg", ret[1]);
+		result.putAll(retMap);
+    	return SUCCESS;
+    	
+    }
     @Action("activeUser")  
     public String activeUser() throws FRException{
     	if(ids==null){

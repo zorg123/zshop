@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,8 @@ import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
+import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -21,7 +24,10 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
+import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsService;
+import com.flyrui.goods.service.impl.GoodsOrderServiceImpl;
+import com.flyrui.quartz.dto.GoodsOrderAfter;
 import com.flyrui.sys.dto.FrConfig;
 import com.flyrui.sys.dto.UserChildDto;
 import com.flyrui.sys.service.FrconfigService;
@@ -30,7 +36,7 @@ import com.flyrui.sys.service.UserService;
 
 @Service(value="userService")
 public class UserServiceImpl extends BaseService<User> implements UserService {
-	
+   private static final Logger log = Logger.getLogger(GoodsOrderServiceImpl.class);	
    @Autowired
    AccoutInfoService accoutInfoService;
    
@@ -45,6 +51,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    
    @Autowired
    GoodsService goodsService;
+   
+   @Autowired
+   GoodsOrderService goodsOrderService;
    
    public UserServiceImpl(){
 	   super.setNameSpace("com.flyrui.dao.pojo.sys.tb_user");
@@ -74,7 +83,81 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   return baseDao.update(getNameSpace()+".modifyPwd", param);
    }
   
-     
+   //tbUser子帐号
+   @Transactional
+   public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser){
+	   
+	   log.info("激活子帐号:"+tbUser.getUser_id()+"被激活人: "+beActivedtbUser.getUser_id());
+	   //查找主账户下的订单 1、会员订单 2、未发货 3、最新一条
+	   GoodsOrder newGoodsOrder = new GoodsOrder();
+	   newGoodsOrder.setUser_id(tbUser.getPid());
+	   newGoodsOrder.setState("0");
+	   newGoodsOrder.setCatalog_id("1");
+	   List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
+	   if(goodsOrderListForActive!=null && goodsOrderListForActive.size()>0){
+		   GoodsOrder activeOrder = goodsOrderListForActive.get(0);
+		   log.info("子帐号激活会员: 订单id :"+activeOrder.getOrder_id()+"  数量:"+activeOrder.getGoods_amount());
+		   if(activeOrder.getGoods_amount() == 0){
+			   return new String[]{"-1","会员订单中商品数量为0，不能激活"};
+		   }
+		   //只剩一条的话
+		   if(activeOrder.getGoods_amount() == 1){
+			   log.info("主帐号商品数量1，子帐号激活会员: 直接激活");
+			   //插入新订单
+			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
+			   //调用存储过程
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新原定订单，作废
+			   GoodsOrder oldOrder = new GoodsOrder();
+			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   oldOrder.setState("-1");
+			   oldOrder.setComments("该订单转赠给用户[："+beActivedtbUser.getUser_code()+"]"+";"+oldOrder.getComments());
+			   goodsOrderService.update(oldOrder);
+		   }else if(activeOrder.getGoods_amount() > 1){
+			   log.info("主帐号商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
+			   //插入新订单
+			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
+			   //调用存储过程
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新原定订单，数量-1
+			   GoodsOrder oldOrder = new GoodsOrder();
+			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
+			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+";"+oldOrder.getComments());
+			   goodsOrderService.update(oldOrder);
+		   }
+		   return new String[]{"0","成功"};
+	   }else{
+		   return new String[]{"-1","父账户没有可以用于激活的订单"};
+	   }
+   }
+   private void genNewActiveOrder(GoodsOrder activeOrder,TbUser tbUser,TbUser beActivedtbUser){
+	   GoodsOrder newOrder = new GoodsOrder();
+	   String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
+	   goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);
+
+	   newOrder.setOrigin_order_id(activeOrder.getOrder_id());
+	   newOrder.setOrder_id(UUIDHexGenerator.generator());
+	   newOrder.setOrder_code(goodsOrderCode);
+	   newOrder.setComments("用户["+tbUser.getUser_code()+"]转赠订单");
+	   newOrder.setGoods_id(activeOrder.getGoods_id());
+	   newOrder.setGoods_name(activeOrder.getGoods_name());
+	   newOrder.setGoods_amount(1);
+	   newOrder.setTotal_fee(activeOrder.getGoods_price());
+	   newOrder.setPay_type(activeOrder.getPay_type());
+	   newOrder.setUser_id(beActivedtbUser.getUser_id());
+	   newOrder.setUser_name(beActivedtbUser.getName());
+	   newOrder.setCreate_date(new Date());
+	   newOrder.setState_date(new Date());
+	   newOrder.setState("0");
+	   newOrder.setGoods_type(activeOrder.getGoods_type());
+	   newOrder.setRefund_fee(0d);
+	   newOrder.setGoods_price(activeOrder.getGoods_price());
+	   newOrder.setCatalog_id(activeOrder.getCatalog_id());
+	   goodsOrderService.insert(newOrder);
+   }
+   
    @Transactional
    @Override
    public int insertRegister(User user){	   
@@ -160,5 +243,25 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		userChildDto.setId(null);
 		baseDao.update(getNameSpace()+".delUserChild",userChildDto);
    }
+   public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize){
+	   return getPagerList(user,nameSpace+".selectForWaitActiveUser",pageNo,pageSize);		
+   }
+	
+	public List<Map> queryUserLevelShareout() {
+		return baseDao.selectList(getNameSpace()+".queryUserLevelShareout");
+	}
+	
+	public List<Map> queryUserMonthGoods(Map<String,String> param) {
+		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
+	}
    
+	private void afterHandler(String child_userId,String act_userId) {
+		//如果是会员商品，调用存储过程
+		Map param = new HashMap();
+		param.put("child_userId", child_userId);
+		param.put("act_userId", act_userId);
+		
+		
+		baseDao.update("com.flyrui.dao.pojo.sys.tb_user.pro_zshop_act",param);
+	}
 }

@@ -81,4 +81,7 @@ public class GoodsOrderServiceImpl extends BaseService<GoodsOrder> implements Go
 		}
 		return true;
 	}
+	public List<GoodsOrder> selectCreateDateDesc(GoodsOrder goodsOrder) {
+		return baseDao.selectList(nameSpace+".selectCreateDateDesc", goodsOrder);		
+	}
 }

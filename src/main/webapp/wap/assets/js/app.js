@@ -261,6 +261,22 @@ var pageData={
 		 CommonUtils.invokeAsyncAction(base+'/Sys/Login!loginOut.do',{},function(reply){
 	           window.location.href=base+'/wap/login/';
 	     })
+	 },
+	 "genSubUser":function(){
+		 var param=[];
+		 CommonUtils.invokeAsyncAction(base+"/Sys/User/genSubUser.do", param, function (reply) {           
+	           if ((reply || '') != '') {
+	               var code = reply._code;               
+	               if (code == '0') {  
+	            	   CommonUtils.showAlert(reply._msg);
+	            	 pageData["refresh"]() 	                   
+	               } else  {
+	            	  CommonUtils.showAlert(reply._msg);
+	               }              
+	           } else  {
+	        	      CommonUtils.showAlert('操作失败!');
+	           }
+	    },true);
 	 }
 }
     

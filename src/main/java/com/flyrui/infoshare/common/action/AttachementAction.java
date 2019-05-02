@@ -275,7 +275,7 @@ public class AttachementAction extends BaseAction {
 		String id = UUIDHexGenerator.generator();
 		String fkey = File.separator+curDate+File.separator+id+"."+fileType;
 		newFileName =path+File.separator+fkey;
-		String fileNameContext =getRelativePath()+"/"+curDate+"/"+id+"."+fileType;
+		String fileNameContext ="/"+Const.DEFAULT_UPLOAD_FILE_HOME_DIR+"/"+curDate+"/"+id+"."+fileType;
 		
 		File newFile = new File(newFileName);
 		CommonUtils.saveFile(content,newFile);				
