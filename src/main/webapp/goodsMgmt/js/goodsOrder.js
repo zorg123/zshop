@@ -42,6 +42,8 @@ var GoodsOrderMng = {
 			retVal="未发货";
 		}else if (value == "1"){
 			retVal = "已发货";
+		}else if (value == "2"){
+			retVal = "待发货";
 		}
 		return retVal;
 	}

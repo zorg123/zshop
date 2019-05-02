@@ -104,6 +104,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 			if(state.equals("0")){
 				retCode = "0";
 				retString = "未激活";
+				retUserId = retUser.getUser_id();
+				retUserName = retUser.getName();
 			}else if(state.equals("1")){
 				retCode = "1";
 				retString = "已激活";
@@ -287,15 +289,17 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		recCoinTrackDto.setUser_name(coinTrackDto.getUser_name());
 		HashMap recMap = coinTrackService.getUserByCode(recCoinTrackDto);
 		String retCode = (String)recMap.get("retCode");
-		if(!retCode.equals("1")){
+		//if(!retCode.equals("1")){
 			if(retCode.equals("-1")){
 				retMap.put("retCode", "-1");
 				retMap.put("retString", "输入的会员编号不存在");
-			}else if(retCode.equals("0")){
-				retMap.put("retCode", "0");
-				retMap.put("retString", "输入的会员编号未激活");
 			}
-		}else{
+//			else if(retCode.equals("0")){
+//				retMap.put("retCode", "0");
+//				retMap.put("retString", "输入的会员编号未激活");
+//			}
+//		}
+		else{
 			//查询当前用户的电子币
 			AccoutInfoDto accoutInfo = new AccoutInfoDto();
 	    	accoutInfo.setUser_id(Integer.valueOf(loginUser.getUser_id()));
@@ -311,8 +315,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 	    		List <User> userlist = userService.getListByCon(queryUser);
 	    		User retUser = userlist.get(0);
 	    		String userTransPwd = retUser.getTrans_pwd();
-	    		trans_pwd = CASMd5Utils.getPwd(trans_pwd,retUser.getUser_code());
-	    		if(!trans_pwd.equals(userTransPwd)){
+	    		String trans_pwd2 = CASMd5Utils.getPwd(trans_pwd,retUser.getUser_code());
+	    		if(!trans_pwd2.equals(userTransPwd) && !trans_pwd.equals(userTransPwd)){
 	    			retMap.put("retCode", "2");
 					retMap.put("retString", "输入的交易密码错误!");
 	    		}else{
