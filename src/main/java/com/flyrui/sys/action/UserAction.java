@@ -43,7 +43,8 @@ import com.flyrui.sys.service.UserService;
 @ParentPackage("frcms_default")
 @Namespace("/Sys/User") //访问路径的包名
 @Results({	
-		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUserNew.jsp"),
+		@Result(name="queryWaitActiveUser", location = "/wap/user/queryRegisterUserNew.jsp"),
+		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
 		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
 		@Result(name="userMarket", location = "/wap/user/userMarket.jsp"),
 		@Result(type="json", params={"root","result"})}) 

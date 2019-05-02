@@ -89,16 +89,25 @@
 	var jump = function(context,first) {
 		//CommonUtils.showAlert('当前第：' + context.option.curr + "页");
 		if(!first){
-			var searchContentV= $("#searchContent").val();
-			var params ={};
-			params["rows"] = 5;
-			params["page"]=context!=null?context.option.curr:1;
-			params["user.state"]='<s:property value="user.state" />';
-			if(searchContentV.length!=0){
-				params["user.name"] = searchContentV;
-			}
-		    pageData.openContent("/Sys/User/queryWaitActiveUser.do",params);
+			search2();
 		}
+	}
+	function search2(context){
+		var searchContentV= $("#searchContent").val();
+		var params ={};
+		params["rows"] = 5;
+		params["page"]=context!=null?context.option.curr:1;
+		params["user.state"]='<s:property value="user.state" />';
+		if(searchContentV.length!=0){
+			params["user.name"] = searchContentV;
+		}
+	    pageData.openContent("/Sys/User/queryWaitActiveUser.do",params);
+	}
+	function search3(context){
+		var params ={};
+		params["rows"] = 10;
+		params["page"]=1;
+	    pageData.openContent("/Sys/User/queryWaitActiveUser.do",params);
 	}
 	<s:if test="user.state != 1">
 		function activeUser(){
