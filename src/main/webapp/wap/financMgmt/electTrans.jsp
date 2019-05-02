@@ -140,7 +140,7 @@
 		        if(code=='0'){
 		        	var retobj = reply.ret;
 		        	//-1:输入的工号不存在 0:未激活 1:转入的电子币大于当前账户的电子币 2:输入的交易密码错误!3:成功
-		        	if(retobj.retCode=='1'){
+		        	if(retobj.retCode=='1' || retobj.retCode=='0'){
 		        		$('#user_name').val(retobj.retUserName);
 		        		return;
 		        	}else{

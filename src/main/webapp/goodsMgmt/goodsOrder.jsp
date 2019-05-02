@@ -23,6 +23,7 @@
                 <option value="">--请选择--</option>
                 <option value="0">未发货</option>
                 <option value="1">已发货</option>
+                <option value="2">待发货</option>
             </select>
             <label>商品名称：</label><input class="easyui-combobox" name="goods_id" db_field="goods_id"  data-options="valueField:'id',textField:'name',url:'<%=baseUri %>/InfoCommon/queryById.do?sqlId=8'" />
             <label>发货开始时间：</label><input type="text" name="state_date_start" class="easyui-datebox" />

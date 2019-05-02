@@ -61,7 +61,7 @@
     	deal_exp_comp,
     	deal_exp_ord,
     	state,
-    	CASE state WHEN 0 THEN '未发货' WHEN 1 THEN '已发货' end AS state_name,
+    	CASE state WHEN 0 THEN '未发货' WHEN 1 THEN '已发货' WHEN 2 THEN '待发货' end AS state_name,
     	order_type,
     	goods_type,
     	owner_id,
