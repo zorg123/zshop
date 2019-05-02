@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.FRException;
 
@@ -36,4 +37,5 @@ public interface UserService {
 	public int delUnActiveUser(User user);
 	public void checkCurrentChild(User loginUser,User user) throws FRException;
 	public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize);
+	public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser);
 }

@@ -22,4 +22,6 @@ public interface GoodsOrderService {
 	public List<GoodsOrder> getListByConGoodsOrder(GoodsOrder goodsOrder);
 	
 	public boolean goodsSend(GoodsOrder goodsOrder,int goodsNum);
+	
+	public List<GoodsOrder> selectCreateDateDesc(GoodsOrder goodsOrder);
 }

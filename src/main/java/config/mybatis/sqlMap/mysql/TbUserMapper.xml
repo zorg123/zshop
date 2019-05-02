@@ -250,6 +250,11 @@
 	<if test="name !=null and name !='' ">
      	and b.name like #{name,jdbcType=VARCHAR}
      </if> 
+      UNION
+     SELECT a.* FROM tb_user a WHERE a.pid = '2' AND a.`state`='0' AND a.user_type='main'
+     <if test="name !=null and name !='' ">
+     	and a.name like #{name,jdbcType=VARCHAR}
+     </if> 
   </select>
   <select id="queryUserByIdState" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
   	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,

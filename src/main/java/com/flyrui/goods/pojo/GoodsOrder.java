@@ -114,6 +114,15 @@ public class GoodsOrder implements Serializable {
 	private Double goods_price;
 	
 	private String catalog_id;
+	private String comments;
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 
 	public String getOrder_id() {
 		return this.order_id;

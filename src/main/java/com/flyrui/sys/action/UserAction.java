@@ -23,6 +23,7 @@ import com.flyrui.common.excel.ImportExcel;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbOrganation;
 import com.flyrui.dao.pojo.sys.TbRole;
+import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -61,6 +62,7 @@ public class UserAction extends BaseAction {
     private File upload;
     private String fileName;
     private String caption;	
+    public String beActivedUserId;
 	
     private static final Logger log = Logger.getLogger(UserAction.class);	
     
@@ -630,7 +632,37 @@ public class UserAction extends BaseAction {
     	
     	return retV;
     }
-    
+    @Action("activeUser2")  
+    public String activeUser2() throws FRException{
+    	User currUser = getLoginUserInfo();
+    	if(!currUser.getUser_type().equals("child")){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "请使用子账户激活");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
+    	UserService userService = getUserService();
+    	User beActivedUser = new User();
+    	beActivedUser.setUser_id(beActivedUserId);
+    	List<User> li= userService.getListByCon(beActivedUser);
+    	if(li == null || li.size() == 0){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活用户不存在");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	String[] ret = userService.activeUser2(getLoginUserInfo(), li.get(0));
+    	
+    	Map retMap = new HashMap();
+		retMap.put("_code", ret[0]);
+		retMap.put("_msg", ret[1]);
+		result.putAll(retMap);
+    	return SUCCESS;
+    	
+    }
     @Action("activeUser")  
     public String activeUser() throws FRException{
     	if(ids==null){

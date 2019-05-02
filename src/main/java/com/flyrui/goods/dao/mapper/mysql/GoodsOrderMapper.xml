@@ -35,6 +35,7 @@
     	<result column="send_immediate" property="send_immediate" jdbcType="VARCHAR" />
     	<result column="goods_price" property="goods_price" jdbcType="DOUBLE" />
     	<result column="catalog_id" property="catalog_id" jdbcType="VARCHAR" />
+    	<result column="comments" property="comments" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     	order_id,
@@ -99,7 +100,8 @@
     	origin_order_id,
     	send_immediate,
     	goods_price,
-    	catalog_id
+    	catalog_id,
+    	comments
   </sql>
   <sql id="Base_Where_Clause" >
     <where >
@@ -208,6 +210,16 @@
     order by create_date
   </select>
   
+  <select id="selectCreateDateDesc" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+    select    
+    *
+    from goods_order
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    order by create_date desc
+  </select>
+  
   <delete id="delete" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
     delete from goods_order
     <if test="_parameter != null" >
@@ -275,7 +287,8 @@
         	  #{send_immediate,jdbcType=VARCHAR},
         	  
         	  #{goods_price,jdbcType=DOUBLE},
-        	  #{catalog_id,jdbcType=DOUBLE}
+        	  #{catalog_id,jdbcType=DOUBLE},
+        	  #{comments,jdbcType=VARCHAR}
      				
 	    )
   </insert>
@@ -370,6 +383,10 @@
      	<if test="catalog_id != null  and catalog_id != '' " >
         		catalog_id = #{catalog_id,jdbcType=DOUBLE},
      		</if>
+     		<if test="comments != null  and comments != '' " >
+        		comments = #{comments,jdbcType=VARCHAR},
+     		</if>
+     		
       	order_id = order_id   		
     where order_id = #{order_id,jdbcType=VARCHAR}
           <if test="user_id != null  and user_id != '' " >
