@@ -209,15 +209,17 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		recCoinTrackDto.setUser_name(user_name);
 		HashMap recMap = coinTrackService.getUserByCode(recCoinTrackDto);
 		String retCode = (String)recMap.get("retCode");
-		if(!retCode.equals("1")){
+		//if(!retCode.equals("1")){
 			if(retCode.equals("-1")){
 				retMap.put("retCode", "-1");
 				retMap.put("retString", "输入的会员编号不存在");
-			}else if(retCode.equals("0")){
-				retMap.put("retCode", "0");
-				retMap.put("retString", "输入的会员编号未激活");
 			}
-		}else{
+//			else if(retCode.equals("0")){
+//				retMap.put("retCode", "0");
+//				retMap.put("retString", "输入的会员编号未激活");
+//			}
+//		}
+		else{
 			//检查用户的充值记录是否经充值过
 			UserRechargeDto userRecharge = new UserRechargeDto();
 			userRecharge.setRec_code(goods_order_id);

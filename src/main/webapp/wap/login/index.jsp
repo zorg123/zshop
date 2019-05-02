@@ -89,7 +89,7 @@
       
      </form>
     </div> 
-    <p data-v-4145efda="" class="foot">Copyright All Rights Reserved. &copy; 2006-2017</p>
+    <p data-v-4145efda="" class="foot">Copyright All Rights Reserved. &copy; 2006-2019</p>
    </div> 
    <section id="pageBg" class="row">
     <div id="canvas" class="boxBG"  >
