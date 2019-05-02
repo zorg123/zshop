@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.DateUtil;
+import com.flyrui.common.SpringBeans;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
@@ -130,7 +132,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   if(oldOrder.getComments().equalsIgnoreCase("null")){
 				   oldOrder.setComments("");
 			   }
-			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+";"+oldOrder.getComments());
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldOrder.getComments());
 			   goodsOrderService.update(oldOrder);
 		   }
 		   return new String[]{"0","成功"};
@@ -273,5 +275,34 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	
 	public List<Map> queryUserGoodsOrder(Map<String,String> param) {
 		return baseDao.selectList(getNameSpace()+".queryUserGoodsOrder",param);
+	}
+	@Transactional
+	public boolean genSubUser(User curcurrUser2,User currUser){
+		curcurrUser2.setPid(currUser.getUser_id());
+    	curcurrUser2.setUser_id(null);
+    	curcurrUser2.setUser_code("z"+currUser.getUser_code());
+    	curcurrUser2.setLogin_count(0);
+    	curcurrUser2.setLast_login_time(null);
+    	curcurrUser2.setLast_login_ip(null);
+    	curcurrUser2.setAllchild_num(0);
+    	curcurrUser2.setUser_type("child");
+    	curcurrUser2.setAllorder_num(0);
+    	curcurrUser2.setRegister_date(new Date());
+    	curcurrUser2.setCreate_time(new Date());
+    	curcurrUser2.setAct_time(null);
+    	curcurrUser2.setState("1");
+    	curcurrUser2.setPassword(CASMd5Utils.getPwd("111111", curcurrUser2.getUser_code()));
+    	curcurrUser2.setTrans_pwd(CASMd5Utils.getPwd("222222", curcurrUser2.getUser_code()));
+    	
+    	super.insert(curcurrUser2);
+    	this.saveUserRole(curcurrUser2.getUser_id(), "4");
+    	
+    	AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(curcurrUser2.getUser_id()));
+    	accoutInfo.setBonus_coin(0d);
+    	accoutInfo.setElect_coin(0d);
+    	accoutInfo.setReconsmp_coin(0d);
+    	accoutInfoService.insert(accoutInfo);
+    	return true;
 	}
 }
