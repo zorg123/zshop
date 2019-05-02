@@ -68,7 +68,8 @@
     	origin_order_id,
     	send_immediate,
     	goods_price,
-    	catalog_id
+    	catalog_id,
+    	comments
   </sql>
   <sql id="Base_Column_List_Insert" >
     	order_id,
