@@ -251,7 +251,7 @@
      	and b.name like #{name,jdbcType=VARCHAR}
      </if> 
       UNION
-     SELECT a.* FROM tb_user a WHERE a.pid = '2' AND a.`state`='0' AND a.user_type='main'
+     SELECT a.* FROM tb_user a WHERE a.pid = #{user_id,jdbcType=VARCHAR} AND a.`state`='0' AND a.user_type='main'
      <if test="name !=null and name !='' ">
      	and a.name like #{name,jdbcType=VARCHAR}
      </if> 
