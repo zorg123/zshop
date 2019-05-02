@@ -1,7 +1,9 @@
 package com.flyrui.goods.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,8 +119,8 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		
 		//插入后处理
 		if("1".equals(goods.getCatalog_id())) {
-			try {
-				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
+			//try {
+				/*GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
 				goodsOrderAfter.setGoods_order_id(goodsOrder.getGoods_id());
 				goodsOrderAfter.setBuy_amount(goodsOrder.getGoods_amount());
 				goodsOrderAfter.setUser_id(user.getUser_id());
@@ -126,12 +128,15 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 				goodsOrderAfter.setAfter_type("shop");
 				goodsOrderAfter.setError_num(0);
 				goodsOrderAfter.setState(1);
-				goodsOrderAfterService.insert(goodsOrderAfter);
-			}catch(Exception ex) {
-				log.error("插入后处理任务出错，不管",ex);
-			}
-		}
-		
+				goodsOrderAfterService.insert(goodsOrderAfter);*/
+				Map param = new HashMap();
+				param.put("in_id", goodsOrder.getUser_id());
+				param.put("goods_amount", goodsOrder.getGoods_amount());
+				baseDao.update("com.flyrui.goods.dao.mapper.GoodsMapper.pro_zshop_buy",param);
+			//}catch(Exception ex) {
+			//	log.error("插入后处理任务出错，不管",ex);
+			//}
+		}		
 	}
 	
 	@Override
