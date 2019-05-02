@@ -42,7 +42,7 @@ var PoolFlow = {
 }
 
 $(function () {
-    $('#staffList').datagrid({
+    $('#poolFlowList').datagrid({
         url: base+'/FinancMgmt/getPagerListByConAccountFlow.do',
         loadFilter:function(data){
         	var jsonStr = JSON.stringify(data);

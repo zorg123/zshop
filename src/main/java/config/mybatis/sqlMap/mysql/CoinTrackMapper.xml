@@ -103,12 +103,15 @@
  	<if test="create_type != null  and create_type != '' " >
     	and a.create_type like concat('%',#{create_type,jdbcType=VARCHAR},'%') 
  	</if>
+ 	<if test="coin_type != null  and coin_type != '' " >
+    	and a.coin_type = #{coin_type,jdbcType=VARCHAR}
+ 	</if>
     order by a.order_id desc
   </select>
   <select id="selectAccountFlowForWap" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
     a.create_time,
-    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='createType' AND idt.`dict_value` = a.create_type) AS create_type_name,
     a.coin_num,
     a.comments,
     a.balance_comments

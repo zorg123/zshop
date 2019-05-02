@@ -15,7 +15,7 @@
 	
 	    <div region="center" title="员工列表" >
 	        <table id="staffList"  rownumbers="true" pagination="true"
-	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true">
+	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true" fit="true">
 	            <thead>
 	            <tr>
 	                <th field="user_code" width="140">会员编号</th>
