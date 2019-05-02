@@ -38,5 +38,11 @@
   		<if test="cf_id != null  and cf_id != '' " >
       		and cf_id = #{cf_id,jdbcType=VARCHAR}
    		</if>
-  </update> 
+  </update>
+	<parameterMap type="map" id="produreParam">  
+		<parameter property="in_grade" jdbcType="INTEGER" mode="IN"/>  
+	</parameterMap>
+	<update id="pro_zshop_poolDivide" parameterMap="produreParam" statementType="CALLABLE">  
+		{call pro_zshop_poolDivide(?)}  
+	</update>
 </mapper>

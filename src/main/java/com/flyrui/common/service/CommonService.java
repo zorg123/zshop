@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.flyrui.framework.web.filter.vo.PageLogVO;
+import com.flyrui.quartz.dto.GoodsOrderAfter;
 
 @Service(value="commonService")
 public class CommonService extends BaseService<Map>{
@@ -80,5 +81,12 @@ public class CommonService extends BaseService<Map>{
 	public List queryFrCfgList(){		
 		return baseDao.selectList("com.flyrui.sys.dao.mapper.FrConfigMapper.queryFrCfgList",new HashMap());
 	
+	}
+	
+	/*
+	 * 执行存储过程 pro_zshop_poolDivide
+	 */
+	public void execProc(Map param) {
+		baseDao.update("com.flyrui.dao.mapper.common.pro_zshop_poolDivide",param);
 	}
 }

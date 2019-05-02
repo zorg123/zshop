@@ -17,7 +17,7 @@ public class ZShopUserOrderAfterHandler {
 	@Autowired
 	public GoodsOrderAfterService goodsOrderAfterService;
 	
-	@PostConstruct
+	
 	public void init() {
 		try {
 			Thread thread = new Thread(new ExecuteService());

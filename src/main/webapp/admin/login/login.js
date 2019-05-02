@@ -27,7 +27,18 @@ var Login={
                     sign=false;
                     if(!result||reply==result) alert("系统超时未返回，请重试!");	  
           		 
-          		  	if(result.code=='0'){          		  		
+          		  	if(result.code=='0'){     
+          		  	if ($('#remember-me').is(':checked')) {
+                        $.cookie('username', user_name, {
+                          expires: 365
+                        });                       
+                        $.cookie('bit', 'true', {
+                          expires: 365
+                        });
+                      } else {
+                        $.removeCookie('username');
+                        $.removeCookie('bit');
+                      }
           		  		window.location.href=base+"/Sys/main.do?r="+(new Date()).getTime();
           		  	}else{  	    
           		  		Login.refreshValidCode();
@@ -71,11 +82,22 @@ $(function(){
 		$("#login_btn").click();
     }};
     
-    $('#login_btn').click(function(){
+    $(".pretty-box").click(function(){    	
+    	if($(".pretty-box input").attr("checked")){
+    		$(".pretty-box input").attr("checked",false)
+    	}else{
+    		$(".pretty-box input").attr("checked",true)
+    	}
+    })
+    $('#login_btn').click(function(){    	
         Login.login();
+        return false;
     });
     
-   
+    if ($.cookie('bit') === 'true') {
+        $('#remember-me').attr('checked', 'checked');
+        $('#user_name').val($.cookie('username'));
+     }   
 })
  
 

@@ -245,6 +245,14 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize){
 	   return getPagerList(user,nameSpace+".selectForWaitActiveUser",pageNo,pageSize);		
    }
+	
+	public List<Map> queryUserLevelShareout() {
+		return baseDao.selectList(getNameSpace()+".queryUserLevelShareout");
+	}
+	
+	public List<Map> queryUserMonthGoods(Map<String,String> param) {
+		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
+	}
    
 	private void afterHandler(GoodsOrderAfter goodsOrderAfter) {
 		//如果是会员商品，调用存储过程

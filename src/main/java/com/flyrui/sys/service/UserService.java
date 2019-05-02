@@ -36,6 +36,10 @@ public interface UserService {
 	public int insertRegister(User user);
 	public int delUnActiveUser(User user);
 	public void checkCurrentChild(User loginUser,User user) throws FRException;
+	
+	public List<Map> queryUserLevelShareout();
+	
+	public List<Map> queryUserMonthGoods(Map<String,String> param);
 	public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize);
 	public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser);
 }

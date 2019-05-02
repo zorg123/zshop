@@ -1,5 +1,6 @@
 package com.flyrui.sys.action;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,10 @@ import com.flyrui.exception.FRException;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
+import com.flyrui.framework.common.DateUtil;
 import com.flyrui.sys.service.MenuService;
 import com.flyrui.sys.service.RoleService;
+import com.flyrui.sys.service.UserService;
 
 public class SysAction extends BaseAction {	
 
@@ -247,6 +250,44 @@ public class SysAction extends BaseAction {
     	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
     	
+    	UserService userService = (UserService)SpringBeans.getBean("userService");
+    	List<Map> userLevelShareoutList = userService.queryUserLevelShareout();
+    	
+    	
+    	Map<String,String> param = new HashMap<String,String>();
+    	param.put("user_id", getUserId());
+    	String curMonth = DateUtil.formatDate(new Date(), DateUtil.DATE_FORMAT_7);
+    	param.put("months", curMonth);
+    	List<Map> monthOrder = userService.queryUserMonthGoods(param);
+    	Integer curMonthOrdrs = 0;
+    	if(monthOrder.size()>0) {
+    		curMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    	}
+    	
+    	param = new HashMap<String,String>();
+    	param.put("user_id", getUserId());
+    	Calendar c = Calendar.getInstance();
+    	c.setTime(new Date());
+    	c.add(Calendar.MONTH, -1);
+    	String lastMonth = DateUtil.formatDate(new Date(c.getTimeInMillis()), DateUtil.DATE_FORMAT_7);
+    	param.put("months", lastMonth);
+    	monthOrder = userService.queryUserMonthGoods(param);
+    	Integer lastMonthOrdrs = 0;
+    	if(monthOrder.size()>0) {
+    		lastMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    	}
+    	//查询用户最新的级别
+    	User u = new User();
+    	u.setUser_id(getUserId());
+    	u = userService.getListByCon(u).get(0);
+    	
+    	Map<String,Object> returnMap = new HashMap<String,Object>();
+    	returnMap.put("userLevelShareoutList",userLevelShareoutList);
+    	returnMap.put("curMonthOrdrs",curMonthOrdrs);
+    	returnMap.put("lastMonthOrdrs",lastMonthOrdrs);
+    	returnMap.put("userLevel",u.getUser_level());
+    	returnMap.put("getShareout_qua",u.getShareout_qua());
+    	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();
     	coinTrackDto.setUser_id(Integer.valueOf(getUserId()));
@@ -256,7 +297,8 @@ public class SysAction extends BaseAction {
     		actSum = (Double)bonusActMap.get("actSum");
     	}
     	retAccoutInfoDto.setComments(actSum+"");*/
-    	setResult(retAccoutInfoDto);
+    	setResult(returnMap);
+    	result.put("retAccoutInfo", retAccoutInfoDto);
     	return "index";
     }
 }
