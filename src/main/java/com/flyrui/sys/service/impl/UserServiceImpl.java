@@ -113,7 +113,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setState("-1");
-			   oldOrder.setComments("该订单转赠给用户[："+beActivedtbUser.getUser_code()+"]"+";"+oldOrder.getComments()==null?"":oldOrder.getComments());
+			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   oldOrder.setComments("该订单转赠给用户：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }else if(activeOrder.getGoods_amount() > 1){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
@@ -126,7 +127,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
-			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldOrder.getComments()==null?"":oldOrder.getComments());
+			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }
 		   return new String[]{"0","成功"};
