@@ -43,7 +43,7 @@
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" id="modRevBtn" class="am-btn am-btn-default am-btn-success" style="display:none"><span class="am-icon-plug"></span>修改收货地址</button>
-                                    <button type="button" id="goodSendBtn" class="am-btn am-btn-default am-btn-success" style="display:none; margin-left:10px"><span class="am-icon-plug"></span>发货</button>
+                                    <button type="button" id="goodSendBtn" class="am-btn am-btn-default am-btn-success" style="display:none; margin-left:10px"><span class="am-icon-plug"></span>申请发货</button>
                                 </div>                             
                             </div>
                         </div>
@@ -101,10 +101,8 @@
 
 <script language="javascript" type="text/javascript" >
 	var jump = function(context,first) {	
-		console.log(context);
-		console.log(first);
+		
 		if(!first){	
-			console.log("tt");
 			var params ={};
 			params["rows"] = 10;			
 			params["conditionType"] = conditionType;
@@ -112,6 +110,7 @@
 			console.log(params);
 		    pageData.openContent("/Goods/queryUserOrder.do",params);
 		}
+		conditionType ="";
 		return false;
 	}	
 	

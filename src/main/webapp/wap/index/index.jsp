@@ -99,6 +99,7 @@
             </a>
                 </div>
             </div>
+            <%--
             <div class="am-u-lg-3 am-u-md-6 am-u-sm-6" >
                 <div class="dashboard-stat green">
                     <div class="visual">
@@ -113,7 +114,7 @@
             </a>
                 </div>
             </div>
-
+ 			--%>
 
         </div>
         <div class="row"  style="padding:0px 10px">           

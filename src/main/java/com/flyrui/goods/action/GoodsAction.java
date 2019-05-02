@@ -400,7 +400,7 @@ public class GoodsAction extends BaseAction {
     public String queryUserOrder(){
 		GoodsOrder  goodsOrder = new GoodsOrder();
 		if(rows==0){
-    		rows=5;
+    		rows=10;
     	}
     	if(page==0){
     		page = 1;
