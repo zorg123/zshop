@@ -136,3 +136,7 @@ function timeParser(date){
 $('input[id=uploadFile]').change(function() {
 	$('#photoCover').textbox('setValue',$(this).val());
 }); 
+function formatCatalog(value){
+	return value == "1"?"会员商品":"拼团商品";
+	
+}

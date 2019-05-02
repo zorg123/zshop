@@ -183,8 +183,10 @@ public class GoodsAction extends BaseAction {
     	//查询用户的账户信息，提示用户的
     	int coin = 0;
     	//校验是否是未激活用户，未激活用户只能购买一件
-    	User user = getLoginUserInfo();
-    	if("0".equals(user.getState()) && goods.getGoods_amount()>1) {
+    	User t = new User();
+    	t.setUser_id(getUserId());
+    	User tempU = userService.getListByCon(t).get(0);
+    	if("0".equals(tempU.getState()) && goods.getGoods_amount()>1) {
     		checkCoin = "-1";
     	}else {    		
     		if(retAccoutInfoDto!=null){
@@ -263,7 +265,11 @@ public class GoodsAction extends BaseAction {
 		goodsOrder.setUser_name(getLoginUserInfo().getName());
 		goodsOrder.setCreate_date(new Date());
 		goodsOrder.setOrd_ip(getIp());
-		goodsOrder.setState("0");
+		if("1".equals(goodsOrder.getSend_immediate())){ //立即发货，状态设置为待发货 2
+			goodsOrder.setState("2");
+		}else {
+			goodsOrder.setState("0");
+		}
     	goodsService.accept(goods, goodsOrder,getLoginUserInfo());//用于事务
     	GoodsOrder goodsOrderLocal = new GoodsOrder();
     	goodsOrderLocal.setOrder_code(goodsOrder.getOrder_code());

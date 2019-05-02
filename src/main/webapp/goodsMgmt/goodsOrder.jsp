@@ -41,6 +41,7 @@
             	<th field="user_id" width="40" hidden>会员id</th>
             	<th field="order_code" width="80">订单编号</th>
             	<th field="goods_name" width="80">商品名称</th>
+            	<th field="catalog_id" width="100" formatter="formatCatalog" >商品类型</th>
             	<th field="goods_amount" width="40">购买数量</th>
             	<th field="total_fee" width="30">金额</th>
             	<th field="user_name" width="40">会员名称</th>

@@ -70,7 +70,7 @@ public class SysAction extends BaseAction {
     public String adminIdxInit() throws FRException{
     	String resultName= "main";
     	User user = getLoginUserInfo();
-    	if(user != null && user.getBus_state()==0){
+    	if(user != null && user.getBus_state()==0){    		
     		List<TbRole> role = getUserRole(user);
     		if(role!=null){
     			MenuService menuService = (MenuService)SpringBeans.getBean("menuService");
@@ -200,6 +200,11 @@ public class SysAction extends BaseAction {
     	String resultName= "main";
     	User user = getLoginUserInfo();
     	if(user != null && user.getBus_state()==1){
+    		UserService userService = (UserService)SpringBeans.getBean("userService");
+    		User t = new User();
+    		t.setUser_id(getUserId());
+    		User tempU = userService.getListByCon(t).get(0);
+    		user.setState(tempU.getState());
     		List<TbRole> role = getUserRole(user);
     		if(role!=null){
     			MenuService menuService = (MenuService)SpringBeans.getBean("menuService");

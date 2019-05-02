@@ -42,7 +42,7 @@ var Login={
           		  		window.location.href=base+"/Sys/main.do?r="+(new Date()).getTime();
           		  	}else{  	    
           		  		Login.refreshValidCode();
-          		  		$.messager.alert(result.msg,'info');
+          		  		$.messager.alert('系统提示',result.msg,'info');
           		  		return false;
           		  	}
                 })
