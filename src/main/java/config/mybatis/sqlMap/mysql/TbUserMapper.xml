@@ -401,4 +401,11 @@
  <select id="queryUserMonthGoods" resultType="hashmap" parameterType="hashmap">
  	select user_id,months,goodsSum from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
  </select>
+  <parameterMap type="map" id="produreParam3">  
+   <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="act_userId" jdbcType="INTEGER" mode="IN"/> 
+ </parameterMap>
+ <update id="pro_zshop_act" parameterMap="produreParam3" statementType="CALLABLE">  
+   	{call pro_zshop_act(?, ?)}  
+ </update>
 </mapper>

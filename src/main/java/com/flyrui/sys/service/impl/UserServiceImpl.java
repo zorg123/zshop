@@ -106,7 +106,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
-			   //afterHandler();
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
 			   //更新原定订单，作废
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -118,7 +118,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
-			   //afterHandler();
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
 			   //更新原定订单，数量-1
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -254,11 +254,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
 	}
    
-	private void afterHandler(GoodsOrderAfter goodsOrderAfter) {
+	private void afterHandler(String child_userId,String act_userId) {
 		//如果是会员商品，调用存储过程
 		Map param = new HashMap();
-		param.put("in_id", goodsOrderAfter.getUser_id());
-		param.put("goods_amount", goodsOrderAfter.getBuy_amount());
-		baseDao.update("com.flyrui.goods.dao.mapper.GoodsMapper.pro_zshop_buy",param);
+		param.put("child_userId", child_userId);
+		param.put("act_userId", act_userId);
+		baseDao.update("com.flyrui.dao.pojo.sys.tb_user.pro_zshop_act",param);
 	}
 }
