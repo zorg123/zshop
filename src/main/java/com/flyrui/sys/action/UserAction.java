@@ -25,6 +25,7 @@ import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbOrganation;
 import com.flyrui.dao.pojo.sys.TbRole;
 import com.flyrui.dao.pojo.sys.TbUser;
+import com.flyrui.dao.pojo.sys.TbUserRole;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -636,7 +637,7 @@ public class UserAction extends BaseAction {
     	}
     	PageModel pageModel = userService.selectForWaitActiveUser(user, page, rows);
     	setResult(pageModel);
-    	return "queryRegisterUser";
+    	return "queryWaitActiveUser";
     }
     
     private String getUserNetClass(String state){
@@ -672,7 +673,7 @@ public class UserAction extends BaseAction {
     		result.putAll(retMap);
         	return SUCCESS;
     	}
-
+    	
     	currUser.setPid(currUser.getUser_id());
     	currUser.setUser_id(null);
     	currUser.setUser_code("z"+currUser.getUser_code());
@@ -687,10 +688,11 @@ public class UserAction extends BaseAction {
     	currUser.setCreate_time(new Date());
     	currUser.setAct_time(null);
     	currUser.setState("1");
-    	userService.insert(currUser);
+    	int userId = userService.insert(currUser);
+    	userService.saveUserRole(currUser.getUser_id(), "4");
     	
     	Map retMap = new HashMap();
-		retMap.put("_code", "-1");
+		retMap.put("_code", "0");
 		retMap.put("_msg", "子帐号创建成功，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录！");
 		result.putAll(retMap);
     	return SUCCESS;
