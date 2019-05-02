@@ -41,16 +41,16 @@ public class PoolDivideHandler {
 		commonService.execProc(map);
 	} 
 	
-	//5级分红池平分月末执行
-	@Scheduled(cron = "59 59 23 L * ?")
+	//5级分红池平分下月初执行
+	@Scheduled(cron = "0 0 0 1 * ?")
 	public void grade5(){
 		Map map = new HashMap();
-		map.put("in_grade", 4);
+		map.put("in_grade", 5);
 		commonService.execProc(map);
 	} 
 	
-	//6级分红池平分月末执行
-	@Scheduled(cron = "59 59 23 L * ?")
+	//6级分红池平分下月初执行
+	@Scheduled(cron = "0 0 0 1 * ?")
 	public void grade6(){
 		Map map = new HashMap();
 		map.put("in_grade", 6);
