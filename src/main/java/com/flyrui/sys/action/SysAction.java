@@ -276,6 +276,15 @@ public class SysAction extends BaseAction {
     	if(monthOrder.size()>0) {
     		lastMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
     	}
+    	
+    	param = new HashMap<String,String>();
+    	param.put("user_id", getUserId());
+    	List<Map> goodsOrders = userService.queryUserGoodsOrder(param);
+    	Integer totalUserGoodsOrders = 0;
+    	if(goodsOrders.size()>0) {
+    		totalUserGoodsOrders = Integer.parseInt(goodsOrders.get(0).get("goodscount")+"");
+    	}
+    	
     	//查询用户最新的级别
     	User u = new User();
     	u.setUser_id(getUserId());
@@ -287,6 +296,8 @@ public class SysAction extends BaseAction {
     	returnMap.put("lastMonthOrdrs",lastMonthOrdrs);
     	returnMap.put("userLevel",u.getUser_level());
     	returnMap.put("getShareout_qua",u.getShareout_qua());
+    	returnMap.put("Allorder_num",u.getAllorder_num());
+    	returnMap.put("totalUserGoodsOrders",totalUserGoodsOrders);
     	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();

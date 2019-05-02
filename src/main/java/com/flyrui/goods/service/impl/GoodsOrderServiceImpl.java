@@ -35,7 +35,11 @@ public class GoodsOrderServiceImpl extends BaseService<GoodsOrder> implements Go
 		if(goodsNum==goodsOrder.getGoods_amount()) { //不做拆分，只更新订单的状态
 			GoodsOrder newGoodsOrder = new GoodsOrder();
 			newGoodsOrder.setOrder_id(goodsOrder.getOrder_id());
-			newGoodsOrder.setState("2");
+			newGoodsOrder.setState("2");			
+			newGoodsOrder.setRev_addr(goodsOrder.getRev_addr());
+			newGoodsOrder.setRev_area(goodsOrder.getRev_area());
+			newGoodsOrder.setRev_link_phone(goodsOrder.getRev_link_phone());
+			newGoodsOrder.setRev_people(goodsOrder.getRev_people());
 			super.update(newGoodsOrder);
 		}else {
 			//拆分订单 

@@ -264,4 +264,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		
 		baseDao.update("com.flyrui.dao.pojo.sys.tb_user.pro_zshop_act",param);
 	}
+	
+	public List<Map> queryUserGoodsOrder(Map<String,String> param) {
+		return baseDao.selectList(getNameSpace()+".queryUserGoodsOrder",param);
+	}
 }

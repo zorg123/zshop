@@ -408,4 +408,7 @@
  <update id="pro_zshop_act" parameterMap="produreParam3" statementType="CALLABLE">  
    	{call pro_zshop_act(?, ?)}  
  </update>
+ <select id="queryUserGoodsOrder" resultType="hashmap" parameterType="hashmap">
+ 	SELECT sum(goods_amount) as goodscount FROM goods_order a WHERE user_id = #{user_id,jdbcType=VARCHAR} AND a.catalog_id ='1' and a.state != '-1'
+ </select>
 </mapper>
