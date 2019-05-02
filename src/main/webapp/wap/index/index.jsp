@@ -7,6 +7,8 @@
 <s:set name="curMonthOrdrs" value="result.ret.curMonthOrdrs"/>
 <s:set name="lastMonthOrdrs" value="result.ret.lastMonthOrdrs"/>
 <s:set name="userLevelShareoutList" value="result.ret.userLevelShareoutList"/>
+<s:set name="Allorder_num" value="result.ret.Allorder_num"/>
+<s:set name="totalUserGoodsOrders" value="result.ret.totalUserGoodsOrders"/>
 <s:if test="result.ret.userLevel == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
@@ -64,7 +66,7 @@
                     		 	<s:if test="result.ret.getShareout_qua == 1">具备分红资格
                     		 	</s:if><s:else> 你不具备分红资格 </s:else>
                     		 </div>
-                         	<div class="desc">您的当月订单：<s:property value="curMonthOrdrs"/>&nbsp;&nbsp;&nbsp;&nbsp;上月订单：<s:property value="lastMonthOrdrs"/></div>
+                         	<div class="desc">上月会员商品数量：<s:property value="lastMonthOrdrs"/>&nbsp;&nbsp;&nbsp;&nbsp;当月会员商品数：<s:property value="curMonthOrdrs"/></div>
                         	
                     </div>
                 </div>
@@ -126,7 +128,12 @@
                       <div class="am-tab-panel am-fade am-in am-active" >
                              <div id="wrapperA" class="wrapper">
                                  <div  class="scroller">
-                                     <ul class="tpl-task-list tpl-task-remind">                                         
+                                     <ul class="tpl-task-list tpl-task-remind">       
+                                     	<li>
+							    			  <div class='cosA' style="margin-right:0px"> <%--购买的会员商品有: <span style="font-size:16px;color:red"> <s:property value="totalUserGoodsOrders"/> </span> 件, --%>
+							    				您的所有市场下共购<span style="font-size:16px;color:blue"> <s:property value="Allorder_num"/> </span>件会员商品. </span>
+							    			  </div>
+							    		 </li>                                  
 							    		 <s:iterator  value="#userLevelShareoutList"  id="shareoutIter" status="st"> 
 							    		     <s:if test="#st.index>0" >
 									    		  <li>

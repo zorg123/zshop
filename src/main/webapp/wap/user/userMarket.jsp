@@ -30,7 +30,7 @@
 	                                            <th class="table-type">类型</th>
 	                                            <th class="table-type">状态</th>
 	                                            <th class="table-type">级别</th>
-	                                            <th class="table-type">会员订单总数</th>
+	                                            <!-- <th class="table-type">会员订单总数</th> -->
 	                                            <th class="table-type">市场2级会员总数</th>
 	                                            <th class="table-type">市场3级会员总数</th>
 	                                            <th class="table-type">市场4级会员总数</th>
@@ -45,14 +45,14 @@
 		                                            <td><s:property value="#userMarketIter.user_type"/></td>
 		                                            <td><s:property value="#userMarketIter.state"/></td>
 		                                            <td><s:property value="#userMarketIter.user_level"/></td>
-		                                            <td>
+		                                            <!-- <td>
 			                                            <s:if test="#userMarketIter.allorder_num==null || #userMarketIter.allorder_num==''">
 			                                            	0
 			                                            </s:if>
 			                                            <s:else>
 			                                            	<s:property value="#userMarketIter.allorder_num"/>
 			                                            </s:else>
-		                                            </td>
+		                                            </td> -->
 		                                            <td><s:property value="#userMarketIter.grade2Number"/></td>
 		                                            <td><s:property value="#userMarketIter.grade3Number"/></td>
 		                                            <td><s:property value="#userMarketIter.grade4Number"/></td>
