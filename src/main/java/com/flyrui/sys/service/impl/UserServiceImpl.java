@@ -13,6 +13,7 @@ import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
+import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -160,5 +161,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		userChildDto.setId(null);
 		baseDao.update(getNameSpace()+".delUserChild",userChildDto);
    }
-   
+   public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize){
+	   return getPagerList(user,nameSpace+".selectForWaitActiveUser",pageNo,pageSize);		
+   }
 }

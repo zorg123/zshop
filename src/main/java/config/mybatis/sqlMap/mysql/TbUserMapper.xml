@@ -32,6 +32,7 @@
    	<result column="act_time" property="act_time" jdbcType="TIMESTAMP" />
    	<result column="allchild_num" property="allchild_num" jdbcType="INTEGER" />
    	<result column="head_img" property="head_img" jdbcType="VARCHAR" />
+   	<result column="user_type" property="user_type" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbUser" useGeneratedKeys="true" keyProperty="user_id">
     insert into tb_user ( user_code, name, 
@@ -140,6 +141,15 @@
    		user_id = #{user_id,jdbcType=VARCHAR}
       where user_id = #{user_id,jdbcType=VARCHAR}
   </update>
+  <select id="selectForWaitActiveUser" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
+	SELECT b.* FROM tb_user a,tb_user b WHERE a.`user_id`=#{user_id,jdbcType=VARCHAR}  AND
+	a.state='1' AND a.user_type='child' AND a.`pid` = b.`pid` AND
+	b.`state`='0' AND b.user_type='main'
+	<if test="name !=null and name !='' ">
+     	and b.name like #{name,jdbcType=VARCHAR}
+     </if> 
+	
+  </select>
   <select id="select" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
      <!--  <bind name="nameLike" value="'%' + _parameter.getName() + '%'" /> -->
   	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,

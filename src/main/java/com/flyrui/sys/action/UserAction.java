@@ -39,7 +39,7 @@ import com.flyrui.sys.service.UserService;
 @ParentPackage("frcms_default")
 @Namespace("/Sys/User") //访问路径的包名
 @Results({	
-		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUser.jsp"),
+		@Result(name="queryRegisterUser", location = "/wap/user/queryRegisterUserNew.jsp"),
 		@Result(name="userProfile", location = "/wap/user/userProfile.jsp"),
 		@Result(name="userMarket", location = "/wap/user/userMarket.jsp"),
 		@Result(type="json", params={"root","result"})}) 
@@ -584,7 +584,7 @@ public class UserAction extends BaseAction {
     	user.setRegister_id(getUserId());
     	if(user.getState()==null){
     		user.setState("1");
-    	}   
+    	}
     	if(rows==0){
     		rows=5;
     	}
@@ -592,6 +592,24 @@ public class UserAction extends BaseAction {
     		page = 1;
     	}
     	PageModel pageModel = userService.getPagerListByCon(user, page, rows);
+    	setResult(pageModel);
+    	return "queryRegisterUser";
+    }
+    
+    @Action("queryWaitActiveUser")
+    public String queryWaitActiveUser(){
+    	UserService userService = getUserService();
+    	user.setUser_id(getUserId());
+    	if(user.getState()==null){
+    		user.setState("1");
+    	}
+    	if(rows==0){
+    		rows=10;
+    	}
+    	if(page==0){
+    		page = 1;
+    	}
+    	PageModel pageModel = userService.selectForWaitActiveUser(user, page, rows);
     	setResult(pageModel);
     	return "queryRegisterUser";
     }

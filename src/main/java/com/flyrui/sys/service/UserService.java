@@ -35,4 +35,5 @@ public interface UserService {
 	public int insertRegister(User user);
 	public int delUnActiveUser(User user);
 	public void checkCurrentChild(User loginUser,User user) throws FRException;
+	public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize);
 }
