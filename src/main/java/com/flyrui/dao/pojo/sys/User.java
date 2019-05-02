@@ -11,7 +11,7 @@ import java.util.List;
  * @see  [相关类/方法]
  * @since  [产品/模块版本]
  */
-public class User extends TbUser
+public class User extends TbUser implements Cloneable 
 {
     private List<TbRole> roleList;  
     private String org_code;
@@ -87,5 +87,9 @@ public class User extends TbUser
 	}
 	public void setOld_trans_pwd(String old_trans_pwd) {
 		this.old_trans_pwd = old_trans_pwd;
+	}
+	@Override
+	    public Object clone() throws CloneNotSupportedException {
+	        return super.clone();
 	}
 }

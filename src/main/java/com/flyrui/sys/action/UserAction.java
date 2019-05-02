@@ -654,6 +654,11 @@ public class UserAction extends BaseAction {
     @Action("genSubUser")  
     public String genSubUser() throws FRException{
     	User currUser = getLoginUserInfo();
+    	User curcurrUser2 = new User();
+    	try{
+        	curcurrUser2 = (User)currUser.clone();
+    	}catch(Exception ex){}
+    	
     	if(currUser.getUser_type().equals("child")){
     		Map retMap = new HashMap();
     		retMap.put("_code", "-1");
@@ -669,31 +674,33 @@ public class UserAction extends BaseAction {
     	if(li != null && li.size() > 0){
     		Map retMap = new HashMap();
     		retMap.put("_code", "-1");
-    		retMap.put("_msg", "已存在子帐号，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录");
+    		retMap.put("_msg", "已存在子帐号，请使用[z"+currUser.getUser_code()+"]和密码6个1即可登录");
     		result.putAll(retMap);
         	return SUCCESS;
     	}
     	
-    	currUser.setPid(currUser.getUser_id());
-    	currUser.setUser_id(null);
-    	currUser.setUser_code("z"+currUser.getUser_code());
-    	currUser.setLogin_count(0);
-    	currUser.setLast_login_time(null);
-    	currUser.setLast_login_ip(null);
-    	currUser.setAllchild_num(0);
-    	currUser.setUser_type("child");
-    	currUser.setAllorder_num(0);
-    	currUser.setRegister_date(new Date());
-    	currUser.setRegister_date(new Date());
-    	currUser.setCreate_time(new Date());
-    	currUser.setAct_time(null);
-    	currUser.setState("1");
-    	int userId = userService.insert(currUser);
-    	userService.saveUserRole(currUser.getUser_id(), "4");
+    	curcurrUser2.setPid(currUser.getUser_id());
+    	curcurrUser2.setUser_id(null);
+    	curcurrUser2.setUser_code("z"+currUser.getUser_code());
+    	curcurrUser2.setLogin_count(0);
+    	curcurrUser2.setLast_login_time(null);
+    	curcurrUser2.setLast_login_ip(null);
+    	curcurrUser2.setAllchild_num(0);
+    	curcurrUser2.setUser_type("child");
+    	curcurrUser2.setAllorder_num(0);
+    	curcurrUser2.setRegister_date(new Date());
+    	curcurrUser2.setCreate_time(new Date());
+    	curcurrUser2.setAct_time(null);
+    	curcurrUser2.setState("1");
+    	curcurrUser2.setPassword(CASMd5Utils.getPwd("111111", curcurrUser2.getUser_code()));
+    	curcurrUser2.setTrans_pwd(CASMd5Utils.getPwd("222222", curcurrUser2.getUser_code()));
+    	
+    	userService.insert(curcurrUser2);
+    	userService.saveUserRole(curcurrUser2.getUser_id(), "4");
     	
     	Map retMap = new HashMap();
 		retMap.put("_code", "0");
-		retMap.put("_msg", "子帐号创建成功，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录！");
+		retMap.put("_msg", "子帐号创建成功，请使用账户["+curcurrUser2.getUser_code()+"]和密码6个1即可登录！");
 		result.putAll(retMap);
     	return SUCCESS;
     }
