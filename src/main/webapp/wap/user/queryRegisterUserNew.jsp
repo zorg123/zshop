@@ -15,7 +15,7 @@
 <s:set name="total" value="#userList.total"/> 
 <s:set var="pageCount" value="userListPage.pageCount"/>
 <s:set var="pageIndex" value="userListPage.pageIndex"/>
-<div   data-url="/Sys/User/queryRegisterUser.do?user.state=<s:property value="user.state" />">           
+<div   data-url="/Sys/User/queryWaitActiveUser.do?user.state=<s:property value="user.state" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">拼团管理</a></li>
@@ -135,7 +135,7 @@
 		  	               var code = reply._code;               
 		  	               if (code == '0') {  
 		  	            	   CommonUtils.showAlert('操作成功!');
-		  	            	 pageData["refresh"]() 	                   
+		  	            	   pageData.refresh();
 		  	               } else  {
 		  	            	  CommonUtils.showAlert(reply._msg);
 		  	               }              
