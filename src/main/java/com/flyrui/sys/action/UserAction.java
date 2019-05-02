@@ -632,6 +632,52 @@ public class UserAction extends BaseAction {
     	
     	return retV;
     }
+    
+    @Action("genSubUser")  
+    public String genSubUser() throws FRException{
+    	User currUser = getLoginUserInfo();
+    	if(currUser.getUser_type().equals("child")){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "当前是子帐号用户登录！不允许该操作！");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	UserService userService = getUserService();
+    	User user = new User();
+    	user.setPid(currUser.getUser_id());
+    	user.setUser_type("child");
+    	List li = userService.getListByCon(user);
+    	if(li != null && li.size() > 0){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "已存在子帐号，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+
+    	currUser.setPid(currUser.getUser_id());
+    	currUser.setUser_id(null);
+    	currUser.setUser_code("z"+currUser.getUser_code());
+    	currUser.setLogin_count(0);
+    	currUser.setLast_login_time(null);
+    	currUser.setLast_login_ip(null);
+    	currUser.setAllchild_num(0);
+    	currUser.setUser_type("child");
+    	currUser.setAllorder_num(0);
+    	currUser.setRegister_date(new Date());
+    	currUser.setRegister_date(new Date());
+    	currUser.setCreate_time(new Date());
+    	currUser.setAct_time(null);
+    	currUser.setState("1");
+    	userService.insert(currUser);
+    	
+    	Map retMap = new HashMap();
+		retMap.put("_code", "-1");
+		retMap.put("_msg", "子帐号创建成功，请使用[z"+currUser.getUser_code()+"]和原账户密码即可登录！");
+		result.putAll(retMap);
+    	return SUCCESS;
+    }
     @Action("activeUser2")  
     public String activeUser2() throws FRException{
     	User currUser = getLoginUserInfo();

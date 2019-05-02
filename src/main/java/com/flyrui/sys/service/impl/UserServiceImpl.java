@@ -151,6 +151,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   newOrder.setCreate_date(new Date());
 	   newOrder.setState_date(new Date());
 	   newOrder.setState("0");
+	   newOrder.setGoods_type(activeOrder.getGoods_type());
 	   newOrder.setRefund_fee(0d);
 	   newOrder.setGoods_price(activeOrder.getGoods_price());
 	   newOrder.setCatalog_id(activeOrder.getCatalog_id());

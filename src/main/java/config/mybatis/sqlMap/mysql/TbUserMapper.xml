@@ -223,7 +223,7 @@
       		head_img = #{head_img,jdbcType=VARCHAR}
 	</if>
 	<if test="user_type != null  and user_type != '' " >
-  			user_type = #{user_type,jdbcType=VARCHAR}
+  			and user_type = #{user_type,jdbcType=VARCHAR}
 	</if>
 	<if test="shareout_qua != null  and shareout_qua != '' " >
   			shareout_qua = #{shareout_qua,jdbcType=VARCHAR}
