@@ -58,7 +58,7 @@
         		and catalog_id = #{catalog_id,jdbcType=VARCHAR}
      		</if>
 	    	<if test="goods_name != null  and goods_name != '' " >
-        		and goods_name = #{goods_name,jdbcType=VARCHAR}
+        		and goods_name like #{goods_name,jdbcType=VARCHAR}
      		</if>
 	    	<if test="goods_alias != null  and goods_alias != '' " >
         		and goods_alias = #{goods_alias,jdbcType=VARCHAR}

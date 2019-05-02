@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -120,8 +121,14 @@ public class GoodsAction extends BaseAction {
     	if(page==0){
     		page = 1;
     	}
+    	if(!StringUtils.isBlank(goods.getGoods_name())) {
+    		goods.setGoods_name("%"+goods.getGoods_name()+"%");
+    	}
     	PageModel retPage = goodsService.getPagerListByCon(goods, page, rows);
     	setResult(retPage);
+    	if(!StringUtils.isBlank(goods.getGoods_name())) {
+    		goods.setGoods_name(goods.getGoods_name().replaceAll("%", ""));
+    	}
     	return "goodsList";
     }
     

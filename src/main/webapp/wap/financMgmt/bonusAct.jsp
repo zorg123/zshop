@@ -72,7 +72,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context.option.curr;
-		    pageData.openContent(base+"/FinancMgmt/queryBonusAct.do",params);
+		    pageData.openContent("/FinancMgmt/queryBonusAct.do",params);
 		}
 	}
 	$("#page").page({pages:<s:property value="#bonusActListPage.pageCount"/>,curr:<s:property value="#bonusActListPage.pageIndex"/>,jump:jump});

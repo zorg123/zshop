@@ -83,7 +83,7 @@
 	                if(code=='0'){
 	                	CommonUtils.showAlert('申请成功!');
 	                	clear();
-	                	pageData.openContent(base+"/FinancMgmt/queryRecApply.do");
+	                	pageData.openContent("/FinancMgmt/queryRecApply.do");
 	        	   		return false;
 	                }else{
 	                	CommonUtils.showAlert('操作失败!');

@@ -59,7 +59,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context.option.curr;
-		    pageData.openContent(base+"/FinancMgmt/queryUserExtractInfo.do",params);
+		    pageData.openContent("/FinancMgmt/queryUserExtractInfo.do",params);
 		}
 	}
 	$("#page").page({pages:<s:property value="#extractInfoListPage.pageCount"/>,curr:<s:property value="#extractInfoListPage.pageIndex"/>,jump:jump});

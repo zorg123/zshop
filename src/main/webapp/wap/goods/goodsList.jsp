@@ -15,6 +15,7 @@
 <s:set name="total" value="#goodsList.total"/> 
 <s:set var="pageCount" value="goodsListPage.pageCount"/>
 <s:set var="pageIndex" value="goodsListPage.pageIndex"/>
+<s:set var="goodsName" value="goods.goods_name"/>
 <div data-url="/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
@@ -29,7 +30,7 @@
 	                    </div>
 	                    <div class="am-u-sm-7 am-u-md-6">
 		                            <div class="am-input-group am-input-group-sm">
-		                                <input type="text" class="am-form-field" id="searchContent" value="<s:property value="goods.goods_name"/>"/>
+		                                <input type="text" class="am-form-field" id="searchContent" value="<s:property value="#goodsName"/>"/>
 		                                <span class="am-input-group-btn">
 		            						<button id="searchBtn" class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
 		          						</span>

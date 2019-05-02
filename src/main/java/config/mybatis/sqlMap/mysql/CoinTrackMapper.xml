@@ -114,7 +114,7 @@
     a.balance_comments
 	FROM coin_track a
 	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
-	WHERE 1=1
+	WHERE 1=1 and log_type ='coin'
 	<if test="user_id != null  and user_id != '' " >
     	and b.user_id = #{user_id,jdbcType=INTEGER}
  	</if>

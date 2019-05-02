@@ -67,7 +67,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context.option.curr;
-		    pageData.openContent(base+"/FinancMgmt/queryElectInfo.do",params);
+		    pageData.openContent("/FinancMgmt/queryElectInfo.do",params);
 		}
 	}
 	$("#page").page({pages:<s:property value="#electInfoListPage.pageCount"/>,curr:<s:property value="#electInfoListPage.pageIndex"/>,jump:jump});

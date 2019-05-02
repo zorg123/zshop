@@ -65,7 +65,7 @@
 			var params ={};
 			params["rows"] = 10;
 			params["page"]=context.option.curr;
-		    pageData.openContent(base+"/FinancMgmt/queryAccoutFlowForWap.do",params);
+		    pageData.openContent("/FinancMgmt/queryAccoutFlowForWap.do",params);
 		}
 	}
 	$("#page").page({pages:<s:property value="#accoutFlowListPage.pageCount"/>,curr:<s:property value="#accoutFlowListPage.pageIndex"/>,jump:jump});

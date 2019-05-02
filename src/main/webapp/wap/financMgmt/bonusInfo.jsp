@@ -65,7 +65,7 @@
 			var params ={};
 			params["rows"] = 5;
 			params["page"]=context.option.curr;
-		    pageData.openContent(base+"/FinancMgmt/queryBonusInfo.do",params);
+		    pageData.openContent("/FinancMgmt/queryBonusInfo.do",params);
 		}
 	}
 	$("#page").page({pages:<s:property value="#bonusInfoListPage.pageCount"/>,curr:<s:property value="#bonusInfoListPage.pageIndex"/>,jump:jump});
