@@ -23,7 +23,7 @@
 	
 	    <div region="center" title="员工列表" >
 	        <table id="staffList"  rownumbers="true" pagination="true"
-	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true">
+	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true" fit="true">
 	            <thead>
 	            <tr>
 	                <th field="user_id" hidden>员工ID</th>
@@ -32,7 +32,7 @@
 	                <th field="create_time" width="140">时间</th>
 	                <th field="create_type_name" width="140">类型</th>
 	                <th field="coin_num" width="140">金额</th>
-	                <th field="comments" width="140">说明</th>
+	                <th field="comments" width="240">说明</th>
 	                <th field="balance_comments" width="140">余额说明</th>
 	            </tr>
 	            </thead>

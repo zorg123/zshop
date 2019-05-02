@@ -9,7 +9,7 @@
 	    <div region="north" style="height:50px;" id="search">
 	        <div region="center" style="margin-top: 10px;margin-left: 10px;">
 	            <label>分红池类型：</label>
-	            <select class="easyui-combobox" name="search_create_type" style="width:80px;">
+	            <select class="easyui-combobox" name="search_create_type" style="width:150px;">
 	                <option value="">--请选择--</option>
 	                <option value="2">2级分红池</option>
 	                <option value="3">3级分红池</option>
@@ -23,7 +23,7 @@
 	
 	    <div region="center" title="分红池流水" >
 	        <table id="poolFlowList"  rownumbers="true" pagination="true"
-	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true">
+	               fitColumns="false" nowrap="false" showFooter="true" singleSelect="true" fit="true">
 	            <thead>
 	            <tr>
 	                <th field="create_time" width="140">时间</th>

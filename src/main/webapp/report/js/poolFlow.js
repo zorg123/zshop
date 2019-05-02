@@ -42,8 +42,8 @@ var PoolFlow = {
 }
 
 $(function () {
-    $('#staffList').datagrid({
-        url: base+'/FinancMgmt/getPagerListByConAccountFlow.do',
+    $('#poolFlowList').datagrid({
+        url: base+'/FinancMgmt/getPagerListByConAccountFlow.do?coinTrackDto.log_type=pool',
         loadFilter:function(data){
         	var jsonStr = JSON.stringify(data);
         	if (jsonStr.indexOf("T")>0) {

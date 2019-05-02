@@ -53,13 +53,13 @@
                 </div>
             </div>
         	 --%>
-        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-6" >
+        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-12" >
                 <div class="dashboard-stat purple">
                     <div class="visual">
                         <i class="am-icon-android"></i>
                     </div>
                     <div class="details">
-                    		 <div class="number" style="color:red">
+                    		 <div class="number" style="color:red;">
                     		 	当前级别：<s:property value="userLevelName"/>&nbsp;&nbsp;&nbsp;&nbsp; 
                     		 	<s:if test="result.ret.getShareout_qua == 1">具备分红资格
                     		 	</s:if><s:else> 你不具备分红资格 </s:else>
@@ -130,7 +130,7 @@
 							    		 <s:iterator  value="#userLevelShareoutList"  id="shareoutIter" status="st"> 
 							    		     <s:if test="#st.index>0" >
 									    		  <li>
-									    			  <div class='cosA'>
+									    			  <div class='cosA' style="margin-right:0px">
 									    				<span style="font-size:16px;color:red"> <s:property value="#shareoutIter.cf_value"/> </span>共有  <span style="font-size:16px;color:red"> <s:property value="#shareoutIter.usercount"/> </span>个用户，奖金池为： <span style="font-size:16	px;color:blue"> <s:property value="#shareoutIter.total"/> </span>
 									    			  </div>
 									    		 </li>	

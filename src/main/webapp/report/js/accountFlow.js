@@ -3,7 +3,7 @@ var Employee = {
     search: function () {
         var search_code = $('input[name="search_code"]').val();
         var search_name = $('input[name="search_name"]').val();       
-        var search_coin_type = $('input[name="search_coin_type"]').val();
+        var search_coin_type = $('input[name="search_coin_type"]').val();       
         $('#staffList').datagrid({
             queryParams: {'coinTrackDto.user_code': search_code, 'coinTrackDto.user_name': search_name, 'coinTrackDto.coin_type': search_coin_type}
        })

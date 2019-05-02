@@ -86,7 +86,7 @@
     a.comments,
     a.balance_comments
 	FROM coin_track a
-	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	left JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	WHERE 1=1
 	<if test="user_code != null  and user_code != '' " >
     	and b.user_code = #{user_code,jdbcType=VARCHAR}
@@ -103,12 +103,15 @@
  	<if test="create_type != null  and create_type != '' " >
     	and a.create_type like concat('%',#{create_type,jdbcType=VARCHAR},'%') 
  	</if>
+ 	<if test="coin_type != null  and coin_type != '' " >
+    	and a.coin_type = #{coin_type,jdbcType=VARCHAR}
+ 	</if>
     order by a.order_id desc
   </select>
   <select id="selectAccountFlowForWap" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
     a.create_time,
-    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='coinCreateType' AND idt.`dict_value` = a.create_type) AS create_type_name,
+    (SELECT idt.`dict_desc` FROM info_dict idt WHERE idt.dict_type='createType' AND idt.`dict_value` = a.create_type) AS create_type_name,
     a.coin_num,
     a.comments,
     a.balance_comments
