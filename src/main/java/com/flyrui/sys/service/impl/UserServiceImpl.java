@@ -90,9 +90,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser){
 	   
 	   log.info("激活子帐号:"+tbUser.getUser_id()+"被激活人: "+beActivedtbUser.getUser_id());
-	   //查找主账户下的订单 1、会员订单 2、未发货 3、最新一条
+	   //查找订单 1、会员订单 2、未发货 3、最新一条
 	   GoodsOrder newGoodsOrder = new GoodsOrder();
-	   newGoodsOrder.setUser_id(tbUser.getPid());
+	   newGoodsOrder.setUser_id(tbUser.getUser_id());
 	   newGoodsOrder.setState("0");
 	   newGoodsOrder.setCatalog_id("1");
 	   List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
@@ -104,7 +104,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		   }
 		   //只剩一条的话
 		   if(activeOrder.getGoods_amount() == 1){
-			   log.info("主帐号商品数量1，子帐号激活会员: 直接激活");
+			   log.info("订单商品数量1，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
@@ -113,10 +113,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setState("-1");
-			   if(oldOrder.getComments().equalsIgnoreCase("null")){
-				   oldOrder.setComments("");
-			   }
-			   oldOrder.setComments("该订单转赠给用户[："+beActivedtbUser.getUser_code()+"]"+";"+oldOrder.getComments());
+			   oldOrder.setComments("该订单转赠给用户[："+beActivedtbUser.getUser_code()+"]"+";"+oldOrder.getComments()==null?"":oldOrder.getComments());
 			   goodsOrderService.update(oldOrder);
 		   }else if(activeOrder.getGoods_amount() > 1){
 			   log.info("主帐号商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
@@ -129,10 +126,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
-			   if(oldOrder.getComments()!=null && oldOrder.getComments().equalsIgnoreCase("null")){
-				   oldOrder.setComments("");
-			   }
-			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldOrder.getComments());
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldOrder.getComments()==null?"":oldOrder.getComments());
 			   goodsOrderService.update(oldOrder);
 		   }
 		   return new String[]{"0","成功"};
