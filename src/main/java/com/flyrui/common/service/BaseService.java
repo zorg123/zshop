@@ -129,7 +129,8 @@ public abstract class BaseService<T>
 	}
 	
 	public int insertById(String sqlId,Object t){
-		return baseDao.insert(nameSpace+"."+sqlId, t);	
+		baseDao.insert(nameSpace+"."+sqlId, t);	
+		return getautoIncrementId();
 	}
 	public int deleteById(String sqlId,Object t){
 		return baseDao.delete(nameSpace+"."+sqlId, t);	
@@ -231,5 +232,46 @@ public abstract class BaseService<T>
 		}
 		return vo;
 	}
+	//得到insert后表中的自增ID,mysql适用
+		public int getautoIncrementId(){
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			Connection connection = null;
+			List list = new ArrayList();
+			SqlSession sqlSession = null;
+			int autoIncrementId=0;
+			try{
+				 sqlSession = SqlSessionUtils.getSqlSession(
+						baseDao.getSqlSessionFactory(), baseDao.getExecutorType(),
+						baseDao.getPersistenceExceptionTranslator());
+				connection = sqlSession.getConnection();
+				PreparedStatement prepareStatement = connection.prepareStatement("SELECT LAST_INSERT_ID()");
+				rs = prepareStatement.executeQuery();
+				
+				if(rs.next()){
+					autoIncrementId = rs.getInt(1);
+				}
+				return autoIncrementId;
+			}catch(Exception e){
+				e.printStackTrace();
+				return 0;
+			}
+			finally{
+				try{
+					if(rs!=null){
+						rs.close();
+					}
+					if(stmt!=null){
+						stmt.close();
+					}
+					if(sqlSession!=null){
+						SqlSessionUtils.closeSqlSession(sqlSession, baseDao.getSqlSessionFactory());
+					}
+				}catch(Exception e){
+					log.error("关闭连接失败",e);
+				}
+			}	
+		}
+		
 	
 }
