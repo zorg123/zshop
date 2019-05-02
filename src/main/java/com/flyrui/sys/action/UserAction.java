@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -467,10 +468,16 @@ public class UserAction extends BaseAction {
     	}
     	    	
     	user.setRegister_id(getUserId());
+    	if(StringUtils.isBlank(user.getPid())) {//推荐人不能为空
+    		FRException frException = new FRException(new FRError("USER_002"));
+    		throw frException;
+    	}
+    	
     	//根据注册人的账号查询注册人的id
     	u = new User();
     	u.setUser_code(user.getPid()+"");
     	u.setBus_state(1);
+    	
     	retList = userService.getListByCon(u);
     	if(retList == null || retList.size()==0){
     		FRException frException = new FRException(new FRError("USER_002"));
@@ -481,15 +488,22 @@ public class UserAction extends BaseAction {
     		FRException frException = new FRException(new FRError("USER_008"));
     		throw frException;
     	}
+    	
+    	if(!"main".equals(tempUser.getUser_type())){
+    		FRException frException = new FRException(new FRError("USER_012"));
+    		throw frException;
+    	}
+    	
+    	
     	//查询节点人下的节点数，如果超过3个就不让注册
-    	u = new User();
+    	/*u = new User();
     	u.setPid(tempUser.getUser_id());
     	u.setBus_state(1);
     	retList = userService.getListByCon(u);
     	if(retList!=null && retList.size()>=3){
     		FRException frException = new FRException(new FRError("USER_009"));
     		throw frException;
-    	}
+    	}*/
     	
     	user.setPid(tempUser.getUser_id());
     	user.setState("0");
@@ -500,6 +514,8 @@ public class UserAction extends BaseAction {
     	user.setRegister_ip(super.getIp());
     	user.setPassword(CASMd5Utils.getPwd(user.getPassword(),user.getUser_code()));
     	user.setTrans_pwd(CASMd5Utils.getPwd(user.getTrans_pwd(),user.getUser_code()));
+    	user.setUser_type("main");
+    	user.setUser_level(0);
     	userService.insertRegister(user);
     	setCommonSuccessReturn();
     	return SUCCESS;

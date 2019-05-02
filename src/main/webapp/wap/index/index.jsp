@@ -75,7 +75,7 @@
                         <i class="am-icon-android"></i>
                     </div>
                     <div class="details">
-                        <div class="number"> <s:property value="#retAccoutInfo.cash_coin"/> </div>
+                        <div class="number"> <s:property value="#retAccoutInfo.bonus_coin"/> </div>
                         <div class="desc"> 奖金币</div>
                     </div>
                     <!-- <a class="more" href="#"> 查看更多
@@ -128,11 +128,13 @@
                                  <div  class="scroller">
                                      <ul class="tpl-task-list tpl-task-remind">                                         
 							    		 <s:iterator  value="#userLevelShareoutList"  id="shareoutIter" status="st"> 
-								    		  <li>
-								    			  <div class='cosA'>
-								    				<span style="font-size:16px;color:red"> <s:property value="#shareoutIter.cf_value"/> </span>共有  <span style="font-size:16px;color:red"> <s:property value="#shareoutIter.usercount"/> </span>个用户，奖金池为： <span style="font-size:16	px;color:blue"> <s:property value="#shareoutIter.total"/> </span>
-								    			  </div>
-								    		 </li>							    		 	
+							    		     <s:if test="#st.index>0" >
+									    		  <li>
+									    			  <div class='cosA'>
+									    				<span style="font-size:16px;color:red"> <s:property value="#shareoutIter.cf_value"/> </span>共有  <span style="font-size:16px;color:red"> <s:property value="#shareoutIter.usercount"/> </span>个用户，奖金池为： <span style="font-size:16	px;color:blue"> <s:property value="#shareoutIter.total"/> </span>
+									    			  </div>
+									    		 </li>	
+								    		 </s:if>						    		 	
 							    		 </s:iterator>                                 
                                      </ul>
                                  </div>

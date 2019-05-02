@@ -91,7 +91,7 @@
 				  	               var code = reply._code;               
 				  	               if (code == '0') {
 				  	            	   CommonUtils.showAlert('操作成功!');
-				  	            	   pageData["refresh"]();   	                   
+				  	            	 	setTimeout(function(){ pageData["refresh"](); }, 1000);  	                   
 				  	               } else  {
 				  	            	  CommonUtils.showAlert(reply._msg);
 				  	             }              
