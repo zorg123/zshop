@@ -449,8 +449,8 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
     	//Double bonusCoin = (Double)retAccoutInfoDto.getBonus_coin();
     	//Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
     	//Double able_coin_num = bonusCoin-reconsmpCoin;
-    	Double cashCoin = retAccoutInfoDto.getCash_coin();
-    	if(cashCoin<extract_bonus_coin){
+    	Double bonus_coin = retAccoutInfoDto.getBonus_coin();
+    	if(bonus_coin<extract_bonus_coin){
     		retMap.put("retCode", "0");
 			retMap.put("retString", "提现金额大于可提现额度 ");
     	}else{
@@ -484,7 +484,7 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
         			sendCoinTrackDto.setAct_num(act_num);
         			//状态
         			sendCoinTrackDto.setApply_state("0");
-        			String balance_comments = "现金账户余额:"+(cashCoin+extract_bonus_coin*-1);
+        			String balance_comments = "奖金账户余额:"+(bonus_coin+extract_bonus_coin*-1);
         			sendCoinTrackDto.setBalance_comments(balance_comments);
         			coinTrackService.insertCoinTrack(loginUser, sendCoinTrackDto);
         			retMap.put("retCode", "3");

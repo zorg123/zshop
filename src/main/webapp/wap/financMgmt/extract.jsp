@@ -75,7 +75,7 @@
 	                	if(retobj.retCode=='3'){
 	                		CommonUtils.showAlert('操作成功!');
 	                		clear();
-	                		pageData.openContent(base+"/FinancMgmt/initExtract.do");
+	                		pageData.openContent("/FinancMgmt/initExtract.do");
 	                		return;
 	                	}else{
 	                		CommonUtils.showAlert(retobj.retString);

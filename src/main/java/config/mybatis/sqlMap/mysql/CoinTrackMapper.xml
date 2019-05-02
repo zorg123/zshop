@@ -176,7 +176,7 @@
 	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	join accout_info c on a.`user_id` = c.`user_id`
 	WHERE a.`coin_type` = 1
-	AND a.`create_type` = 3
+	AND a.`create_type` = 'toCashout'
 	<if test="user_id != null" >
     	and b.user_id = #{user_id,jdbcType=VARCHAR}
  	</if>

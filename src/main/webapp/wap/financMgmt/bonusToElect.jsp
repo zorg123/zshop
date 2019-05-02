@@ -30,9 +30,9 @@
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">现金</label>
+                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">金额</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="现金">
+                                        <input type="number" pattern="[0-9]*" id="coin_num" placeholder="金额">
                                         <small>请输入转入的现金总额</small>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
 	                	if(retobj.retCode=='3'){
 	                		CommonUtils.showAlert('操作成功!');
 	                		clear();
-	                		pageData.openContent(base+"/FinancMgmt/initBonusToElect.do");
+	                		pageData.openContent("/FinancMgmt/initBonusToElect.do");
 	                		return;
 	                	}else{
 	                		CommonUtils.showAlert(retobj.retString);
