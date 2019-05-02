@@ -110,7 +110,7 @@
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
 				  	            	   CommonUtils.showAlert('操作成功!');
-				  	            	   pageData["refresh"]()  	                   
+				  	            	   setTimeout(function(){ pageData["refresh"](); }, 1000);                
 				  	               } else  {
 				  	            	  if(code == "SYS_ERR006"){
 				  	            		  $("input[name='user.user_code']").parent().find("small").html('<div class="zvalid-resultformat"><div class="field-invalidmsg">'+reply._msg+'</div></div>')

@@ -41,7 +41,7 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" value="<s:property value="user_phone" />" disabled/> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" value="<s:property value="user.user_phone" />" disabled/> 
                                     </div>
                                 </div>
 								                              
@@ -75,7 +75,12 @@
                                     <div class="am-u-sm-8">
                                         <div class="am-form-group am-form-file  am-cf">
                                             <div class="tpl-form-file-img  am-cf">
-                                                <img src="<%=baseUri %><s:property value="user.head_img" />" id="up-img-touch" class="am-circle" alt="点击图片上传" >
+                                            	<s:if test="user.head_img == null">
+						                       		<img src="<%=baseUri %>/wap/assets/img/user01.png" id="up-img-touch" class="am-circle" alt="点击图片上传" style="height:40px;width:40px;">
+						                       	</s:if>
+						                       	<s:else>
+						                       	    <img src="<%=baseUri %><s:property value='user.head_img' />" id="up-img-touch" class="am-circle" alt="点击图片上传" style="height:40px;width:40px;">
+						                       	</s:else>                                               
                                             </div>  
                                            <small> <div>请点击图片修改头像</div> </small>  
                                            <input type="hidden" db_field="user.head_img" value="<s:property value="user.head_img" />" name="user.head_img" />                                       
@@ -150,7 +155,7 @@
 				  	               var code = reply._code;               
 				  	               if (code == '0') {  
 				  	            	   CommonUtils.showAlert('操作成功!');
-				  	            	   pageData["refresh"]();   	                   
+				  	            	   setTimeout(function(){ pageData["refresh"](); }, 1000);           
 				  	               } else  {
 				  	            	  CommonUtils.showAlert(reply._msg);
 				  	             }              
