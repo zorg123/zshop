@@ -116,7 +116,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setComments("该订单转赠给用户[："+beActivedtbUser.getUser_code()+"]"+";"+oldOrder.getComments()==null?"":oldOrder.getComments());
 			   goodsOrderService.update(oldOrder);
 		   }else if(activeOrder.getGoods_amount() > 1){
-			   log.info("主帐号商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
+			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
@@ -131,7 +131,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		   }
 		   return new String[]{"0","成功"};
 	   }else{
-		   return new String[]{"-1","父账户没有可以用于激活的订单"};
+		   return new String[]{"-1","没有可以用于激活的订单"};
 	   }
    }
    private void genNewActiveOrder(GoodsOrder activeOrder,TbUser tbUser,TbUser beActivedtbUser){
