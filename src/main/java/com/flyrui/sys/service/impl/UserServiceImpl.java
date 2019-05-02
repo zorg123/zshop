@@ -259,6 +259,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		Map param = new HashMap();
 		param.put("child_userId", child_userId);
 		param.put("act_userId", act_userId);
+		
+		
 		baseDao.update("com.flyrui.dao.pojo.sys.tb_user.pro_zshop_act",param);
 	}
 }
