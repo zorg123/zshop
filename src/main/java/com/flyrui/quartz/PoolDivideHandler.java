@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.service.CommonService;
 
@@ -18,6 +19,7 @@ public class PoolDivideHandler {
 	
 	//2级分红池平分周末执行
 	@Scheduled(cron = "59 59 23 ? * SUN")
+	@Transactional
 	public void grade2(){
 		//2级分红池
 		Map map = new HashMap();
@@ -27,6 +29,7 @@ public class PoolDivideHandler {
 	
 	//3级分红池平分周末执行
 	@Scheduled(cron = "59 59 23 ? * SUN")
+	@Transactional
 	public void grade3(){
 		Map map = new HashMap();
 		map.put("in_grade", 3);
@@ -35,14 +38,16 @@ public class PoolDivideHandler {
 	
 	//4级分红池平分周末执行
 	@Scheduled(cron = "59 59 23 ? * SUN")
+	@Transactional
 	public void grade4(){
 		Map map = new HashMap();
 		map.put("in_grade", 4);
 		commonService.execProc(map);
-	} 
+	}
 	
 	//5级分红池平分下月初执行
 	@Scheduled(cron = "0 0 0 1 * ?")
+	@Transactional
 	public void grade5(){
 		Map map = new HashMap();
 		map.put("in_grade", 5);
@@ -51,6 +56,7 @@ public class PoolDivideHandler {
 	
 	//6级分红池平分下月初执行
 	@Scheduled(cron = "0 0 0 1 * ?")
+	@Transactional
 	public void grade6(){
 		Map map = new HashMap();
 		map.put("in_grade", 6);
