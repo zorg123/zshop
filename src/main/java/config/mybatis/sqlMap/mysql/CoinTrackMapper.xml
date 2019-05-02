@@ -86,7 +86,7 @@
     a.comments,
     a.balance_comments
 	FROM coin_track a
-	JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	left JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
 	WHERE 1=1
 	<if test="user_code != null  and user_code != '' " >
     	and b.user_code = #{user_code,jdbcType=VARCHAR}
