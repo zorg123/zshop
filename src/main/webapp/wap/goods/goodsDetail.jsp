@@ -82,14 +82,14 @@
                                    <label for="user-email" class="am-u-sm-3 am-form-label">是否立即发货</label>	
                                     <div class="am-u-sm-9">							 
 									  <label class="am-radio am-radio-inline">
-									    <input type="radio" name="goodsOrder.send_immediate" value="1" checked> 是
+									    <input type="radio" name="goodsOrder.send_immediate" value="1" > 是
 									  </label>
 									  <label class="am-radio am-radio-inline">
-									    <input type="radio" name="goodsOrder.send_immediate" value="0" > 否
+									    <input type="radio" name="goodsOrder.send_immediate" value="0" checked> 否
 									  </label>
 								 	 </div>
 								</div>
-                                <div class="am-form-group" id="addrDiv">
+                                <div class="am-form-group" id="addrDiv" style="display:none">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">收货信息：</label>
                                     <div class="am-u-sm-9">
                                     	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsOrder.rev_people" name="goodsOrder.rev_people" value="<s:property value="goodsRevAddr.rev_people"/>" readonly/>
@@ -261,7 +261,7 @@
 	            valid:function(event,options){
 	            	event.preventDefault();
 	            	var revPeople =$("#acceptForm input[name='goodsOrder.rev_people']").val();
-	            	if($("#acceptForm input[name='goodsOrder.send_immediate']").val()=='1'){
+	            	if($("#acceptForm input[name='goodsOrder.send_immediate']:checked").val()=='1'){
 	            		if($.trim(revPeople) == ''){
 		            		 CommonUtils.showAlert("请选择收货地址!");
 		            		 return false;

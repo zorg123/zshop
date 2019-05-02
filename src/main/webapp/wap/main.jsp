@@ -40,7 +40,7 @@
   			<li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                   <a class="am-dropdown-toggle tpl-header-list-link am-inline" href="javascript:;">
                       <span class="tpl-header-list-user-nick">
-                      	<s:property value="#session.user.user_code" />(<s:property value="userLevelName" />)
+                      	<s:property value="#session.user.user_code" />
                       </span>
                       <span class="tpl-header-list-user-ico am-show-lg-only ">
                         <s:if test="#session.user.head_img == null">
@@ -123,9 +123,9 @@
     <script language="javascript" type="text/javascript" >
 		$(function() {
 			if(window.location.hash !=''){				
-	    		//var ha = window.location.hash.substring(1)
-	        	//var o = BASE64.decoderStr(ha).split(";"); 
-	    		//pageData.openContent(o[1], null, o[0]);
+	    		var ha = window.location.hash.substring(1)
+	        	var o = base64.decode(ha).split(";"); 
+	    		pageData.openContent(o[1], null, o[0]);
 	    	}else{
 				pageData.openContent("/Sys/Sys!index.do");
 	    	}
