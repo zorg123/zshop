@@ -269,7 +269,6 @@ var pageData={
 	               var code = reply._code;               
 	               if (code == '0') {  
 	            	   CommonUtils.showAlert(reply._msg);
-	            	 pageData["refresh"]() 	                   
 	               } else  {
 	            	  CommonUtils.showAlert(reply._msg);
 	               }              

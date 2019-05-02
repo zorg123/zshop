@@ -129,7 +129,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
-			   if(oldOrder.getComments().equalsIgnoreCase("null")){
+			   if(oldOrder.getComments()!=null && oldOrder.getComments().equalsIgnoreCase("null")){
 				   oldOrder.setComments("");
 			   }
 			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldOrder.getComments());
@@ -291,6 +291,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     	curcurrUser2.setCreate_time(new Date());
     	curcurrUser2.setAct_time(null);
     	curcurrUser2.setState("1");
+    	curcurrUser2.setUser_level(0);
+    	curcurrUser2.setShareout_qua("-1");
     	curcurrUser2.setPassword(CASMd5Utils.getPwd("111111", curcurrUser2.getUser_code()));
     	curcurrUser2.setTrans_pwd(CASMd5Utils.getPwd("222222", curcurrUser2.getUser_code()));
     	
