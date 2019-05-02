@@ -674,7 +674,7 @@ public class UserAction extends BaseAction {
     	if(li != null && li.size() > 0){
     		Map retMap = new HashMap();
     		retMap.put("_code", "-1");
-    		retMap.put("_msg", "已存在子帐号，请使用[z"+currUser.getUser_code()+"]和密码6个1即可登录");
+    		retMap.put("_msg", "已存在子帐号，请使用账户[z"+currUser.getUser_code()+"]和密码6个1即可登录");
     		result.putAll(retMap);
         	return SUCCESS;
     	}
