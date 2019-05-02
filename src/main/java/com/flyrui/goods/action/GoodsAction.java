@@ -222,9 +222,10 @@ public class GoodsAction extends BaseAction {
 		if(goodsOrder.getGoods_amount()<1){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
-		
-		if(goodsOrder.getRev_people() == null || "".equals(goodsOrder.getRev_people().trim())){
-			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		if("1".equals(goodsOrder.getSend_immediate())){
+			if(goodsOrder.getRev_people() == null || "".equals(goodsOrder.getRev_people().trim())){
+				throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+			}
 		}
 		//商品是否存在
 		Goods tGoods = new Goods();
@@ -411,7 +412,7 @@ public class GoodsAction extends BaseAction {
     		 Calendar c = Calendar.getInstance();
     		 c.setTime(new Date());
     	     c.add(Calendar.DATE, - 30);
-    		 goodsOrder.setState_date_start(DateUtil.formatDate(new Date(c.getTimeInMillis()),DateUtil.DATE_FORMAT_1));
+    		 goodsOrder.setCreate_date_start(DateUtil.formatDate(new Date(c.getTimeInMillis()),DateUtil.DATE_FORMAT_1));
     	}
 		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
 		setResult(pageModel);

@@ -169,6 +169,12 @@
      		<if test="state_date_end != null and state_date_end != '' " >
         		and state_date &lt;= str_to_date(#{state_date_end,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
      		</if>
+     		<if test="create_date_start != null and create_date_start != '' " >
+        		and create_date &gt;= str_to_date(#{create_date_start,jdbcType=VARCHAR} '00:00:00','%Y-%m-%d %H:%i:%s')
+     		</if>
+     		<if test="create_date_end != null and create_date_end != '' " >
+        		and create_date &lt;= str_to_date(#{create_date_end,jdbcType=VARCHAR} '23:59:59','%Y-%m-%d %H:%i:%s')
+     		</if>
 	    	<if test="ord_ip != null  and ord_ip != '' " >
         		and ord_ip = #{ord_ip,jdbcType=VARCHAR}
      		</if>

@@ -106,7 +106,7 @@
 		if(!first){	
 			console.log("tt");
 			var params ={};
-			params["rows"] = 1;			
+			params["rows"] = 10;			
 			params["conditionType"] = conditionType;
 			params["page"]=context!=null?context.option.curr:1;		
 			console.log(params);

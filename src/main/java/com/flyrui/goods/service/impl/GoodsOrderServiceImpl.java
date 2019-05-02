@@ -59,6 +59,7 @@ public class GoodsOrderServiceImpl extends BaseService<GoodsOrder> implements Go
 			newGoodsOrder.setTotal_fee(totalFee);
 			newGoodsOrder.setRefund_fee(0d);
 			newGoodsOrder.setCreate_date(new Date());
+			newGoodsOrder.setState_date(new Date());
 			newGoodsOrder.setOrigin_order_id(newGoodsOrder.getOrder_id());
 			String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
 			goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);

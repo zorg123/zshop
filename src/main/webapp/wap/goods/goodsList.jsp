@@ -18,8 +18,8 @@
 <s:set var="goodsName" value="goods.goods_name"/>
 <div data-url="/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />">           
             <ol class="am-breadcrumb">
-                <li><a href="<%=baseUri %>/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />" class="am-icon-home">首页</a></li>
-                <li><a href="#">网上商城</a></li>
+                <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="javascript:pageData.openContent('/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />')">网上商城</a></li>
                 <li class="am-active"><s:property value="funcName"/></li>
             </ol>
             <div class="tpl-portlet-components">

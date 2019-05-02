@@ -7,7 +7,7 @@
 <div id="goodDetailDiv">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">网上商城</a></li>
+                <li><a href="javascript:pageData.openContent('/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />')">网上商城</a></li>
                 <li class="am-active">商品受理</li>
             </ol>
             <div class="tpl-portlet-components">
@@ -111,7 +111,8 @@
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <input type="submit" id="userProfileSubmit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交"></input>                                    	
+                                        <input type="submit" id="userProfileSubmit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交"></input>  
+                                        <input type="submit" id="gobackSubmit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="返回" style="padding-left:20px"></input>                                    	
                                     </div>
                                 </div>
                             </form>
@@ -168,6 +169,10 @@
 				$("#addrDiv").hide();
 			}
 			return true;
+		});
+		
+		$("#gobackSubmit").click(function(){
+			pageData.openContent("/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />");
 		});
 		
 		$("#acceptForm input[name='goodsOrder.goods_amount']").trigger("input");
@@ -241,7 +246,7 @@
 		});
 		
 		$("#continueBuyBtn").on("click",function(){
-			pageData.openContent("/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />",null,"addrMngDiv");
+			pageData.openContent("/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />",null);
 		});
 		
 		$("#queryOrderBtn").on("click",function(){
@@ -266,7 +271,7 @@
 	            	 
 	                //点击提交按钮时,表单通过验证触发函数
 	                 var params = CommonUtils.getParam("acceptForm",false);		
-	                 if($("#acceptForm input[name='goodsOrder.send_immediate']").val()=='0'){ //收货地址清除掉
+	                 if($("#acceptForm input[name='goodsOrder.send_immediate']:checked").val()=='0'){ //收货地址清除掉
 	                	 	params["goodsOrder.rev_people"]="";  
 	                	 	params["goodsOrder.rev_link_phone"]=""; 
 	                	 	params["goodsOrder.rev_area"]=""; 

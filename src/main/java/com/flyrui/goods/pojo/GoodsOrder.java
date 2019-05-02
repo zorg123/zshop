@@ -115,6 +115,10 @@ public class GoodsOrder implements Serializable {
 	
 	private String catalog_id;
 	private String comments;
+	
+	private String create_date_start;
+	
+	private String create_date_end;
 
 	public String getComments() {
 		return comments;
@@ -386,6 +390,22 @@ public class GoodsOrder implements Serializable {
 
 	public void setCatalog_id(String catalog_id) {
 		this.catalog_id = catalog_id;
-	}	
+	}
+
+	public String getCreate_date_start() {
+		return create_date_start;
+	}
+
+	public void setCreate_date_start(String create_date_start) {
+		this.create_date_start = create_date_start;
+	}
+
+	public String getCreate_date_end() {
+		return create_date_end;
+	}
+
+	public void setCreate_date_end(String create_date_end) {
+		this.create_date_end = create_date_end;
+	}
 	
 }
