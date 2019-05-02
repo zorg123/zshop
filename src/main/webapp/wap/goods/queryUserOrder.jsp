@@ -66,6 +66,7 @@
                                             <th class="table-type">收货人地址</th>
                                             <th class="table-type">订单状态</th>
                                             <th class="table-type">购买日期</th>
+                                            <th class="table-type">备注</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,8 +81,9 @@
 	                                            <td><s:property value="#goodsOrderIter.rev_people"/></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_link_phone"/></td>
 	                                            <td><s:property value="#goodsOrderIter.rev_addr"/></td> 
-	                                            <td><s:if test="#goodsOrderIter.state == 0" >未发货</s:if><s:if test="#goodsOrderIter.state == 1" >已发货</s:if><s:if test="#goodsOrderIter.state == 2" >待发货</s:if></td>  
-	                                            <td> <s:date name="#goodsOrderIter.create_date" format="yyyy-MM-dd HH:mm:ss"/></td>                                         
+	                                            <td><s:if test="#goodsOrderIter.state == 0" >未发货</s:if><s:if test="#goodsOrderIter.state == 1" >已发货</s:if><s:if test="#goodsOrderIter.state == 2" >待发货</s:if><s:if test="#goodsOrderIter.state == -1" >已赠送</s:if></td>  
+	                                            <td> <s:date name="#goodsOrderIter.create_date" format="yyyy-MM-dd HH:mm:ss"/></td>
+	                                            <td><s:property value="#goodsOrderIter.comments"/></td>                                          
 	                                        </tr>
                                         </s:iterator>                                        
                                     </tbody>
@@ -166,7 +168,7 @@
 		var state = $this.attr("state");
 		$("#listForm td input[type='checkbox']").prop("checked",false);
 		$this.prop("checked",true);
-		if($this.is(":checked") && goodType == '1' && state == '0'){
+		if($this.is(":checked") && state == '0'){
 			$("#modRevBtn").show();
 			$("#goodSendBtn").show();
 		}else{			

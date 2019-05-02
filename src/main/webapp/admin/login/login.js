@@ -42,7 +42,7 @@ var Login={
           		  		window.location.href=base+"/Sys/main.do?r="+(new Date()).getTime();
           		  	}else{  	    
           		  		Login.refreshValidCode();
-          		  		alert(result.msg);
+          		  		$.messager.alert(result.msg,'info');
           		  		return false;
           		  	}
                 })
