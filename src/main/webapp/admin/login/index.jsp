@@ -56,7 +56,7 @@
                         </div>
                         <div class="gap">                            
                             <div class="pull-right" style="margin-top: 6px"><span class="split-space"></span><a  class="link"></a></div>                            
-                            <div class="pretty-box" style="cursor:hand">
+                            <div class="pretty-box" style="cursor:pointer">
                                 <input type="checkbox" value="1" name="remember-me" id="remember-me">
                                 <label for="remember" style="font-weight: normal" >记住我</label>
                             </div>

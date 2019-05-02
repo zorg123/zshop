@@ -63,7 +63,7 @@
         <div class="login-sub-Key el-input" data-v-4145efda="">       
          <input type="text" name="valid_code" placeholder="请输入验证码" autocomplete="off" class="el-input__inner" />        
         </div> 
-        <img data-v-4145efda="" id="veri" src="<%=baseUri%>/public/vc.jsp" alt="" onclick="javascript:this.src='<%=baseUri%>/public/vc.jsp?time='+Math.random()" class="veri" style="cursor:pointer" />
+        <img data-v-4145efda="" id="valid_code_img" src="<%=baseUri%>/public/vc.jsp" alt="" onclick="javascript:this.src='<%=baseUri%>/public/vc.jsp?time='+Math.random()" class="veri" style="cursor:pointer" />
         
        </div>
       </div> 

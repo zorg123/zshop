@@ -160,5 +160,13 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		userChildDto.setId(null);
 		baseDao.update(getNameSpace()+".delUserChild",userChildDto);
    }
+	
+	public List<Map> queryUserLevelShareout() {
+		return baseDao.selectList(getNameSpace()+".queryUserLevelShareout");
+	}
+	
+	public List<Map> queryUserMonthGoods(Map<String,String> param) {
+		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
+	}
    
 }
