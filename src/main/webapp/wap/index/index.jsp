@@ -130,7 +130,7 @@
 							    		 <s:iterator  value="#userLevelShareoutList"  id="shareoutIter" status="st"> 
 								    		  <li>
 								    			  <div class='cosA'>
-								    				<s:property value="#shareoutIter.cf_value"/> 共有 <s:property value="#shareoutIter.usercount"/>个用户，奖金池为： <s:property value="#shareoutIter.total"/>
+								    				<span style="font-size:16px;color:red"> <s:property value="#shareoutIter.cf_value"/> </span>共有  <span style="font-size:16px;color:red"> <s:property value="#shareoutIter.usercount"/> </span>个用户，奖金池为： <span style="font-size:16	px;color:blue"> <s:property value="#shareoutIter.total"/> </span>
 								    			  </div>
 								    		 </li>							    		 	
 							    		 </s:iterator>                                 

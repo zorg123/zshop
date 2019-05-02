@@ -41,6 +41,7 @@ public class PoolDivideHandler {
 		commonService.execProc(map);
 	} 
 	
+	/*
 	//5级分红池平分月末执行
 	@Scheduled(cron = "59 59 23 L * ?")
 	public void grade5(){
@@ -55,5 +56,5 @@ public class PoolDivideHandler {
 		Map map = new HashMap();
 		map.put("in_grade", 6);
 		commonService.execProc(map);
-	}
+	}*/
 }
