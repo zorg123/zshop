@@ -4,16 +4,16 @@
 	String baseUri = request.getContextPath();	
 	String pUserCode = request.getParameter("puserCode")==null?"":request.getParameter("puserCode");
 %>
-<div id="goodOrderRevModDiv">           
+<div id="goodsSendDiv">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
-                <li class="am-active">订单收货地址修改</li>
+                <li class="am-active">订单发货</li>
             </ol>
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
                     <div class="caption font-green bold">
-                        <span class="am-icon-code"></span>订单信息
+                        <span class="am-icon-code"></span>订单发货信息
                     </div>
                 </div>
 
@@ -34,7 +34,20 @@
                                     <div class="am-u-sm-9">
                                         <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="goodsOrder.order_code" /></span> 
                                      </div>
-                                </div>                               
+                                </div> 
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">购买数量 </label>
+                                    <div class="am-u-sm-9">
+                                        <span type="text" class="am-form-field tpl-form-no-bg" ><s:property value="goodsOrder.goods_amount" /></span> 
+                                     </div>
+                                </div> 
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">发货数量</label>
+                                    <input name="goodsAmount" id="goodsAmount" value="<s:property value="goodsOrder.goods_amount" />" type="hidden">
+                                    <div class="am-u-sm-9">
+                                    	<input type="number" pattern="[0-9]*" placeholder="输入你要发货的数量，不能大于<s:property value="goodsOrder.goods_amount" />" style="font-size:14px" value="1" db_field="goodsOrderSplitNumber" name="goodsOrderSplitNumber" value="<s:property value="goodsOrder.goods_amount" />">
+                                     </div>
+                                </div>                              
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">收货信息：</label>
                                     <div class="am-u-sm-9">
@@ -70,18 +83,31 @@
 			var params={};
 			pageData.openContent("/Goods/goodsRevAddrListForSel.do",params,"addrMngDiv");
 			if ($.AMUI.support.animation) {
-				$("#goodOrderRevModDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
-					$("#goodOrderRevModDiv").removeClass("am-animation-fade am-animation-reverse");
-					$("#goodOrderRevModDiv").hide();
+				$("#goodsSendDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
+					$("#goodsSendDiv").removeClass("am-animation-fade am-animation-reverse");
+					$("#goodsSendDiv").hide();
 					$("#addrMngDiv").show();
 					$("#addrMngDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
 						$("#addrMngDiv").removeClass("am-animation-fade");								
 			        });
 		        });						
 			}else{
-				$("#goodOrderRevModDiv").hide();
+				$("#goodsSendDiv").hide();
 				$("#addrMngDiv").show();
 			}
+		});
+		
+		$("input[name='goodsOrderSplitNumber']").on("change",function(){
+			var v = $(this).val();
+			var tv = $("#goodsAmount").val();
+			if(parseInt(v)<1){
+				 CommonUtils.showAlert("发货数量不能小于1!");
+				 $(this).focus();
+			}else if(parseInt(v)>parseInt(tv)){
+				CommonUtils.showAlert("发货数量不能大于购买数量!");
+				 $(this).focus();
+			}
+			
 		});
 				
 		$("#acceptForm").mvalidate({
@@ -96,16 +122,23 @@
 	            		 CommonUtils.showAlert("请选择收货地址!");
 	            		 return false;
 	            	 }
+	            	 var tv = $("#goodsAmount").val();
+	            	 var v = $("input[name='goodsOrderSplitNumber']").val();
+	            	 if(parseInt(v)>parseInt(tv) || parseInt(v)<1){
+	            		 CommonUtils.showAlert("发货数量填写错误!");
+	            		 return false;
+	            	 }
 	                //点击提交按钮时,表单通过验证触发函数
 	                 var params = CommonUtils.getParam("acceptForm",false);			                 
-					 CommonUtils.invokeAsyncAction(base+'/Goods/modGoodsRev.do', params, function (reply) {           
+					 CommonUtils.invokeAsyncAction(base+'/Goods/goodsSendsAccept.do', params, function (reply) {           
 		  	           
 						if ((reply || '') != '') {
 		  	               var code = reply._code;               
 		  	               if (code == '0') {  
 		  	            	   var ret = reply.ret;
 		  	            	   CommonUtils.showAlert('操作成功!');
-		  	            	   $("#cancelSubmit").trigger("click");  
+		  	            	 	setTimeout(function(){ $("#cancelSubmit").trigger("click"); }, 500);//提示后500ms跳转到订单查询结果
+		  	            	   
 		  	            	
 		  	               } else  {
 		  	            	  CommonUtils.showAlert(reply._msg);
@@ -141,14 +174,14 @@
 			$("#addrMngDiv").addClass("am-animation-fade am-animation-reverse").one($.AMUI.support.animation.end, function() {
 				$("#addrMngDiv").removeClass("am-animation-fade am-animation-reverse");
 				$("#addrMngDiv").hide();
-				$("#goodOrderRevModDiv").show();
-				$("#goodOrderRevModDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
-					$("#goodOrderRevModDiv").removeClass("am-animation-fade");								
+				$("#goodsSendDiv").show();
+				$("#goodsSendDiv").addClass("am-animation-fade").one($.AMUI.support.animation.end, function() {				
+					$("#goodsSendDiv").removeClass("am-animation-fade");								
 		        });
 	        });						
 		}else{
 			$("#addrMngDiv").hide();
-			$("#goodOrderRevModDiv").show();
+			$("#goodsSendDiv").show();
 		}
 	};
 </script>	

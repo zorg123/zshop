@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.quartz.dao.mapper.GoodsOrderAfterMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.quartz.dto.GoodsOrderAfter" >
+    	<result column="id" property="id" jdbcType="INTEGER" />
+    	<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    	<result column="goods_order_id" property="goods_order_id" jdbcType="VARCHAR" />
+    	<result column="buy_amount" property="buy_amount" jdbcType="INTEGER" />
+    	<result column="state" property="state" jdbcType="INTEGER" />
+    	<result column="error_num" property="error_num" jdbcType="INTEGER" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="state_date" property="state_date" jdbcType="TIMESTAMP" />
+    	<result column="comments" property="comments" jdbcType="VARCHAR" />
+    	<result column="after_type" property="after_type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	id,
+    	user_id,
+    	goods_order_id,
+    	buy_amount,
+    	state,
+    	error_num,
+    	create_date,
+    	state_date,
+    	comments,
+    	after_type
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="id != null  and id != '' " >
+        		and id = #{id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="user_id != null  and user_id != '' " >
+        		and user_id = #{user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_order_id != null  and goods_order_id != '' " >
+        		and goods_order_id = #{goods_order_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="buy_amount != null  and buy_amount != '' " >
+        		and buy_amount = #{buy_amount,jdbcType=INTEGER}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=INTEGER}
+     		</if>
+	    	<if test="error_num != null  and error_num != '' " >
+        		and error_num &lt;= #{error_num,jdbcType=INTEGER}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="state_date != null " >
+        		and state_date = #{state_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="comments != null  and comments != '' " >
+        		and comments = #{comments,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="after_type != null  and after_type != '' " >
+        		and after_type = #{after_type,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.quartz.dto.GoodsOrderAfter" >
+    select    
+    <include refid="Base_Column_List" />
+    from goods_order_after
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    order by create_date
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.quartz.dto.GoodsOrderAfter" >
+    delete from goods_order_after
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.quartz.dto.GoodsOrderAfter" >
+    insert into goods_order_after ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{user_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{goods_order_id,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{buy_amount,jdbcType=INTEGER},     		
+	    	    	
+        	  #{state,jdbcType=INTEGER},     		
+	    	    	
+        	  #{error_num,jdbcType=INTEGER},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{state_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{comments,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{after_type,jdbcType=VARCHAR}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.quartz.dto.GoodsOrderAfter">
+    update goods_order_after
+    set   		
+   		<if test="user_id != null  and user_id != '' " >
+      		user_id = #{user_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="goods_order_id != null  and goods_order_id != '' " >
+      		goods_order_id = #{goods_order_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="buy_amount != null  and buy_amount != '' " >
+      		buy_amount = #{buy_amount,jdbcType=INTEGER},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=INTEGER},
+   		</if>
+   		<if test="error_num != null  and error_num != '' " >
+      		error_num = #{error_num,jdbcType=INTEGER},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="state_date != null " >
+      		state_date = #{state_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="comments != null  and comments != '' " >
+      		comments = #{comments,jdbcType=VARCHAR},
+   		</if>
+   		<if test="after_type != null  and after_type != '' " >
+      		after_type = #{after_type,jdbcType=VARCHAR},
+   		</if>
+   		id = id
+    where  id = #{id,jdbcType=INTEGER}
+    
+  </update>
+</mapper>

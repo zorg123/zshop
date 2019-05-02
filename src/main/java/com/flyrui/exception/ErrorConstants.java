@@ -55,4 +55,7 @@ public class ErrorConstants {
  	
  	/** 市场无此账号 */
  	public static final String MARKET_NO_USER = "USER_010";
+ 	
+ 	/** 非激活用户只能购买一个会员商品  */
+ 	public static final String SHOP_UNACTIVE_USER_1 = "USER_011";
 }

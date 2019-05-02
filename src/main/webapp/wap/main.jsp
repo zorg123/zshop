@@ -3,23 +3,26 @@
 <%
 	String baseUri = request.getContextPath();	
 %>
-<s:if test="#session.user.user_level == -1">    
-    <s:set name="userLevelName" value="'拼团会员'" />      
-</s:if>
 <s:if test="#session.user.user_level == 0">    
-    <s:set name="userLevelName" value="'经理'" />      
+    <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
 <s:if test="#session.user.user_level == 1">    
-    <s:set name="userLevelName" value="'县代'" />      
+    <s:set name="userLevelName" value="'普通会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 2">    
-    <s:set name="userLevelName" value="'市代'" />      
+    <s:set name="userLevelName" value="'vip会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 3">    
-    <s:set name="userLevelName" value="'省代'" />      
+    <s:set name="userLevelName" value="'经理'" />      
 </s:if>
 <s:if test="#session.user.user_level == 4">    
-    <s:set name="userLevelName" value="'董事'" />      
+    <s:set name="userLevelName" value="'总监'" />      
+</s:if>
+<s:if test="#session.user.user_level == 5">    
+    <s:set name="userLevelName" value="'总裁'" />      
+</s:if>
+<s:if test="#session.user.user_level == 6">    
+    <s:set name="userLevelName" value="'合伙人'" />      
 </s:if>
 <jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -88,13 +91,17 @@
                    
                     <ul class="tpl-left-nav-sub-menu">
                         <s:iterator  value="#menu.sub_menu_list"  id="subMenu">
-	                    	<li id="tree<s:property value="#subMenu.menu_id" />" >
-	                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" menuId="tree<s:property value="#subMenu.menu_id" />">
-	                                <i class="am-icon-angle-right"></i>
-	                                <span><s:property value="#subMenu.menu_name" escape="false"/></span>
-	                                <i class="tpl-left-nav-content-ico am-fr am-margin-right"></i>
-	                            </a>
-	                    	</li>
+                           <%--未激活用户不显示拼团抢购 --%>
+                           <s:if test="#session.user.state == 1 || (#session.user.state == 0 && #subMenu.menu_name !='拼团商品')">    
+         						<li id="tree<s:property value="#subMenu.menu_id" />" >
+		                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" menuId="tree<s:property value="#subMenu.menu_id" />">
+		                                <i class="am-icon-angle-right"></i>
+		                                <span><s:property value="#subMenu.menu_name" escape="false"/></span>
+		                                <i class="tpl-left-nav-content-ico am-fr am-margin-right"></i>
+		                            </a>
+	                    		</li>
+							</s:if>
+	                    	
                     	</s:iterator>
                     </ul>	  
                    </li>     			

@@ -307,20 +307,22 @@ public class FinancMgmtAction extends BaseAction {
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double able_coin_num = retAccoutInfoDto.getCash_coin();
+    	//Double able_coin_num = retAccoutInfoDto.getCash_coin();
+    	Double able_coin_num = retAccoutInfoDto.getBonus_coin();
     	result.put("_code", "0");
     	result.put("_msg", "成功");
 		result.put("able_coin_num", able_coin_num);
 		return "initBonusToElect";
 	}
-	//查询当前可提现的金额=账户中奖金币-账户中重消币
+	//查询当前可提现的金额=账户中奖金币
 	@Action(value="initExtract")
 	public String initExtract(){
 		//查找账户奖金币总额
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
-    	Double able_coin_num = retAccoutInfoDto.getCash_coin();
+    	//Double able_coin_num = retAccoutInfoDto.getCash_coin();
+    	Double able_coin_num = retAccoutInfoDto.getBonus_coin();
     	result.put("_code", "0");
     	result.put("_msg", "成功");
 		result.put("able_coin_num", able_coin_num);

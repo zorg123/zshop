@@ -10,6 +10,10 @@ public class CoinTrackDto implements Serializable {
 	
 	private Integer id;
 	
+	private String log_type;
+	
+	private String sub_logType;
+	
 	private Integer user_id;
 	
 	@ExcelAnnotation(exportName = "银行名称")
@@ -35,7 +39,7 @@ public class CoinTrackDto implements Serializable {
 	@ExcelAnnotation(exportName = "金额")
 	private Double coin_num;
 	
-	private Integer create_type;
+	private String create_type;
 	
 	private Integer oper_user_id;
 	
@@ -108,11 +112,11 @@ public class CoinTrackDto implements Serializable {
 		this.coin_num = coin_num;
 	}
 
-	public Integer getCreate_type() {
+	public String getCreate_type() {
 		return create_type;
 	}
 
-	public void setCreate_type(Integer create_type) {
+	public void setCreate_type(String create_type) {
 		this.create_type = create_type;
 	}
 
@@ -302,5 +306,21 @@ public class CoinTrackDto implements Serializable {
 
 	public void setGoods_order_id(String goods_order_id) {
 		this.goods_order_id = goods_order_id;
+	}
+
+	public String getLog_type() {
+		return log_type;
+	}
+
+	public void setLog_type(String log_type) {
+		this.log_type = log_type;
+	}
+
+	public String getSub_logType() {
+		return sub_logType;
+	}
+
+	public void setSub_logType(String sub_logType) {
+		this.sub_logType = sub_logType;
 	}	
 }

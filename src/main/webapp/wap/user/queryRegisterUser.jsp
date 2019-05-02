@@ -97,7 +97,7 @@
 			if(searchContentV.length!=0){
 				params["user.name"] = searchContentV;
 			}
-		    pageData.openContent(base+"/Sys/User/queryRegisterUser.do",params);
+		    pageData.openContent("/Sys/User/queryRegisterUser.do",params);
 		}
 	}
 	<s:if test="user.state != 1">

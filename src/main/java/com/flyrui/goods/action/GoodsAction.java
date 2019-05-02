@@ -2,6 +2,7 @@ package com.flyrui.goods.action;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
 import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
@@ -35,6 +37,7 @@ import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsRevAddrService;
 import com.flyrui.goods.service.GoodsService;
 import com.flyrui.goods.service.TbChinaAreaService;
+import com.flyrui.sys.service.UserService;
 
 @ParentPackage("frcms_default")
 @Namespace("/Goods") //访问路径的包名
@@ -45,6 +48,7 @@ import com.flyrui.goods.service.TbChinaAreaService;
 		@Result(name="goodsRevAddrEdit", location = "/wap/goods/goodsRevAddrEdit.jsp"),
 		@Result(name="goodsRevAddrList", location = "/wap/goods/goodsRevAddr.jsp"),
 		@Result(name="modGoodsRevAddr", location = "/wap/goods/goodsRevMod.jsp"),
+		@Result(name="goodsSends", location = "/wap/goods/goodsSends.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -69,6 +73,10 @@ public class GoodsAction extends BaseAction {
 	
 	public String url;
 	
+	public String goodsOrderSplitNumber;
+	
+	public String conditionType;
+	
 	@Autowired
 	public GoodsService goodsService;	
 	
@@ -86,6 +94,9 @@ public class GoodsAction extends BaseAction {
 	
 	@Autowired
 	GoodsOrderService goodsOrderService;
+	
+	@Autowired
+	UserService userService;
 	
 	public Goods getGoods() {
 		return goods;
@@ -164,21 +175,27 @@ public class GoodsAction extends BaseAction {
     	Double totalFee = goods.getGoods_amount()*goods.getGoods_price();
     	//查询用户的账户信息，提示用户的
     	int coin = 0;
-    	if(retAccoutInfoDto!=null){
-    		Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
-    		Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
-    		if("2".equals(payType)){//电子币
-    			if(electCoin>=totalFee){
-    				checkCoin = "1";
-    			}
-    			coin = electCoin.intValue();
-    		}else if("3".equals(payType)){//重销币
-    			if(reconsmpCoin>=totalFee){
-    				checkCoin = "1";
-    			}
-    			coin = reconsmpCoin.intValue();
-    		}
-    	}
+    	//校验是否是未激活用户，未激活用户只能购买一件
+    	User user = getLoginUserInfo();
+    	if("0".equals(user.getState()) && goods.getGoods_amount()>1) {
+    		checkCoin = "-1";
+    	}else {    		
+    		if(retAccoutInfoDto!=null){
+        		Double electCoin = (Double)retAccoutInfoDto.getElect_coin();
+        		Double reconsmpCoin = (Double)retAccoutInfoDto.getReconsmp_coin();
+        		if("2".equals(payType)){//电子币
+        			if(electCoin>=totalFee){
+        				checkCoin = "1";
+        			}
+        			coin = electCoin.intValue();
+        		}else if("3".equals(payType)){//重销币
+        			if(reconsmpCoin>=totalFee){
+        				checkCoin = "1";
+        			}
+        			coin = reconsmpCoin.intValue();
+        		}
+        	}
+    	}    	
     	Map<String, String> retMap = new HashMap<String, String>();
     	retMap.put("check", checkCoin);
     	retMap.put("coin", coin+"");
@@ -198,14 +215,37 @@ public class GoodsAction extends BaseAction {
 		if(goodsOrder.getGoods_amount()<1){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		
 		if(goodsOrder.getRev_people() == null || "".equals(goodsOrder.getRev_people().trim())){
 			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
 		}
+		//商品是否存在
+		Goods tGoods = new Goods();
+		tGoods.setGoods_id(goodsOrder.getGoods_id());	
+		tGoods.setState("1");
+		List<Goods> goodsList = goodsService.getListByCon(tGoods);
+		if(goodsList.size()<1) {
+			throw new FRException(new FRError(ErrorConstants.PARAM_ERROR));
+		}
+		tGoods = goodsList.get(0);
+		
+		if("1".equals(tGoods.getCatalog_id())) {
+			//获取当前用户,会员商品只能购买一单
+			User u = new User();
+			u.setUser_id(getUserId());
+			u = userService.getListByCon(u).get(0);
+			if("0".equals(u.getState()) && goodsOrder.getGoods_amount()>1) {
+				throw new FRException(new FRError(ErrorConstants.SHOP_UNACTIVE_USER_1));
+			} 
+		}
+		
+		
 		goods = new Goods();
 		goods.setGoods_id(goodsOrder.getGoods_id());
 		goods.setState("1");
 		goods.setEff_date(new Date());
 		goods.setExp_date(new Date());
+		goods.setCatalog_id(tGoods.getCatalog_id());
 		//orderCode的组成规则 YYYYMMDDHH+8位序列
 		String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
 		goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);
@@ -358,6 +398,14 @@ public class GoodsAction extends BaseAction {
     		page = 1;
     	}
     	goodsOrder.setUser_id(getUserId());
+    	if("0".equals(conditionType) || "1".equals(conditionType)|| "2".equals(conditionType)) { //根据状态查询
+    		goodsOrder.setState(conditionType);
+    	}else if("4".equals(conditionType)) {
+    		 Calendar c = Calendar.getInstance();
+    		 c.setTime(new Date());
+    	     c.add(Calendar.DATE, - 30);
+    		 goodsOrder.setState_date_start(DateUtil.formatDate(new Date(c.getTimeInMillis()),DateUtil.DATE_FORMAT_1));
+    	}
 		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
 		setResult(pageModel);
     	return "queryUserOrder";
@@ -432,6 +480,34 @@ public class GoodsAction extends BaseAction {
 	    	return "modGoodsRevAddr";
 	 }
 	 
+	 @Action("goodsSends")
+	 public String goodsSends() throws FRException{	    	
+	    	if(goodsOrder.getOrder_id()==null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}	    	
+	    	List<GoodsOrder> retList = goodsOrderService.getListByCon(goodsOrder);
+	    	if(retList.size()==0){
+	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
+	    	}	    	
+	    	goodsOrder = retList.get(0); 
+	    	//查询订单的收货人信息，如果没有，则查询默认的收货信息
+	    	if(CommonUtils.isBlankStr(goodsOrder.getRev_people())){
+	    		//查询默认地址
+	    		//获取默认收货地址
+	        	goodsRevAddr.setUser_id(getUserId());
+	        	goodsRevAddr.setIs_default("1");
+	        	List<GoodsRevAddr> addrRetList = goodsRevAddrService.getListByCon(goodsRevAddr);
+	        	if(addrRetList.size()>0){
+	        		goodsRevAddr = addrRetList.get(0);
+	        	}
+	    	}else{
+	    		goodsRevAddr.setRev_addr(goodsOrder.getRev_addr());
+	    		goodsRevAddr.setRev_link_phone(goodsOrder.getRev_link_phone());
+	    		goodsRevAddr.setRev_people(goodsOrder.getRev_people());
+	    		goodsRevAddr.setRev_provice(goodsOrder.getRev_area());
+	    	}
+	    	return "goodsSends";
+	 }
 	 @Action("modGoodsRev")
 	 public String modGoodsRev() throws FRException{	    	
 	    	if(goodsOrder.getOrder_id()==null){
@@ -451,6 +527,38 @@ public class GoodsAction extends BaseAction {
 	    	if(cnt==0){
 	    		throw new FRException(new FRError(ErrorConstants.NO_DATA_FOUND));
 	    	}	    	
+	    	setCommonSuccessReturn();
+	    	return SUCCESS;
+	 }
+	 
+	 @Action("goodsSendsAccept")
+	 public String goodsSendsAccept() throws FRException{	    	
+	    	if(goodsOrder.getOrder_id()==null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	if(goodsOrder.getRev_addr()==null || goodsOrder.getRev_people() == null || goodsOrder.getRev_link_phone()== null || goodsOrderSplitNumber == null){
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	int goodsOrderSplitNumberI = 0;
+	    	try {
+	    		goodsOrderSplitNumberI = Integer.parseInt(goodsOrderSplitNumber);
+	    	}catch(Exception ex) {
+	    		log.error("传入的数字错误",ex);
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	GoodsOrder newGoodsOrder =new GoodsOrder();
+	    	newGoodsOrder.setOrder_id(goodsOrder.getOrder_id());
+	    	List<GoodsOrder> goodsList = goodsOrderService.getListByCon(newGoodsOrder);
+	    	if(goodsList.size()<1) {
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	
+	    	newGoodsOrder = goodsList.get(0);
+	    	if(newGoodsOrder.getGoods_amount()<goodsOrderSplitNumberI) {
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	goodsOrder.setGoods_amount(newGoodsOrder.getGoods_amount());
+	    	goodsOrderService.goodsSend(goodsOrder,goodsOrderSplitNumberI);	    	
 	    	setCommonSuccessReturn();
 	    	return SUCCESS;
 	 }

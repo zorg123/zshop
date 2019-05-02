@@ -28,7 +28,9 @@ import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
 import com.flyrui.financMgmt.pojo.AccoutInfoDto;
+import com.flyrui.financMgmt.pojo.UserDirectRecommend;
 import com.flyrui.financMgmt.service.AccoutInfoService;
+import com.flyrui.financMgmt.service.UserDirectRecommendService;
 import com.flyrui.sys.dto.UserInfoDto;
 import com.flyrui.sys.dto.UserNetTree;
 import com.flyrui.sys.service.FrconfigService;
@@ -103,6 +105,10 @@ public class UserAction extends BaseAction {
     public RoleService getRoleService(){
     	return (RoleService)SpringBeans.getBean("roleService");
     }
+    
+    public UserDirectRecommendService getUserDirectRecommendService(){
+    	return (UserDirectRecommendService)SpringBeans.getBean("userDirectRecommendService");
+    } 
     /**      
      * 添加用户       
      * @param user
@@ -803,13 +809,18 @@ public class UserAction extends BaseAction {
     }
     @Action("userMarket")  
     public String userMarket() throws FRException{
-    	UserService userService = getUserService();
+    	/*UserService userService = getUserService();
     	User uu= new User();
     	uu.setPid(getLoginUserInfo().getUser_id());
     	uu.setState("1");
     	uu.setBus_state(1);
     	List<User> userList = userService.getListByCon(uu);
-    	setResult(userList);
+    	setResult(userList);*/
+    	UserDirectRecommendService userDirectRecommendService = getUserDirectRecommendService();
+    	UserDirectRecommend userDirectRecommend = new UserDirectRecommend();
+    	userDirectRecommend.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	List<UserDirectRecommend> userDirectRecommendList = userDirectRecommendService.getListByCon(userDirectRecommend);
+    	setResult(userDirectRecommendList);
     	return "userMarket";
     }
 }

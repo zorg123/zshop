@@ -20,4 +20,6 @@ public interface GoodsOrderService {
 	public PageModel getPagerListByCon(GoodsOrder goodsOrder,int pageNo,int pageSize);
 	
 	public List<GoodsOrder> getListByConGoodsOrder(GoodsOrder goodsOrder);
+	
+	public boolean goodsSend(GoodsOrder goodsOrder,int goodsNum);
 }

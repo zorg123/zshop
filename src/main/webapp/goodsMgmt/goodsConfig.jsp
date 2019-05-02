@@ -21,8 +21,8 @@
         	<label>所属模块：</label>
             <select class="easyui-combobox" name="query_catalog_id" style="width:80px;">
                 <option value="">--请选择--</option>
-                <option value="1">精品拼团</option>
-                <option value="2">即时拼团</option>
+                <option value="1">会员商品</option>
+                <option value="2">拼团商品</option>
             </select>
         	<label>是否有效：</label>
             <select class="easyui-combobox" name="query_state" style="width:80px;">
@@ -71,8 +71,8 @@
     		<td>所属模块:</td>
     		<td colspan="3">
     			<select class="easyui-combobox" name="catalog_id" id = "catalog_id" style="width:200px;">
-	                <option value="1" selected="true">精品拼团</option>
-	                <option value="2">即时拼团</option>
+	                <option value="1" selected="true">会员商品</option>
+	                <option value="2">拼团商品</option>
             	</select>
     		</td>
     	</tr>

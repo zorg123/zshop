@@ -33,26 +33,31 @@
    	<result column="allchild_num" property="allchild_num" jdbcType="INTEGER" />
    	<result column="head_img" property="head_img" jdbcType="VARCHAR" />
    	<result column="user_type" property="user_type" jdbcType="VARCHAR" />
+   	<result column="shareout_qua" property="shareout_qua" jdbcType="VARCHAR" />
+   	<result column="allorder_num" property="allorder_num" jdbcType="INTEGER" />
   </resultMap>
   <insert id="insert" parameterType="com.flyrui.dao.pojo.sys.TbUser" useGeneratedKeys="true" keyProperty="user_id">
     insert into tb_user ( user_code, name, 
       password, sex, mail, 
       phone, org_id, register_date, 
       register_ip, last_login_time, last_login_ip, 
-      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num,head_img)
+      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num,
+      head_img,user_type,shareout_qua,allorder_num)
     values (#{user_code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{org_id,jdbcType=INTEGER}, #{register_date,jdbcType=TIMESTAMP}, 
       #{register_ip,jdbcType=VARCHAR}, #{last_login_time,jdbcType=TIMESTAMP}, #{last_login_ip,jdbcType=VARCHAR}, 
       #{login_count,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{bank_account,jdbcType=VARCHAR}, #{id_card,jdbcType=VARCHAR}, #{position_level,jdbcType=VARCHAR},#{cas_account,jdbcType=VARCHAR},
-      #{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER},#{head_img,jdbcType=VARCHAR})
+      #{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER},
+      #{head_img,jdbcType=VARCHAR},#{user_type,jdbcType=VARCHAR},#{shareout_qua,jdbcType=VARCHAR},#{allorder_num,jdbcType=INTEGER})
   </insert>
   <insert id="batchInsert" parameterType="java.util.List" >	 
     insert into tb_user ( user_code, name, 
       password, sex, mail, 
       phone, org_id, register_date, 
       register_ip, last_login_time, last_login_ip, 
-      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num)
+      login_count, state,bank_account,id_card,position_level,cas_account,user_phone,trans_pwd,pid,cert_type,user_level,cert_id,bus_state,create_time,register_id,act_time,allchild_num,
+      head_img,user_type,shareout_qua,allorder_num)
      values 
      <foreach collection="list" item="item" index="index" separator="," >
       (#{item.user_code,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, 
@@ -60,7 +65,8 @@
       	#{item.phone,jdbcType=VARCHAR}, #{item.org_id,jdbcType=INTEGER}, #{item.register_date,jdbcType=TIMESTAMP}, 
       	#{item.register_ip,jdbcType=VARCHAR}, #{item.last_login_time,jdbcType=TIMESTAMP}, #{item.last_login_ip,jdbcType=VARCHAR}, 
       	#{item.login_count,jdbcType=INTEGER}, #{item.state,jdbcType=VARCHAR}, #{item.bank_account,jdbcType=VARCHAR}, #{item.id_card,jdbcType=VARCHAR}, #{item.position_level,jdbcType=VARCHAR},
-      	#{cas_account,jdbcType=VARCHAR},#{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER})  
+      	#{cas_account,jdbcType=VARCHAR},#{user_phone,jdbcType=VARCHAR},#{trans_pwd,jdbcType=VARCHAR},#{pid,jdbcType=INTEGER},#{cert_type,jdbcType=VARCHAR},#{user_level,jdbcType=INTEGER},#{cert_id,jdbcType=VARCHAR},#{bus_state,jdbcType=INTEGER},#{create_time,jdbcType=TIMESTAMP},#{register_id,jdbcType=INTEGER},#{act_time,jdbcType=TIMESTAMP},#{allchild_num,jdbcType=INTEGER},
+      	#{head_img,jdbcType=VARCHAR},#{user_type,jdbcType=VARCHAR},#{shareout_qua,jdbcType=VARCHAR},#{allorder_num,jdbcType=INTEGER})  
     </foreach>
   </insert>
   <update id="update" parameterType="com.flyrui.dao.pojo.sys.TbUser" >
@@ -138,25 +144,25 @@
    		<if test="head_img != null  and head_img != '' " >
       		head_img = #{head_img,jdbcType=VARCHAR},
    		</if>
+   		<if test="user_type != null  and user_type != '' " >
+      		user_type = #{user_type,jdbcType=VARCHAR},
+   		</if>
+   		<if test="shareout_qua != null  and shareout_qua != '' " >
+      		shareout_qua = #{shareout_qua,jdbcType=VARCHAR},
+   		</if>
+   		<if test="allorder_num != null  and allorder_num != '' " >
+      		allorder_num = #{allorder_num,jdbcType=INTEGER},
+   		</if>
    		user_id = #{user_id,jdbcType=VARCHAR}
       where user_id = #{user_id,jdbcType=VARCHAR}
   </update>
-  <select id="selectForWaitActiveUser" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
-	SELECT b.* FROM tb_user a,tb_user b WHERE a.`user_id`=#{user_id,jdbcType=VARCHAR}  AND
-	a.state='1' AND a.user_type='child' AND a.`pid` = b.`pid` AND
-	b.`state`='0' AND b.user_type='main'
-	<if test="name !=null and name !='' ">
-     	and b.name like #{name,jdbcType=VARCHAR}
-     </if> 
-	
-  </select>
   <select id="select" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
      <!--  <bind name="nameLike" value="'%' + _parameter.getName() + '%'" /> -->
   	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img,a.user_type,a.shareout_qua,a.allorder_num
       	from tb_user a left join tb_organation b on a.org_id = b.org_id 
      where  1=1
      <if test="user_id !=null and user_id != ''">
@@ -213,6 +219,18 @@
   	<if test="allchild_num != null  and allchild_num != '' " >
      		and allchild_num = #{allchild_num,jdbcType=INTEGER}
   	</if>
+  	<if test="head_img != null  and head_img != '' " >
+      		head_img = #{head_img,jdbcType=VARCHAR}
+	</if>
+	<if test="user_type != null  and user_type != '' " >
+  			user_type = #{user_type,jdbcType=VARCHAR}
+	</if>
+	<if test="shareout_qua != null  and shareout_qua != '' " >
+  			shareout_qua = #{shareout_qua,jdbcType=VARCHAR}
+	</if>
+	<if test="allorder_num != null  and allorder_num != '' " >
+  			allorder_num = #{allorder_num,jdbcType=INTEGER}
+	</if>
   </select>
   <update id="updateUserLoginInfo" parameterType="com.flyrui.dao.pojo.sys.TbUser">
   	 update tb_user 
@@ -225,6 +243,14 @@
   	 delete from tb_user   	   
   	  where user_id = #{user_id,jdbcType=VARCHAR}
   </delete>
+      <select id="selectForWaitActiveUser" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
+	SELECT b.* FROM tb_user a,tb_user b WHERE a.`user_id`=#{user_id,jdbcType=VARCHAR}  AND
+	a.state='1' AND a.user_type='child' AND a.`pid` = b.`pid` AND
+	b.`state`='0' AND b.user_type='main'
+	<if test="name !=null and name !='' ">
+     	and b.name like #{name,jdbcType=VARCHAR}
+     </if> 
+  </select>
   <select id="queryUserByIdState" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
   	 select a.user_id, a.user_code, a.name,a.password, a.sex, a.mail,
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
@@ -237,7 +263,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,a.pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img
+  	 		a.cas_account,a.user_phone,a.trans_pwd,a.pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img,a.user_type,a.shareout_qua,a.allorder_num
       	from tb_user a left join tb_organation b on a.org_id = b.org_id where a.user_code = #{user_code,jdbcType=VARCHAR} and a.bus_state = #{bus_state,jdbcType=VARCHAR} 
   </select>
   <insert id="saveUserRole" parameterType="hashMap" >
@@ -262,7 +288,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img,a.user_type,a.shareout_qua,a.allorder_num
       	from tb_user a left join tb_organation b on a.org_id = b.org_id where a.bank_account = #{bank_account,jdbcType=VARCHAR} and a.state = #{state,jdbcType=VARCHAR}
   </select>
   <select id="queryUserByCasAccountState" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
@@ -270,7 +296,7 @@
   	 		a.phone, a.org_id, a.register_date,a.register_ip, 
   	 		a.last_login_time, a.last_login_ip,a.login_count, a.state,
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,a.cas_account,
-  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num
+  	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img,a.user_type,a.shareout_qua,a.allorder_num
       	from tb_user a left join tb_organation b on a.org_id = b.org_id where a.cas_account = #{cas_account,jdbcType=VARCHAR} and a.state = #{state,jdbcType=VARCHAR}
   </select>
   
