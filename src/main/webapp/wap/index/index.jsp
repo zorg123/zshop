@@ -80,7 +80,9 @@
                          	<div class="desc" style="color:white;font-size: 14px">分红资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:black;font-weight: bold;">具备</font></s:if>
                          	<s:else>
                          		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
-                         		相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
+                         		<s:if test="result.ret.userLevel > 1">
+                         			相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
+                         		</s:if>
                          	</s:else>
                          	
                          	<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
