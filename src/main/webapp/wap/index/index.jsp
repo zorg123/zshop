@@ -68,7 +68,7 @@
                     <div class="details">
                     		 <div class="number" style="color:white;font-size: 14px">
                     		 <s:if test="result.ret.userLevel > 1">
-                    		 	会员级别：<font style="color:black;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                    		 	会员级别：<font style="color:blue;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     		 	本级分红池累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
                     		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
                     		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
@@ -77,7 +77,7 @@
                     		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     		 </s:else>
                     		 </div>
-                         	<div class="desc" style="color:white;font-size: 14px">分红资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:black;font-weight: bold;">具备</font></s:if>
+                         	<div class="desc" style="color:white;font-size: 14px">分红资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
                          	<s:else>
                          		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
                          		<s:if test="result.ret.userLevel > 1">
