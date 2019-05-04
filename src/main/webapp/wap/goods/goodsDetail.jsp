@@ -33,7 +33,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">商品类型 </label>
                                     <div class="am-u-sm-9">
-                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.catalog_id == 1" >精品拼团</s:if><s:else>即时拼团</s:else></span>
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:if test="goods.catalog_id == 1" >会员商品</s:if><s:else>拼团商品</s:else></span>
                                     </div>
                                 </div>                                  
                                 <div class="am-form-group">
@@ -277,6 +277,9 @@
 	                	 	params["goodsOrder.rev_area"]=""; 
 	                	 	params["goodsOrder.rev_addr"]=""; 
 		            	}
+	                 
+	                 params["goodsOrder.send_immediate"]= $("#acceptForm input[name='goodsOrder.send_immediate']:checked").val(); 
+	                 
 					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
 		  	           
 						if ((reply || '') != '') {

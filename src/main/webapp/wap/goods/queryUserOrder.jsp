@@ -12,7 +12,7 @@
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
-                <li class="am-active">订单查询   <s:property value="conditionType"/></li>
+                <li class="am-active">订单查询  </li>
             </ol>
             <div class="tpl-portlet-components" id="addrListDiv">
             	<div class="portlet-title">
@@ -24,16 +24,16 @@
 				<div class="tpl-block">  
 					<div class="am-g">
 					    <div class="am-btn-group doc-js-btn-1"  data-am-button>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 0" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 0" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="0"  > 未发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 2" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 2" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="2"  > 待发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 1" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary  am-btn-sm <s:if test="conditionType == 1" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="1"  > 已发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 4" >am-active</s:if>" >
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 4" >am-active</s:if>" >
 						    <input type="radio" name="searchCon" value="4"  > 一个月内订单
 						  </label>
 						</div>  
@@ -58,6 +58,7 @@
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
                                             <th class="table-title">订单编号</th>
                                             <th class="table-title">购买商品</th>
+                                            <th class="table-title">商品类型</th>
                                             <th class="table-type">购买数量</th>
                                             <th class="table-type">消费金额</th>
                                             <th class="table-type">支付类型</th>
@@ -75,6 +76,7 @@
 	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
+	                                            <td><s:if test="#goodsOrderIter.catalog_id == 1" >会员商品</s:if><s:else>拼团商品</s:else></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_amount"/></td>
 	                                            <td><s:property value="#goodsOrderIter.total_fee"/></td>
 	                                            <td><s:if test="#goodsOrderIter.pay_type == 2" >电子积分</s:if><s:if test="#goodsOrderIter.pay_type == 3" >重消积分</s:if></td>
