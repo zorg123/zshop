@@ -86,7 +86,7 @@
     a.comments,
     a.balance_comments
 	FROM coin_track a
-	left JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.state=1 AND b.bus_state=1
+	left JOIN tb_user b ON a.`user_id` = b.`user_id` AND b.bus_state=1
 	WHERE 1=1
 	<if test="user_code != null  and user_code != '' " >
     	and b.user_code = #{user_code,jdbcType=VARCHAR}
@@ -309,4 +309,11 @@
 		from accout_info 
 		where user_id = #{user_id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectPoolShareout" resultType="hashmap" parameterType="hashmap">
+ 	SELECT c.cf_value,c.cf_desc ,IFNULL(a.total,0) total, IFNULL(b.usercount,0) usercount FROM  fr_config c 
+   		LEFT JOIN pool_shareout a ON  a.ptype = c.`cf_desc` AND a.state='1' 
+   		LEFT JOIN (SELECT user_level ,SUM(1) AS usercount FROM tb_user a WHERE state = '1' AND bus_state='1' AND  shareout_qua ='1' GROUP BY user_level) b ON a.ptype = b.user_level    
+	WHERE  c.cf_module='zshopuserlevel' AND c.cf_id!='g1name' ORDER BY cf_desc
+ </select>
 </mapper>

@@ -26,7 +26,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请输入用户账号" data-pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,8}$" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description" /> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请使用手机号作为注册账号" data-pattern="\d{11}" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description" /> 
                                         <small id="user.user_code-description"></small>                                       
                                     </div>
                                 </div> 
@@ -61,7 +61,7 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8 phred">
-                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="手机号确认账户使用，必须真实填写" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description">                                        
+                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="手机号确认账户使用，必须真实填写" data-pattern="\d{11}" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description">                                        
                                     	<small id="user.user_phone-description"></small>  
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">推荐人账号</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid" value="<%=pUserCode %>" name="user.pid" placeholder="请输入推荐人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description" />                                        
+                                        <input type="text" disabled="disabled" class="am-form-field tpl-form-no-bg" db_field="user.pid" value='<s:property value="#session.user.user_code"/>' name="user.pid" placeholder="请输入推荐人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description" />                                        
                                     	<small id="user.pid-description"></small>  
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
 			            descriptions:{
 			                "user.user_code":{
 			                    required : '<div class="field-invalidmsg">请输入用户账号</div>',
-			                    pattern : '<div class="field-invalidmsg">用户账号不对，必须为6-8位数字或字母</div>',
+			                    pattern : '<div class="field-invalidmsg">请使用手机号作为注册账号</div>',
 			                    conditional : '<div class="field-validmsg">用户已经存在</div>',
 			                    valid : ''
 			                },
@@ -176,7 +176,7 @@
 			                },
 			                "user.pid":{
 			                    required : '<div class="field-invalidmsg">请输入接点人账号</div>',
-			                    conditional : '<div class="field-validmsg">该接点人账号不正确：1:账号不存在;2:未激活;3:下面已注册满3个</div>',
+			                    conditional : '<div class="field-validmsg">该接点人账号不正确：1:账号不存在;2:未激活</div>',
 			                    valid : ''
 			                }
 			            }

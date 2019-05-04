@@ -1,4 +1,5 @@
 var curHash;
+var isFirstIn = true;
 $(function() {
 
         var $fullText = $('.admin-fullText');
@@ -63,6 +64,7 @@ $(function() {
     		$('#menuToggle').trigger("click");
     	}
     	if($url != ''){
+    		isFirstIn = false;
     		var opt={};
     		opt.url=$url;
     		opt.menuId = menuId;
@@ -81,8 +83,8 @@ $(function() {
 		console.log(window.location.hash); 
 	});*/
     window.onhashchange=function(){
-    	//console.log("cur="+curHash);
-    	//console.log(window.location.hash); 
+    	console.log("cur="+curHash);
+    	console.log(window.location.hash); 
     	if(window.location.hash !=''){    		
     		var ha = window.location.hash.substring(1);
     		//console.log("ha=="+ha);
@@ -97,7 +99,7 @@ $(function() {
 	        		$(".tpl-left-nav-item >a").removeClass("active");
 
 	        		$(".tpl-left-nav-sub-menu:not(:hidden)").hide().find("i.tpl-left-nav-more-ico").removeClass("tpl-left-nav-more-ico-rotate");
-
+	        		
 	        		$this.parent().parent().show();
 	        		$this.parent().parent().find("i.tpl-left-nav-more-ico").addClass("tpl-left-nav-more-ico-rotate");
 
@@ -243,8 +245,12 @@ var pageData={
 		 });
 	 },
 	 openIndex:function(o){
-		 var $this = $(o);		 
-		 this.openContent($this.attr("url"));
+		 var $this = $(o);	
+		 var opt={};
+ 		 opt.url=$this.attr("url");
+ 		 opt.target = "mainContent";
+ 		 opt.menuId = -1;
+		 this.openContent(opt);
 		 $this.addClass("active");
 		 $(".tpl-left-nav-sub-menu a").removeClass("active");
 		 if (browser.versions.mobile){
@@ -279,5 +285,7 @@ var pageData={
 	    },true);
 	 }
 }
+
+
     
 

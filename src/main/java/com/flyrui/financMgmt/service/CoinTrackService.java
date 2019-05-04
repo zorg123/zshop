@@ -27,6 +27,8 @@ public interface CoinTrackService {
 	
 	public PageModel getPagerListByConAccountFlow(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
+	public PageModel getPagerListByConPoolShareout(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
+	
 	public PageModel getPagerListByConAccountFlowForWap(CoinTrackDto coinTrackDto,int pageNo,int pageSize);
 	
 	public PageModel getPagerListByConAccountInfo(CoinTrackDto coinTrackDto,int pageNo,int pageSize);

@@ -129,6 +129,13 @@ public class FinancMgmtAction extends BaseAction {
     	setResult(pageModel);
     	return SUCCESS;
     }
+	//报表统计--分红池明细
+	@Action(value="getPagerListByConPoolShareout")
+	public String getPagerListByConPoolShareout(){
+    	PageModel<CoreUser> pageModel = coinTrackService.getPagerListByConPoolShareout(coinTrackDto, page, rows);
+    	setResult(pageModel);
+    	return SUCCESS;
+    }
 	//报表统计--账户明细
 	@Action(value="getPagerListByConAccountInfo")
 	public String getPagerListByConAccountInfo(){

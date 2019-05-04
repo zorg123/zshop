@@ -12,7 +12,7 @@
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">网上商城</a></li>
-                <li class="am-active">订单查询   <s:property value="conditionType"/></li>
+                <li class="am-active">订单查询  </li>
             </ol>
             <div class="tpl-portlet-components" id="addrListDiv">
             	<div class="portlet-title">
@@ -24,16 +24,16 @@
 				<div class="tpl-block">  
 					<div class="am-g">
 					    <div class="am-btn-group doc-js-btn-1"  data-am-button>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 0" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 0" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="0"  > 未发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 2" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 2" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="2"  > 待发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 1" >am-active</s:if>">
+						  <label class="am-btn am-btn-primary  am-btn-sm <s:if test="conditionType == 1" >am-active</s:if>">
 						    <input type="radio" name="searchCon" value="1"  > 已发货
 						  </label>
-						  <label class="am-btn am-btn-primary <s:if test="conditionType == 4" >am-active</s:if>" >
+						  <label class="am-btn am-btn-primary am-btn-sm <s:if test="conditionType == 4" >am-active</s:if>" >
 						    <input type="radio" name="searchCon" value="4"  > 一个月内订单
 						  </label>
 						</div>  
