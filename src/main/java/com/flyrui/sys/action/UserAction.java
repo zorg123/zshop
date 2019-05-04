@@ -693,7 +693,24 @@ public class UserAction extends BaseAction {
     		result.putAll(retMap);
         	return SUCCESS;
     	}
+
+    	//未激活，不能切换账号
     	UserService userService = getUserService();
+    	User userIsActive = new User();
+    	userIsActive.setUser_id(currUser.getUser_id());
+    	List<User> liActiveUser = userService.getListByCon(userIsActive);
+    	if(liActiveUser != null || liActiveUser.size() > 0){
+    		userIsActive = liActiveUser.get(0);
+    		if(userIsActive.getState().equals("0")){
+        		Map retMap = new HashMap();
+        		retMap.put("_code", "-1");
+        		retMap.put("_msg", "账号未激活，不允许切换用户");
+        		result.putAll(retMap);
+            	return SUCCESS;
+        	}
+    	}
+    	
+    	
     	User user = new User();
     	user.setPid(currUser.getUser_id());
     	user.setUser_type("child");
