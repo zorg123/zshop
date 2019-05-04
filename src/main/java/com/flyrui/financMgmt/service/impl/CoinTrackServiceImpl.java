@@ -75,6 +75,11 @@ public class CoinTrackServiceImpl extends BaseService<CoinTrackDto> implements C
 		return getPagerList(coinTrackDto,nameSpace+".selectAccountFlow",pageNo,pageSize);
 	}
 	
+	//报表统计--分红池明细
+	public PageModel getPagerListByConPoolShareout(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
+		return getPagerList(coinTrackDto,nameSpace+".selectPoolShareout",pageNo,pageSize);
+	}
+	
 	public PageModel getPagerListByConAccountFlowForWap(CoinTrackDto coinTrackDto,int pageNo,int pageSize){
 		return getPagerList(coinTrackDto,nameSpace+".selectAccountFlowForWap",pageNo,pageSize);
 	}
