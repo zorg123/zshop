@@ -75,7 +75,7 @@
                                  <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">推荐人账号</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.pid" value="<%=pUserCode %>" name="user.pid" placeholder="请输入推荐人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description" />                                        
+                                        <input type="text" disabled="disabled" class="am-form-field tpl-form-no-bg" db_field="user.pid" value='<s:property value="#session.user.user_code"/>' name="user.pid" placeholder="请输入推荐人账号" data-required="true" data-descriptions="user.pid" data-describedby="user.pid-description" />                                        
                                     	<small id="user.pid-description"></small>  
                                     </div>
                                 </div>
