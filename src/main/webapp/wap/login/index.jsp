@@ -11,7 +11,7 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
-  <title>美食加拼团</title>
+  <title>天恩一滴生物科技有限公司</title>
   <!-[if lt IE9]>   
     <script src="<%=baseUri %>/public/bootstrap/html5shiv.min.js" type="text/javascript"></script>  
   <![endif]-> 
@@ -43,7 +43,7 @@
    <div data-v-4145efda="" class="wrap-outer">
     <div data-v-4145efda="" class="trans-contain">
      <form class="el-form" data-v-4145efda="">
-      <h5 data-v-4145efda="" class="title">美食加拼团</h5> 
+      <img src="<%=baseUri %>/wap/assets/img/logo.png" style="height: 70px;">
       <div class="el-form-item is-required" data-v-4145efda="">
        <div class="el-form-item__content">
         <div class="login-sub-Key el-input" data-v-4145efda="">       
@@ -89,7 +89,7 @@
       
      </form>
     </div> 
-    <p data-v-4145efda="" class="foot">Copyright All Rights Reserved. &copy; 2006-2019</p>
+    <p data-v-4145efda="" class="foot">Copyright 2017-2019 天恩一滴生物科技有限公司 All Rights Reserved.</p>
    </div> 
    <section id="pageBg" class="row">
     <div id="canvas" class="boxBG"  >

@@ -28,7 +28,7 @@
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
         <a href="javascript:;" class="tpl-logo">
-            <img src="<%=baseUri %>/wap/assets/img/myLogo.png" alt="">
+            <img src="<%=baseUri %>/wap/assets/img/logo.png" alt="">
         </a>
     </div> 
     <button class="am-btn am-btn-sm am-btn-success" id="menuToggle">
@@ -76,7 +76,7 @@
         <div class="tpl-left-nav-list">
             <ul class="tpl-left-nav-menu">
                <li class="tpl-left-nav-item" id="menu<s:property value="#menu.menu_id" />">
-	               	<a href="javascript:void(0);" onclick="pageData.openIndex(this);" url="/Sys/Sys!index.do" class="nav-link active">
+	               	<a href="javascript:void(0);" onclick="pageData.openIndex(this);" url="/Sys/Sys!index.do" menuId="tree-1" class="nav-link active">
                         <i class="am-icon-home"></i>
                         <span>首页</span>
                     </a>                   
@@ -122,13 +122,36 @@
     </div>
     <script language="javascript" type="text/javascript" >
 		$(function() {
+			
 			if(window.location.hash !=''){				
 	    		var ha = window.location.hash.substring(1)
 	        	var o = base64.decode(ha).split(";"); 
 	    		pageData.openContent(o[1], null, o[0]);
 	    	}else{
-				pageData.openContent("/Sys/Sys!index.do");
+	    		 var opt = {};
+	    		 opt.url="/Sys/Sys!index.do";
+	     		 opt.target = "mainContent";
+	     		 opt.menuId = -1;
+	     		pageData.openContent(opt);
+				//pageData.openContent("/Sys/Sys!index.do");
 	    	}
+			
+			
+			window.addEventListener("popstate", function(e) { 
+				//alert(isFirstIn);
+				if(isFirstIn){
+					//alert(3);
+					pushHistory();
+				}
+				//alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能 
+			}, false); 
+			function pushHistory() { 
+				var state = { 
+					title: "首页", 
+					url: "#"
+				}; 
+				window.history.pushState(state, "首页", "#"); 
+			} 
 		});
 	</script>
 </div>
