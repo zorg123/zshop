@@ -12,6 +12,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
   <title>天恩一滴生物科技有限公司</title>
+  <link rel="icon" type="image/png" href="<%=baseUri %>/wap/assets/i/favicon1.png">
   <!-[if lt IE9]>   
     <script src="<%=baseUri %>/public/bootstrap/html5shiv.min.js" type="text/javascript"></script>  
   <![endif]-> 
@@ -43,7 +44,9 @@
    <div data-v-4145efda="" class="wrap-outer">
     <div data-v-4145efda="" class="trans-contain">
      <form class="el-form" data-v-4145efda="">
-      <img src="<%=baseUri %>/wap/assets/img/logo.png" style="height: 70px;">
+      <div id="logoDiv">
+      	<img src="<%=baseUri %>/wap/assets/img/logo.png" style="height: 70px;">
+      </div>      
       <div class="el-form-item is-required" data-v-4145efda="">
        <div class="el-form-item__content">
         <div class="login-sub-Key el-input" data-v-4145efda="">       
@@ -89,7 +92,7 @@
       
      </form>
     </div> 
-    <p data-v-4145efda="" class="foot">Copyright 2017-2019 天恩一滴生物科技有限公司 All Rights Reserved.</p>
+    <p data-v-4145efda="" class="foot" style="">Copyright 2017-2019 Rights Reserved.</p>
    </div> 
    <section id="pageBg" class="row">
     <div id="canvas" class="boxBG"  >
@@ -102,5 +105,11 @@
   <script src="<%=baseUri %>/wap/assets/js/CommonUtils.js"></script>
   <script src="<%=baseUri %>/wap/assets/js/layer.js"></script>
   <script src="<%=baseUri %>/wap/login/login.js?d=<%=d %>"></script>
+  <script type="text/javascript">
+ 	 if (browser.versions.mobile){
+ 		 //style="margin-left:-30px"
+		$("#logoDiv").css("margin-left","-30px");
+	 }
+  </script>
  </body>
 </html>

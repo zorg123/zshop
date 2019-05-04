@@ -17,9 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="<%=baseUri %>/wap/assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="<%=baseUri %>/wap/assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="icon" type="image/png" href="<%=baseUri %>/wap/assets/i/favicon1.png">
+    <meta name="apple-mobile-web-app-title" content="天恩一滴生物科技有限公司" />
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/amazeui.min.css" />
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/validate.css">
     <link rel="stylesheet" href="<%=baseUri %>/wap/assets/css/admin.css">

@@ -29,8 +29,8 @@
 	                <th field="create_time" width="140">时间</th>
 	                <th field="create_type_name" width="140">类型</th>
 	                <th field="coin_num" width="140">金额</th>
-	                <th field="comments" width="200">说明</th>
-	                <th field="balance_comments" width="200">余额说明</th>
+	                <th field="comments" width="250">说明</th>
+	                <th field="balance_comments" width="250">余额说明</th>
 	            </tr>
 	            </thead>
 	        </table>
