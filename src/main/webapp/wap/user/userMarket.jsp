@@ -4,6 +4,9 @@
 	String baseUri = request.getContextPath();    
 %>
 <s:set name="userMarketList" value="result.ret"/>
+<s:set name="lastMonthOrdrs" value="result.lastMonthOrdrs"/>
+<s:set name="curMonthOrdrs" value="result.curMonthOrdrs"/>
+<s:set name="totalUserGoodsOrders" value="result.totalUserGoodsOrders"/>
 <div>           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
@@ -16,6 +19,13 @@
 	                    <div class="tpl-caption font-green ">
 	                       <i class="am-icon-cloud-download"></i>
 	                       <span>统计列表</span>
+	                    </div>
+	                    <div class="actions">
+	                        <ul class="actions-btn">
+	                            <li class="purple-on">上月销量:<s:property value="lastMonthOrdrs"/></li>
+	                            <li class="blue-on">本月新增:<s:property value="curMonthOrdrs"/></li>
+	                            <li class="red-on">市场总销量:<s:property value="totalUserGoodsOrders"/></li>
+	                        </ul>
 	                    </div>
                     </div>
 					<div class="tpl-block">

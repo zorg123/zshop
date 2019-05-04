@@ -2,6 +2,7 @@ package com.flyrui.sys.action;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.pojo.UserDirectRecommend;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.UserDirectRecommendService;
+import com.flyrui.framework.common.DateUtil;
 import com.flyrui.sys.dto.UserInfoDto;
 import com.flyrui.sys.dto.UserNetTree;
 import com.flyrui.sys.service.FrconfigService;
@@ -960,7 +962,44 @@ public class UserAction extends BaseAction {
     	UserDirectRecommend userDirectRecommend = new UserDirectRecommend();
     	userDirectRecommend.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
     	List<UserDirectRecommend> userDirectRecommendList = userDirectRecommendService.getListByCon(userDirectRecommend);
-    	setResult(userDirectRecommendList);
+    	//setResult(userDirectRecommendList);
+    	
+    	UserService userService = (UserService)SpringBeans.getBean("userService");
+    	Map<String,String> param = new HashMap<String,String>();
+    	param.put("user_id", getUserId());
+    	String curMonth = DateUtil.formatDate(new Date(), DateUtil.DATE_FORMAT_7);
+    	param.put("months", curMonth);
+    	List<Map> monthOrder = userService.queryUserMonthGoods(param);
+    	Integer curMonthOrdrs = 0;
+    	if(monthOrder.size()>0) {
+    		curMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    	}
+    	
+    	param = new HashMap<String,String>();
+    	param.put("user_id", getUserId());
+    	Calendar c = Calendar.getInstance();
+    	c.setTime(new Date());
+    	c.add(Calendar.MONTH, -1);
+    	String lastMonth = DateUtil.formatDate(new Date(c.getTimeInMillis()), DateUtil.DATE_FORMAT_7);
+    	param.put("months", lastMonth);
+    	monthOrder = userService.queryUserMonthGoods(param);
+    	Integer lastMonthOrdrs = 0;
+    	if(monthOrder.size()>0) {
+    		lastMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    	}
+    	
+    	//查询用户最新的级别
+    	User u = new User();
+    	u.setUser_id(getUserId());
+    	u = userService.getListByCon(u).get(0);
+    	
+    	//返回值设置
+    	result.put("ret",userDirectRecommendList);
+    	result.put("_code", "0");
+    	result.put("_msg", "成功");
+		result.put("curMonthOrdrs", curMonthOrdrs);
+		result.put("lastMonthOrdrs", lastMonthOrdrs);
+		result.put("totalUserGoodsOrders", u.getAllorder_num());
     	return "userMarket";
     }
 }

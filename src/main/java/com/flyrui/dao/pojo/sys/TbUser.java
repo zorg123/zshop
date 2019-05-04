@@ -40,6 +40,10 @@ public class TbUser implements Serializable {
     
     private String cas_account;
     
+    private String current_goodsSum;
+    
+    private String pre_goodsSum;
+    
     /** 手机号码 */
 	private String user_phone;
 
@@ -346,5 +350,21 @@ public class TbUser implements Serializable {
 
 	public void setAllorder_num(Integer allorder_num) {
 		this.allorder_num = allorder_num;
+	}
+
+	public String getCurrent_goodsSum() {
+		return current_goodsSum;
+	}
+
+	public void setCurrent_goodsSum(String current_goodsSum) {
+		this.current_goodsSum = current_goodsSum;
+	}
+
+	public String getPre_goodsSum() {
+		return pre_goodsSum;
+	}
+
+	public void setPre_goodsSum(String pre_goodsSum) {
+		this.pre_goodsSum = pre_goodsSum;
 	}    
 }

@@ -41,6 +41,18 @@ var Employee = {
 			retVal = "已激活";
 		}
 		return retVal;
+	},
+	shareoutQua:function(value,row){
+		//alert(CommonUtils.dumpObject(row));
+		var retVal = value;
+		if(value == "-1"){
+			retVal="不具备";
+		}else if (value == "1"){
+			retVal = "具备";
+		}else{
+			retVal="不具备";
+		}
+		return retVal;
 	}
 }
 
@@ -48,7 +60,12 @@ $(function () {
     $('#staffList').datagrid({
         url: base+'/Sys/User!queryUser.do',
         queryParams: {'user.bus_state':1},
-        loadFilter:function(data){			
+        loadFilter:function(data){
+        	var jsonStr = JSON.stringify(data);
+        	if (jsonStr.indexOf("T")>0) {
+        		jsonStr = jsonStr.replace(/T/g," ");
+        		data =  JSON.parse(jsonStr);
+		    }
 			return Employee.loadFilter(data);
 		}
     })
