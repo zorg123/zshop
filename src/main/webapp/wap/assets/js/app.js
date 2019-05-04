@@ -268,7 +268,8 @@ var pageData={
 	           if ((reply || '') != '') {
 	               var code = reply._code;               
 	               if (code == '0') {  
-	            	   CommonUtils.showAlert(reply._msg);
+	            	   window.location.hash="";
+	            	   window.history.go(0);
 	               } else  {
 	            	  CommonUtils.showAlert(reply._msg);
 	               }              

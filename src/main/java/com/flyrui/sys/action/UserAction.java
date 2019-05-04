@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -21,6 +22,8 @@ import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.SpringBeans;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.excel.ImportExcel;
+import com.flyrui.common.service.BaseService;
+import com.flyrui.dao.common.SQLMapConstant;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.TbOrganation;
 import com.flyrui.dao.pojo.sys.TbRole;
@@ -659,10 +662,34 @@ public class UserAction extends BaseAction {
         	curcurrUser2 = (User)currUser.clone();
     	}catch(Exception ex){}
     	
+    	//老逻辑，生成子账户的
+//    	if(currUser.getUser_type().equals("child")){
+//    		Map retMap = new HashMap();
+//    		retMap.put("_code", "-1");
+//    		retMap.put("_msg", "当前是子帐号用户登录！不允许该操作！");
+//    		result.putAll(retMap);
+//        	return SUCCESS;
+//    	}
+    	
     	if(currUser.getUser_type().equals("child")){
-    		Map retMap = new HashMap();
-    		retMap.put("_code", "-1");
-    		retMap.put("_msg", "当前是子帐号用户登录！不允许该操作！");
+    		//子帐号，找回主帐号
+    		UserService userService = getUserService();
+        	User user = new User();
+        	user.setUser_id(currUser.getPid());
+        	user.setUser_type("main");
+        	List<User> li = userService.getListByCon(user);
+        	if(li == null || li.size() == 0){
+        		Map retMap = new HashMap();
+        		retMap.put("_code", "-1");
+        		retMap.put("_msg", "未找到主帐号");
+        		result.putAll(retMap);
+            	return SUCCESS;
+        	}
+        	curcurrUser2 = li.get(0);
+        	userService.setUserSessionAttr(curcurrUser2);
+        	Map retMap = new HashMap();
+    		retMap.put("_code", "0");
+    		retMap.put("_msg", "切换为主帐号");
     		result.putAll(retMap);
         	return SUCCESS;
     	}
@@ -670,20 +697,29 @@ public class UserAction extends BaseAction {
     	User user = new User();
     	user.setPid(currUser.getUser_id());
     	user.setUser_type("child");
-    	List li = userService.getListByCon(user);
-    	if(li != null && li.size() > 0){
-    		Map retMap = new HashMap();
-    		retMap.put("_code", "-1");
-    		retMap.put("_msg", "已存在子帐号，请使用账户[z"+currUser.getUser_code()+"]和密码6个1即可登录");
-    		result.putAll(retMap);
-        	return SUCCESS;
-    	}
+    	List<User> li = userService.getListByCon(user);
+    	//生成子帐号逻辑
+//    	if(li == null || li.size() > 0){
+//    		Map retMap = new HashMap();
+//    		retMap.put("_code", "-1");
+//    		retMap.put("_msg", "已存在子帐号，请使用账户[z"+currUser.getUser_code()+"]和密码6个1即可登录");
+//    		result.putAll(retMap);
+//        	return SUCCESS;
+//    	}
+//    	
+//    	userService.genSubUser(curcurrUser2, currUser);
     	
-    	userService.genSubUser(curcurrUser2, currUser);
-    	   
+    	//切换子帐号逻辑
+    	if(li == null || li.size() == 0){
+    		userService.genSubUser(curcurrUser2, currUser);
+		}else{
+			curcurrUser2 = currUser;
+			curcurrUser2 = li.get(0);
+		}
+    	userService.setUserSessionAttr(curcurrUser2);
     	Map retMap = new HashMap();
 		retMap.put("_code", "0");
-		retMap.put("_msg", "子帐号创建成功，请使用账户["+curcurrUser2.getUser_code()+"]和密码6个1即可登录！");
+		retMap.put("_msg", "切换为子帐号");
 		result.putAll(retMap);
     	return SUCCESS;
     }

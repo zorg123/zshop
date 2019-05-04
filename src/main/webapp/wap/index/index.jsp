@@ -9,6 +9,9 @@
 <s:set name="userLevelShareoutList" value="result.ret.userLevelShareoutList"/>
 <s:set name="Allorder_num" value="result.ret.Allorder_num"/>
 <s:set name="totalUserGoodsOrders" value="result.ret.totalUserGoodsOrders"/>
+<s:set name="currentLevelAmount" value="result.ret.currentLevelAmount"/>
+
+
 <s:if test="result.ret.userLevel == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
@@ -61,6 +64,19 @@
                         <i class="am-icon-apple"></i>
                     </div>
                     <div class="details">
+                    		 <div class="number" style="color:white;font-size: 14px">
+                    		 	会员级别：<font style="color:black;font-weight: bold;"><s:property value="result.ret.userLevel"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
+                    		 	<s:property value="result.ret.userLevel"/>级奖金池：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
+                    		 	会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font>
+                    		 </div>
+                    		 
+                    		 
+                         	<div class="desc" style="color:white;font-size: 14px">分红资格:<s:if test="result.ret.getShareout_qua == 1"><font style="color:black;font-weight: bold;">具备</font></s:if><s:else><font style="color:gray;font-weight: bold;">不具备 </font></s:else>&nbsp;&nbsp;&nbsp;&nbsp;
+                         	上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font></div>
+                        	
+                    </div>
+                    <!-- 
+                    <div class="details">
                     		 <div class="number" style="color:red;">
                     		 	当前级别：<s:property value="userLevelName"/>&nbsp;&nbsp;&nbsp;&nbsp; 
                     		 	<s:if test="result.ret.getShareout_qua == 1">具备分红资格
@@ -68,7 +84,7 @@
                     		 </div>
                          	<div class="desc">上月会员商品数量：<s:property value="lastMonthOrdrs"/>&nbsp;&nbsp;&nbsp;&nbsp;当月会员商品数：<s:property value="curMonthOrdrs"/></div>
                         	
-                    </div>
+                    </div> -->
                 </div>
             </div>
         	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-6" >
@@ -117,6 +133,7 @@
  			--%>
 
         </div>
+        <!-- 
         <div class="row"  style="padding:0px 10px">           
              <div class="am-u-md-6 am-u-sm-12 row-mb">
                <div class="tpl-portlet">
@@ -150,7 +167,7 @@
                          </div> 
                      </div>
                    </div>
-               </div>    
+               </div>    --> 
                <div class="am-u-md-6 am-u-sm-12 row-mb">
                <div class="tpl-portlet">
                  <div class="tpl-portlet-title">

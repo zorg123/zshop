@@ -1,7 +1,14 @@
+<%@page import="com.flyrui.dao.pojo.sys.User"%>
 <%@ page contentType="text/html; charset=utf-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
 	String baseUri = request.getContextPath();	
+	String userType="";
+	if(request.getSession().getAttribute("user")!=null){
+		User currentUser =  (User)request.getSession().getAttribute("user");
+		userType = currentUser.getUser_type();
+	}
+	
 %>
 <s:if test="#session.user.user_level == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
@@ -52,8 +59,8 @@
                       </span>
                   </a>
                   <ul class="am-dropdown-content">
-                  	  <li><a href="javascript:void(0);" onclick="pageData.genSubUser(this);"><span class="am-icon-users"></span>生成子账号</a></li>
-                      <li><a href="javascript:void(0);" onclick="pageData.loginOut(this);"><span class="am-icon-power-off"></span> 退出</a></li>
+                  	  <li><a href="javascript:void(0);" onclick="pageData.genSubUser(this);"><span class="am-icon-users"></span>&nbsp;&nbsp;切换账号</a></li>
+                      <li><a href="javascript:void(0);" onclick="pageData.loginOut(this);"><span class="am-icon-power-off"></span>&nbsp;&nbsp;退出</a></li>
                   </ul>
               </li>                
           </ul>
@@ -93,7 +100,7 @@
                     <ul class="tpl-left-nav-sub-menu">
                         <s:iterator  value="#menu.sub_menu_list"  id="subMenu">
                            <%--未激活用户不显示拼团抢购 --%>
-                           <s:if test="#session.user.state == 1 || (#session.user.state == 0 && #subMenu.menu_name !='拼团商品')">    
+                           <s:if test="#session.user.state == 1 || (#session.user.state == 0 && #subMenu.menu_name !='拼团商品') ">    
          						<li id="tree<s:property value="#subMenu.menu_id" />" >
 		                    		<a href="javascript:void(0);" url="<s:property value="#subMenu.menu_url" />" menuId="tree<s:property value="#subMenu.menu_id" />">
 		                                <i class="am-icon-angle-right"></i>
@@ -121,6 +128,7 @@
 	<div id="mainContent" class="tpl-content-wrapper">
     </div>
     <script language="javascript" type="text/javascript" >
+    	var userType = "<%=userType%>";
 		$(function() {
 			if(window.location.hash !=''){				
 	    		var ha = window.location.hash.substring(1)
@@ -129,6 +137,7 @@
 	    	}else{
 				pageData.openContent("/Sys/Sys!index.do");
 	    	}
+			
 		});
 	</script>
 </div>

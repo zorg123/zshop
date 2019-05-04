@@ -44,4 +44,5 @@ public interface UserService {
 	public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser);
 	public List<Map> queryUserGoodsOrder(Map<String,String> param);
 	public boolean genSubUser(User curcurrUser2,User currUser);
+	public void setUserSessionAttr(User user);
 }

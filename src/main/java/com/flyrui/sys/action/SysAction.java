@@ -295,6 +295,14 @@ public class SysAction extends BaseAction {
     	u.setUser_id(getUserId());
     	u = userService.getListByCon(u).get(0);
     	
+    	String currentLevelAmount = "";
+    	for(Map map:userLevelShareoutList){
+    		if(u.getUser_level().toString().equals(map.get("cf_desc"))){
+    			currentLevelAmount=(String)map.get("total");
+    			break;
+    		}
+    	}
+    	
     	Map<String,Object> returnMap = new HashMap<String,Object>();
     	returnMap.put("userLevelShareoutList",userLevelShareoutList);
     	returnMap.put("curMonthOrdrs",curMonthOrdrs);
@@ -303,6 +311,7 @@ public class SysAction extends BaseAction {
     	returnMap.put("getShareout_qua",u.getShareout_qua());
     	returnMap.put("Allorder_num",u.getAllorder_num());
     	returnMap.put("totalUserGoodsOrders",totalUserGoodsOrders);
+    	returnMap.put("currentLevelAmount",currentLevelAmount);
     	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();

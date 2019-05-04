@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,9 @@ import com.flyrui.common.SpringBeans;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
+import com.flyrui.dao.common.SQLMapConstant;
 import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.sys.TbRole;
 import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
@@ -276,7 +279,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	public boolean genSubUser(User curcurrUser2,User currUser){
 		curcurrUser2.setPid(currUser.getUser_id());
     	curcurrUser2.setUser_id(null);
-    	curcurrUser2.setUser_code("z"+currUser.getUser_code());
+//    	curcurrUser2.setUser_code("z"+currUser.getUser_code());
+    	curcurrUser2.setUser_code(currUser.getUser_code()+"-1");
     	curcurrUser2.setLogin_count(0);
     	curcurrUser2.setLast_login_time(null);
     	curcurrUser2.setLast_login_ip(null);
@@ -287,13 +291,13 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     	curcurrUser2.setCreate_time(new Date());
     	curcurrUser2.setAct_time(null);
     	curcurrUser2.setState("1");
-    	curcurrUser2.setUser_level(0);
+    	curcurrUser2.setUser_level(1);
     	curcurrUser2.setShareout_qua("-1");
     	curcurrUser2.setPassword(CASMd5Utils.getPwd("111111", curcurrUser2.getUser_code()));
     	curcurrUser2.setTrans_pwd(CASMd5Utils.getPwd("222222", curcurrUser2.getUser_code()));
     	
     	super.insert(curcurrUser2);
-    	this.saveUserRole(curcurrUser2.getUser_id(), "4");
+    	this.saveUserRole(curcurrUser2.getUser_id(), "5");
     	
     	AccoutInfoDto accoutInfo = new AccoutInfoDto();
     	accoutInfo.setUser_id(Integer.valueOf(curcurrUser2.getUser_id()));
@@ -302,5 +306,15 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     	accoutInfo.setReconsmp_coin(0d);
     	accoutInfoService.insert(accoutInfo);
     	return true;
+	}
+	public void setUserSessionAttr(User user) {
+    	List<TbRole> roleList = baseDao.selectList(SQLMapConstant.QUERY_ROLE_INFO_BY_USER_ID, user);
+        user.setRoleList(roleList);
+        if(roleList!=null&roleList.size()>0){
+            //有角色信息,则写入到session中,记录登录信息
+            if(ServletActionContext.getRequest().getSession()!=null){
+            	ServletActionContext.getRequest().getSession().setAttribute("user",user);
+            }
+        }
 	}
 }
