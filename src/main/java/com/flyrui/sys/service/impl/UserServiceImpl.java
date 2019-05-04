@@ -257,7 +257,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	public List<Map> queryUserLevelShareout() {
 		return baseDao.selectList(getNameSpace()+".queryUserLevelShareout");
 	}
-	
+	public List<Map> queryfrConfig(Map map) {
+		return baseDao.selectList(getNameSpace()+".queryfrConfig",map);
+	}
 	public List<Map> queryUserMonthGoods(Map<String,String> param) {
 		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
 	}

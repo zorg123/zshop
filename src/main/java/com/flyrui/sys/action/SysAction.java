@@ -257,6 +257,9 @@ public class SysAction extends BaseAction {
     	
     	UserService userService = (UserService)SpringBeans.getBean("userService");
     	List<Map> userLevelShareoutList = userService.queryUserLevelShareout();
+    	HashMap mapPara = new HashMap();
+    	mapPara.put("cf_id", "Threshold");
+    	List<Map> frConfigList = userService.queryfrConfig(mapPara);
     	
     	
     	Map<String,String> param = new HashMap<String,String>();
@@ -295,11 +298,21 @@ public class SysAction extends BaseAction {
     	u.setUser_id(getUserId());
     	u = userService.getListByCon(u).get(0);
     	
+    	String currentLevelPepoleCount = "";
     	String currentLevelAmount = "";
     	for(Map map:userLevelShareoutList){
     		if(u.getUser_level().toString().equals(map.get("cf_desc"))){
     			currentLevelAmount=(String)map.get("total");
+    			currentLevelPepoleCount=String.valueOf(map.get("usercount")) ;
     			break;
+    		}
+    	}
+    	
+    	int num_need_tobe_share = 0;
+    	//如果不具备分红资格，查询还差多少个
+    	for(Map map : frConfigList){
+    		if(map.get("cf_desc").toString().indexOf(u.getUser_level()+"")>=0){
+    			num_need_tobe_share = lastMonthOrdrs+curMonthOrdrs - Integer.parseInt((String)map.get("cf_value")) ;
     		}
     	}
     	
@@ -312,6 +325,8 @@ public class SysAction extends BaseAction {
     	returnMap.put("Allorder_num",u.getAllorder_num());
     	returnMap.put("totalUserGoodsOrders",totalUserGoodsOrders);
     	returnMap.put("currentLevelAmount",currentLevelAmount);
+    	returnMap.put("currentLevelPepoleCount",currentLevelPepoleCount);
+    	returnMap.put("num_need_tobe_share",num_need_tobe_share);
     	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();

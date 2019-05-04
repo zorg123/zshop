@@ -398,6 +398,9 @@
    		LEFT JOIN (SELECT user_level ,SUM(1) AS usercount FROM tb_user a WHERE state = '1' AND bus_state='1' AND  shareout_qua ='1' GROUP BY user_level) b ON a.ptype = b.user_level    
 	WHERE  c.cf_module='zshopuserlevel' ORDER BY cf_desc
  </select>
+ <select id="queryfrConfig" resultType="hashmap" parameterType="hashmap">
+ 	SELECT * FROM fr_config a WHERE a.`cf_id` like  concat('%',#{cf_id,jdbcType=VARCHAR},'%') 
+ </select>
  <select id="queryUserMonthGoods" resultType="hashmap" parameterType="hashmap">
  	select user_id,months,goodsSum from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
  </select>

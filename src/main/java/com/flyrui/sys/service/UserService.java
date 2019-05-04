@@ -38,7 +38,7 @@ public interface UserService {
 	public void checkCurrentChild(User loginUser,User user) throws FRException;
 	
 	public List<Map> queryUserLevelShareout();
-	
+	public List<Map> queryfrConfig(Map map);
 	public List<Map> queryUserMonthGoods(Map<String,String> param);
 	public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize);
 	public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser);

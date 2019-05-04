@@ -10,28 +10,30 @@
 <s:set name="Allorder_num" value="result.ret.Allorder_num"/>
 <s:set name="totalUserGoodsOrders" value="result.ret.totalUserGoodsOrders"/>
 <s:set name="currentLevelAmount" value="result.ret.currentLevelAmount"/>
+<s:set name="currentLevelPepoleCount" value="result.ret.currentLevelPepoleCount"/>
+<s:set name="num_need_tobe_share" value="result.ret.num_need_tobe_share"/>
 
 
 <s:if test="result.ret.userLevel == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 1">    
-    <s:set name="userLevelName" value="'1'" />      
+    <s:set name="userLevelName" value="'普通会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 2">    
-    <s:set name="userLevelName" value="'2'" />      
+    <s:set name="userLevelName" value="'vip会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 3">    
-    <s:set name="userLevelName" value="'3'" />      
+    <s:set name="userLevelName" value="'经理'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 4">    
-    <s:set name="userLevelName" value="'4'" />      
+    <s:set name="userLevelName" value="'总监'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 5">    
-    <s:set name="userLevelName" value="'5'" />      
+    <s:set name="userLevelName" value="'总裁'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 6">    
-    <s:set name="userLevelName" value="'6'" />      
+    <s:set name="userLevelName" value="'合伙人'" />      
 </s:if>
 <div >
         <!-- <div class="tpl-content-page-title">
@@ -67,15 +69,22 @@
                     		 <div class="number" style="color:white;font-size: 14px">
                     		 <s:if test="result.ret.userLevel > 1">
                     		 	会员级别：<font style="color:black;font-weight: bold;"><s:property value="result.ret.userLevel"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                    		 	<s:property value="result.ret.userLevel"/>级奖金池：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
-                    		 	会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font>
+                    		 	本级分红池累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
+                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
+                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
                     		 </s:if>
                     		 <s:else>
                     		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     		 </s:else>
                     		 </div>
-                         	<div class="desc" style="color:white;font-size: 14px">分红资格:<s:if test="result.ret.getShareout_qua == 1"><font style="color:black;font-weight: bold;">具备</font></s:if><s:else><font style="color:red;font-weight: bold;">不具备 </font></s:else>&nbsp;&nbsp;&nbsp;&nbsp;
-                         	上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font></div>
+                         	<div class="desc" style="color:white;font-size: 14px">分红资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:black;font-weight: bold;">具备</font></s:if>
+                         	<s:else>
+                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
+                         		相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
+                         	</s:else>
+                         	
+                         	<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
+                         	</div>
                         	
                     </div>
                     <!-- 
