@@ -53,7 +53,7 @@
                                             <span class="ico" style="margin-bottom:0px">
 			                                   	 <%-- <span class="price-promo">￥ <s:property value="#goodsIter.goods_price"/> </span> <span class="price-original"><s:property value="#goodsIter.goods_market_price"/></span>  <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if> --%>  
 			                                	<span class="sk_item_price">
-			                                		拼团:<span class="mod_price sk_item_price_new">
+			                                		<s:if test="goods.catalog_id == 1">会员价格:</s:if><s:else>拼团价格:</s:else><span class="mod_price sk_item_price_new">
 				                                		<i>¥</i><span><s:property value="#goodsIter.goods_price"/></span>
 			                                		</span>
 			                                		<s:if test="#goodsIter.goods_market_price != null">

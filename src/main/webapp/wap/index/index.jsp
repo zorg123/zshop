@@ -21,19 +21,19 @@
     <s:set name="userLevelName" value="'普通会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 2">    
-    <s:set name="userLevelName" value="'vip会员'" />      
+    <s:set name="userLevelName" value="'一星股东'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 3">    
-    <s:set name="userLevelName" value="'经理'" />      
+    <s:set name="userLevelName" value="'二星股东'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 4">    
-    <s:set name="userLevelName" value="'总监'" />      
+    <s:set name="userLevelName" value="'三星股东'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 5">    
-    <s:set name="userLevelName" value="'总裁'" />      
+    <s:set name="userLevelName" value="'四星股东'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 6">    
-    <s:set name="userLevelName" value="'合伙人'" />      
+    <s:set name="userLevelName" value="'五星股东'" />      
 </s:if>
 <div >
         <!-- <div class="tpl-content-page-title">
