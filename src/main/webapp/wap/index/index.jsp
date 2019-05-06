@@ -108,7 +108,7 @@
                     </div>
                     <div class="details">
                         <div class="number"> <s:property value="#retAccoutInfo.bonus_coin"/> </div>
-                        <div class="desc"> 奖金币</div>
+                        <div class="desc"> 奖金积分</div>
                     </div>
                     <!-- <a class="more" href="#"> 查看更多
 		                <i class="m-icon-swapright m-icon-white"></i>  
@@ -122,7 +122,7 @@
                     </div>
                     <div class="details">
                         <div class="number"><s:property value="#retAccoutInfo.elect_coin"/> </div>
-                        <div class="desc"> 电子币 </div>
+                        <div class="desc"> 电子积分 </div>
                     </div>
                     <!-- <a class="more" href="#"> 查看更多
                 <i class="m-icon-swapright m-icon-white"></i>  -->
