@@ -98,6 +98,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   newGoodsOrder.setUser_id(tbUser.getUser_id());
 	   newGoodsOrder.setState("0");
 	   newGoodsOrder.setCatalog_id("1");
+	   newGoodsOrder.setGoods_id_notInclude("201705091900000011");
 	   List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
 	   if(goodsOrderListForActive!=null && goodsOrderListForActive.size()>0){
 		   GoodsOrder activeOrder = goodsOrderListForActive.get(0);

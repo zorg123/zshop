@@ -22,6 +22,9 @@ public class GoodsOrder implements Serializable {
 
 	/** 商品id */
 	private String goods_id;
+	
+	/** 商品id */
+	private String goods_id_notInclude;
 
 	/** 商品名称 */
 	@ExcelAnnotation(exportName = "商品名称")
@@ -406,6 +409,14 @@ public class GoodsOrder implements Serializable {
 
 	public void setCreate_date_end(String create_date_end) {
 		this.create_date_end = create_date_end;
+	}
+
+	public String getGoods_id_notInclude() {
+		return goods_id_notInclude;
+	}
+
+	public void setGoods_id_notInclude(String goods_id_notInclude) {
+		this.goods_id_notInclude = goods_id_notInclude;
 	}
 	
 }
