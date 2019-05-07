@@ -72,9 +72,14 @@
 	                                        <div class="am-btn-toolbar">
 	                                            <form class="am-form am-form-horizontal" style="margin-top:10px">	                                            
 		                                        	<div class="am-form-group" style="margin-bottom:0px">					                                   
-					                                    <label class="am-u-sm-8" style="padding:0px;font-weight:400;font-size:14px;">
+					                                    <label class="am-u-sm-6" style="padding:0px;font-weight:400;font-size:14px;">
 					                                        <input type="number" pattern="[0-9]*" name="amount" placeholder="输入你要购买的数量" style="font-size:14px" value="1">
 					                                    </label>
+					                                    <s:if test="#goodsIter.goods_id == '201705091900000011'">
+					                                    <label class="am-u-sm-2" style="padding:5px;font-weight:400;font-size:14px;">
+					                                        X10
+					                                    </label>
+					                                    </s:if>
 					                                    <div class="am-btn-group am-btn-group-xs am-u-sm-4">
 			                                            	 <button type="button" class="am-btn am-btn-default am-btn-success" goodsId="<s:property value="#goodsIter.goods_id"/>" onclick="buy(this);"><span class="am-icon-cart-arrow-down"></span> 购买</button> </div>
 					                                    </div>
@@ -120,6 +125,9 @@
 		if(!amount || amount < 1){
 			CommonUtils.showAlert("请先输入要购买的数量!");
 			return ;
+		}
+		if(goodsId=='201705091900000011'){
+			amount = amount*10;
 		}
 		var params ={};
 		params["goods.goods_id"] = goodsId;
