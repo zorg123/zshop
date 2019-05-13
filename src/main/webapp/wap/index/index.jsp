@@ -69,7 +69,7 @@
                     		 <div class="number" style="color:white;font-size: 14px">
                     		 <s:if test="result.ret.userLevel > 1">
                     		 	会员级别：<font style="color:blue;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                    		 	本级分红池累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
+                    		 	公司红包累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
                     		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
                     		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
                     		 </s:if>
