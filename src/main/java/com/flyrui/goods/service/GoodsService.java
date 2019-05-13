@@ -25,5 +25,7 @@ public interface GoodsService {
 	
 	public List<Goods> selectGoodsByIdForUpdate(Goods goods);
 	
+	public int goodsChange(String orderId,Goods goods);
 	
+	public PageModel<Goods> selectByChangeGoods(Goods goods,int pageNo,int pageSize);
 }

@@ -44,6 +44,7 @@
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" id="modRevBtn" class="am-btn am-btn-default am-btn-success" style="display:none"><span class="am-icon-plug"></span>修改收货地址</button>
                                     <button type="button" id="goodSendBtn" class="am-btn am-btn-default am-btn-success" style="display:none; margin-left:10px"><span class="am-icon-plug"></span>申请发货</button>
+                                    <button type="button" id="goodChangeBtn" class="am-btn am-btn-default am-btn-success" style="display:none; margin-left:10px"><span class="am-icon-exchange"></span>换货</button>
                                 </div>                             
                             </div>
                         </div>
@@ -73,7 +74,7 @@
                                     <tbody>
                                         <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>"  goodsId="<s:property value="#goodsOrderIter.goods_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:if test="#goodsOrderIter.catalog_id == 1" >会员商品</s:if><s:else>拼团商品</s:else></td>
@@ -162,6 +163,29 @@
 	    pageData.openContent("/Goods/goodsSends.do",params);
 	});
 	
+	$("#goodChangeBtn").on("click",function(){
+		var goodsList=[];
+		var orderId ;
+		var goodsId;
+		$.each($("#listForm input:checked"),function(i,v){
+			orderId = $(this).attr("orderId");
+			goodsId = $(this).attr("goodsId");
+			goodsList.push(orderId);
+		});
+		if(goodsList.length==0){
+			CommonUtils.showAlert("请先选择要修改的记录!");
+			return;
+		}
+		if(goodsList.length>1){
+			CommonUtils.showAlert("只能选择一个记录修改!");
+			return;
+		}
+		var params ={};
+		params["orderId"]=orderId;	
+		params["goods.goods_id"]=goodsId;	
+	    pageData.openContent("/Goods/goodsChangeList.do",params);		
+	});
+	
 	$("#listForm td input[type='checkbox']").on("click",function(event,param){
 		
 		var $this = $(this);
@@ -172,9 +196,11 @@
 		if($this.is(":checked") && state == '0'){
 			$("#modRevBtn").show();
 			$("#goodSendBtn").show();
+			$("#goodChangeBtn").show();
 		}else{			
 			$("#modRevBtn").hide();
 			$("#goodSendBtn").hide();
+			$("#goodChangeBtn").hide();
 		}
 	});
 	

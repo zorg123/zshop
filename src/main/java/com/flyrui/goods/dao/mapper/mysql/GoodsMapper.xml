@@ -119,6 +119,73 @@
      		</if>
     </where>
   </sql>
+  <sql id="Base_Where_Clause2" >
+    <where >	    	
+	    	<if test="catalog_id != null  and catalog_id != '' " >
+        		and catalog_id = #{catalog_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_name != null  and goods_name != '' " >
+        		and goods_name like #{goods_name,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_alias != null  and goods_alias != '' " >
+        		and goods_alias = #{goods_alias,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="eff_date != null " >
+        		and eff_date &lt;= #{eff_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="exp_date != null " >
+        		and exp_date &gt;= #{exp_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="goods_type != null  and goods_type != '' " >
+        		and goods_type = #{goods_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_amount != null  and goods_amount != '' " >
+        		and goods_amount = #{goods_amount,jdbcType=INTEGER}
+     		</if>
+	    	<if test="goods_price != null  and goods_price != '' " >
+        		and goods_price = #{goods_price,jdbcType=DOUBLE}
+     		</if>
+	    	<if test="goods_market_price != null  and goods_market_price != '' " >
+        		and goods_market_price = #{goods_market_price,jdbcType=DOUBLE}
+     		</if>
+	    	<if test="pay_type != null  and pay_type != '' " >
+        		and pay_type = #{pay_type,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_desc != null  and goods_desc != '' " >
+        		and goods_desc = #{goods_desc,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="icon_url != null  and icon_url != '' " >
+        		and icon_url = #{icon_url,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="pic_url != null  and pic_url != '' " >
+        		and pic_url = #{pic_url,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="state_date != null " >
+        		and state_date = #{state_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="create_user_id != null  and create_user_id != '' " >
+        		and create_user_id = #{create_user_id,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="order_id != null  and order_id != '' " >
+        		and order_id = #{order_id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="goods_title != null  and goods_title != '' " >
+        		and goods_title = #{goods_title,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_keywords != null  and goods_keywords != '' " >
+        		and goods_keywords = #{goods_keywords,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="goods_descriptions != null  and goods_descriptions != '' " >
+        		and goods_descriptions = #{goods_descriptions,jdbcType=VARCHAR}
+     		</if>
+    </where>
+  </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.Goods" >
     select    
     <include refid="Base_Column_List" />
@@ -279,4 +346,15 @@
   <update id="pro_zshop_buy" parameterMap="produreParam" statementType="CALLABLE">  
    	{call pro_zshop_buy(?, ?)}  
  </update>
+ <select id="selectByChangeGoods" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.Goods" >
+    select    
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause2" /> 
+      <if test="goods_id != null" >
+         and goods_id != #{goods_id,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </select>
 </mapper>

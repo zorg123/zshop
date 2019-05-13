@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
+import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.FRError;
 import com.flyrui.exception.FRException;
@@ -23,7 +24,6 @@ import com.flyrui.goods.pojo.Goods;
 import com.flyrui.goods.pojo.GoodsOrder;
 import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsService;
-import com.flyrui.quartz.dto.GoodsOrderAfter;
 import com.flyrui.quartz.service.GoodsOrderAfterService;
 
 
@@ -150,5 +150,20 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		goodsId = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsId.substring(goodsId.length()-8);
 		goods.setGoods_id(goodsId);
 		return baseDao.insert(getNameSpace()+".insert", goods);
+	}
+	
+	@Override
+	public int goodsChange(String orderId,Goods goods){		
+		GoodsOrder  goodsOrder = new GoodsOrder();
+		goodsOrder.setOrder_id(orderId);
+		goodsOrder.setGoods_name(goods.getGoods_name());
+		goodsOrder.setGoods_id(goods.getGoods_id());
+		goodsOrder.setState_date(new Date());
+		return goodsOrderService.update(goodsOrder);
+	}
+	
+	@Override
+	public PageModel<Goods> selectByChangeGoods(Goods goods,int pageNo,int pageSize){
+		return  getPagerList(goods,getNameSpace()+".selectByChangeGoods",pageNo,pageSize);
 	}
 }

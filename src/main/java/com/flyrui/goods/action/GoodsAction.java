@@ -50,6 +50,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="goodsRevAddrList", location = "/wap/goods/goodsRevAddr.jsp"),
 		@Result(name="modGoodsRevAddr", location = "/wap/goods/goodsRevMod.jsp"),
 		@Result(name="goodsSends", location = "/wap/goods/goodsSends.jsp"),
+		@Result(name="goodsChangeList", location = "/wap/goods/goodsChangeList.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -77,6 +78,8 @@ public class GoodsAction extends BaseAction {
 	public String goodsOrderSplitNumber;
 	
 	public String conditionType;
+	
+	public String orderId;
 	
 	@Autowired
 	public GoodsService goodsService;	
@@ -573,6 +576,59 @@ public class GoodsAction extends BaseAction {
 	    	}
 	    	goodsOrder.setGoods_amount(newGoodsOrder.getGoods_amount());
 	    	goodsOrderService.goodsSend(goodsOrder,goodsOrderSplitNumberI);	    	
+	    	setCommonSuccessReturn();
+	    	return SUCCESS;
+	 }
+	 
+	 
+	 @Action("goodsChangeList")
+	 public String goodsChangeList() throws FRException{	    	
+	    	if(orderId == null || "".equals(orderId) ) {
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	//goods = new Goods(); 
+	    	goods.setCatalog_id("1");
+	    	goods.setState("1");
+			goods.setEff_date(new Date());
+			goods.setExp_date(new Date());
+			if(rows==0){
+	    		rows=6;
+	    	}
+	    	if(page==0){
+	    		page = 1;
+	    	}
+	    	if(!StringUtils.isBlank(goods.getGoods_name())) {
+	    		goods.setGoods_name("%"+goods.getGoods_name()+"%");
+	    	}
+	    	PageModel retPage = goodsService.selectByChangeGoods(goods, page, rows);
+	    	setResult(retPage);
+	    	if(!StringUtils.isBlank(goods.getGoods_name())) {
+	    		goods.setGoods_name(goods.getGoods_name().replaceAll("%", ""));
+	    	}
+	    	return "goodsChangeList";
+	 }
+	 
+	 @Action("goodsChange")
+	 public String goodsChange() throws FRException{	    	
+	    	if(orderId == null || "".equals(orderId) ) {
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	if(goods == null || goods.getGoods_id() == null ) {
+	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
+	    	}
+	    	GoodsOrder goodsOrder =new GoodsOrder();
+	    	goodsOrder.setOrder_id(orderId);
+	    	List<GoodsOrder> orderList = goodsOrderService.getListByCon(goodsOrder);
+	    	if(orderList.size() < 1) {
+	    		throw new FRException(new FRError(ErrorConstants.GOODS_004));
+	    	}
+	    	
+	    	List<Goods> goodsList = goodsService.getListByCon(goods);
+	    	if(goodsList.size() < 1) {
+	    		throw new FRException(new FRError(ErrorConstants.GOODS_005));
+	    	}
+	    	goods = goodsList.get(0);
+	    	goodsService.goodsChange(orderId, goods);
 	    	setCommonSuccessReturn();
 	    	return SUCCESS;
 	 }
