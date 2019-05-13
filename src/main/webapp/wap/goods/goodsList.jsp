@@ -19,7 +19,7 @@
 <div data-url="/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="javascript:pageData.openContent('/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />')">网上商城</a></li>
+                <li><a href="javascript:pageData.openContent('/Goods/goodsList.do?goods.catalog_id=<s:property value="goods.catalog_id" />')">会员购物</a></li>
                 <li class="am-active"><s:property value="funcName"/></li>
             </ol>
             <div class="tpl-portlet-components">
@@ -53,7 +53,7 @@
                                             <span class="ico" style="margin-bottom:0px">
 			                                   	 <%-- <span class="price-promo">￥ <s:property value="#goodsIter.goods_price"/> </span> <span class="price-original"><s:property value="#goodsIter.goods_market_price"/></span>  <s:if test="#goodsIter.pay_type == 2">电子币</s:if><s:if test="#goodsIter.pay_type == 3">重销币</s:if><s:if test="#goodsIter.pay_type == '2,3'">电子币或重销币</s:if> --%>  
 			                                	<span class="sk_item_price">
-			                                		拼团:<span class="mod_price sk_item_price_new">
+			                                		<s:if test="goods.catalog_id == 1">会员价格:</s:if><s:else>拼团价格:</s:else><span class="mod_price sk_item_price_new">
 				                                		<i>¥</i><span><s:property value="#goodsIter.goods_price"/></span>
 			                                		</span>
 			                                		<s:if test="#goodsIter.goods_market_price != null">
@@ -72,9 +72,14 @@
 	                                        <div class="am-btn-toolbar">
 	                                            <form class="am-form am-form-horizontal" style="margin-top:10px">	                                            
 		                                        	<div class="am-form-group" style="margin-bottom:0px">					                                   
-					                                    <label class="am-u-sm-8" style="padding:0px;font-weight:400;font-size:14px;">
+					                                    <label class="am-u-sm-6" style="padding:0px;font-weight:400;font-size:14px;">
 					                                        <input type="number" pattern="[0-9]*" name="amount" placeholder="输入你要购买的数量" style="font-size:14px" value="1">
 					                                    </label>
+					                                    <s:if test="#goodsIter.goods_id == '201705091900000011'">
+					                                    <label class="am-u-sm-2" style="padding:5px;font-weight:400;font-size:14px;">
+					                                        X10
+					                                    </label>
+					                                    </s:if>
 					                                    <div class="am-btn-group am-btn-group-xs am-u-sm-4">
 			                                            	 <button type="button" class="am-btn am-btn-default am-btn-success" goodsId="<s:property value="#goodsIter.goods_id"/>" onclick="buy(this);"><span class="am-icon-cart-arrow-down"></span> 购买</button> </div>
 					                                    </div>
@@ -120,6 +125,9 @@
 		if(!amount || amount < 1){
 			CommonUtils.showAlert("请先输入要购买的数量!");
 			return ;
+		}
+		if(goodsId=='201705091900000011'){
+			amount = amount*10;
 		}
 		var params ={};
 		params["goods.goods_id"] = goodsId;

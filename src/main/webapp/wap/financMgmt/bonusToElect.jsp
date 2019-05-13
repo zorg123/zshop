@@ -8,12 +8,12 @@
 			<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">财务管理</a></li>
-                <li class="am-active">奖金币转电子币</li>
+                <li class="am-active">奖金积分转电子积分</li>
             </ol>
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
                     <div class="caption font-green bold">
-                        <span class="am-icon-code"></span> 奖金币转电子币
+                        <span class="am-icon-code"></span> 奖金积分转电子积分
                     </div>
                 </div>
                 <div class="tpl-block ">
@@ -33,7 +33,7 @@
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">金额</label>
                                     <div class="am-u-sm-9">
                                         <input type="number" pattern="[0-9]*" id="coin_num" placeholder="金额">
-                                        <small>请输入转入的现金总额</small>
+                                        <small>请输入转入的奖金积分金额</small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">

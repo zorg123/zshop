@@ -58,4 +58,10 @@ public class ErrorConstants {
  	
  	/** 非激活用户只能购买一个会员商品  */
  	public static final String SHOP_UNACTIVE_USER_1 = "USER_011";
+ 	
+ 	/** 要修改的订单不存在!**/
+ 	public static final String GOODS_004 = "GOODS_004";
+ 	
+ 	/**要订购的商品不存在! **/
+ 	public static final String GOODS_005 = "GOODS_005";
 }

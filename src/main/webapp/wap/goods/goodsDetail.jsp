@@ -74,7 +74,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-3 am-form-label">购买数量</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" db_field="goodsOrder.goods_amount" pattern="[0-9]*" name="goodsOrder.goods_amount" placeholder="输入你要购买的数量" value="<s:property value="goods.goods_amount" />">
+                                        <input type="number" disabled="disabled" db_field="goodsOrder.goods_amount" pattern="[0-9]*" name="goodsOrder.goods_amount" placeholder="输入你要购买的数量" value="<s:property value="goods.goods_amount" />">
                                         <small id="coinAmountTip"></small> 
                                     </div>
                                 </div>

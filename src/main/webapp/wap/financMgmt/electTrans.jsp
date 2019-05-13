@@ -7,12 +7,12 @@
 			<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
                 <li><a href="#">财务管理</a></li>
-                <li class="am-active">电子币互转</li>
+                <li class="am-active">电子积分互转</li>
             </ol>
             <div class="tpl-portlet-components">
                 <div class="portlet-title">
                     <div class="caption font-green bold">
-                        <span class="am-icon-code"></span> 电子币互转
+                        <span class="am-icon-code"></span> 电子积分互转
                     </div>
                 </div>
                 <div class="tpl-block ">
@@ -37,10 +37,10 @@
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">电子币金额</label>
+                                    <label for="user-QQ" class="am-u-sm-3 am-form-label">电子积分金额</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" pattern="[0-9]" id="coin_num" placeholder="电子币金额">
-                                        <small>输入要转入的电子币金额</small>
+                                        <input type="number" pattern="[0-9]" id="coin_num" placeholder="电子积分金额">
+                                        <small>输入要转入的电子积分金额</small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">

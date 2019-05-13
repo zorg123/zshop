@@ -5,6 +5,7 @@
     	<result column="order_id" property="order_id" jdbcType="VARCHAR" />
     	<result column="order_code" property="order_code" jdbcType="VARCHAR" />
     	<result column="goods_id" property="goods_id" jdbcType="VARCHAR" />
+    	<result column="goods_id_notInclude" property="goods_id_notInclude" jdbcType="VARCHAR" />
     	<result column="goods_name" property="goods_name" jdbcType="VARCHAR" />
     	<result column="goods_amount" property="goods_amount" jdbcType="INTEGER" />
     	<result column="total_fee" property="total_fee" jdbcType="DOUBLE" />
@@ -114,6 +115,9 @@
      		</if>
 	    	<if test="goods_id != null  and goods_id != '' " >
         		and goods_id = #{goods_id,jdbcType=VARCHAR}
+     		</if>
+     		<if test="goods_id_notInclude != null  and goods_id_notInclude != '' " >
+        		and goods_id != #{goods_id_notInclude,jdbcType=VARCHAR}
      		</if>
 	    	<if test="goods_name != null  and goods_name != '' " >
         		and goods_name = #{goods_name,jdbcType=VARCHAR}

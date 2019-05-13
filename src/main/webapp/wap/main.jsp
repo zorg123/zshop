@@ -14,10 +14,10 @@
     <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
 <s:if test="#session.user.user_level == 1">    
-    <s:set name="userLevelName" value="'普通会员'" />      
+    <s:set name="userLevelName" value="'会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 2">    
-    <s:set name="userLevelName" value="'vip会员'" />      
+    <s:set name="userLevelName" value="'主管'" />      
 </s:if>
 <s:if test="#session.user.user_level == 3">    
     <s:set name="userLevelName" value="'经理'" />      
@@ -29,7 +29,7 @@
     <s:set name="userLevelName" value="'总裁'" />      
 </s:if>
 <s:if test="#session.user.user_level == 6">    
-    <s:set name="userLevelName" value="'合伙人'" />      
+    <s:set name="userLevelName" value="'董事'" />      
 </s:if>
 <jsp:include page="/wap/common/head.jsp"><jsp:param value="index" name="data-type"/></jsp:include>
 <header class="am-topbar am-topbar-inverse admin-header">

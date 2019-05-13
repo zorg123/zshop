@@ -18,7 +18,7 @@
 <div data-url="<s:property value="url" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">网上商城</a></li>
+                <li><a href="#">会员购物</a></li>
                 <li class="am-active"><s:property value="funcName" /></li>
             </ol>
             <div class="tpl-portlet-components" id="addrListDiv">
