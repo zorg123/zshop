@@ -10,7 +10,7 @@
 <div>           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">团队管理</a></li>
+                <li><a href="#">会员管理</a></li>
                 <li class="am-active">市场统计</li>
             </ol>
             <div class="tpl-portlet-components">

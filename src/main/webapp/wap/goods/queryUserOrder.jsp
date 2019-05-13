@@ -11,7 +11,7 @@
 <div   data-url="/Goods/queryUserOrder.do">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">网上商城</a></li>
+                <li><a href="#">会员购物</a></li>
                 <li class="am-active">订单查询  </li>
             </ol>
             <div class="tpl-portlet-components" id="addrListDiv">
