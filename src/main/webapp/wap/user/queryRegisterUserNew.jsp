@@ -18,7 +18,7 @@
 <div   data-url="/Sys/User/queryWaitActiveUser.do?user.state=<s:property value="user.state" />">           
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
-                <li><a href="#">拼团管理</a></li>
+                <li><a href="#">会员管理</a></li>
                 <li class="am-active"><s:property value="funcName"/></li>
             </ol>
             <div class="tpl-portlet-components">
