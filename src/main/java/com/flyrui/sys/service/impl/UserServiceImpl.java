@@ -87,7 +87,58 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    public int modifyPwd(Map<String,String> param){
 	   return baseDao.update(getNameSpace()+".modifyPwd", param);
    }
-  
+   //tbUser子帐号
+   @Transactional
+   public String[] activeUserUseOrder(TbUser tbUser,TbUser beActivedtbUser,String orderId){
+	   
+	   log.info("激活子帐号:"+tbUser.getUser_id()+"被激活人: "+beActivedtbUser.getUser_id());
+	   //查找订单 1、会员订单 2、未发货 3、最新一条
+	   GoodsOrder newGoodsOrder = new GoodsOrder();
+	   newGoodsOrder.setUser_id(tbUser.getUser_id());
+	   newGoodsOrder.setState("0");
+	   newGoodsOrder.setCatalog_id("1");
+	   newGoodsOrder.setOrder_id(orderId);
+	   List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
+	   if(goodsOrderListForActive!=null && goodsOrderListForActive.size()>0){
+		   GoodsOrder activeOrder = goodsOrderListForActive.get(0);
+		   log.info("子帐号激活会员: 订单id :"+activeOrder.getOrder_id()+"  数量:"+activeOrder.getGoods_amount());
+		   if(activeOrder.getGoods_amount() == 0){
+			   return new String[]{"-1","会员订单中商品数量为0，不能激活"};
+		   }
+		   //只剩一条的话
+		   if(activeOrder.getGoods_amount() == 1){
+			   log.info("订单商品数量1，子帐号激活会员: 直接激活");
+			   //插入新订单
+			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
+			   //调用存储过程
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新原定订单，作废
+			   GoodsOrder oldOrder = new GoodsOrder();
+			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   oldOrder.setState("-1");
+			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   oldOrder.setComments("该订单转赠给用户：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
+			   goodsOrderService.update(oldOrder);
+		   }else if(activeOrder.getGoods_amount() > 1){
+			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
+			   //插入新订单
+			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
+			   //调用存储过程
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新原定订单，数量-1
+			   GoodsOrder oldOrder = new GoodsOrder();
+			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
+			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
+			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldComments);
+			   goodsOrderService.update(oldOrder);
+		   }
+		   return new String[]{"0","成功"};
+	   }else{
+		   return new String[]{"-1","没有可以用于激活的订单"};
+	   }
+   }
    //tbUser子帐号
    @Transactional
    public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser){

@@ -36,7 +36,7 @@
 	                                <div class="am-btn-group am-btn-group-xs">
 	                                    <button type="button" id="activeBtn" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span>激活</button>
 	                                </div>
-	                                <div class="am-btn-group am-btn-group-xs" style="display: none">
+	                                <div class="am-btn-group am-btn-group-xs">
 	                                    <button type="button" id="delBtn" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span>删除</button>
 	                                </div>
 	                            </div>
@@ -113,9 +113,10 @@
 		function activeUser(){
 			var actUserList=[];
 			var userId;
-			//var name;
+			var name;
 			$.each($("#listForm input:checked"),function(i,v){
 				userId = $(this).attr("userId");
+				
 				actUserList.push(userId);
 			});
 			if(actUserList.length==0){
@@ -130,12 +131,14 @@
 			param["beActivedUserId"] = userId;
 			//alert(userId);
 			CommonUtils.showConfirm("确定要把您的订单赠送1个给该用户，并激活该用户吗?",function(){
-				CommonUtils.invokeAsyncAction(base+"/Sys/User/activeUser2.do", param, function (reply) {           
+				CommonUtils.invokeAsyncAction(base+"/Sys/User/activeUser2.do", param, function (reply) {
 		  	           if ((reply || '') != '') {
 		  	               var code = reply._code;               
-		  	               if (code == '0') {  
-		  	            	   CommonUtils.showAlert('操作成功!');
-		  	            	 setTimeout(function(){ pageData["refresh"](); }, 1000);   
+		  	               if (code == '0') {
+		  	            	  var params ={"conditionType":"0","catLog":"1","userId":userId,"name":name};
+		  	            	  pageData.openContent("/Goods/queryUserOrder.do?rows=10",params);
+		  	            	   //CommonUtils.showAlert('操作成功!');
+		  	            	 //setTimeout(function(){ pageData["refresh"](); }, 1000);   
 		  	               } else  {
 		  	            	  CommonUtils.showAlert(reply._msg);
 		  	               }              
@@ -162,7 +165,7 @@
 			}
 			var param={};
 			param["ids"] = actUserList.join(",");
-			CommonUtils.showConfirm("确定要删除吗?",function(){				
+			CommonUtils.showConfirm("确定要删除该用户吗?",function(){				
 				CommonUtils.invokeAsyncAction(base+'/Sys/User/delUnActiveUser.do', param, function (reply) {
 		  	           if ((reply || '') != '') {
 		  	               var code = reply._code;               

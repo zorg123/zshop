@@ -39,6 +39,9 @@ import com.flyrui.financMgmt.pojo.UserDirectRecommend;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.financMgmt.service.UserDirectRecommendService;
 import com.flyrui.framework.common.DateUtil;
+import com.flyrui.goods.pojo.GoodsOrder;
+import com.flyrui.goods.service.GoodsOrderService;
+import com.flyrui.goods.service.GoodsService;
 import com.flyrui.sys.dto.UserInfoDto;
 import com.flyrui.sys.dto.UserNetTree;
 import com.flyrui.sys.service.FrconfigService;
@@ -71,6 +74,7 @@ public class UserAction extends BaseAction {
     private String fileName;
     private String caption;	
     public String beActivedUserId;
+    public String orderId;
 	
     private static final Logger log = Logger.getLogger(UserAction.class);	
     
@@ -119,6 +123,10 @@ public class UserAction extends BaseAction {
     public UserDirectRecommendService getUserDirectRecommendService(){
     	return (UserDirectRecommendService)SpringBeans.getBean("userDirectRecommendService");
     } 
+    
+    public GoodsOrderService getGoodsOrderService(){
+    	return (GoodsOrderService)SpringBeans.getBean("goodsOrderService");
+    }
     /**      
      * 添加用户       
      * @param user
@@ -742,6 +750,37 @@ public class UserAction extends BaseAction {
 		result.putAll(retMap);
     	return SUCCESS;
     }
+    @Action("activeUserUseOrder")  
+    public String activeUserUseOrder() throws FRException{
+    	User currUser = getLoginUserInfo();
+    	if(!currUser.getUser_type().equals("child")){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "请使用子账户激活");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
+    	UserService userService = getUserService();
+    	User beActivedUser = new User();
+    	beActivedUser.setUser_id(beActivedUserId);
+    	List<User> li= userService.getListByCon(beActivedUser);
+    	if(li == null || li.size() == 0){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活用户不存在");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
+    	String[] ret = userService.activeUserUseOrder(getLoginUserInfo(), li.get(0),orderId);
+    	
+    	Map retMap = new HashMap();
+    	retMap.put("_code", "0");
+		result.putAll(retMap);
+    	return SUCCESS;
+    	
+    }
     @Action("activeUser2")  
     public String activeUser2() throws FRException{
     	User currUser = getLoginUserInfo();
@@ -764,11 +803,25 @@ public class UserAction extends BaseAction {
     		result.putAll(retMap);
         	return SUCCESS;
     	}
-    	String[] ret = userService.activeUser2(getLoginUserInfo(), li.get(0));
+    	
+    	GoodsOrderService goodsOrderService = this.getGoodsOrderService();
+    	GoodsOrder newGoodsOrder = new GoodsOrder();
+ 	    newGoodsOrder.setUser_id(currUser.getUser_id());
+ 	    newGoodsOrder.setState("0");
+ 	    newGoodsOrder.setCatalog_id("1");
+ 	    List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
+ 	    if(goodsOrderListForActive==null || goodsOrderListForActive.size()==0){
+ 	    	Map retMap = new HashMap();
+ 			retMap.put("_code", "-1");
+ 			retMap.put("_msg", "没有可以用于激活的订单");
+ 			result.putAll(retMap);
+ 	    	return SUCCESS;
+ 	    }
+    	
+    	//String[] ret = userService.activeUser2(getLoginUserInfo(), li.get(0));
     	
     	Map retMap = new HashMap();
-		retMap.put("_code", ret[0]);
-		retMap.put("_msg", ret[1]);
+    	retMap.put("_code", "0");
 		result.putAll(retMap);
     	return SUCCESS;
     	
@@ -903,10 +956,10 @@ public class UserAction extends BaseAction {
     	//校验是否是当前用户注册的
     	UserService userService = getUserService();
     	User uu= new User();
-    	uu.setRegister_id(userId);
+    	//uu.setRegister_id(userId);
     	uu.setUser_id(idStr[0]);
-    	uu.setBus_state(1);
-    	uu.setState("0");
+    	//uu.setBus_state(1);
+    	//uu.setState("0");
     	int cnt = userService.delUnActiveUser(uu);
     	if(cnt==0){
     		throw new FRException(new FRError("SYS_ERR010"));

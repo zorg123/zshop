@@ -42,6 +42,7 @@ public interface UserService {
 	public List<Map> queryUserMonthGoods(Map<String,String> param);
 	public PageModel selectForWaitActiveUser(User user,int pageNo,int pageSize);
 	public String[] activeUser2(TbUser tbUser,TbUser beActivedtbUser);
+	public String[] activeUserUseOrder(TbUser tbUser,TbUser beActivedtbUser,String orderId);
 	public List<Map> queryUserGoodsOrder(Map<String,String> param);
 	public boolean genSubUser(User curcurrUser2,User currUser);
 	public void setUserSessionAttr(User user);

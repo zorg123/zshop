@@ -50,6 +50,7 @@ import com.flyrui.sys.service.UserService;
 		@Result(name="goodsRevAddrList", location = "/wap/goods/goodsRevAddr.jsp"),
 		@Result(name="modGoodsRevAddr", location = "/wap/goods/goodsRevMod.jsp"),
 		@Result(name="goodsSends", location = "/wap/goods/goodsSends.jsp"),
+		@Result(name="activeUser", location = "/wap/goods/queryUserOrderForActive.jsp"),
 		@Result(type="json", params={"root","result"})}) 
 public class GoodsAction extends BaseAction {	
 		
@@ -77,7 +78,10 @@ public class GoodsAction extends BaseAction {
 	public String goodsOrderSplitNumber;
 	
 	public String conditionType;
+	public String catLog ;
+	public String userId;
 	
+	public String name;
 	@Autowired
 	public GoodsService goodsService;	
 	
@@ -420,8 +424,20 @@ public class GoodsAction extends BaseAction {
     	     c.add(Calendar.DATE, - 30);
     		 goodsOrder.setCreate_date_start(DateUtil.formatDate(new Date(c.getTimeInMillis()),DateUtil.DATE_FORMAT_1));
     	}
+    	if("1".equals(catLog)){
+    		goodsOrder.setCatalog_id("1");
+    	}
 		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
 		setResult(pageModel);
+		
+		if("1".equals(catLog)){
+			Map retMap = new HashMap();
+	    	retMap.put("user_id", userId);
+	    	retMap.put("name", name);
+			result.putAll(retMap);
+			
+			return "activeUser";
+		}
     	return "queryUserOrder";
     }
     
