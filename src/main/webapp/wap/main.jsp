@@ -47,7 +47,14 @@
   			<li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                   <a class="am-dropdown-toggle tpl-header-list-link am-inline" href="javascript:;">
                       <span class="tpl-header-list-user-nick">
-                      	<s:property value="#session.user.user_code" />
+                      	<s:if test="#session.user.user_type == 'child'">
+                      		<font style="color:red;font-weight: bold;">
+                      			<s:property value="#session.user.user_code" />
+                      		</font>
+                      	</s:if>
+                      	<s:else>
+                      		<s:property value="#session.user.user_code" />
+                      	</s:else>
                       </span>
                       <span class="tpl-header-list-user-ico am-show-lg-only ">
                         <s:if test="#session.user.head_img == null">
