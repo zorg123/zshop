@@ -63,7 +63,7 @@
     SELECT 
 	  CASE a.`user_type` WHEN 'main' THEN '主账号' WHEN 'child' THEN '子账号' ELSE '主账号' END AS user_type,
 	  CASE b.`state` WHEN '0' THEN '未激活' WHEN '1' THEN '激活' END AS state,
-	  IFNULL(b.`user_level`,0) AS user_level,
+	  c.cf_value AS user_level,
 	  IFNULL(b.`allorder_num`,0) AS allorder_num,
 	  IFNULL(a.`grade2Number`,0) AS grade2Number,
 	  IFNULL(a.`grade3Number`,0) AS grade3Number,
@@ -74,6 +74,7 @@
 	FROM
 	  user_direct_recommend a 
 	  JOIN tb_user b ON a.`user_id` = b.`user_id`
+	  join fr_config c on c.`cf_module` = 'zshopuserlevel' and c.`cf_desc`=b.user_level
 	where a.pid = #{user_id,jdbcType=INTEGER}
   </select>
   

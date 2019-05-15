@@ -77,7 +77,7 @@
                     		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     		 </s:else>
                     		 </div>
-                         	<div class="desc" style="color:white;font-size: 14px">分红资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
+                         	<div class="desc" style="color:white;font-size: 14px">红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
                          	<s:else>
                          		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
                          		<s:if test="result.ret.userLevel > 1">
@@ -93,8 +93,8 @@
                     <div class="details">
                     		 <div class="number" style="color:red;">
                     		 	当前级别：<s:property value="userLevelName"/>&nbsp;&nbsp;&nbsp;&nbsp; 
-                    		 	<s:if test="result.ret.getShareout_qua == 1">具备分红资格
-                    		 	</s:if><s:else> 你不具备分红资格 </s:else>
+                    		 	<s:if test="result.ret.getShareout_qua == 1">具备红包资格
+                    		 	</s:if><s:else> 你不具备红包资格 </s:else>
                     		 </div>
                          	<div class="desc">上月会员商品数量：<s:property value="lastMonthOrdrs"/>&nbsp;&nbsp;&nbsp;&nbsp;当月会员商品数：<s:property value="curMonthOrdrs"/></div>
                         	
