@@ -275,11 +275,13 @@ var pageData={
 	               var code = reply._code;               
 	               if (code == '0') {  
 	            	   window.location.hash="";
-	            	   if (navigator.userAgent && /(iPhone|iPad|iPod|Safari)/i.test(navigator.userAgent)) {
-	            	        window.location.href = window.document.referrer;
-	            		} else {
-	 	            	   window.history.go(0);
-	            		}
+	            	   CommonUtils.showAlert(reply._msg);
+	            	   setTimeout(function(){ window.location.href=base+'/Sys/mainwap.do';; }, 1000); 
+	            	   //if (navigator.userAgent && /(iPhone|iPad|iPod|Safari)/i.test(navigator.userAgent)) {
+	            	   //     window.location.href = window.document.referrer;
+	            	//} else {
+	 	            //	   window.history.go(0);
+	            	//	}
 	               } else  {
 	            	  CommonUtils.showAlert(reply._msg);
 	               }              
