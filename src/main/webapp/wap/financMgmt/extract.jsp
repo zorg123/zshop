@@ -4,6 +4,8 @@
 	String baseUri = request.getContextPath();
 %>
 <s:set name="able_coin_num" value="result.able_coin_num"/>
+<s:set name="isHasAccountInfo" value="result.isHasAccountInfo"/>
+
 <div>
 			<ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-home">首页</a></li>
@@ -23,6 +25,13 @@
 
                         <div class="am-u-sm-12 am-u-md-9">
                             <form class="am-form am-form-horizontal">
+                            	<s:if test="#isHasAccountInfo==0">
+	                            	<div class="am-form-group">
+	                                    <label for="user-QQ" class="am-u-sm-12 am-form-label" style="color:red;text-align:center">请到资料管理--账户资料中补充信息后提现!</label>	                                   
+	                                </div>
+                            	</s:if>
+                            	
+                                
                             	<div class="am-form-group">
                                     <label for="user-QQ" class="am-u-sm-3 am-form-label">可提现额度</label>
                                     <div class="am-u-sm-9">
@@ -59,6 +68,9 @@
 	$('#save').bind('click', function () {
 		save();
 	});
+	<s:if test="#isHasAccountInfo==0">
+		$("#save").attr("disabled",true);
+	</s:if>
 	function save(){
 		if(check()){
 			var param ={};
@@ -82,7 +94,7 @@
 	                		return;
 	                	}
 	                }else{
-	                	CommonUtils.showAlert('操作失败!');
+	                	CommonUtils.showAlert(reply._msg);
 	        	   		return false;
 	                }
 				}			
