@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -333,11 +334,22 @@ public class FinancMgmtAction extends BaseAction {
     	result.put("_code", "0");
     	result.put("_msg", "成功");
 		result.put("able_coin_num", able_coin_num);
+		String isHasAccountInfo ="1";
+		if(StringUtils.isBlank(retAccoutInfoDto.getAccount_bank())) {
+			isHasAccountInfo = "0";
+		}
+		result.put("isHasAccountInfo", isHasAccountInfo);
 		return "initExtract";
 	}
 	//奖金币提现
 	@Action(value="insertExtract")
-	public String insertExtract(){
+	public String insertExtract() throws FRException{
+		AccoutInfoDto accoutInfo = new AccoutInfoDto();
+    	accoutInfo.setUser_id(Integer.valueOf(getLoginUserInfo().getUser_id()));
+    	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
+    	if(retAccoutInfoDto==null || StringUtils.isBlank(retAccoutInfoDto.getAccount_bank())) {
+    		throw new FRException(new FRError(ErrorConstants.USER_013));
+    	}
 		HashMap retMap = new HashMap();
 		retMap = coinTrackService.insertExtract(getLoginUserInfo(), coinTrackDto);
 		setResult(retMap);

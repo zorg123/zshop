@@ -158,7 +158,7 @@
   </select>
   <select id="selectExtConf" resultMap="BaseResultMap" parameterType="com.flyrui.financMgmt.pojo.CoinTrackDto" >
     SELECT
-    CASE c.account_bank WHEN 1 THEN '工商银行' WHEN 2 THEN '建设银行' WHEN 3 THEN '农业银行' WHEN 4 THEN '中国银行' END AS account_bank,
+    CASE c.account_bank WHEN 1 THEN '工商银行' WHEN 2 THEN '建设银行' WHEN 3 THEN '农业银行' WHEN 4 THEN '中国银行' WHEN 5 THEN '支付宝' END AS account_bank,
     c.account_bank_brc,
     c.account_id,
     c.account_name,

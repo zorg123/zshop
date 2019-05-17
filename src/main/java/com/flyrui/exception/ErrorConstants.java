@@ -64,4 +64,9 @@ public class ErrorConstants {
  	
  	/**要订购的商品不存在! **/
  	public static final String GOODS_005 = "GOODS_005";
+ 	
+ 	/**
+ 	 * 请到资料管理--账户资料中补充信息后提现!
+ 	 */
+ 	public static final String USER_013 = "USER_013";
 }

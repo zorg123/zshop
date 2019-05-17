@@ -31,20 +31,21 @@
 										  <option value="2">建设银行</option>
 										  <option value="3">农业银行</option>
 										  <option value="4">中国银行</option>
+										  <option value="5">支付宝</option>
 										</select>	
                                     </div>
                                 </div>
                                 
-                                <div class="am-form-group">
+                                <div class="am-form-group" id="bankBrcDiv">
                                     <label for="accoutInfo-account_bank_brc" class="am-u-sm-4 am-form-label">开户支行</label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="tpl-form-input" db_field="accoutInfo.account_bank_brc" name="accoutInfo.account_bank_brc" placeholder="请输入开户支行，为必填" data-required="true" data-descriptions="accoutInfo.account_bank_brc" data-describedby="accoutInfo.account_bank_brc-description" value="<s:property value="accoutInfo.account_bank_brc" />"/>                                        
+                                        <input type="text" class="tpl-form-input" db_field="accoutInfo.account_bank_brc" name="accoutInfo.account_bank_brc" placeholder="请输入开户支行，为必填"  data-descriptions="accoutInfo.account_bank_brc" data-describedby="accoutInfo.account_bank_brc-description" value="<s:property value="accoutInfo.account_bank_brc" />"/>                                        
                                     	<small id="accoutInfo.account_bank_brc-description"></small>  
                                     </div>
                                 </div>
                                 
                                 <div class="am-form-group">
-                                    <label for="accoutInfo-account_id" class="am-u-sm-4 am-form-label">银行账号</label>
+                                    <label for="accoutInfo-account_id" class="am-u-sm-4 am-form-label" id="bankNameLabel">银行账号</label>
                                     <div class="am-u-sm-8">
                                         <input type="text" class="tpl-form-input" db_field="accoutInfo.account_id" name="accoutInfo.account_id" placeholder="请输入银行账号，为必填" data-required="true" data-descriptions="accoutInfo.account_id" data-describedby="accoutInfo.account_id-description" value="<s:property value="accoutInfo.account_id" />"/>                                        
                                     	<small id="accoutInfo.account_id-description"></small>  
@@ -52,7 +53,7 @@
                                 </div>
                                 
                                 <div class="am-form-group">
-                                    <label for="accoutInfo-account_name" class="am-u-sm-4 am-form-label">开户人姓名</label>
+                                    <label for="accoutInfo-account_name" class="am-u-sm-4 am-form-label" id="bankPersonName">开户人姓名</label>
                                     <div class="am-u-sm-8">
                                         <input type="text" class="tpl-form-input" db_field="accoutInfo.account_name" name="accoutInfo.account_name" placeholder="请输入开户人姓名，为必填" data-required="true" data-descriptions="accoutInfo.account_name" data-describedby="accoutInfo.account_name-description" value="<s:property value="accoutInfo.account_name" />"/>                                        
                                     	<small id="accoutInfo.account_name-description"></small>  
@@ -74,7 +75,32 @@
         </div>
         
       <script language="javascript" type="text/javascript" >
+      		function showZhifuBaoTip(){
+      			$("#bankBrcDiv").hide();
+      			$("#bankNameLabel").html("支付宝账号");
+      			$("#bankPersonName").html("账号姓名");
+      		}
+      		function showOtherBankTip(){
+      			$("#bankBrcDiv").show();
+      			$("#bankNameLabel").html("银行账号");
+      			$("#bankPersonName").html("开户人姓名");
+      		}
+      		<s:if test="accoutInfo.account_bank == 5" >
+      			showZhifuBaoTip();
+      		</s:if>
+      		
 			$(function() {	
+				
+				 $("#account_bank").on("change",function(){
+					 var $this = $(this);
+					 if($this.val()==5){
+						 showZhifuBaoTip();
+					 } else{
+						 showOtherBankTip();
+					 }
+				 });
+				
+				 
 				$("#accountfileForm").mvalidate({
 			            type:2,
 			            onKeyup:true,
@@ -84,6 +110,12 @@
 			                //点击提交按钮时,表单通过验证触发函数
 			                 var params = CommonUtils.getParam("accountfileForm",false);
 			                 params["accoutInfo.account_bank"] = $("#account_bank").val();
+			                 if($("#account_bank").val()!=5){
+			                	 if(params["accoutInfo.account_bank_brc"] ==""){
+			                		 CommonUtils.showAlert(' 请输入开户支行');
+			                		 return false;
+			                	 }
+			                 }
 			                 CommonUtils.showLoading();
 							 CommonUtils.invokeAsyncAction(base+'/FinancMgmt/updateAccountInfo.do', params, function (reply) {           
 				  	            CommonUtils.closeLoading();
@@ -103,7 +135,7 @@
 			                event.preventDefault();
 			                return false;
 			            },
-			            descriptions:{
+			            descriptions:{	
 			            	"accoutInfo.account_bank_brc":{
 			            		required : '<div class="field-invalidmsg">请输入开户支行</div>',
 			            		valid : ''
