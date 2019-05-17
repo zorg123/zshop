@@ -151,12 +151,12 @@
 		//如果找打提示的容器，是第二种类型的验证
 		if($describedShowElem.length > 0 && options.type==2){
 			//如果是change 或者是keyup 同时是第一次输入的时候就不要验证
-			if((event.type=="keyup" || event.type=="change") && (!$describedShowElem.children().length || !$.trim($describedShowElem.text()))){
+			//if((event.type=="keyup" || event.type=="change") && (!$describedShowElem.children().length || !$.trim($describedShowElem.text()))){
 
-			}else{					
+			//}else{					
 				$describedShowElem.html(log || '');
 				fieldValidTypeHand($field,status,options)
-			}
+			//}
 		}
 
 		if(typeof(validation.each) == 'function') {
@@ -241,8 +241,7 @@
 			
 			//
 			if(flag && opts.onKeyup){
-				$fields.filter(type[0]).each(function() {
-
+				$fields.filter(type[0]).each(function() {					
 					$(this).on("keyup."+namespace,function(event){
 						validateField.call(this,event,opts)
 					})
