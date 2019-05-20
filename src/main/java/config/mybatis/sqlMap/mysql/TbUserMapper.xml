@@ -250,12 +250,12 @@
       <select id="selectForWaitActiveUser" parameterType="com.flyrui.dao.pojo.sys.TbUser"  resultType="User">
 	SELECT b.* FROM tb_user a,tb_user b WHERE a.`user_id`=#{user_id,jdbcType=VARCHAR}  AND
 	a.state='1' AND a.user_type='child' AND a.`pid` = b.`pid` AND
-	b.`state`='0' AND b.user_type='main'
+	b.`state`='0' and b.`bus_state` = '1' AND b.user_type='main'
 	<if test="name !=null and name !='' ">
      	and b.name like #{name,jdbcType=VARCHAR}
      </if> 
       UNION
-     SELECT a.* FROM tb_user a WHERE a.pid = #{user_id,jdbcType=VARCHAR} AND a.`state`='0' AND a.user_type='main'
+     SELECT a.* FROM tb_user a WHERE a.pid = #{user_id,jdbcType=VARCHAR} AND a.`state`='0' and a.`bus_state` = '1' AND a.user_type='main'
      <if test="name !=null and name !='' ">
      	and a.name like #{name,jdbcType=VARCHAR}
      </if> 

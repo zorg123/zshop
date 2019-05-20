@@ -764,6 +764,7 @@ public class UserAction extends BaseAction {
     	UserService userService = getUserService();
     	User beActivedUser = new User();
     	beActivedUser.setUser_id(beActivedUserId);
+    	beActivedUser.setBus_state(1);
     	List<User> li= userService.getListByCon(beActivedUser);
     	if(li == null || li.size() == 0){
     		Map retMap = new HashMap();
@@ -795,6 +796,7 @@ public class UserAction extends BaseAction {
     	UserService userService = getUserService();
     	User beActivedUser = new User();
     	beActivedUser.setUser_id(beActivedUserId);
+    	beActivedUser.setBus_state(1);
     	List<User> li= userService.getListByCon(beActivedUser);
     	if(li == null || li.size() == 0){
     		Map retMap = new HashMap();
