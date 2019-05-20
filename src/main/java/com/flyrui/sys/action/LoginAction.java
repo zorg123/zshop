@@ -13,6 +13,7 @@ import org.springframework.context.support.AbstractRefreshableApplicationContext
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.CommonUtils;
 import com.flyrui.common.SpringBeans;
 import com.flyrui.common.action.BaseAction;
@@ -486,7 +487,21 @@ public class LoginAction extends BaseAction {
 		   if(newPwd == null || "".equals(newPwd)){
 			   throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
 		   }
-		   param.put("newPwd", newPwd);
+		   
+		   //校验是否是当前用户注册的
+		   String userId = getUserId();
+		   User uu= new User();
+		   uu.setUser_id(userId);
+		   List<User> userList = userService.getListByCon(uu);
+		   User curUser = userList.get(0);
+		   String oldPwdEncode = CASMd5Utils.getPwd(this.oldPwd,curUser.getUser_code());
+	   	   if(!oldPwdEncode.equals(curUser.getPassword())){
+	   			throw new FRException(new FRError("USER_006"));
+	   	   }
+	   	   String newPwdEncode = CASMd5Utils.getPwd(newPwd,curUser.getUser_code());
+	   	   
+	   	   param.put("oldPwd", oldPwdEncode);
+		   param.put("newPwd", newPwdEncode);
 		   param.put("user_id", getUserId());
 		   int uCount = userService.modifyPwd(param);
 		   if(uCount != 1){
