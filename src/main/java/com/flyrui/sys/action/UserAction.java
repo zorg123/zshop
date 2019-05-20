@@ -752,6 +752,14 @@ public class UserAction extends BaseAction {
     }
     @Action("activeUserUseOrder")  
     public String activeUserUseOrder() throws FRException{
+    	if(beActivedUserId== null || "".equals(beActivedUserId.trim())){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活人为空");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
     	User currUser = getLoginUserInfo();
     	if(!currUser.getUser_type().equals("child")){
     		Map retMap = new HashMap();
@@ -774,6 +782,14 @@ public class UserAction extends BaseAction {
         	return SUCCESS;
     	}
     	
+    	if(li.size()>1){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活用户不止1条");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
     	String[] ret = userService.activeUserUseOrder(getLoginUserInfo(), li.get(0),orderId);
     	
     	Map retMap = new HashMap();
@@ -784,6 +800,14 @@ public class UserAction extends BaseAction {
     }
     @Action("activeUser2")  
     public String activeUser2() throws FRException{
+    	if(beActivedUserId== null || "".equals(beActivedUserId.trim())){
+    		Map retMap = new HashMap();
+    		retMap.put("_code", "-1");
+    		retMap.put("_msg", "被激活人为空");
+    		result.putAll(retMap);
+        	return SUCCESS;
+    	}
+    	
     	User currUser = getLoginUserInfo();
     	if(!currUser.getUser_type().equals("child")){
     		Map retMap = new HashMap();
