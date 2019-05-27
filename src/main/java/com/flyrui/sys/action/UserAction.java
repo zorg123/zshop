@@ -532,6 +532,15 @@ public class UserAction extends BaseAction {
     	user.setUser_type("main");
     	user.setUser_level(0);
     	userService.insertRegister(user);
+    	//子账户
+    	try{
+        	//userService.genSubUser((User)user.clone(), user);
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    	
+    	
+    	
     	setCommonSuccessReturn();
     	return SUCCESS;
     }
@@ -793,7 +802,8 @@ public class UserAction extends BaseAction {
     	String[] ret = userService.activeUserUseOrder(getLoginUserInfo(), li.get(0),orderId);
     	
     	Map retMap = new HashMap();
-    	retMap.put("_code", "0");
+    	retMap.put("_code", ret[0]);
+    	retMap.put("_msg", ret[1]);
 		result.putAll(retMap);
     	return SUCCESS;
     	

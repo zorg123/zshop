@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
 	   if(goodsOrderListForActive!=null && goodsOrderListForActive.size()>0){
 		   GoodsOrder activeOrder = goodsOrderListForActive.get(0);
+		   if(!StringUtils.isEmpty(activeOrder.getOrigin_order_id())){
+			   return new String[]{"-1","转赠订单，不能用于激活"};
+	    	}
+		   
 		   log.info("子帐号激活会员: 订单id :"+activeOrder.getOrder_id()+"  数量:"+activeOrder.getGoods_amount());
 		   if(activeOrder.getGoods_amount() == 0){
 			   return new String[]{"-1","会员订单中商品数量为0，不能激活"};
@@ -116,7 +121,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setState("-1");
-			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   String oldComments = StringUtils.isEmpty(oldOrder.getComments())?"":oldOrder.getComments();
 			   oldOrder.setComments("该订单转赠给用户：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }else if(activeOrder.getGoods_amount() > 1){
@@ -130,7 +135,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
-			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
+			   String oldComments = StringUtils.isEmpty(oldOrder.getComments()) ?"":oldOrder.getComments();
 			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }
