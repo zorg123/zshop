@@ -167,8 +167,6 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   log.info("订单商品数量1，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
-			   //调用存储过程
-			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
 			   //更新原定订单，作废
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -176,6 +174,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
 			   oldOrder.setComments("转赠：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
 			   goodsOrderService.update(oldOrder);
+			   //调用存储过程
+			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
 		   }else if(activeOrder.getGoods_amount() > 1){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
 			   //插入新订单
