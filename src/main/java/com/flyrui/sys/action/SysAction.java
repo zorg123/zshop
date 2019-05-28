@@ -21,6 +21,8 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
 import com.flyrui.framework.common.DateUtil;
+import com.flyrui.sys.dto.FrConfig;
+import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.MenuService;
 import com.flyrui.sys.service.RoleService;
 import com.flyrui.sys.service.UserService;
@@ -29,6 +31,7 @@ public class SysAction extends BaseAction {
 
 	public List menuList ;	
 	TbMenu menu;
+	public String shopMenuHidden;
 	public MenuOptBean menuOptBean = new MenuOptBean();
 	
 	public TbRole tbRole = new TbRole();
@@ -228,6 +231,19 @@ public class SysAction extends BaseAction {
     				    menu.setSub_menu_list(retList);
     				}
     			}
+    			shopMenuHidden = "0";
+    			FrconfigService frconfigService = (FrconfigService)SpringBeans.getBean("frconfigService");
+    			FrConfig frConfig = new FrConfig();
+    			frConfig.setCf_id("shop_mainaccount_cantbuy");
+    			
+    			List<FrConfig> frConfigList = frconfigService.getListByCon(frConfig);
+    			if(frConfigList!=null && frConfigList.size()>0) {
+    				frConfig = frConfigList.get(0);
+    				if("0".equals(frConfig.getCf_value()) && "main".equals(user.getUser_type()) && "1".equals(user.getState())) { //已激活主账户不允许再购物，提示请使用子账号购物！
+    					shopMenuHidden = "1";
+    				}
+    			}
+    			//setResult(shopMenuHidden);
     		}else{
     			FRException frException = new FRException(new FRError(ErrorConstants.SYS_ROLE_NOT_FOUND));
     			throw frException;

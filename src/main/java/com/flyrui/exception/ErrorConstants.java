@@ -69,4 +69,9 @@ public class ErrorConstants {
  	 * 请到资料管理--账户资料中补充信息后提现!
  	 */
  	public static final String USER_013 = "USER_013";
+ 	
+ 	/**
+ 	 * 已激活主账户不允许再购物，提示请使用子账号购物！
+ 	 */
+ 	public static final String GOODS_006 = "GOODS_006";
 }
