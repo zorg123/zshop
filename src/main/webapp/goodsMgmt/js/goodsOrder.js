@@ -88,13 +88,13 @@ $(function () {
                 	var goods_id = $('input[name="goods_id"]').val();
 	                var state_date_start = $('input[name="state_date_start"]').val();
 	                var state_date_end = $('input[name="state_date_end"]').val();
-	                //var order_code = $('input[name="query_order_code"]').val();
+	                var order_code = $('input[name="query_order_code"]').val();
 	                
             	    var strParam = "goodsOrder.state="+state;
             	    strParam += "&goodsOrder.goods_id="+goods_id;
             	    strParam += "&goodsOrder.state_date_start="+state_date_start;
             	    strParam += "&goodsOrder.state_date_end="+state_date_end;
-            	    //strParam += "&goodsOrder.order_code="+order_code;
+            	    strParam += "&goodsOrder.order_code="+order_code;
             	    var url = base+"/GoodsMgmt/exportGoodsOrder.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){

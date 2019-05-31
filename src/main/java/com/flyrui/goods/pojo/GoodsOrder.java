@@ -87,7 +87,7 @@ public class GoodsOrder implements Serializable {
 	private String state_name;
 
 	/** 状态变更时间 */
-	@ExcelAnnotation(exportName = "发货时间")
+	@ExcelAnnotation(exportName = "待发货时间")
 	private Date state_date;
 
 	/** 订购ip */

@@ -28,7 +28,7 @@
             <label>商品名称：</label><input class="easyui-combobox" name="goods_id" db_field="goods_id"  data-options="valueField:'id',textField:'name',url:'<%=baseUri %>/InfoCommon/queryById.do?sqlId=8'" />
             <label>待发货开始时间：</label><input type="text" name="state_date_start" class="easyui-datebox" />
             <label>待发货结束时间：</label><input type="text" name="state_date_end" class="easyui-datebox" />
-            <!-- <label>订单编号：</label><input type="text" name="query_order_code"> -->
+            <label>订单编号：</label><input type="text" name="query_order_code">
             <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
         </div>
     </div>
