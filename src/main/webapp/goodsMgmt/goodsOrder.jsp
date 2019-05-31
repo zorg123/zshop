@@ -26,8 +26,8 @@
                 <option value="2">待发货</option>
             </select>
             <label>商品名称：</label><input class="easyui-combobox" name="goods_id" db_field="goods_id"  data-options="valueField:'id',textField:'name',url:'<%=baseUri %>/InfoCommon/queryById.do?sqlId=8'" />
-            <label>发货开始时间：</label><input type="text" name="state_date_start" class="easyui-datebox" />
-            <label>发货结束时间：</label><input type="text" name="state_date_end" class="easyui-datebox" />
+            <label>待发货开始时间：</label><input type="text" name="state_date_start" class="easyui-datebox" />
+            <label>待发货结束时间：</label><input type="text" name="state_date_end" class="easyui-datebox" />
             <!-- <label>订单编号：</label><input type="text" name="query_order_code"> -->
             <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
         </div>
@@ -50,7 +50,7 @@
             	<th field="rev_addr" width="120">详细地址</th>
             	<th field="create_date" width="50">购买时间</th>
             	<th field="state_name"  width="40">订单状态</th>
-            	<th field="state_date" width="50">发货时间</th>
+            	<th field="state_date" width="50">待发货时间</th>
             	<th field="deal_exp_ord" width="80">物流订单号</th>
             </tr>
             </thead>

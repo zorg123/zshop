@@ -370,7 +370,7 @@
    		<if test="state != null  and state != '' " >
       		state = #{state,jdbcType=VARCHAR},
    		</if>
-   		<if test="state != null  and state == 1 " >
+   		<if test="state != null  and state == 2 " >
    			state_date = now(),
    		</if>
    		<if test="state != null  and state == 0 " >
