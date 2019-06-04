@@ -288,6 +288,7 @@ public class GoodsAction extends BaseAction {
 		goodsOrder.setOrd_ip(getIp());
 		if("1".equals(goodsOrder.getSend_immediate())){ //立即发货，状态设置为待发货 2
 			goodsOrder.setState("2");
+			goodsOrder.setState_date(new Date());
 		}else {
 			goodsOrder.setState("0");
 		}
