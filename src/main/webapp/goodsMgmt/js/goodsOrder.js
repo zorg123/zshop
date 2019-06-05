@@ -95,6 +95,7 @@ $(function () {
             	    strParam += "&goodsOrder.state_date_start="+state_date_start;
             	    strParam += "&goodsOrder.state_date_end="+state_date_end;
             	    strParam += "&goodsOrder.order_code="+order_code;
+            	    strParam += "&goodsOrder.isBack=1";
             	    var url = base+"/GoodsMgmt/exportGoodsOrder.do?"+strParam;
             	    //alert(url);
             	    if(parent.parent.document){
@@ -118,6 +119,7 @@ $(function () {
         param["goodsOrder.state_date_start"] = $('input[name="state_date_start"]').val();
         param["goodsOrder.state_date_end"] = $('input[name="state_date_end"]').val();
         param["goodsOrder.order_code"] = $('input[name="query_order_code"]').val();
+        param["goodsOrder.isBack"] = 1;
         $('#goodsOrderList').datagrid({
             queryParams: param
         });

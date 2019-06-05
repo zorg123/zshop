@@ -209,6 +209,9 @@
      		<if test="catalog_id != null  and catalog_id != '' " >
         		and catalog_id = #{catalog_id,jdbcType=DOUBLE}
      		</if>
+     		<if test="isBack != null  and isBack == 1 " >
+        		and state != '-1'
+     		</if>
     </where>
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >

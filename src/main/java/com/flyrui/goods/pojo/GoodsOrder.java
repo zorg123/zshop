@@ -122,6 +122,16 @@ public class GoodsOrder implements Serializable {
 	private String create_date_start;
 	
 	private String create_date_end;
+	
+	private String isBack;
+
+	public String getIsBack() {
+		return isBack;
+	}
+
+	public void setIsBack(String isBack) {
+		this.isBack = isBack;
+	}
 
 	public String getComments() {
 		return comments;
