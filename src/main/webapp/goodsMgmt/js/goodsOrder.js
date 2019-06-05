@@ -70,7 +70,7 @@ $(function () {
                         return;
                     }
                     sign = 'edit';
-                    $('#win_edit').attr('title', '打款修改');
+                    $('#win_edit').attr('title', '订单修改');
                     $('#win_edit').show();
                     $('#win_edit').window({
                         width: 450,
