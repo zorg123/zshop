@@ -32,7 +32,7 @@
             <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
         </div>
     </div>
-    <div region="center" title="充值列表" style="padding:2px;">
+    <div region="center" title="订单修改" style="padding:2px;">
         <table id="goodsOrderList"  rownumbers="true" pagination="true"
                fitColumns="true" nowrap="false" showFooter="true" singleSelect="true" fit="true">
             <thead>
