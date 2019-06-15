@@ -148,6 +148,7 @@
 			CommonUtils.showAlert("只能选择一个记录!");
 			return;
 		}
+		$("#activeBtn").attr("disabled","disabled");
     	var params ={"orderId":orderId,"beActivedUserId":userId};
 		CommonUtils.showConfirm("确定要把您的订单赠送1个给该用户，并激活该用户吗?",function(){
 			CommonUtils.invokeAsyncAction(base+"/Sys/User/activeUserUseOrder.do", params, function (reply) {
@@ -164,6 +165,7 @@
 	  	           }
 	  	    },true);
 		});
+        $("#activeBtn").removeAttr("disabled");
 	});
 	
 	

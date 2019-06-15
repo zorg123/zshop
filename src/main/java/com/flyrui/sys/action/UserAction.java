@@ -782,11 +782,12 @@ public class UserAction extends BaseAction {
     	User beActivedUser = new User();
     	beActivedUser.setUser_id(beActivedUserId);
     	beActivedUser.setBus_state(1);
+    	beActivedUser.setState("0");//只有未被激活的，才能再次被激活
     	List<User> li= userService.getListByCon(beActivedUser);
     	if(li == null || li.size() == 0){
     		Map retMap = new HashMap();
     		retMap.put("_code", "-1");
-    		retMap.put("_msg", "被激活用户不存在");
+    		retMap.put("_msg", "被激活用户不存在，或已被激活");
     		result.putAll(retMap);
         	return SUCCESS;
     	}
