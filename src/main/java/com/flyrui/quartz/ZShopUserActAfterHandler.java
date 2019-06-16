@@ -9,13 +9,17 @@ import org.springframework.stereotype.Component;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.quartz.dto.GoodsOrderAfter;
 import com.flyrui.quartz.service.GoodsOrderAfterService;
+import com.flyrui.sys.service.UserService;
 
 @Component
-public class ZShopUserOrderAfterHandler {
-	private static final Logger log = Logger.getLogger(ZShopUserOrderAfterHandler.class);	
+public class ZShopUserActAfterHandler {
+	private static final Logger log = Logger.getLogger(ZShopUserActAfterHandler.class);	
 	
 	@Autowired
 	public GoodsOrderAfterService goodsOrderAfterService;
+	
+	@Autowired
+	public UserService userService;
 	
 	@PostConstruct
 	public void init() {
@@ -38,7 +42,7 @@ public class ZShopUserOrderAfterHandler {
 						GoodsOrderAfter orderAfter = new GoodsOrderAfter();
 						orderAfter.setState(1);
 						orderAfter.setError_num(3);
-						orderAfter.setAfter_type("shop");
+						orderAfter.setAfter_type("act");;
 						PageModel<GoodsOrderAfter> page = goodsOrderAfterService.getPagerListByCon(orderAfter, 1, 10);
 						if(page.getTotal()>0) {
 							for(GoodsOrderAfter temp : page.getRows()) {
@@ -50,7 +54,7 @@ public class ZShopUserOrderAfterHandler {
 							
 							for(GoodsOrderAfter temp : page.getRows()) {
 								try {
-									goodsOrderAfterService.afterHandler(temp);
+									userService.afterHandler(temp.getUser_id(),temp.getGoods_order_id());//goodsOderId暂存为被激活用户id
 									orderAfter.setId(temp.getId());
 									orderAfter.setState(3);
 									orderAfter.setComments("执行成功");
@@ -66,7 +70,7 @@ public class ZShopUserOrderAfterHandler {
 							}
 							
 						}else {
-							Thread.sleep(5000);
+							Thread.sleep(2000);
 						}
 					}catch(Exception ex) {
 						log.error("执行订单后处理调度失败",ex);

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.CASMd5Utils;
 import com.flyrui.common.DateUtil;
-import com.flyrui.common.SpringBeans;
 import com.flyrui.common.service.BaseService;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
@@ -34,6 +33,7 @@ import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsService;
 import com.flyrui.goods.service.impl.GoodsOrderServiceImpl;
 import com.flyrui.quartz.dto.GoodsOrderAfter;
+import com.flyrui.quartz.service.GoodsOrderAfterService;
 import com.flyrui.sys.dto.FrConfig;
 import com.flyrui.sys.dto.UserChildDto;
 import com.flyrui.sys.service.FrconfigService;
@@ -42,7 +42,7 @@ import com.flyrui.sys.service.UserService;
 
 @Service(value="userService")
 public class UserServiceImpl extends BaseService<User> implements UserService {
-   private static final Logger log = Logger.getLogger(GoodsOrderServiceImpl.class);	
+   private static final Logger log = Logger.getLogger(UserServiceImpl.class);	
    @Autowired
    AccoutInfoService accoutInfoService;
    
@@ -60,6 +60,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
    
    @Autowired
    GoodsOrderService goodsOrderService;
+   
+   @Autowired
+   public GoodsOrderAfterService goodsOrderAfterService;   
+  
    
    public UserServiceImpl(){
 	   super.setNameSpace("com.flyrui.dao.pojo.sys.tb_user");
@@ -116,7 +120,24 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
-			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新用户为激活状态
+			   User u = new User();
+			   u.setUser_id(beActivedtbUser.getUser_id());
+			   u.setUser_level(1);
+			   u.setState("1");
+			   update(u);
+			   
+			   GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
+				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+				goodsOrderAfter.setBuy_amount(1);
+				goodsOrderAfter.setUser_id(tbUser.getUser_id());
+				goodsOrderAfter.setCreate_date(new Date());
+				goodsOrderAfter.setAfter_type("act");
+				goodsOrderAfter.setError_num(0);
+				goodsOrderAfter.setState(1);
+				goodsOrderAfterService.insert(goodsOrderAfter);	
+				
 			   //更新原定订单，作废
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -129,7 +150,24 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
-			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   //更新用户为激活状态
+			   User u = new User();
+			   u.setUser_id(beActivedtbUser.getUser_id());
+			   u.setUser_level(1);
+			   u.setState("1");
+			   update(u);
+			   
+				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
+				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+				goodsOrderAfter.setBuy_amount(1);
+				goodsOrderAfter.setUser_id(tbUser.getUser_id());
+				goodsOrderAfter.setCreate_date(new Date());
+				goodsOrderAfter.setAfter_type("act");
+				goodsOrderAfter.setError_num(0);
+				goodsOrderAfter.setState(1);
+				goodsOrderAfterService.insert(goodsOrderAfter);					
+				
 			   //更新原定订单，数量-1
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -321,7 +359,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
 	}
    
-	private void afterHandler(String child_userId,String act_userId) {
+	public void afterHandler(String child_userId,String act_userId) {
 		//如果是会员商品，调用存储过程
 		Map param = new HashMap();
 		param.put("child_userId", child_userId);

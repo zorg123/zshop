@@ -122,7 +122,7 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		if("1".equals(goods.getCatalog_id())) {
 			try {
 				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
-				goodsOrderAfter.setGoods_order_id(goodsOrder.getGoods_id());
+				goodsOrderAfter.setGoods_order_id(goodsOrder.getOrder_id());
 				goodsOrderAfter.setBuy_amount(goodsOrder.getGoods_amount());
 				goodsOrderAfter.setUser_id(user.getUser_id());
 				goodsOrderAfter.setCreate_date(new Date());
