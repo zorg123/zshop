@@ -1,5 +1,7 @@
 package com.flyrui.quartz;
 
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
@@ -45,6 +47,7 @@ public class ZShopUserOrderAfterHandler {
 								orderAfter = new GoodsOrderAfter();
 								orderAfter.setId(temp.getId());
 								orderAfter.setState(2);
+								orderAfter.setState_date(new Date());
 								goodsOrderAfterService.update(orderAfter);
 							}
 							
@@ -53,12 +56,14 @@ public class ZShopUserOrderAfterHandler {
 									goodsOrderAfterService.afterHandler(temp);
 									orderAfter.setId(temp.getId());
 									orderAfter.setState(3);
+									orderAfter.setState_date(new Date());
 									orderAfter.setComments("执行成功");
 									goodsOrderAfterService.update(orderAfter);
 								}catch(Exception ex) {
 									orderAfter = new GoodsOrderAfter();
 									orderAfter.setId(temp.getId());
 									orderAfter.setState(-1);
+									orderAfter.setState_date(new Date());
 									orderAfter.setError_num(temp.getError_num()+1);
 									orderAfter.setComments(ex.getMessage());
 									goodsOrderAfterService.update(orderAfter);
