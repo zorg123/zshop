@@ -359,6 +359,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		return baseDao.selectList(getNameSpace()+".queryUserMonthGoods",param);
 	}
    
+	@Transactional
 	public void afterHandler(String child_userId,String act_userId) {
 		//如果是会员商品，调用存储过程
 		Map param = new HashMap();
