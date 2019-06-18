@@ -78,6 +78,9 @@
   <sql id="Base_Column_List2" >
     a.notice_id, a.title, a.content_id, a.create_date, a.eff_date, a.exp_date, a.state,a.oper_staff,b.content
   </sql>
+  <sql id="Base_Column_List3" >
+    a.notice_id, a.title, a.content_id, a.create_date, a.eff_date, a.exp_date, a.oper_staff,b.content,c.state
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.flyrui.dao.pojo.sys.TbNoticeCriteria" >
     select
     <if test="distinct" >
@@ -118,8 +121,10 @@
   </select>
   <select id="selectEffNotice" resultMap="BaseResultMapDetail" parameterType="com.flyrui.dao.pojo.sys.Notice" >   
     select   
-    <include refid="Base_Column_List2" />
-    from tb_notice a left join tb_content b on  a.content_id = b.content_id where 1=1 
+    <include refid="Base_Column_List3" />
+    from tb_notice a left join tb_content b on  a.content_id = b.content_id 
+    left join tb_notice_log c on c.notice_id = a.notice_id
+    where 1=1 
     and a.eff_date &lt;= NOW() AND a.exp_date &gt;= NOW() AND a.state = '1'
     <if test="notice_id != null" >
      	and notice_id = #{notice_id,jdbcType=INTEGER}

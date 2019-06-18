@@ -147,13 +147,22 @@ var pageData={
 	    setValues: function (obj) {
 	    	var content = $("#noticeContent");
 	    	var HTML="";
-	    	if(obj!=null && obj.length>0){    		
+	    	if(obj!=null && obj.length>0){    	
+	    		var readedStyle="color:gray";
+	    		var readedStyleForICon = "background-color:gray";
 	    		for(var i=0;i<obj.length;i++){
 	    			var oo = obj[i];	
 	    			HTML+="<li><div class='cosB'>"+CommonUtils.transformDate(oo.eff_date,'1')+"</div>";
-	    			HTML+="  <div class='cosA'><span class='cosIco'><i class='am-icon-bell-o'></i></span>";
-	    			HTML+="   <span><a herf='javascript:void(0);' onclick=\"pageData.openDetail("+oo.notice_id+")\">"+oo.title+"</a></span>";
-	    			HTML+="  </div>";
+	    			
+	    			if(oo.state=='1'){
+	    				HTML+="  <div class='cosA'><span class='cosIco' style='"+readedStyleForICon+"'><i class='am-icon-bell-o'></i></span>";
+		    			HTML+="   <span><a herf='javascript:void(0);' tid = '"+oo.notice_id+"' style='"+readedStyle+"' onclick=\"pageData.openDetail("+oo.notice_id+")\">"+oo.title+"</a></span>";
+		    			HTML+="  </div>";
+	    			}else{
+		    			HTML+="  <div class='cosA'><span class='cosIco'><i class='am-icon-bell-o'></i></span>";
+		    			HTML+="   <span><a herf='javascript:void(0);' tid = '"+oo.notice_id+"' onclick=\"pageData.openDetail("+oo.notice_id+")\">"+oo.title+"</a></span>";
+		    			HTML+="  </div>";
+	    			}
 	    			HTML+="</li>"; 
 	    		}
 	    		HTML+="";
@@ -165,6 +174,10 @@ var pageData={
 	    openDetail:function(notice_id){
 	    	var param = {}, me = this;      
 	        param["notice.notice_id"] = notice_id;
+	        $this = $("a[tid='"+notice_id+"']");
+	        $this.css("color","gray");
+	        $this.parent().siblings().css("background-color","gray");
+	        
 	    	CommonUtils.invokeAsyncAction(base+'/Sys/Notice!queryContentDetail.do', param, function (reply) {
 				if((reply || '') !=''){
 					var code = reply._code;

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flyrui.sys.dao.mapper.TbNoticeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.flyrui.sys.dto.TbNoticeLog" >
+    	<result column="log_Id" property="log_Id" jdbcType="INTEGER" />
+    	<result column="notice_id" property="notice_id" jdbcType="INTEGER" />
+    	<result column="state" property="state" jdbcType="VARCHAR" />
+    	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    	log_Id,
+    	notice_id,
+    	state,
+    	create_date
+  </sql>
+  <sql id="Base_Where_Clause" >
+    <where >
+	    	<if test="log_Id != null  and log_Id != '' " >
+        		and log_Id = #{log_Id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="notice_id != null  and notice_id != '' " >
+        		and notice_id = #{notice_id,jdbcType=INTEGER}
+     		</if>
+	    	<if test="state != null  and state != '' " >
+        		and state = #{state,jdbcType=VARCHAR}
+     		</if>
+	    	<if test="create_date != null " >
+        		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.flyrui.sys.dto.TbNoticeLog" >
+    select    
+    <include refid="Base_Column_List" />
+    from tb_notice_log
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.flyrui.sys.dto.TbNoticeLog" >
+    delete from tb_notice_log
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.flyrui.sys.dto.TbNoticeLog" >
+    insert into tb_notice_log ( <include refid="Base_Column_List" />)
+    values (	    	
+        	  #{log_Id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{notice_id,jdbcType=INTEGER},     		
+	    	    	
+        	  #{state,jdbcType=VARCHAR},     		
+	    	    	
+        	  #{create_date,jdbcType=TIMESTAMP}     		
+	    )
+  </insert>
+  
+  <update id="update" parameterType="com.flyrui.sys.dto.TbNoticeLog">
+    update tb_notice_log
+    set
+   		<if test="log_Id != null  and log_Id != '' " >
+      		log_Id = #{log_Id,jdbcType=INTEGER},
+   		</if>
+   		<if test="notice_id != null  and notice_id != '' " >
+      		notice_id = #{notice_id,jdbcType=INTEGER},
+   		</if>
+   		<if test="state != null  and state != '' " >
+      		state = #{state,jdbcType=VARCHAR},
+   		</if>
+   		<if test="create_date != null " >
+      		create_date = #{create_date,jdbcType=TIMESTAMP}
+   		</if>
+    <if test="_parameter != null" >
+      <include refid="Base_Where_Clause" />
+    </if>
+    
+  </update>
+</mapper>

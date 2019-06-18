@@ -1,11 +1,16 @@
 package com.flyrui.sys.action;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.flyrui.common.SpringBeans;
 import com.flyrui.common.action.BaseAction;
 import com.flyrui.dao.pojo.sys.Notice;
+import com.flyrui.sys.dto.TbNoticeLog;
 import com.flyrui.sys.service.NoticeService;
+import com.flyrui.sys.service.TbNoticeLogService;
 
 public class NoticeAction extends BaseAction {	
 	
@@ -19,6 +24,7 @@ public class NoticeAction extends BaseAction {
     
     private NoticeService noticeService;
    
+    public TbNoticeLog noticeLog = new TbNoticeLog();
     
     public void getNoticeService(){
     	noticeService = SpringBeans.getBean("noticeService");
@@ -91,7 +97,8 @@ public class NoticeAction extends BaseAction {
      * Feb 10, 2014
      */
     public String queryContentDetail(){
-    	getNoticeService();   
+    	getNoticeService();  
+    	updateNoticeReadState(notice.getNotice_id());
     	setResult(noticeService.queryNoticeDetail(notice));    	
     	return SUCCESS;
     }
@@ -107,6 +114,17 @@ public class NoticeAction extends BaseAction {
     	getNoticeService();   
     	setResult(noticeService.queryEffNoticeList(notice,page,rows));    	
     	return SUCCESS;
+    }
+    
+    public void updateNoticeReadState(int noticeId){
+    	TbNoticeLogService tbNoticeLogService = SpringBeans.getBean("tbNoticeLogService");
+    	noticeLog.setNotice_id(noticeId);
+    	List<TbNoticeLog> logList = tbNoticeLogService.getListByCon(noticeLog);
+    	noticeLog.setCreate_date(new Date());
+    	noticeLog.setState("1");
+    	if(logList == null || logList.size() ==0) {
+    		tbNoticeLogService.insert(noticeLog);
+    	}    	
     }
 
 }
