@@ -112,6 +112,7 @@ public class NoticeAction extends BaseAction {
      */
     public String queryEffNoticeList(){
     	getNoticeService();   
+    	notice.setUserId(getUserId());
     	setResult(noticeService.queryEffNoticeList(notice,page,rows));    	
     	return SUCCESS;
     }
@@ -119,6 +120,7 @@ public class NoticeAction extends BaseAction {
     public void updateNoticeReadState(int noticeId){
     	TbNoticeLogService tbNoticeLogService = SpringBeans.getBean("tbNoticeLogService");
     	noticeLog.setNotice_id(noticeId);
+    	noticeLog.setUser_id(Integer.parseInt(getUserId()));
     	List<TbNoticeLog> logList = tbNoticeLogService.getListByCon(noticeLog);
     	noticeLog.setCreate_date(new Date());
     	noticeLog.setState("1");

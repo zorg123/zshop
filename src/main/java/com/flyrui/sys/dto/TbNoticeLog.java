@@ -25,6 +25,9 @@ public class TbNoticeLog implements Serializable {
 	/**  */
 	private Date create_date;
 
+	/**  */
+	private Integer user_id;
+
 
 	public Integer getLog_Id() {
 		return this.log_Id;
@@ -56,6 +59,14 @@ public class TbNoticeLog implements Serializable {
 
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
+	}
+
+	public Integer getUser_id() {
+		return this.user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 }

@@ -6,12 +6,14 @@
     	<result column="notice_id" property="notice_id" jdbcType="INTEGER" />
     	<result column="state" property="state" jdbcType="VARCHAR" />
     	<result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    	<result column="user_id" property="user_id" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     	log_Id,
     	notice_id,
     	state,
-    	create_date
+    	create_date,
+    	user_id
   </sql>
   <sql id="Base_Where_Clause" >
     <where >
@@ -26,6 +28,9 @@
      		</if>
 	    	<if test="create_date != null " >
         		and create_date = #{create_date,jdbcType=TIMESTAMP}
+     		</if>
+	    	<if test="user_id != null  and user_id != '' " >
+        		and user_id = #{user_id,jdbcType=INTEGER}
      		</if>
     </where>
   </sql>
@@ -54,7 +59,9 @@
 	    	    	
         	  #{state,jdbcType=VARCHAR},     		
 	    	    	
-        	  #{create_date,jdbcType=TIMESTAMP}     		
+        	  #{create_date,jdbcType=TIMESTAMP},     		
+	    	    	
+        	  #{user_id,jdbcType=INTEGER}     		
 	    )
   </insert>
   
@@ -71,7 +78,10 @@
       		state = #{state,jdbcType=VARCHAR},
    		</if>
    		<if test="create_date != null " >
-      		create_date = #{create_date,jdbcType=TIMESTAMP}
+      		create_date = #{create_date,jdbcType=TIMESTAMP},
+   		</if>
+   		<if test="user_id != null  and user_id != '' " >
+      		user_id = #{user_id,jdbcType=INTEGER}
    		</if>
     <if test="_parameter != null" >
       <include refid="Base_Where_Clause" />

@@ -123,7 +123,7 @@
     select   
     <include refid="Base_Column_List3" />
     from tb_notice a left join tb_content b on  a.content_id = b.content_id 
-    left join tb_notice_log c on c.notice_id = a.notice_id
+    left join tb_notice_log c on c.notice_id = a.notice_id and c.user_Id = #{userId,jdbcType=INTEGER}
     where 1=1 
     and a.eff_date &lt;= NOW() AND a.exp_date &gt;= NOW() AND a.state = '1'
     <if test="notice_id != null" >
