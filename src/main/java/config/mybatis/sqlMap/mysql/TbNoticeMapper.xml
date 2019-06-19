@@ -132,7 +132,7 @@
     <if test="title != null and title != '' " >
      	and title like concat('%',#{title,jdbcType=VARCHAR},'%')
     </if>
-      order by create_date    
+      order by create_date desc 
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
