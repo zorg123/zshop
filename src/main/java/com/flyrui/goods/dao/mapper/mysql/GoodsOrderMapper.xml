@@ -221,7 +221,7 @@
     <if test="_parameter != null" >
       <include refid="Base_Where_Clause" />
     </if>
-    order by rev_link_phone
+    order by create_date
   </select>
   
   <select id="selectCreateDateDesc" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
