@@ -399,7 +399,7 @@ var CommonUtils={
         s = s.replace(/<br>/g, "\n");
         return s;
     },
-    getParam:function(scope,flag,deleteNullFlag){
+    getParam:function(scope,flag,deleteNullFlag,needTrim){
     	var param={};
     	$("#"+scope+" input[db_field]").each(function(i){
     		$field=$(this);
@@ -426,7 +426,9 @@ var CommonUtils={
     		var value = $field.val();
     		if(useText){
 				value = $field.find('option').eq(this.selectedIndex).text();
-				value = $.trim(value);
+				if(needTrim){
+					value = $.trim(value);
+				}
 			}
     		var isLike = $field.attr("is_like");
     		var needEncode = $field.attr("need_encode");

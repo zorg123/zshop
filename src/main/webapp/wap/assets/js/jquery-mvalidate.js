@@ -81,7 +81,7 @@
 			fieldDescribedby=$field.attr("data-describedby") || validation.describedby;
 
 			fieldDescription = $.isPlainObject(fieldDescription) ? fieldDescription : (options.descriptions[fieldDescription] || {});
-			fieldRequired=fieldRequired !='' ? (fieldRequired || !!validation.required ) : true;
+			fieldRequired= (fieldRequired =='true')  ? true : false;
 			if($.type(fieldPattern) != 'regexp') {
 				fieldPattern=RegExp(fieldPattern);
 			}

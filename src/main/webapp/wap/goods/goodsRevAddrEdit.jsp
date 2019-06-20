@@ -42,21 +42,21 @@
                           <label for="user-name" class="am-u-sm-3 am-form-label">联系地址</label>
                           <div class="am-u-sm-9">
 								<div class="am-form-group">
-									<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
+									<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;" id="provDiv">
 	                                <select id="provSel" data-am-selected  db_field="goodsRevAddr.rev_provice" value="<s:property value="goodsRevAddr.rev_provice" />" name="goodsRevAddr.rev_provice"  data-descriptions="goodsRevAddr.rev_provice" data-describedby="goodsRevAddr.rev_provice-description" data-am-dropdown="{boundary: '#provSel'}" use_text="true">
 		  								<s:iterator  value="#areaMap.prov"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_provice == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
 		  								</s:iterator>  								
 								 	</select>
 								 	</div>
-								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
+								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;" id="zoneDiv">
 								 	<select id="zoneSel" data-am-selected db_field="goodsRevAddr.rev_city" value="<s:property value="goodsRevAddr.rev_city" />" name="goodsRevAddr.rev_city"  data-descriptions="goodsRevAddr.rev_city" data-describedby="goodsRevAddr.rev_city-description" use_text="true">
 		  								<s:iterator  value="#areaMap.zone"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_city == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
 		  								</s:iterator>  								
 								 	</select>
 								 	</div>
-								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;">
+								 	<div class="am-u-md-6 am-u-lg-4 am-u-sm-12" style="padding-top:10px;padding-left:0px;" id="xianDiv">
 								 	<select id="xianSel" data-am-selected db_field="goodsRevAddr.rev_zone" value="<s:property value="goodsRevAddr.rev_zone" />" name="goodsRevAddr.rev_zone"  data-descriptions="goodsRevAddr.rev_zone" data-describedby="goodsRevAddr.rev_zone-description" use_text="true">
 		  								<s:iterator  value="#areaMap.xian"  id="provIter" status="st"> 
 		  									<option value="<s:property value="#provIter.id" />" <s:if test="goodsRevAddr.rev_zone == #provIter.name">selected </s:if>><s:property value="#provIter.name" /></option>
@@ -64,7 +64,7 @@
 								 	</select>	
 								 	</div>
 								 </div>
-								 	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsRevAddr.rev_addr" data-required="true"   value="<s:property value="goodsRevAddr.rev_addr" />" name="goodsRevAddr.rev_addr" placeholder="请输入详细地址" data-descriptions="goodsRevAddr.rev_addr" data-describedby="goodsRevAddr.rev_addr-description"/>						                               
+								 	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsRevAddr.rev_addr" data-required="false"   value="<s:property value="goodsRevAddr.rev_addr" />" name="goodsRevAddr.rev_addr" placeholder="请输入详细地址" data-descriptions="goodsRevAddr.rev_addr" data-describedby="goodsRevAddr.rev_addr-description"/>						                               
                               	<small id="goodsRevAddr.rev_addr-description"></small>  
                           </div>
                       </div>               
@@ -87,37 +87,70 @@
         
         
       <script language="javascript" type="text/javascript" >
+      		function hideProvide11(){
+      			$("input[name='goodsRevAddr.rev_addr']").val('　');
+				
+				$("#zoneSel").empty();
+				$("#zoneSel").append('<option value="　" selected>　</option>'); 
+				if (!$.AMUI.support.mutationobserver) {
+	            		$("#zoneSel").trigger('changed.selected.amui');
+	                 }   
+				$("#xianSel").empty();
+				$("#xianSel").append('<option value="　" selected>　</option>');  
+				if (!$.AMUI.support.mutationobserver) {
+	            		$("#xianSel").trigger('changed.selected.amui');
+	                }   
+				$("#zoneDiv").hide();
+				$("#xianDiv").hide();
+				$("input[name='goodsRevAddr.rev_addr']").hide();
+      			
+      		}
 			$(function() {	
 				
+				<s:if test="goodsRevAddr.rev_provice == '公司自提'">
+					hideProvide11();
+				</s:if>
 				$("#provSel").on('change', function() {					
 					var provId = $(this).val();
 					var params={};
 					params["ids"]=provId;
-					CommonUtils.invokeAsyncAction(base+'/Goods/getNextLevelAddr.do', params, function (reply) {
-						if ((reply || '') != '') {
-		  	               var code = reply._code;               
-		  	               if (code == '0') {  
-		  	            	 $("#zoneSel").empty();
-		  	            	 var result = reply.ret;
-		  	            	 for(var o in result){
-		  	            		$("#zoneSel").append('<option value="' + result[o].id +'"> ' + result[o].name + '</option>');  
-		  	            	 }
-		  	            	 if (!$.AMUI.support.mutationobserver) {
-		  	            		$("#zoneSel").trigger('changed.selected.amui');
-		  	                 }                  
-		  	               } else  {
-		  	            	  CommonUtils.showAlert(reply._msg);
-		  	             }              
-		  	           } else  {
-		  	        	   CommonUtils.showAlert('查询失败，请重试!');
-		  	           }
-		  	         });
+					if(provId==11){
+						hideProvide11();
+					}else{
+						$("input[name='goodsRevAddr.rev_addr']").val('');
+						$("#provDiv").show();
+						$("#zoneDiv").show();
+						$("#xianDiv").show();
+						$("input[name='goodsRevAddr.rev_addr']").show();
+						CommonUtils.invokeAsyncAction(base+'/Goods/getNextLevelAddr.do', params, function (reply) {
+							if ((reply || '') != '') {
+			  	               var code = reply._code;               
+			  	               if (code == '0') {  
+			  	            	 $("#zoneSel").empty();
+			  	            	 var result = reply.ret;
+			  	            	 for(var o in result){
+			  	            		$("#zoneSel").append('<option value="' + result[o].id +'"> ' + result[o].name + '</option>');  
+			  	            	 }
+			  	            	 if (!$.AMUI.support.mutationobserver) {
+			  	            		$("#zoneSel").trigger('changed.selected.amui');
+			  	                 }                  
+			  	               } else  {
+			  	            	  CommonUtils.showAlert(reply._msg);
+			  	             }              
+			  	           } else  {
+			  	        	   CommonUtils.showAlert('查询失败，请重试!');
+			  	           }
+			  	         });
+					}
                  });
 				
 				$("#zoneSel").on('change', function() {					
 					var zoneId = $(this).val();
 					var params={};
 					params["ids"]=zoneId;
+					if(zoneId=="" || zoneId=="　"){
+						return;
+					}
 					CommonUtils.invokeAsyncAction(base+'/Goods/getNextLevelAddr.do', params, function (reply) {
 						if ((reply || '') != '') {
 		  	               var code = reply._code;               
@@ -147,7 +180,7 @@
 			            firstInvalidFocus:true,
 			            valid:function(event,options){
 			                //点击提交按钮时,表单通过验证触发函数
-			                 var params = CommonUtils.getParam("goodsRevAddrForm",false);			                 
+			                 var params = CommonUtils.getParam("goodsRevAddrForm",false,false);			                 
 							 CommonUtils.invokeAsyncAction(base+'/Goods/goodsRevAddrUpdate.do', params, function(reply) {           
 				  	           
 								if ((reply || '') != '') {
