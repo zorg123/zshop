@@ -18,14 +18,14 @@ public class PoolDivideHandler {
 	public CommonService commonService;
 	
 	//2级分红池平分周末执行
-	@Scheduled(cron = "59 59 23 ? * SUN")
-	@Transactional
-	public void grade2(){
+	//@Scheduled(cron = "59 59 23 ? * SUN")
+	//@Transactional
+	//public void grade2(){
 		//2级分红池
-		Map map = new HashMap();
-		map.put("in_grade", 2);
-		commonService.execProc(map);
-	}
+		//Map map = new HashMap();
+		//map.put("in_grade", 2);
+		//commonService.execProc(map);
+	//}
 	
 	//3级分红池平分周末执行
 	@Scheduled(cron = "59 59 23 ? * SUN")
