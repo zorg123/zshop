@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.flyrui.common.SpringBeans;
@@ -21,6 +22,8 @@ import com.flyrui.financMgmt.pojo.AccoutInfoDto;
 import com.flyrui.financMgmt.service.AccoutInfoService;
 import com.flyrui.framework.annotation.SessionCheckAnnotation;
 import com.flyrui.framework.common.DateUtil;
+import com.flyrui.goods.pojo.GoodsOrder;
+import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.sys.dto.FrConfig;
 import com.flyrui.sys.service.FrconfigService;
 import com.flyrui.sys.service.MenuService;
@@ -271,6 +274,7 @@ public class SysAction extends BaseAction {
     	accoutInfo.setUser_id(Integer.valueOf(getUserId()));
     	AccoutInfoDto retAccoutInfoDto = accoutInfoService.queryAccountInfo(accoutInfo);
     	
+    	GoodsOrderService goodsOrderService = (GoodsOrderService)SpringBeans.getBean("goodsOrderService");
     	UserService userService = (UserService)SpringBeans.getBean("userService");
     	List<Map> userLevelShareoutList = userService.queryUserLevelShareout();
     	HashMap mapPara = new HashMap();
@@ -332,6 +336,14 @@ public class SysAction extends BaseAction {
     		}
     	}
     	
+    	//未发货大礼包数量
+    	GoodsOrder goCount = new GoodsOrder();
+    	goCount.setUser_id(getUserId());
+    	String GifNotSendCount = goodsOrderService.getGifNotSendCount(goCount);
+    	if(StringUtils.isEmpty(GifNotSendCount)){
+    		GifNotSendCount ="0";
+    	}
+    	
     	Map<String,Object> returnMap = new HashMap<String,Object>();
     	returnMap.put("userLevelShareoutList",userLevelShareoutList);
     	returnMap.put("curMonthOrdrs",curMonthOrdrs);
@@ -343,6 +355,7 @@ public class SysAction extends BaseAction {
     	returnMap.put("currentLevelAmount",currentLevelAmount);
     	returnMap.put("currentLevelPepoleCount",currentLevelPepoleCount);
     	returnMap.put("num_need_tobe_share",num_need_tobe_share);
+    	returnMap.put("GifNotSendCount",GifNotSendCount);
     	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();

@@ -1,7 +1,9 @@
 package com.flyrui.goods.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,5 +91,12 @@ public class GoodsOrderServiceImpl extends BaseService<GoodsOrder> implements Go
 	}
 	public List<GoodsOrder> selectCreateDateDesc(GoodsOrder goodsOrder) {
 		return baseDao.selectList(nameSpace+".selectCreateDateDesc", goodsOrder);		
+	}
+	public String getGifNotSendCount(GoodsOrder goodsOrder) {
+		List<GoodsOrder> li = baseDao.selectList(nameSpace+".getGifNotSendCount", goodsOrder);		
+		if(li == null || li.size()==0 || li.get(0) == null){
+			return "0";
+		}
+		return li.get(0).getComments();
 	}
 }

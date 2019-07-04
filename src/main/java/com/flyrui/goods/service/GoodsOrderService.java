@@ -24,4 +24,6 @@ public interface GoodsOrderService {
 	public boolean goodsSend(GoodsOrder goodsOrder,int goodsNum);
 	
 	public List<GoodsOrder> selectCreateDateDesc(GoodsOrder goodsOrder);
+	
+	public String getGifNotSendCount(GoodsOrder goodsOrder) ;
 }

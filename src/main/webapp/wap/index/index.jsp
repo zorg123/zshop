@@ -12,6 +12,7 @@
 <s:set name="currentLevelAmount" value="result.ret.currentLevelAmount"/>
 <s:set name="currentLevelPepoleCount" value="result.ret.currentLevelPepoleCount"/>
 <s:set name="num_need_tobe_share" value="result.ret.num_need_tobe_share"/>
+<s:set name="GifNotSendCount" value="result.ret.GifNotSendCount"/>
 
 
 <s:if test="result.ret.userLevel == 0">    
@@ -77,7 +78,9 @@
                     		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
                     		 </s:else>
                     		 </div>
-                         	<div class="desc" style="color:white;font-size: 14px">红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
+                         	<div class="desc" style="color:white;font-size: 14px">
+                         	获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+                         	红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
                          	<s:else>
                          		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
                          		<s:if test="result.ret.userLevel > 1">

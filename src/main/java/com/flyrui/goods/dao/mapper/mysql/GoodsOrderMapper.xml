@@ -234,6 +234,10 @@
     order by create_date desc
   </select>
   
+    <select id="getGifNotSendCount" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
+    SELECT SUM(a.`goods_amount`) comments FROM goods_order a WHERE a.user_id = #{user_id,jdbcType=VARCHAR} AND a.`goods_type`='1'  AND a.`state` IN (0,2)
+  </select>
+  
   <delete id="delete" parameterType="com.flyrui.goods.pojo.GoodsOrder" >
     delete from goods_order
     <if test="_parameter != null" >
