@@ -149,6 +149,18 @@ public class BaseAction extends ActionSupport{
 		}		
 		return userId;
 	}
+	//如果是子帐号，那么返回主帐号ID；如果是主帐号，返回主帐号ID
+	public String getMainUserId(){
+		User user = getLoginUserInfo();
+		String userId = "";
+		if( user !=null ){
+			if(user.getUser_type().equals("child")){
+				return user.getPid();
+			}
+			userId = user.getUser_id();
+		}		
+		return userId;
+	}
 	
 	public String getUserCode(){
 		User user = getLoginUserInfo();

@@ -24,6 +24,7 @@ import com.flyrui.common.action.BaseAction;
 import com.flyrui.common.service.CommonService;
 import com.flyrui.common.uuid.UUIDHexGenerator;
 import com.flyrui.dao.common.page.PageModel;
+import com.flyrui.dao.pojo.sys.TbUser;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.ErrorConstants;
 import com.flyrui.exception.FRError;
@@ -170,7 +171,7 @@ public class GoodsAction extends BaseAction {
     	goods.setGoods_amount(goodsAmount);  
     	
     	//获取默认收货地址
-    	goodsRevAddr.setUser_id(getUserId());
+    	goodsRevAddr.setUser_id(getMainUserId());
     	goodsRevAddr.setIs_default("1");
     	List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddr);
     	if(retList.size()>0){
@@ -304,7 +305,7 @@ public class GoodsAction extends BaseAction {
 		if(url==null){
 			url="/Goods/goodsRevAddrList.do";
 		}
-		goodsRevAddr.setUser_id(getUserId());
+		goodsRevAddr.setUser_id(getMainUserId());
 		if(rows==0){
     		rows=5;
     	}
@@ -381,16 +382,17 @@ public class GoodsAction extends BaseAction {
 	@Action("goodsRevAddrUpdate")
     public String goodsRevAddrUpdate(){
 		if(goodsRevAddr.getAddr_id() !=null){
-			goodsRevAddr.setUser_id(getUserId());			
+			goodsRevAddr.setUser_id(getMainUserId());			
 			goodsRevAddrService.update(goodsRevAddr);
+			//addOrUpdateLinkUserAddr(goodsRevAddr);
 		}else{
 			String addrId = commonService.getSequence("seq_goods_revaddr_id");
-			goodsRevAddr.setUser_id(getUserId());
+			goodsRevAddr.setUser_id(getMainUserId());
 			goodsRevAddr.setAddr_id(Integer.parseInt(addrId));
 			goodsRevAddr.setCreate_date(new Date());
 			goodsRevAddr.setState("1");
 			GoodsRevAddr goodsRevAddrTemp = new GoodsRevAddr();
-			goodsRevAddrTemp.setUser_id(getUserId());
+			goodsRevAddrTemp.setUser_id(getMainUserId());
 			//查询是否已有收货地址，如果没有，则设置第一个为默认地址
 			List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddrTemp);
 			if(retList.size() == 0){
@@ -399,10 +401,63 @@ public class GoodsAction extends BaseAction {
 				goodsRevAddr.setIs_default("0");
 			}
 			goodsRevAddrService.insert(goodsRevAddr);
+			//addOrUpdateLinkUserAddr(goodsRevAddr);
 		}
 		setCommonSuccessReturn();
     	return SUCCESS;
     }
+	
+	private void addOrUpdateLinkUserAddr(GoodsRevAddr goodsRevAddr){
+		User linkUser = new User();
+		
+		User tbUser = new User();
+		//查找子帐号
+		tbUser.setPid(goodsRevAddr.getUser_id());
+		tbUser.setUser_type("child");
+		tbUser.setState("1");
+		List<User> liUser = userService.getListByCon(tbUser);
+		if(liUser!=null && liUser.size()>0){
+			linkUser = liUser.get(0);
+		}else{
+			//查找主帐号
+			tbUser = new User();
+			tbUser.setUser_id(goodsRevAddr.getUser_id());
+			List<User> liUser2 = userService.getListByCon(tbUser);
+			if(liUser!=null || liUser.size()==0){
+				//没找到账户
+				return;
+			}
+			if(StringUtils.isEmpty(liUser2.get(0).getPid())){
+				//父帐号为空
+				return;
+			}
+			User tbUser2 = new User();
+			tbUser2.setUser_id(liUser2.get(0).getPid());
+			liUser2 = userService.getListByCon(tbUser2);
+			if(StringUtils.isEmpty(liUser2.get(0).getPid())){
+				return;
+			}
+			linkUser = liUser2.get(0);
+		}
+		
+		//更新或插入 关联账户的地址
+		GoodsRevAddr gra = new GoodsRevAddr();
+		gra.setUser_id(linkUser.getUser_id());
+		List li = goodsRevAddrService.getListByCon(gra);
+		if(li == null || li.size()==0){
+			//新增
+			goodsRevAddr.setUser_id(linkUser.getUser_id());
+			goodsRevAddr.setAddr_id(null);
+			goodsRevAddr.setIs_default("1");
+			goodsRevAddr.setState("1");
+			goodsRevAddrService.insert(goodsRevAddr);
+		}else{
+			//更新
+			goodsRevAddr.setIs_default("1");
+			goodsRevAddr.setUser_id(linkUser.getUser_id());
+			goodsRevAddrService.update(goodsRevAddr);
+		}
+	}
 	
 	@Action("getNextLevelAddr")
     public String getNextLevelAddr() throws FRException{
@@ -465,7 +520,7 @@ public class GoodsAction extends BaseAction {
     	if(ids==null){
     		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
     	}    	
-    	String userId = getUserId();
+    	String userId = getMainUserId();
     	String[] idStr = ids.split(";");
     	goodsRevAddr.setUser_id(userId);
     	goodsRevAddr.setAddr_id(Integer.parseInt(idStr[0]));    	
@@ -484,7 +539,7 @@ public class GoodsAction extends BaseAction {
 	    		throw new FRException(new FRError(ErrorConstants.SYS_PARAMETER_NOT_SEND));
 	    	}   
 	    	
-	    	String userId = getUserId();	    	
+	    	String userId = getMainUserId();	    	
 	    	goodsRevAddr.setUser_id(userId);
 	    	List<GoodsRevAddr> retList = goodsRevAddrService.getListByCon(goodsRevAddr);
 	    	if(retList.size()==0){
@@ -513,7 +568,7 @@ public class GoodsAction extends BaseAction {
 	    	if(CommonUtils.isBlankStr(goodsOrder.getRev_people())){
 	    		//查询默认地址
 	    		//获取默认收货地址
-	        	goodsRevAddr.setUser_id(getUserId());
+	        	goodsRevAddr.setUser_id(getMainUserId());
 	        	goodsRevAddr.setIs_default("1");
 	        	List<GoodsRevAddr> addrRetList = goodsRevAddrService.getListByCon(goodsRevAddr);
 	        	if(addrRetList.size()>0){
@@ -542,7 +597,7 @@ public class GoodsAction extends BaseAction {
 	    	if(CommonUtils.isBlankStr(goodsOrder.getRev_people())){
 	    		//查询默认地址
 	    		//获取默认收货地址
-	        	goodsRevAddr.setUser_id(getUserId());
+	        	goodsRevAddr.setUser_id(getMainUserId());
 	        	goodsRevAddr.setIs_default("1");
 	        	List<GoodsRevAddr> addrRetList = goodsRevAddrService.getListByCon(goodsRevAddr);
 	        	if(addrRetList.size()>0){
