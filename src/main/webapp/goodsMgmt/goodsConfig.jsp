@@ -49,6 +49,7 @@
                 <th field="goods_desc" width="40">简要描述</th>
                 <th field="pic_url" width="40">图片</th>
                 <th field="state" width="20" formatter="commMng.formatState">状态</th>
+                <th field="goods_type" width="20" formatter="commMng.formatGoodsType">商品类型</th>
                 <th field="eff_date" width="40">生效时间</th>
                 <th field="exp_date" width="40">失效时间</th>
             </tr>
@@ -75,6 +76,13 @@
 	                <option value="2">拼团商品</option>
             	</select>
     		</td>
+    	</tr>
+    	<tr>
+    		<td>商品类型:</td>
+    		<td colspan="3"> <select class="easyui-combobox" name="goods_type" id="goods_type" style="width:200px;">
+	                <option value="0" selected="true">正常商品</option>
+	                <option value="1" >赠送商品</option>
+            	</select></td>
     	</tr>
     	<tr>
     		<td>拼团价格:</td>
@@ -104,6 +112,7 @@
 	                <option value="1" selected="true">已发布</option>
             	</select></td>
     	</tr>
+    	
     	<tr>
     		<td>生效时间:</td>
     		<td colspan="3"> <input type="text" name="eff_date" id="eff_date" class="easyui-datetimebox" style="width:200px;"/></td>

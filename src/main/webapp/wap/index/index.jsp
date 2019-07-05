@@ -68,29 +68,31 @@
                     </div>
                     <div class="details">
                     		 <div class="number" style="color:white;font-size: 14px">
-                    		 <s:if test="result.ret.userLevel > 1">
-                    		 	会员级别：<font style="color:blue;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                    		 	公司红包累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
-                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
-                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
-                    		 </s:if>
-                    		 <s:else>
-                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                    		 </s:else>
+	                    		 <s:if test="result.ret.userLevel > 2">
+	                    		 	会员级别：<font style="color:blue;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+	                    		 	公司红包累计：<font style="color:black;"><s:property value="currentLevelAmount"/></font>&nbsp;&nbsp;&nbsp;&nbsp; 
+	                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
+	                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
+	                    		 </s:if>
+	                    		 <s:else>
+	                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+	                    		 </s:else>
                     		 </div>
                          	<div class="desc" style="color:white;font-size: 14px">
-                         	获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-                         	红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
-                         	<s:else>
-                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
-                         		<s:if test="result.ret.userLevel > 1">
-                         			相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
-                         		</s:if>
-                         	</s:else>
-                         	
-                         	<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
+	                         	<s:if test="result.ret.userLevel == 2">
+	                         		获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+	                         	</s:if>
+	                         	<s:else>
+	                         		红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
+		                         	<s:else>
+		                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
+		                         		<s:if test="result.ret.userLevel > 2">
+		                         			相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
+		                         		</s:if>
+		                         	</s:else>
+	                         	</s:else>
+                         		<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
                          	</div>
-                        	
                     </div>
                     <!-- 
                     <div class="details">

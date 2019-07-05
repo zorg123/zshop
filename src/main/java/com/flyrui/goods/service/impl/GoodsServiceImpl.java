@@ -1,9 +1,7 @@
 package com.flyrui.goods.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flyrui.common.DateUtil;
 import com.flyrui.common.service.BaseService;
+import com.flyrui.common.service.CommonService;
+import com.flyrui.common.uuid.UUIDHexGenerator;
 import com.flyrui.dao.common.page.PageModel;
 import com.flyrui.dao.pojo.sys.User;
 import com.flyrui.exception.FRError;
@@ -26,6 +26,8 @@ import com.flyrui.goods.service.GoodsOrderService;
 import com.flyrui.goods.service.GoodsService;
 import com.flyrui.quartz.dto.GoodsOrderAfter;
 import com.flyrui.quartz.service.GoodsOrderAfterService;
+import com.flyrui.sys.dto.FrConfig;
+import com.flyrui.sys.service.FrconfigService;
 
 
 @Service(value="goodsService")
@@ -44,6 +46,15 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 	
 	@Autowired
 	public GoodsOrderAfterService goodsOrderAfterService;
+	
+	@Autowired
+	public FrconfigService frconfigService;
+	
+	@Autowired
+	public GoodsService goodsService;
+	
+	@Autowired
+	public CommonService commonService;
 	
 	public GoodsServiceImpl(){
 		super.setNameSpace("com.flyrui.goods.dao.mapper.GoodsMapper");
@@ -106,11 +117,61 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		}
 		coinTrackService.insertCoinTrack(user,coinTrackDto);
 		
+		FrConfig frconfig = new FrConfig();
+		frconfig.setCf_id("gift_base_count");
+		List<FrConfig> configList = frconfigService.getListByCon(frconfig);
+		int giftGoodsBase = Integer.MAX_VALUE;
+		if(configList!=null && configList.size()>0) {
+			giftGoodsBase = Integer.parseInt(configList.get(0).getCf_value());
+		}
+		//如果大于配置的数量，则插入赠品订单
+		if(goodsOrder.getGoods_amount()>=giftGoodsBase) {
+			int giftGoodsAmount = goodsOrder.getGoods_amount()/giftGoodsBase;
+			//查询赠品信息
+			Goods gGoods = new Goods();
+			gGoods.setGoods_type("1");
+			List<Goods> gGoodsList = goodsService.getListByCon(gGoods);
+			if(gGoodsList!=null && gGoodsList.size()>0) {
+				gGoods = gGoodsList.get(0);
+				GoodsOrder gGoodsOrder = new GoodsOrder();
+				String goodsOrderCode = "00000000"+commonService.getSequence("seq_goods_order");
+				goodsOrderCode = DateUtil.formatDate(new Date(), "yyyyMMddHH")+goodsOrderCode.substring(goodsOrderCode.length()-8);
+				gGoodsOrder.setOrder_code(goodsOrderCode);
+				gGoodsOrder.setOrder_id(UUIDHexGenerator.generator());
+				gGoodsOrder.setUser_id(goodsOrder.getUser_id());
+				gGoodsOrder.setUser_name(goodsOrder.getUser_name());
+				gGoodsOrder.setCreate_date(new Date());
+				gGoodsOrder.setOrd_ip(goodsOrder.getOrd_ip());
+				gGoodsOrder.setState(goodsOrder.getState());
+				gGoodsOrder.setTotal_fee(0d);
+				gGoodsOrder.setGoods_name(gGoods.getGoods_name());
+				gGoodsOrder.setGoods_type(gGoods.getGoods_type());
+				gGoodsOrder.setCatalog_id(gGoods.getCatalog_id());
+				gGoodsOrder.setGoods_price(gGoods.getGoods_price());
+				gGoodsOrder.setOrigin_order_id(goodsOrder.getOrder_id());
+				gGoodsOrder.setGoods_amount(giftGoodsAmount);
+				gGoodsOrder.setGoods_id(gGoods.getGoods_id());
+				gGoodsOrder.setPay_type(goodsOrder.getPay_type());
+				gGoodsOrder.setSend_immediate(goodsOrder.getSend_immediate());
+				gGoodsOrder.setRev_addr(goodsOrder.getRev_addr());
+				gGoodsOrder.setRev_area(goodsOrder.getRev_area());
+				gGoodsOrder.setRev_desc(goodsOrder.getRev_desc());
+				gGoodsOrder.setRev_invoice(goodsOrder.getRev_invoice());
+				gGoodsOrder.setRev_people(goodsOrder.getRev_people());
+				gGoodsOrder.setRev_invoice_name(goodsOrder.getRev_invoice_name());
+				gGoodsOrder.setRev_link_phone(goodsOrder.getRev_link_phone());
+				gGoodsOrder.setState_date(goodsOrder.getState_date());
+				goodsOrderService.insert(gGoodsOrder);
+			}else {
+				log.info("未找到赠品信息");
+			}
+		}
 		goodsOrder.setTotal_fee(totalFee);
 		goodsOrder.setGoods_name(goods.getGoods_name());
 		goodsOrder.setGoods_type(goods.getGoods_type());
 		goodsOrder.setCatalog_id(goods.getCatalog_id());
 		goodsOrder.setGoods_price(goods.getGoods_price());
+		goodsOrder.setGoods_type(goods.getGoods_type());
 		Goods newGoods = new Goods();
 		newGoods.setGoods_amount(goods.getGoods_amount() - goodsOrder.getGoods_amount());
 		newGoods.setGoods_id(goods.getGoods_id());

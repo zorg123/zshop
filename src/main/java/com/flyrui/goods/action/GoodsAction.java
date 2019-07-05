@@ -130,6 +130,7 @@ public class GoodsAction extends BaseAction {
 		goods.setState("1");
 		goods.setEff_date(new Date());
 		goods.setExp_date(new Date());
+		goods.setGoods_type("0");
 		if(rows==0){
     		rows=6;
     	}

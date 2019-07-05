@@ -7,13 +7,13 @@ var commMng = {
         	return;
         }
         var goods_price = $('input[name="goods_price"]').val();
-        if(!/^\+?[1-9][0-9]*$/.test(goods_price)){
+        if(!/^\+?[0-9][0-9]*$/.test(goods_price)){
    		 $.messager.alert('系统提示', '商品拼团价格请输入整数值!', 'info');
    		 return;
         }
         
         var goods_market_price = $('input[name="goods_market_price"]').val();
-        if(!/^\+?[1-9][0-9]*$/.test(goods_market_price)){
+        if(!/^\+?[0-9][0-9]*$/.test(goods_market_price)){
    		 $.messager.alert('系统提示', '商品市场价格请输入整数值!', 'info');
    		 return;
         }
@@ -71,7 +71,8 @@ var commMng = {
         //alert("图片URL=="+icon_url);
         //alert("图片下载地址=="+pic_url);
         if(operType=='save'){
-        	if(icon_url=="" || icon_url==undefined || pic_url=="" || pic_url==undefined){
+        	var goodsType =$('input[name="goods_type"]').val();
+        	if(goodsType =='0' &&( icon_url=="" || icon_url==undefined || pic_url=="" || pic_url==undefined)){
             	$.messager.alert('系统提示', '请上传商品图片!', 'info');
             	return;
             }
@@ -90,6 +91,7 @@ var commMng = {
         param["goods.eff_date"] = $('input[name="eff_date"]').val();
         param["goods.exp_date"] = $('input[name="exp_date"]').val();
         param["goods.goods_market_price"] = goods_market_price;
+        param["goods.goods_type"] = $('input[name="goods_type"]').val();
         if(operType=='save'){
         	 param["goods.icon_url"] = icon_url;
              param["goods.pic_url"] = pic_url;
@@ -249,6 +251,16 @@ var commMng = {
 		}
 		return retVal;
   },
+  formatGoodsType:function(value,row){
+		//alert(CommonUtils.dumpObject(row));
+		var retVal = value;
+		if(value == "0"){
+			retVal="正常商品";
+		}else if (value == "1"){
+			retVal = "赠送商品";
+		}
+		return retVal;
+ },
   payType:function(value,row){
 		//alert(CommonUtils.dumpObject(row));
 		var retVal = value;
@@ -304,6 +316,7 @@ var commMng = {
 	  $("#eff_date").datetimebox('setValue',obj.eff_date);
 	  $("#exp_date").datetimebox('setValue',obj.exp_date);
 	  $("#_easyui_textbox_input2").val(obj.icon_url);
+	  $('#goods_type').combobox('setValue',obj.goods_type);
   }
 }
 
