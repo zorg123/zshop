@@ -31,7 +31,7 @@
 										  <option value="2">建设银行</option>
 										  <option value="3">农业银行</option>
 										  <option value="4">中国银行</option>
-										  <option value="5">支付宝</option>
+										  <!-- <option value="5">支付宝</option> -->
 										</select>	
                                     </div>
                                 </div>

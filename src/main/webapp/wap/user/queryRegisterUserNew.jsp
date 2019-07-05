@@ -130,7 +130,7 @@
 			var param={};
 			param["beActivedUserId"] = userId;
 			//alert(userId);
-			CommonUtils.showConfirm("确定要把您的订单赠送1个给该用户，并激活该用户吗?",function(){
+			//CommonUtils.showConfirm("确定要把您的订单赠送1个给该用户，并激活该用户吗?",function(){
 				CommonUtils.invokeAsyncAction(base+"/Sys/User/activeUser2.do", param, function (reply) {
 		  	           if ((reply || '') != '') {
 		  	               var code = reply._code;               
@@ -146,7 +146,7 @@
 		  	        	      CommonUtils.showAlert('操作失败!');
 		  	           }
 		  	    },true);
-			});
+			//});
 		}
 		
 		function delUser(){
