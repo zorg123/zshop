@@ -846,6 +846,7 @@ public class UserAction extends BaseAction {
  	    newGoodsOrder.setUser_id(currUser.getUser_id());
  	    newGoodsOrder.setState("0");
  	    newGoodsOrder.setCatalog_id("1");
+ 	    newGoodsOrder.setGoods_type("0");
  	    List<GoodsOrder> goodsOrderListForActive = goodsOrderService.selectCreateDateDesc(newGoodsOrder);
  	    if(goodsOrderListForActive==null || goodsOrderListForActive.size()==0){
  	    	Map retMap = new HashMap();
