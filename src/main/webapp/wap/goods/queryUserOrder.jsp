@@ -196,6 +196,9 @@
 		var state = $this.attr("state");
 		$("#listForm td input[type='checkbox']").prop("checked",false);
 		$this.prop("checked",true);
+		$("#modRevBtn").hide();
+		$("#goodSendBtn").hide();
+		$("#goodChangeBtn").hide();
 		if($this.is(":checked") && state == '0'){
 			$("#modRevBtn").show();
 			$("#goodSendBtn").show();
