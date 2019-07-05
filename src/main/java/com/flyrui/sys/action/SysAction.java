@@ -338,7 +338,7 @@ public class SysAction extends BaseAction {
     	
     	//未发货大礼包数量
     	GoodsOrder goCount = new GoodsOrder();
-    	goCount.setUser_id(getUserId());
+    	goCount.setUser_name(getUserCode()+"-1");
     	String GifNotSendCount = goodsOrderService.getGifNotSendCount(goCount);
     	if(StringUtils.isEmpty(GifNotSendCount)){
     		GifNotSendCount ="0";
