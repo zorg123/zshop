@@ -75,7 +75,7 @@
                                     <tbody>
                                         <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>"  goodsId="<s:property value="#goodsOrderIter.goods_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>"  goodsId="<s:property value="#goodsOrderIter.goods_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" goodsType="<s:property value="#goodsOrderIter.goods_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:if test="#goodsOrderIter.catalog_id == 1" >会员商品</s:if><s:else>拼团商品</s:else></td>
@@ -191,14 +191,17 @@
 	$("#listForm td input[type='checkbox']").on("click",function(event,param){
 		
 		var $this = $(this);
-		var goodType = $this.attr("orderType");
+		var orderType = $this.attr("orderType");
+		var goodType = $this.attr("goodsType");
 		var state = $this.attr("state");
 		$("#listForm td input[type='checkbox']").prop("checked",false);
 		$this.prop("checked",true);
 		if($this.is(":checked") && state == '0'){
 			$("#modRevBtn").show();
 			$("#goodSendBtn").show();
-			$("#goodChangeBtn").show();
+			if(goodType=="0"){
+			  $("#goodChangeBtn").show();
+			}
 		}else{			
 			$("#modRevBtn").hide();
 			$("#goodSendBtn").hide();
