@@ -88,6 +88,8 @@ public class GoodsAction extends BaseAction {
 	public String name;
 	public String orderId;
 	
+	public String beActivedUserId;
+	
 	@Autowired
 	public GoodsService goodsService;	
 	
@@ -499,6 +501,9 @@ public class GoodsAction extends BaseAction {
     	}
     	if("1".equals(catLog)){
     		goodsOrder.setCatalog_id("1");
+    	}
+    	if(!StringUtils.isEmpty(beActivedUserId)){
+    		goodsOrder.setGoods_type("0");
     	}
 		PageModel pageModel = goodsOrderService.getPagerListByCon(goodsOrder, page, rows);
 		setResult(pageModel);

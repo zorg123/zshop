@@ -135,7 +135,7 @@
 		  	           if ((reply || '') != '') {
 		  	               var code = reply._code;               
 		  	               if (code == '0') {
-		  	            	  var params ={"conditionType":"0","catLog":"1","userId":userId,"name":name};
+		  	            	  var params ={"conditionType":"0","catLog":"1","userId":userId,"name":name,"beActivedUserId":userId};
 		  	            	  pageData.openContent("/Goods/queryUserOrder.do?rows=10",params);
 		  	            	   //CommonUtils.showAlert('操作成功!');
 		  	            	 //setTimeout(function(){ pageData["refresh"](); }, 1000);   
