@@ -338,7 +338,7 @@ public class SysAction extends BaseAction {
     	
     	//未发货大礼包数量
     	GoodsOrder goCount = new GoodsOrder();
-    	goCount.setUser_name(getUserCode()+"-1");
+    	goCount.setUser_name(getUserCode());
     	String GifNotSendCount = goodsOrderService.getGifNotSendCount(goCount);
     	if(StringUtils.isEmpty(GifNotSendCount)){
     		GifNotSendCount ="0";
@@ -356,6 +356,7 @@ public class SysAction extends BaseAction {
     	returnMap.put("currentLevelPepoleCount",currentLevelPepoleCount);
     	returnMap.put("num_need_tobe_share",num_need_tobe_share);
     	returnMap.put("GifNotSendCount",GifNotSendCount);
+    	returnMap.put("userType",u.getUser_type());
     	
     	/*CoinTrackService coinTrackService = (CoinTrackService)SpringBeans.getBean("coinTrackService");
     	CoinTrackDto coinTrackDto = new CoinTrackDto();

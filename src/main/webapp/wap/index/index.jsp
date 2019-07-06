@@ -13,7 +13,7 @@
 <s:set name="currentLevelPepoleCount" value="result.ret.currentLevelPepoleCount"/>
 <s:set name="num_need_tobe_share" value="result.ret.num_need_tobe_share"/>
 <s:set name="GifNotSendCount" value="result.ret.GifNotSendCount"/>
-
+<s:set name="userType" value="result.ret.userType"/>
 
 <s:if test="result.ret.userLevel == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
@@ -22,7 +22,7 @@
     <s:set name="userLevelName" value="'会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 2">    
-    <s:set name="userLevelName" value="'主管'" />      
+    <s:set name="userLevelName" value="'VIP会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 3">    
     <s:set name="userLevelName" value="'经理'" />      
@@ -74,15 +74,15 @@
 	                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
 	                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
 	                    		 </s:if>
-	                    		 <s:else>
+	                    		 <s:if test="result.ret.userLevel <= 2 && userType == 'main'">
 	                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-	                    		 </s:else>
+	                    		 </s:if>
                     		 </div>
                          	<div class="desc" style="color:white;font-size: 14px">
-	                         	<s:if test="result.ret.userLevel == 2">
+	                         	<s:if test="userType == 'child'">
 	                         		获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
 	                         	</s:if>
-	                         	<s:else>
+	                         	<s:if test="result.ret.userLevel > 2">
 	                         		红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
 		                         	<s:else>
 		                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,7 +90,7 @@
 		                         			相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
 		                         		</s:if>
 		                         	</s:else>
-	                         	</s:else>
+	                         	</s:if>
                          		<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
                          	</div>
                     </div>
