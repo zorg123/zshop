@@ -105,7 +105,8 @@
                     </div> -->
                 </div>
             </div>
-        	 <div class="am-u-lg-3 am-u-md-6 am-u-sm-6" >
+            <s:if test="result.ret.userType == 'main'">
+        	<div class="am-u-lg-3 am-u-md-6 am-u-sm-6" >
                 <div class="dashboard-stat purple">
                     <div class="visual">
                         <i class="am-icon-android"></i>
@@ -119,6 +120,7 @@
 		            </a>-->
                 </div>
             </div>
+            </s:if>
             <div class="am-u-lg-3 am-u-md-6 am-u-sm-6">
                 <div class="dashboard-stat red">
                     <div class="visual">
