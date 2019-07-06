@@ -13,7 +13,6 @@
 <s:set name="currentLevelPepoleCount" value="result.ret.currentLevelPepoleCount"/>
 <s:set name="num_need_tobe_share" value="result.ret.num_need_tobe_share"/>
 <s:set name="GifNotSendCount" value="result.ret.GifNotSendCount"/>
-<s:set name="userType" value="result.ret.userType"/>
 
 <s:if test="result.ret.userLevel == 0">    
     <s:set name="userLevelName" value="'未激活'" />      
@@ -74,12 +73,12 @@
 	                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
 	                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
 	                    		 </s:if>
-	                    		 <s:if test="result.ret.userLevel <= 2 && userType == 'main'">
+	                    		 <s:if test="result.ret.userLevel <= 2 && result.ret.userType == 'main'">
 	                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
 	                    		 </s:if>
                     		 </div>
                          	<div class="desc" style="color:white;font-size: 14px">
-	                         	<s:if test="userType == 'child'">
+	                         	<s:if test="result.ret.userType == 'child'">
 	                         		获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
 	                         	</s:if>
 	                         	<s:if test="result.ret.userLevel > 2">
