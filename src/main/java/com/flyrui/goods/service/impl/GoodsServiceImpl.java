@@ -28,6 +28,7 @@ import com.flyrui.quartz.dto.GoodsOrderAfter;
 import com.flyrui.quartz.service.GoodsOrderAfterService;
 import com.flyrui.sys.dto.FrConfig;
 import com.flyrui.sys.service.FrconfigService;
+import com.flyrui.sys.service.UserService;
 
 
 @Service(value="goodsService")
@@ -55,6 +56,9 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 	
 	@Autowired
 	public CommonService commonService;
+	
+	@Autowired
+	public UserService userService;
 	
 	public GoodsServiceImpl(){
 		super.setNameSpace("com.flyrui.goods.dao.mapper.GoodsMapper");
@@ -124,8 +128,15 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		if(configList!=null && configList.size()>0) {
 			giftGoodsBase = Integer.parseInt(configList.get(0).getCf_value());
 		}
-		//如果大于配置的数量，则插入赠品订单
-		if(goodsOrder.getGoods_amount()>=giftGoodsBase) {
+		//查找主账户信息
+		User uu = new User();
+		uu.setUser_id(user.getPid());
+		List<User> uuList = userService.getListByCon(uu);
+		if(uuList!=null && uuList.size()>0) {
+			uu = uuList.get(0);
+		}
+		//如果大于配置的数量,且账户级别大于2级时，则插入赠品订单
+		if(goodsOrder.getGoods_amount()>=giftGoodsBase && (uu.getUser_level()!=null && uu.getUser_level()>=2)) {
 			int giftGoodsAmount = goodsOrder.getGoods_amount()/giftGoodsBase;
 			//查询赠品信息
 			Goods gGoods = new Goods();
