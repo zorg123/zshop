@@ -296,7 +296,7 @@ public class GoodsAction extends BaseAction {
 		}else {
 			goodsOrder.setState("0");
 		}
-    	goodsService.accept(goods, goodsOrder,getLoginUserInfo());//用于事务
+    	goodsService.accept(goods, goodsOrder,u);//用于事务
     	GoodsOrder goodsOrderLocal = new GoodsOrder();
     	goodsOrderLocal.setOrder_code(goodsOrder.getOrder_code());
     	setResult(goodsOrderLocal);
