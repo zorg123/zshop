@@ -135,8 +135,8 @@ public class GoodsServiceImpl extends BaseService<Goods> implements GoodsService
 		if(uuList!=null && uuList.size()>0) {
 			uu = uuList.get(0);
 		}
-		//如果大于配置的数量,且账户级别大于2级时，则插入赠品订单
-		if(goodsOrder.getGoods_amount()>=giftGoodsBase && (uu.getUser_level()!=null && uu.getUser_level()>=2)) {
+		//如果大于配置的数量,且账户级别大于2级 且为会员商品时，则插入赠品订单
+		if(goodsOrder.getGoods_amount()>=giftGoodsBase && (uu.getUser_level()!=null && uu.getUser_level()>=2) && "1".equals(goods.getCatalog_id())) {
 			int giftGoodsAmount = goodsOrder.getGoods_amount()/giftGoodsBase;
 			//查询赠品信息
 			Goods gGoods = new Goods();
