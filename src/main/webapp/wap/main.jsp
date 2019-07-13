@@ -17,7 +17,7 @@
     <s:set name="userLevelName" value="'会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 2">    
-    <s:set name="userLevelName" value="'主管'" />      
+    <s:set name="userLevelName" value="'VIP会员'" />      
 </s:if>
 <s:if test="#session.user.user_level == 3">    
     <s:set name="userLevelName" value="'经理'" />      

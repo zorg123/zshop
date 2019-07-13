@@ -41,7 +41,7 @@
 	                                            <th class="table-type">状态</th>
 	                                            <th class="table-type">级别</th>
 	                                            <!-- <th class="table-type">会员订单总数</th> -->
-	                                            <th class="table-type">主管总数</th>
+	                                            <th class="table-type">VIP会员总数</th>
 	                                            <th class="table-type">经理总数</th>
 	                                            <th class="table-type">总监总数</th>
 	                                            <th class="table-type">总裁总数</th>
