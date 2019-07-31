@@ -38,7 +38,7 @@
             	<th field="rec_code" width="40" hidden>充值申请id</th>
                 <th field="rec_bankname" width="40">充值银行</th>  
                 <th field="rec_bankid" width="80">充值卡号</th>
-                <th field="rec_num" width="30">申请金额</th>              
+                <th field="rec_num" width="50">申请金额</th>              
                 <th field="rec_message" width="100">充值留言</th>
                 <th field="user_code" width="40">会员编号</th>
                 <th field="user_name" width="40">会员名称</th>
