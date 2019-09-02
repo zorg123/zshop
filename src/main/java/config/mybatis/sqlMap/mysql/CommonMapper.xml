@@ -45,4 +45,7 @@
 	<update id="pro_zshop_poolDivide" parameterMap="produreParam" statementType="CALLABLE">  
 		{call pro_zshop_poolDivide(?)}  
 	</update>
+	<update id="pro_zshop_shareoutQuaAll" parameterMap="produreParam" statementType="CALLABLE">  
+		{call pro_zshop_shareoutQuaAll()}  
+	</update>
 </mapper>

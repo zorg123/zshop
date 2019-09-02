@@ -89,4 +89,11 @@ public class CommonService extends BaseService<Map>{
 	public void execProc(Map param) {
 		baseDao.update("com.flyrui.dao.mapper.common.pro_zshop_poolDivide",param);
 	}
+	
+	/*
+	 * 执行存储过程 pro_zshop_shareoutQuaAll
+	 */
+	public void execProcShareout() {
+		baseDao.update("com.flyrui.dao.mapper.common.pro_zshop_shareoutQuaAll");
+	}
 }

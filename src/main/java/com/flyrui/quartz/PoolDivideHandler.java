@@ -62,4 +62,11 @@ public class PoolDivideHandler {
 		map.put("in_grade", 6);
 		commonService.execProc(map);
 	}
+	
+	//每天凌晨1点
+	@Scheduled(cron = "0 0 1 * * ?")
+	@Transactional
+	public void shareoutQuaAll(){
+		commonService.execProcShareout();
+	}
 }
