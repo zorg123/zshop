@@ -74,7 +74,8 @@
 	                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
 	                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
 	                    		 </s:if>
-	                    		 <s:if test="result.ret.userLevel <= 2 && result.ret.userType == 'main'">
+	                    		 <%-- <s:if test="result.ret.userLevel <= 2 && result.ret.userType == 'main'"> --%>
+	                    		 <s:if test="result.ret.userLevel <= 2">
 	                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
 	                    		 </s:if>
                     		 </div>
