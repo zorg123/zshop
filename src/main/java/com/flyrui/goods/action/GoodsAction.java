@@ -260,7 +260,7 @@ public class GoodsAction extends BaseAction {
 		
 		if("1".equals(tGoods.getCatalog_id())) {
 			//获取当前用户,会员商品只能购买一单			
-			if("0".equals(u.getState()) && goodsOrder.getGoods_amount()>1) {
+			if("0".equals(u.getState()) && goodsOrder.getGoods_amount()!=10) {
 				throw new FRException(new FRError(ErrorConstants.SHOP_UNACTIVE_USER_1));
 			} 
 		}

@@ -212,7 +212,7 @@
   	            		 		$("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额不足，余额为:"+ret.coin+"</div>"); 
   	            		 		$("#userProfileSubmit").attr("disabled",true);
   	            		   }else{
-  	            			 $("#coinAmountTip").html("<div class='field-invalidmsg'>您未激活，只能购买10件会员商品</div>"); 
+  	            			 $("#coinAmountTip").html("<div class='field-invalidmsg'>您未激活，只能购买10单会员商品</div>"); 
 	            		 		$("#userProfileSubmit").attr("disabled",true);
   	            		   }
   	            	   }else{
