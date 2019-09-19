@@ -177,7 +177,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-10);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
 			   String oldComments = StringUtils.isEmpty(oldOrder.getComments()) ?"":oldOrder.getComments();
-			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldComments);
+			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量10;"+oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }
 		   return new String[]{"0","成功"};
