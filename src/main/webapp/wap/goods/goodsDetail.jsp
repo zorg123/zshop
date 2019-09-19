@@ -212,7 +212,7 @@
   	            		 		$("#coinAmountTip").html("<div class='field-invalidmsg'>当前余额不足，余额为:"+ret.coin+"</div>"); 
   	            		 		$("#userProfileSubmit").attr("disabled",true);
   	            		   }else{
-  	            			 $("#coinAmountTip").html("<div class='field-invalidmsg'>您未激活，只能购买一件会员商品</div>"); 
+  	            			 $("#coinAmountTip").html("<div class='field-invalidmsg'>您未激活，只能购买10件会员商品</div>"); 
 	            		 		$("#userProfileSubmit").attr("disabled",true);
   	            		   }
   	            	   }else{
@@ -280,6 +280,7 @@
 	                 
 	                 params["goodsOrder.send_immediate"]= $("#acceptForm input[name='goodsOrder.send_immediate']:checked").val(); 
 	                 
+	                 $("#userProfileSubmit").attr("disabled",true);
 					 CommonUtils.invokeAsyncAction(base+'/Goods/accept.do', params, function (reply) {           
 		  	           
 						if ((reply || '') != '') {

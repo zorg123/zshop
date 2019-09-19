@@ -202,7 +202,7 @@ public class GoodsAction extends BaseAction {
     	User t = new User();
     	t.setUser_id(getUserId());
     	User tempU = userService.getListByCon(t).get(0);
-    	if("0".equals(tempU.getState()) && goods.getGoods_amount()>1) {
+    	if("0".equals(tempU.getState()) && goods.getGoods_amount()!=10) {
     		checkCoin = "-1";
     	}else {    		
     		if(retAccoutInfoDto!=null){
