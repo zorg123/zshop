@@ -406,7 +406,7 @@
  	SELECT * FROM fr_config a WHERE a.`cf_id` like  concat('%',#{cf_id,jdbcType=VARCHAR},'%') 
  </select>
  <select id="queryUserMonthGoods" resultType="hashmap" parameterType="hashmap">
- 	select user_id,months,goodsSum from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
+ 	select user_id,months,goodsSum,smallMarket from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
  </select>
   <parameterMap type="map" id="produreParam3">  
    <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>  

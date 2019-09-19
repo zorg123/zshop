@@ -78,7 +78,7 @@
                                     <tbody>
                                         <s:iterator  value="#goodsOrderList"  id="goodsOrderIter" status="st">   
 	                                        <tr>
-	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
+	                                            <td><input type="checkbox" orderId="<s:property value="#goodsOrderIter.order_id"/>" goodsAmount="<s:property value="#goodsOrderIter.goods_amount"/>" orderType="<s:property value="#goodsOrderIter.order_type"/>" state="<s:property value="#goodsOrderIter.state"/>"></td>
 	                                            <td><s:property value="#goodsOrderIter.order_code"/></td>
 	                                            <td><s:property value="#goodsOrderIter.goods_name"/></td>
 	                                            <td><s:if test="#goodsOrderIter.catalog_id == 1" >会员商品</s:if><s:else>拼团商品</s:else></td>
@@ -136,9 +136,11 @@
 		var goodsList=[];
 		var userId = $("#user_id").val();
 		var orderId="";
+		var goodsAmount=0;
 		$.each($("#listForm input:checked"),function(i,v){
 			orderId = $(this).attr("orderId");
 			goodsList.push(orderId);
+			goodsAmount = $(this).attr("goodsAmount");
 		});
 		if(goodsList.length==0){
 			CommonUtils.showAlert("请先选择一条订单记录!");
@@ -148,9 +150,13 @@
 			CommonUtils.showAlert("只能选择一个记录!");
 			return;
 		}
+		if(goodsAmount<10){
+			CommonUtils.showAlert("少于10单不能用于激活!");
+			return;
+		}
 		$("#activeBtn").attr("disabled","disabled");
     	var params ={"orderId":orderId,"beActivedUserId":userId};
-		CommonUtils.showConfirm("确定要把您的订单调拨1个给该用户，并激活该用户吗?",function(){
+		CommonUtils.showConfirm("确定转派10单给该用户用于激活么?",function(){
 			CommonUtils.invokeAsyncAction(base+"/Sys/User/activeUserUseOrder.do", params, function (reply) {
 	  	           if ((reply || '') != '') {
 	  	               var code = reply._code;               

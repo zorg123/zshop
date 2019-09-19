@@ -198,11 +198,14 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		   GoodsOrder activeOrder = goodsOrderListForActive.get(0);
 		   log.info("子帐号激活会员: 订单id :"+activeOrder.getOrder_id()+"  数量:"+activeOrder.getGoods_amount());
 		   if(activeOrder.getGoods_amount() == 0){
-			   return new String[]{"-1","会员订单中商品数量为0，不能激活"};
+			   return new String[]{"-1","会员订单中单数为0，不能激活"};
+		   }
+		   if(activeOrder.getGoods_amount() < 10){
+			   return new String[]{"-1","会员订单中的单数小于10，不能激活"};
 		   }
 		   //只剩一条的话
-		   if(activeOrder.getGoods_amount() == 1){
-			   log.info("订单商品数量1，子帐号激活会员: 直接激活");
+		   if(activeOrder.getGoods_amount() == 10){
+			   log.info("订单商品数量10，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //更新原定订单，作废
@@ -214,16 +217,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   goodsOrderService.update(oldOrder);
 			   //调用存储过程
 			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
-		   }else if(activeOrder.getGoods_amount() > 1){
+		   }else if(activeOrder.getGoods_amount() > 10){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
 			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
-			   //更新原定订单，数量-1
+			   //更新原定订单，数量-10
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
-			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
+			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-10);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
 			   String oldComments = oldOrder.getComments()==null?"":oldOrder.getComments();
 			   oldOrder.setComments("转赠：["+beActivedtbUser.getUser_code()+"];"+oldComments);
@@ -245,8 +248,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	   newOrder.setComments("用户["+tbUser.getUser_code()+"]转赠订单");
 	   newOrder.setGoods_id(activeOrder.getGoods_id());
 	   newOrder.setGoods_name(activeOrder.getGoods_name());
-	   newOrder.setGoods_amount(1);
-	   newOrder.setTotal_fee(activeOrder.getGoods_price());
+	   newOrder.setGoods_amount(10);
+	   newOrder.setTotal_fee(activeOrder.getGoods_price()*10);
 	   newOrder.setPay_type(activeOrder.getPay_type());
 	   newOrder.setUser_id(beActivedtbUser.getUser_id());
 	   newOrder.setUser_name(beActivedtbUser.getName());

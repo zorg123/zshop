@@ -45,8 +45,8 @@ public class PoolDivideHandler {
 		commonService.execProc(map);
 	}
 	
-	//5级分红池平分下月初执行
-	@Scheduled(cron = "0 0 0 1 * ?")
+	//5级分红池平分每天执行，过程中判断是否为当月最后一天
+	@Scheduled(cron = "0 59 23 * * ?")
 	@Transactional
 	public void grade5(){
 		Map map = new HashMap();
@@ -54,8 +54,8 @@ public class PoolDivideHandler {
 		commonService.execProc(map);
 	} 
 	
-	//6级分红池平分下月初执行
-	@Scheduled(cron = "0 0 0 1 * ?")
+	//6级分红池平分每天执行，过程中判断是否为当月最后一天
+	@Scheduled(cron = "0 59 23 * * ?")
 	@Transactional
 	public void grade6(){
 		Map map = new HashMap();
@@ -63,8 +63,8 @@ public class PoolDivideHandler {
 		commonService.execProc(map);
 	}
 	
-	//每天凌晨1点
-	@Scheduled(cron = "0 0 1 * * ?")
+	//1号凌晨1点执行，判断上个月的分红资格
+	@Scheduled(cron = "0 0 1 1 * ?")
 	@Transactional
 	public void shareoutQuaAll(){
 		commonService.execProcShareout();

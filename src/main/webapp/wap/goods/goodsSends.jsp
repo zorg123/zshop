@@ -49,7 +49,7 @@
                                      		<input type="number" disabled="disabled" pattern="[0-9]*" placeholder="输入你要发货的数量，不能大于<s:property value="goodsOrder.goods_amount" />" style="font-size:14px"  db_field="goodsOrderSplitNumber" name="goodsOrderSplitNumber" value="<s:property value="goodsOrder.goods_amount" />">
                                      	</s:if>
                                      	<s:if test="goodsOrder.goods_id != '201705091900000011'">
-                                     		<input type="number" pattern="[0-9]*" placeholder="输入你要发货的数量，不能大于<s:property value="goodsOrder.goods_amount" />" style="font-size:14px"  db_field="goodsOrderSplitNumber" name="goodsOrderSplitNumber" value="<s:property value="goodsOrder.goods_amount" />">
+                                     		<input type="number" pattern="[0-9]*" placeholder="输入你要发货的单数，不能大于<s:property value="goodsOrder.goods_amount" />" style="font-size:14px"  db_field="goodsOrderSplitNumber" name="goodsOrderSplitNumber" value="<s:property value="goodsOrder.goods_amount" />">
                                      	</s:if>
                                      </div>
                                 </div>                              

@@ -6,6 +6,7 @@
 <s:set name="retAccoutInfo" value="result.retAccoutInfo"/>
 <s:set name="curMonthOrdrs" value="result.ret.curMonthOrdrs"/>
 <s:set name="lastMonthOrdrs" value="result.ret.lastMonthOrdrs"/>
+<s:set name="lastSmallMarket" value="result.ret.lastSmallMarket"/>
 <s:set name="userLevelShareoutList" value="result.ret.userLevelShareoutList"/>
 <s:set name="Allorder_num" value="result.ret.Allorder_num"/>
 <s:set name="totalUserGoodsOrders" value="result.ret.totalUserGoodsOrders"/>
@@ -78,17 +79,12 @@
 	                    		 </s:if>
                     		 </div>
                          	<div class="desc" style="color:white;font-size: 14px">
-	                         	<s:if test="result.ret.userType == 'child'">
-	                         		获赠大礼包:待发货 <font style="color:red;font-weight: bold;"><s:property value="GifNotSendCount"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-	                         	</s:if>
 	                         	<s:if test="result.ret.userLevel > 2">
 	                         		红包资格：<s:if test="result.ret.getShareout_qua == 1"><font style="color:blue;font-weight: bold;">具备</font></s:if>
 		                         	<s:else>
 		                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
-		                         		<s:if test="result.ret.userLevel > 2">
-		                         			相差 ：<font style="color:red;font-weight: bold;"><s:property value="num_need_tobe_share"/></font>
-		                         		</s:if>
 		                         	</s:else>
+		                         	上月小市场 ：<font style="color:blue;font-weight: bold;"><s:property value="lastSmallMarket"/></font>
 	                         	</s:if>
                          		<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
                          	</div>

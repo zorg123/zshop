@@ -301,8 +301,10 @@ public class SysAction extends BaseAction {
     	param.put("months", lastMonth);
     	monthOrder = userService.queryUserMonthGoods(param);
     	Integer lastMonthOrdrs = 0;
+    	Integer lastSmallMarket = 0;
     	if(monthOrder.size()>0) {
     		lastMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    		lastSmallMarket = Integer.parseInt(monthOrder.get(0).get("smallMarket")+"");
     	}
     	
     	param = new HashMap<String,String>();
@@ -348,6 +350,7 @@ public class SysAction extends BaseAction {
     	returnMap.put("userLevelShareoutList",userLevelShareoutList);
     	returnMap.put("curMonthOrdrs",curMonthOrdrs);
     	returnMap.put("lastMonthOrdrs",lastMonthOrdrs);
+    	returnMap.put("lastSmallMarket",lastSmallMarket);
     	returnMap.put("userLevel",u.getUser_level());
     	returnMap.put("getShareout_qua",u.getShareout_qua());
     	returnMap.put("Allorder_num",u.getAllorder_num());
