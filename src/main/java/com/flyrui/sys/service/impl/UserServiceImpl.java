@@ -114,9 +114,12 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		   if(activeOrder.getGoods_amount() == 0){
 			   return new String[]{"-1","会员订单中商品数量为0，不能激活"};
 		   }
+		   if(activeOrder.getGoods_amount() < 10){
+			   return new String[]{"-1","会员订单中的单数小于10，不能激活"};
+		   }
 		   //只剩一条的话
-		   if(activeOrder.getGoods_amount() == 1){
-			   log.info("订单商品数量1，子帐号激活会员: 直接激活");
+		   if(activeOrder.getGoods_amount() == 10){
+			   log.info("订单商品数量10，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
@@ -130,7 +133,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   
 			   GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
 				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
-				goodsOrderAfter.setBuy_amount(1);
+				goodsOrderAfter.setBuy_amount(10);
 				goodsOrderAfter.setUser_id(tbUser.getUser_id());
 				goodsOrderAfter.setCreate_date(new Date());
 				goodsOrderAfter.setAfter_type("act");
@@ -145,7 +148,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   String oldComments = StringUtils.isEmpty(oldOrder.getComments())?"":oldOrder.getComments();
 			   oldOrder.setComments("该订单转赠给用户：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
 			   goodsOrderService.update(oldOrder);
-		   }else if(activeOrder.getGoods_amount() > 1){
+		   }else if(activeOrder.getGoods_amount() > 10){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
@@ -160,7 +163,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   
 				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
 				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
-				goodsOrderAfter.setBuy_amount(1);
+				goodsOrderAfter.setBuy_amount(10);
 				goodsOrderAfter.setUser_id(tbUser.getUser_id());
 				goodsOrderAfter.setCreate_date(new Date());
 				goodsOrderAfter.setAfter_type("act");
@@ -168,10 +171,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 				goodsOrderAfter.setState(1);
 				goodsOrderAfterService.insert(goodsOrderAfter);					
 				
-			   //更新原定订单，数量-1
+			   //更新原定订单，数量-10
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
-			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-1);
+			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-10);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
 			   String oldComments = StringUtils.isEmpty(oldOrder.getComments()) ?"":oldOrder.getComments();
 			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量1;"+oldComments);
