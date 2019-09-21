@@ -19,7 +19,7 @@
     <s:set name="userLevelName" value="'未激活'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 1">    
-    <s:set name="userLevelName" value="'会员'" />      
+    <s:set name="userLevelName" value="'VIP会员'" />      
 </s:if>
 <s:if test="result.ret.userLevel == 2">    
     <s:set name="userLevelName" value="'VIP会员'" />      

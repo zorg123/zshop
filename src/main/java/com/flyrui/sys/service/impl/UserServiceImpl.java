@@ -144,9 +144,19 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //更新原定订单，作废
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   String oldComments = "";
+			   List<GoodsOrder> retListGoodsOrder = goodsOrderService.getListByCon(oldOrder);
+			   if(null!=retListGoodsOrder && retListGoodsOrder.size()>0){
+				   oldComments = retListGoodsOrder.get(0).getComments();
+			   }
 			   oldOrder.setState("-1");
-			   String oldComments = StringUtils.isEmpty(oldOrder.getComments())?"":oldOrder.getComments();
-			   oldOrder.setComments("该订单转赠给用户：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
+			   //String oldComments = StringUtils.isEmpty(oldOrder.getComments())?"":oldOrder.getComments();
+			   if(null==oldComments || oldComments.equals("") || oldComments.length()==0){
+				   oldComments = "转赠:"+beActivedtbUser.getUser_code()+"(10单)";
+			   }else{
+				   oldComments = oldComments+"-"+beActivedtbUser.getUser_code()+"(10单)";
+			   }
+			   oldOrder.setComments(oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }else if(activeOrder.getGoods_amount() > 10){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
@@ -174,10 +184,20 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   //更新原定订单，数量-10
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
+			   String oldComments = "";
+			   List<GoodsOrder> retListGoodsOrder = goodsOrderService.getListByCon(oldOrder);
+			   if(null!=retListGoodsOrder && retListGoodsOrder.size()>0){
+				   oldComments = retListGoodsOrder.get(0).getComments();
+			   }
 			   oldOrder.setGoods_amount(activeOrder.getGoods_amount()-10);
 			   oldOrder.setTotal_fee(activeOrder.getGoods_price()*oldOrder.getGoods_amount());
-			   String oldComments = StringUtils.isEmpty(oldOrder.getComments()) ?"":oldOrder.getComments();
-			   oldOrder.setComments("该订单转赠："+beActivedtbUser.getUser_code()+",转增数量10;"+oldComments);
+			   //String oldComments = StringUtils.isEmpty(oldOrder.getComments()) ?"":oldOrder.getComments();
+			   if(null==oldComments || oldComments.equals("") || oldComments.length()==0){
+				   oldComments = "转赠:"+beActivedtbUser.getUser_code()+"(10单)";
+			   }else{
+				   oldComments = oldComments+"-"+beActivedtbUser.getUser_code()+"(10单)";
+			   }
+			   oldOrder.setComments(oldComments);
 			   goodsOrderService.update(oldOrder);
 		   }
 		   return new String[]{"0","成功"};
