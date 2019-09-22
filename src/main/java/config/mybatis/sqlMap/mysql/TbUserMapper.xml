@@ -410,7 +410,7 @@
  </select>
   <parameterMap type="map" id="produreParam3">  
    <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>
-   <parameter property="order_id" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="order_id" jdbcType="VARCHAR" mode="IN"/>  
    <parameter property="act_userId" jdbcType="INTEGER" mode="IN"/> 
  </parameterMap>
  <update id="pro_zshop_act" parameterMap="produreParam3" statementType="CALLABLE">  
