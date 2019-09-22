@@ -44,10 +44,10 @@
                                 </div>
 								                              
                                 <div class="am-form-group">
-                                    <label for="user-email" class="am-u-sm-3 am-form-label">商品价格</label>
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">商品总价</label>
                                     <div class="am-u-sm-9">
                                     	<input type="hidden" name="goods.goods_price" db_field="goods.goods_price" value="<s:property value="goods.goods_price" />" />
-                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_price" /></span>
+                                        <span type="text" class="am-form-field tpl-form-no-bg"><s:property value="goods.goods_price*goods.goods_amount" /></span>
                                     </div>
                                 </div>
                                                                 
