@@ -5,6 +5,7 @@
     	<result column="id" property="id" jdbcType="INTEGER" />
     	<result column="user_id" property="user_id" jdbcType="VARCHAR" />
     	<result column="goods_order_id" property="goods_order_id" jdbcType="VARCHAR" />
+    	<result column="act_userId" property="act_userId" jdbcType="VARCHAR" />
     	<result column="buy_amount" property="buy_amount" jdbcType="INTEGER" />
     	<result column="state" property="state" jdbcType="INTEGER" />
     	<result column="error_num" property="error_num" jdbcType="INTEGER" />
@@ -17,6 +18,7 @@
     	id,
     	user_id,
     	goods_order_id,
+    	act_userId,
     	buy_amount,
     	state,
     	error_num,
@@ -35,6 +37,9 @@
      		</if>
 	    	<if test="goods_order_id != null  and goods_order_id != '' " >
         		and goods_order_id = #{goods_order_id,jdbcType=VARCHAR}
+     		</if>
+     		<if test="act_userId != null  and act_userId != '' " >
+        		and act_userId = #{act_userId,jdbcType=VARCHAR}
      		</if>
 	    	<if test="buy_amount != null  and buy_amount != '' " >
         		and buy_amount = #{buy_amount,jdbcType=INTEGER}
@@ -83,7 +88,9 @@
 	    	    	
         	  #{user_id,jdbcType=VARCHAR},     		
 	    	    	
-        	  #{goods_order_id,jdbcType=VARCHAR},     		
+        	  #{goods_order_id,jdbcType=VARCHAR},
+        	  
+        	  #{act_userId,jdbcType=VARCHAR}, 		
 	    	    	
         	  #{buy_amount,jdbcType=INTEGER},     		
 	    	    	
@@ -109,6 +116,9 @@
    		</if>
    		<if test="goods_order_id != null  and goods_order_id != '' " >
       		goods_order_id = #{goods_order_id,jdbcType=VARCHAR},
+   		</if>
+   		<if test="act_userId != null  and act_userId != '' " >
+      		act_userId = #{act_userId,jdbcType=VARCHAR},
    		</if>
    		<if test="buy_amount != null  and buy_amount != '' " >
       		buy_amount = #{buy_amount,jdbcType=INTEGER},

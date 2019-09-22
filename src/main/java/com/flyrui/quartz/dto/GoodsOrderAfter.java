@@ -21,6 +21,8 @@ public class GoodsOrderAfter implements Serializable {
 
 	/**  */
 	private String goods_order_id;
+	
+	private String act_userId;
 
 	/**  */
 	private Integer buy_amount;
@@ -66,6 +68,14 @@ public class GoodsOrderAfter implements Serializable {
 
 	public void setGoods_order_id(String goods_order_id) {
 		this.goods_order_id = goods_order_id;
+	}
+	
+	public String getAct_userId() {
+		return act_userId;
+	}
+
+	public void setAct_userId(String act_userId) {
+		this.act_userId = act_userId;
 	}
 
 	public Integer getBuy_amount() {

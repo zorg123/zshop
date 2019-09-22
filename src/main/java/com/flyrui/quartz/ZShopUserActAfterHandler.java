@@ -57,7 +57,7 @@ public class ZShopUserActAfterHandler {
 							
 							for(GoodsOrderAfter temp : page.getRows()) {
 								try {
-									userService.afterHandler(temp.getUser_id(),temp.getGoods_order_id());//goodsOderId暂存为被激活用户id
+									userService.afterHandler(temp.getUser_id(),temp.getGoods_order_id(),temp.getAct_userId());//goodsOderId暂存为被激活用户id
 									orderAfter.setId(temp.getId());
 									orderAfter.setState(3);
 									orderAfter.setState_date(new Date());

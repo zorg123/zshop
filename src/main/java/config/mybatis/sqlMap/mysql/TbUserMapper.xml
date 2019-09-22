@@ -409,11 +409,12 @@
  	select user_id,months,goodsSum,smallMarket from user_month_goods where months = #{months,jdbcType=VARCHAR} and user_id = #{user_id,jdbcType=VARCHAR}
  </select>
   <parameterMap type="map" id="produreParam3">  
-   <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>  
+   <parameter property="child_userId" jdbcType="INTEGER" mode="IN"/>
+   <parameter property="order_id" jdbcType="INTEGER" mode="IN"/>  
    <parameter property="act_userId" jdbcType="INTEGER" mode="IN"/> 
  </parameterMap>
  <update id="pro_zshop_act" parameterMap="produreParam3" statementType="CALLABLE">  
-   	{call pro_zshop_act(?, ?)}  
+   	{call pro_zshop_act(?, ?, ?)}  
  </update>
  <select id="queryUserGoodsOrder" resultType="hashmap" parameterType="hashmap">
  	SELECT IFNULL(SUM(goods_amount),0) as goodscount FROM goods_order a WHERE user_id = #{user_id,jdbcType=VARCHAR} AND a.catalog_id ='1' and a.state != '-1'

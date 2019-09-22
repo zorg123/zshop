@@ -132,7 +132,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   update(u);
 			   
 			   GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
-				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+			    goodsOrderAfter.setAct_userId(beActivedtbUser.getUser_id());
+				//goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+			    goodsOrderAfter.setGoods_order_id(orderId);
 				goodsOrderAfter.setBuy_amount(10);
 				goodsOrderAfter.setUser_id(tbUser.getUser_id());
 				goodsOrderAfter.setCreate_date(new Date());
@@ -172,7 +174,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   update(u);
 			   
 				GoodsOrderAfter goodsOrderAfter = new GoodsOrderAfter();
-				goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+				goodsOrderAfter.setAct_userId(beActivedtbUser.getUser_id());
+				//goodsOrderAfter.setGoods_order_id(beActivedtbUser.getUser_id());
+				goodsOrderAfter.setGoods_order_id(orderId);
 				goodsOrderAfter.setBuy_amount(10);
 				goodsOrderAfter.setUser_id(tbUser.getUser_id());
 				goodsOrderAfter.setCreate_date(new Date());
@@ -239,13 +243,13 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 			   oldOrder.setComments("转赠：["+beActivedtbUser.getUser_code()+"]"+";"+oldComments);
 			   goodsOrderService.update(oldOrder);
 			   //调用存储过程
-			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   afterHandler(tbUser.getUser_id(),activeOrder.getOrder_code(),beActivedtbUser.getUser_id());
 		   }else if(activeOrder.getGoods_amount() > 10){
 			   log.info("商品数量"+activeOrder.getGoods_amount()+"，子帐号激活会员: 直接激活");
 			   //插入新订单
 			   genNewActiveOrder(activeOrder, tbUser, beActivedtbUser);
 			   //调用存储过程
-			   afterHandler(tbUser.getUser_id(),beActivedtbUser.getUser_id());
+			   afterHandler(tbUser.getUser_id(),activeOrder.getOrder_code(),beActivedtbUser.getUser_id());
 			   //更新原定订单，数量-10
 			   GoodsOrder oldOrder = new GoodsOrder();
 			   oldOrder.setOrder_id(activeOrder.getOrder_id());
@@ -386,10 +390,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
    
 	@Transactional
-	public void afterHandler(String child_userId,String act_userId) {
+	public void afterHandler(String child_userId,String goods_order_id,String act_userId) {
 		//如果是会员商品，调用存储过程
 		Map param = new HashMap();
 		param.put("child_userId", child_userId);
+		param.put("order_id", goods_order_id);
 		param.put("act_userId", act_userId);
 		
 		
