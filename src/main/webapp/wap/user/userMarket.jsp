@@ -29,10 +29,11 @@
 	                    </div>
                     </div>
 					<div class="tpl-block">
+						<div class ="am-scrollable-horizontal">
 	                    <div class="am-g">
 	                        <div class="am-u-sm-12">
 	                            <form class="am-form">
-	                                <table class="am-table am-table-striped am-table-hover table-main">
+	                                <table class="am-table am-table-striped am-table-hover am-text-nowrap table-main">
 	                                    <thead>
 	                                        <tr>
 	                                            <th class="table-type">编号</th>
