@@ -47,6 +47,8 @@ public class UserDirectRecommend {
 	
 	private String name;
 	
+	private String preMonthGoodsSum;
+	
 	private String currentMonthGoodsSum;
 
 	/**  */
@@ -163,6 +165,14 @@ public class UserDirectRecommend {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPreMonthGoodsSum() {
+		return preMonthGoodsSum;
+	}
+
+	public void setPreMonthGoodsSum(String preMonthGoodsSum) {
+		this.preMonthGoodsSum = preMonthGoodsSum;
 	}
 
 	public String getCurrentMonthGoodsSum() {

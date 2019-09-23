@@ -16,6 +16,7 @@
     	<result column="allorder_num" property="allorder_num" jdbcType="VARCHAR" />
     	<result column="user_code" property="user_code" jdbcType="VARCHAR" />
     	<result column="name" property="name" jdbcType="VARCHAR" />
+    	<result column="preMonthGoodsSum" property="preMonthGoodsSum" jdbcType="VARCHAR" />
     	<result column="currentMonthGoodsSum" property="currentMonthGoodsSum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -72,12 +73,14 @@
 	  IFNULL(a.`grade5Number`,0) AS grade5Number,
 	  b.user_code,
 	  b.name,
-	  IFNULL(d.goodsSum,0) AS currentMonthGoodsSum
+	  IFNULL(d.goodsSum,0) AS preMonthGoodsSum,
+	  IFNULL(e.goodsSum,0) AS currentMonthGoodsSum
 	FROM
 	  user_direct_recommend a 
 	  JOIN tb_user b ON a.`user_id` = b.`user_id`
 	  join fr_config c on c.`cf_module` = 'zshopuserlevel' and c.`cf_desc`=b.user_level
-	  JOIN user_month_goods d ON b.user_id = d.user_id AND d.months = DATE_FORMAT(NOW(),'%Y%m')
+	  left JOIN user_month_goods d ON b.user_id = d.user_id AND d.months = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 MONTH),'%Y%m')
+	  left JOIN user_month_goods e ON b.user_id = e.user_id AND e.months = DATE_FORMAT(NOW(),'%Y%m')
 	where a.pid = #{user_id,jdbcType=INTEGER}
   </select>
   

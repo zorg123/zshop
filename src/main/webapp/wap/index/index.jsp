@@ -74,10 +74,12 @@
 	                    		 	本级人数：<font style="color:black;"><s:property value="currentLevelPepoleCount"/></font>
 	                    		 	<%--会员商品总数：<font style="color:black;"><s:property value="Allorder_num"/></font> --%>
 	                    		 </s:if>
-	                    		 <%-- <s:if test="result.ret.userLevel <= 2 && result.ret.userType == 'main'"> --%>
-	                    		 <s:if test="result.ret.userLevel <= 2">
-	                    		 	会员级别：<font style="color:red;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+	                    		 <s:if test="result.ret.userLevel < 2 && result.ret.userType == 'main'">
+	                    		 	会员级别：<font style="color:blue;font-weight: bold;"><s:property value="userLevelName"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
 	                    		 </s:if>
+	                    		 <s:if test="result.ret.userType == 'child'">
+	                    		 	本月已发货：<font style="color:blue;font-weight: bold;"><s:property value="totalUserGoodsOrders"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+	                    		 </s:if>	                    		 
                     		 </div>
                          	<div class="desc" style="color:white;font-size: 14px">
 	                         	<s:if test="result.ret.userLevel > 2">
@@ -85,7 +87,7 @@
 		                         	<s:else>
 		                         		<font style="color:red;font-weight: bold;">不具备 </font>&nbsp;&nbsp;&nbsp;&nbsp;
 		                         	</s:else>
-		                         	上月小市场 ：<font style="color:blue;font-weight: bold;"><s:property value="lastSmallMarket"/></font>
+		                         	<%-- 上月小市场 ：<font style="color:blue;font-weight: bold;"><s:property value="lastSmallMarket"/></font> --%>
 	                         	</s:if>
                          		<%--上月总数：<font style="color:black;"><s:property value="lastMonthOrdrs"/></font>&nbsp;&nbsp;&nbsp;&nbsp;本月总数：<font style="color:black;"><s:property value="curMonthOrdrs"/></font>--%>
                          	</div>

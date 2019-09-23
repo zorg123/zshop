@@ -418,5 +418,10 @@
  </update>
  <select id="queryUserGoodsOrder" resultType="hashmap" parameterType="hashmap">
  	SELECT IFNULL(SUM(goods_amount),0) as goodscount FROM goods_order a WHERE user_id = #{user_id,jdbcType=VARCHAR} AND a.catalog_id ='1' and a.state != '-1'
+ 	<if test="isChild != null  and isChild != '' " >
+ 		and state IN(1,2)
+ 		AND DATE_FORMAT(create_date,'%Y%m')=DATE_FORMAT(NOW(), '%Y%m')
+ 		AND goods_id!='201907052300000023'
+ 	</if>
  </select>
 </mapper>

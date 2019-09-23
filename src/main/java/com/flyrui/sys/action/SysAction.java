@@ -309,6 +309,11 @@ public class SysAction extends BaseAction {
     	
     	param = new HashMap<String,String>();
     	param.put("user_id", getUserId());
+    	//判断是否为子账户,查询子账户当月发货量
+    	User sessionUser = getLoginUserInfo();
+    	if(null!=sessionUser.getUser_type() && sessionUser.getUser_type().equals("child")){
+    		param.put("isChild", "1");
+    	}
     	List<Map> goodsOrders = userService.queryUserGoodsOrder(param);
     	Integer totalUserGoodsOrders = 0;
     	if(goodsOrders.size()>0) {
