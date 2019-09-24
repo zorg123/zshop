@@ -72,8 +72,8 @@
 	                                        <div class="am-btn-toolbar">
 	                                            <form class="am-form am-form-horizontal" style="margin-top:10px">	                                            
 		                                        	<div class="am-form-group" style="margin-bottom:0px">					                                   
-					                                    <label class="am-u-sm-6" style="padding:0px;font-weight:400;font-size:14px;">
-					                                        <input type="number" pattern="[0-9]*" name="amount" placeholder="输入你要购买的数量" style="font-size:14px" value="1">
+					                                    <label class="am-u-sm-6" style="width:150px;padding:0px;font-weight:400;font-size:14px;">
+					                                        <input type="number" min="1" max="10" pattern="[0-9]*" name="amount" placeholder="输入你要购买的数量" style="font-size:14px" value="1">
 					                                    </label>
 					                                    <%-- <s:if test="#goodsIter.goods_id == '201705091900000011'"> --%>
 					                                    <label class="am-u-sm-2" style="padding:5px;font-weight:400;font-size:14px;">
