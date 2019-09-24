@@ -16,6 +16,12 @@
 	                <option value="1">已激活</option>
 	                <option value="0">未激活</option>               
 	            </select>
+	            <label>分红资格：</label>
+	            <select class="easyui-combobox" name="search_shareoutQua" style="width:80px;">
+	                <option value="">--请选择--</option>
+	                <option value="1">具备</option>
+	                <option value="-1">不具备</option>               
+	            </select>
 	            <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
 	        </div>
 	    </div>

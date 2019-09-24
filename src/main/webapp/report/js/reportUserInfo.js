@@ -5,8 +5,9 @@ var Employee = {
         var search_code = $('input[name="search_code"]').val();
         var search_name = $('input[name="search_name"]').val();       
         var search_state = $('input[name="search_state"]').val();
+        var search_shareoutQua = $('input[name="search_shareoutQua"]').val();
         $('#staffList').datagrid({
-            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.bus_state': 1,'user.notInChild': 1}
+            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.shareout_qua': search_shareoutQua,'user.bus_state': 1,'user.notInChild': 1}
        })
     },
     refresh: function () {
