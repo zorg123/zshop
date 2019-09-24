@@ -84,6 +84,8 @@ public class TbUser implements Serializable {
 	private String shareout_qua;
 	
 	private Integer allorder_num;
+	
+	private String notInChild;
     
     private static final long serialVersionUID = 1L;
     
@@ -366,5 +368,13 @@ public class TbUser implements Serializable {
 
 	public void setPre_goodsSum(String pre_goodsSum) {
 		this.pre_goodsSum = pre_goodsSum;
-	}    
+	}
+
+	public String getNotInChild() {
+		return notInChild;
+	}
+
+	public void setNotInChild(String notInChild) {
+		this.notInChild = notInChild;
+	}
 }

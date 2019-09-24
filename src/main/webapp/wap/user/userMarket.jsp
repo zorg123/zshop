@@ -4,7 +4,9 @@
 	String baseUri = request.getContextPath();    
 %>
 <s:set name="userMarketList" value="result.ret"/>
+<s:set name="lastmallMarket" value="result.lastmallMarket"/>
 <s:set name="lastMonthOrdrs" value="result.lastMonthOrdrs"/>
+<s:set name="cursmallMarket" value="result.cursmallMarket"/>
 <s:set name="curMonthOrdrs" value="result.curMonthOrdrs"/>
 <s:set name="totalUserGoodsOrders" value="result.totalUserGoodsOrders"/>
 <div>           
@@ -23,7 +25,9 @@
 	                    <div class="actions">
 	                        <ul class="actions-btn">
 	                            <li class="purple-on">上月销量:<s:property value="lastMonthOrdrs"/></li>
+	                            <li class="purple-on">上月小市场:<s:property value="lastmallMarket"/></li>
 	                            <li class="blue-on">本月新增:<s:property value="curMonthOrdrs"/></li>
+	                            <li class="blue-on">本月小市场:<s:property value="cursmallMarket"/></li>
 	                            <li class="red-on">市场总销量:<s:property value="totalUserGoodsOrders"/></li>
 	                        </ul>
 	                    </div>

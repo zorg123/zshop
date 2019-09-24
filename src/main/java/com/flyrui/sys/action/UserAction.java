@@ -1062,8 +1062,10 @@ public class UserAction extends BaseAction {
     	param.put("months", curMonth);
     	List<Map> monthOrder = userService.queryUserMonthGoods(param);
     	Integer curMonthOrdrs = 0;
+    	Integer cursmallMarket = 0;
     	if(monthOrder.size()>0) {
     		curMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    		cursmallMarket = Integer.parseInt(monthOrder.get(0).get("smallMarket")+"");
     	}
     	
     	param = new HashMap<String,String>();
@@ -1075,8 +1077,10 @@ public class UserAction extends BaseAction {
     	param.put("months", lastMonth);
     	monthOrder = userService.queryUserMonthGoods(param);
     	Integer lastMonthOrdrs = 0;
+    	Integer lastmallMarket = 0;
     	if(monthOrder.size()>0) {
     		lastMonthOrdrs = Integer.parseInt(monthOrder.get(0).get("goodsSum")+"");
+    		lastmallMarket = Integer.parseInt(monthOrder.get(0).get("smallMarket")+"");
     	}
     	
     	//查询用户最新的级别
@@ -1088,8 +1092,10 @@ public class UserAction extends BaseAction {
     	result.put("ret",userDirectRecommendList);
     	result.put("_code", "0");
     	result.put("_msg", "成功");
-		result.put("curMonthOrdrs", curMonthOrdrs);
+    	result.put("curMonthOrdrs", curMonthOrdrs);
+		result.put("cursmallMarket", cursmallMarket);
 		result.put("lastMonthOrdrs", lastMonthOrdrs);
+		result.put("lastmallMarket", lastmallMarket);
 		result.put("totalUserGoodsOrders", u.getAllorder_num());
     	return "userMarket";
     }

@@ -230,10 +230,13 @@
   			and user_type = #{user_type,jdbcType=VARCHAR}
 	</if>
 	<if test="shareout_qua != null  and shareout_qua != '' " >
-  			shareout_qua = #{shareout_qua,jdbcType=VARCHAR}
+  			and shareout_qua = #{shareout_qua,jdbcType=VARCHAR}
 	</if>
 	<if test="allorder_num != null  and allorder_num != '' " >
-  			allorder_num = #{allorder_num,jdbcType=INTEGER}
+  			and allorder_num = #{allorder_num,jdbcType=INTEGER}
+	</if>
+	<if test="notInChild != null  and notInChild != '' " >
+  			and user_type not in('child')
 	</if>
   </select>
   <update id="updateUserLoginInfo" parameterType="com.flyrui.dao.pojo.sys.TbUser">

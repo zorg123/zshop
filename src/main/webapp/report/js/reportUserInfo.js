@@ -6,7 +6,7 @@ var Employee = {
         var search_name = $('input[name="search_name"]').val();       
         var search_state = $('input[name="search_state"]').val();
         $('#staffList').datagrid({
-            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.bus_state': 1}
+            queryParams: {'user.user_code': search_code, 'user.name': search_name, 'user.state': search_state,'user.bus_state': 1,'user.notInChild': 1}
        })
     },
     refresh: function () {
@@ -59,7 +59,7 @@ var Employee = {
 $(function () {
     $('#staffList').datagrid({
         url: base+'/Sys/User!queryUser.do',
-        queryParams: {'user.bus_state':1},
+        queryParams: {'user.bus_state':1,'user.notInChild':1},
         loadFilter:function(data){
         	var jsonStr = JSON.stringify(data);
         	if (jsonStr.indexOf("T")>0) {
