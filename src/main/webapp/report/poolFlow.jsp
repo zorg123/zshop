@@ -11,11 +11,11 @@
 	            <label>分红池类型：</label>
 	            <select class="easyui-combobox" name="search_create_type" style="width:150px;">
 	                <option value="">--请选择--</option>
-	                <option value="2">2级分红池</option>
-	                <option value="3">3级分红池</option>
-	                <option value="4">4级分红池</option>
-	                <option value="5">5级分红池</option>
-	                <option value="6">6级分红池</option>
+	                <%-- <option value="2">2级分红池</option> --%>
+	                <option value="3">经理分红池</option>
+	                <option value="4">总监分红池</option>
+	                <option value="5">总裁分红池</option>
+	                <option value="6">董事分红池</option>
 	            </select>
 	            <a href="javascript:void(0);" class="easyui-linkbutton" id="search_btn" iconCls="icon-search">搜索</a>
 	        </div>
