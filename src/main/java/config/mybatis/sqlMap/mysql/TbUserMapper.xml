@@ -166,7 +166,9 @@
   	 		b.org_code,b.org_name,a.bank_account,a.id_card,a.position_level,
   	 		a.cas_account,a.user_phone,a.trans_pwd,pid,a.cert_type,a.user_level,a.cert_id,a.bus_state,a.create_time,a.register_id,a.act_time,a.allchild_num,a.head_img,a.user_type,a.shareout_qua,IFNULL(a.allorder_num,0) as allorder_num,
   	 		IFNULL((SELECT IFNULL(goodsSum,0) FROM user_month_goods WHERE user_id = a.user_id AND months = DATE_FORMAT(NOW(),'%Y%m')),0) as current_goodsSum,
-  	 		IFNULL((SELECT IFNULL(goodsSum,0) FROM user_month_goods WHERE user_id = a.user_id AND months = DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 MONTH),'%Y%m')),0) as pre_goodsSum
+  	 		IFNULL((SELECT IFNULL(smallMarket,0) FROM user_month_goods WHERE user_id = a.user_id AND months = DATE_FORMAT(NOW(),'%Y%m')),0) as current_smallMarket,
+  	 		IFNULL((SELECT IFNULL(goodsSum,0) FROM user_month_goods WHERE user_id = a.user_id AND months = DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 MONTH),'%Y%m')),0) as pre_goodsSum,
+  	 		IFNULL((SELECT IFNULL(smallMarket,0) FROM user_month_goods WHERE user_id = a.user_id AND months = DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 MONTH),'%Y%m')),0) as pre_smallMarket
       	from tb_user a left join tb_organation b on a.org_id = b.org_id 
      where  1=1
      <if test="user_id !=null and user_id != ''">

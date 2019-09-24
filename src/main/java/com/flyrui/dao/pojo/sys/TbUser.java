@@ -86,6 +86,10 @@ public class TbUser implements Serializable {
 	private Integer allorder_num;
 	
 	private String notInChild;
+	
+	private String pre_smallMarket;
+	
+	private String current_smallMarket;
     
     private static final long serialVersionUID = 1L;
     
@@ -376,5 +380,21 @@ public class TbUser implements Serializable {
 
 	public void setNotInChild(String notInChild) {
 		this.notInChild = notInChild;
+	}
+
+	public String getPre_smallMarket() {
+		return pre_smallMarket;
+	}
+
+	public void setPre_smallMarket(String pre_smallMarket) {
+		this.pre_smallMarket = pre_smallMarket;
+	}
+
+	public String getCurrent_smallMarket() {
+		return current_smallMarket;
+	}
+
+	public void setCurrent_smallMarket(String current_smallMarket) {
+		this.current_smallMarket = current_smallMarket;
 	}
 }

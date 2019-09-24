@@ -40,7 +40,9 @@
 	                <th field="user_level" width="100">会员等级</th>
 	                <th field="shareout_qua" width="100" formatter="Employee.shareoutQua">分红资格</th>
 	                <th field="pre_goodsSum" width="100">上月销量</th>
+	                <th field="pre_smallMarket" width="100">上月小市场</th>
 	                <th field="current_goodsSum" width="100">当月新增</th>
+	                <th field="current_smallMarket" width="100">当月小市场</th>
 	                <th field="allorder_num" width="100">市场总销量</th>
 	            </tr>
 	            </thead>
