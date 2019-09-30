@@ -10,11 +10,14 @@
 	        <div region="center" style="margin-top: 10px;margin-left: 10px;">
 	            <label>会员编号：</label><input type="text" name="search_code">
 	            <label>会员名称：</label><input type="text" name="search_name">
-	            <label>会员状态：</label>
-	            <select class="easyui-combobox" name="search_state" style="width:80px;">
-	                <option value="-1">--请选择--</option>
-	                <option value="1">已激活</option>
-	                <option value="0">未激活</option>               
+	            <label>会员级别：</label>
+	            <select class="easyui-combobox" name="search_userLevel" style="width:80px;">
+	                <option value="">--请选择--</option>
+	                <option value="1">VIP会员</option>
+	                <option value="3">经理</option>
+	                <option value="4">总监</option>
+	                <option value="5">总裁</option>
+	                <option value="6">董事</option>              
 	            </select>
 	            <label>分红资格：</label>
 	            <select class="easyui-combobox" name="search_shareoutQua" style="width:80px;">
