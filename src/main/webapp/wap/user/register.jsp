@@ -26,7 +26,7 @@
                                 <div class="am-form-group">
                                     <label for="user-email" class="am-u-sm-4 am-form-label">用户账号 </label>
                                     <div class="am-u-sm-8">
-                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请使用手机号作为注册账号" data-pattern="\d{11}" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description" /> 
+                                        <input type="text" class="am-form-field tpl-form-no-bg" db_field="user.user_code"  name="user.user_code" placeholder="请使用手机号作为注册账号" data-pattern="^\d{11}$" data-required="true" data-descriptions="user.user_code" data-describedby="user.user_code-description" /> 
                                         <small id="user.user_code-description"></small>                                       
                                     </div>
                                 </div> 
@@ -61,7 +61,7 @@
                                 <div class="am-form-group">
                                     <label for="user-name" class="am-u-sm-4 am-form-label">手机号码</label>
                                     <div class="am-u-sm-8 phred">
-                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="手机号确认账户使用，必须真实填写" data-pattern="\d{11}" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description">                                        
+                                        <input type="text" class="tpl-form-input" data-validate="phone" db_field="user.user_phone" name="user.user_phone" placeholder="手机号确认账户使用，必须真实填写" data-pattern="^\d{11}$" data-required="true" data-descriptions="user.user_phone" data-describedby="user.user_phone-description">                                        
                                     	<small id="user.user_phone-description"></small>  
                                     </div>
                                 </div>

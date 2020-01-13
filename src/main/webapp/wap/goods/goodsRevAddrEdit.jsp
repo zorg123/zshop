@@ -34,7 +34,7 @@
                       <div class="am-form-group">
                           <label for="user-email" class="am-u-sm-3 am-form-label">联系电话 </label>
                           <div class="am-u-sm-9">                             
-                              	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsRevAddr.rev_link_phone"  data-required="true"  value="<s:property value="goodsRevAddr.rev_link_phone" />" name="goodsRevAddr.rev_link_phone" placeholder="请输入收货人联系电话" data-pattern="\d{11}" data-descriptions="goodsRevAddr.rev_link_phone" data-describedby="goodsRevAddr.rev_link_phone-description"/>
+                              	<input type="text" class="am-form-field tpl-form-no-bg" db_field="goodsRevAddr.rev_link_phone"  data-required="true"  value="<s:property value="goodsRevAddr.rev_link_phone" />" name="goodsRevAddr.rev_link_phone" placeholder="请输入收货人联系电话" data-pattern="^\d{11}$" data-descriptions="goodsRevAddr.rev_link_phone" data-describedby="goodsRevAddr.rev_link_phone-description"/>
                                 <small id="goodsRevAddr.rev_link_phone-description"></small>
                           </div>
                       </div>                                  
