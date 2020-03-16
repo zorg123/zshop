@@ -23,6 +23,7 @@ public class GoodsOrderAfterServiceImpl extends BaseService<GoodsOrderAfter> imp
 		//如果是会员商品，调用存储过程
 		Map param = new HashMap();
 		param.put("in_id", goodsOrderAfter.getUser_id());
+		param.put("order_id", goodsOrderAfter.getGoods_order_id());
 		param.put("goods_amount", goodsOrderAfter.getBuy_amount());
 		baseDao.update("com.flyrui.goods.dao.mapper.GoodsMapper.pro_zshop_buy",param);
 	}

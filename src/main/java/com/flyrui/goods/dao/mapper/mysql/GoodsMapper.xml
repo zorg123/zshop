@@ -339,12 +339,13 @@
       		and exp_date &gt;= #{exp_date,jdbcType=TIMESTAMP}
    	 </if> for update
   </select>
-  <parameterMap type="map" id="produreParam">  
-   <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>  
+  <parameterMap type="map" id="produreParam">
+   <parameter property="in_id" jdbcType="INTEGER" mode="IN"/>
+   <parameter property="order_id" jdbcType="VARCHAR" mode="IN"/>
    <parameter property="goods_amount" jdbcType="INTEGER" mode="IN"/> 
  </parameterMap>
   <update id="pro_zshop_buy" parameterMap="produreParam" statementType="CALLABLE">  
-   	{call pro_zshop_buy(?, ?)}  
+   	{call pro_zshop_buy(?, ?, ?)}  
  </update>
  <select id="selectByChangeGoods" resultMap="BaseResultMap" parameterType="com.flyrui.goods.pojo.Goods" >
     select    
