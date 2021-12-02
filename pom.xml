@@ -9,7 +9,7 @@
 	<description>Fr CMS Maven Project</description>
 	<properties>
     	<org.springframework.version>4.3.23.RELEASE</org.springframework.version>
-    	<org.apache.struts.version>2.3.37</org.apache.struts.version>
+    	<org.apache.struts.version>2.5.22</org.apache.struts.version>
     	<org.springasm.version>3.1.4.RELEASE</org.springasm.version>
   	</properties>
 	<dependencies>
